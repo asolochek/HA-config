@@ -1,0 +1,38 @@
+
+- platform: rest
+  resource: http://10.3.1.70/json?live=true
+  name: "PurpleAir"
+  unique_id: purpleair
+  value_template: "OK"
+  force_update: true
+  json_attributes:
+    - Mem
+    - memfrag
+    - Adc
+    - uptime
+    - rssi
+    - current_temp_f
+    - current_humidity
+    - current_dewpoint_f
+    - pressure
+    - p_0_3_um
+    - p_0_3_um_b
+    - p_0_5_um
+    - p_0_5_um_b
+    - p_1_0_um
+    - p_1_0_um_b
+    - pm1_0_atm
+    - pm1_0_atm_b
+    - p_2_5_um
+    - p_2_5_um_b
+    - pm2_5_atm
+    - pm2_5_atm_b
+    - p_5_0_um
+    - p_5_0_um_b
+    - p_10_0_um
+    - p_10_0_um_b
+    - pm10_0_atm
+    - pm10_0_atm_b
+    - pm2.5_aqi
+    - pm2.5_aqi_b
+

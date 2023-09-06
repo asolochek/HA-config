@@ -1,0 +1,10 @@
+- platform: template
+  fans: 
+    peloton_fan:
+      friendly_name: "Peloton Fan"
+      unique_id: peloton_fan
+      value_template: "{{ states('sensor.peloton_fan_plug_power') | float(0) > 1 }}"
+      turn_on:
+        service: rest_command.peloton_fan_power_ir
+      turn_off:
+        service: rest_command.peloton_fan_power_ir

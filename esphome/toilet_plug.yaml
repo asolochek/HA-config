@@ -1,0 +1,23 @@
+substitutions:
+  friendly_name: Toilet
+
+esphome:
+  name: plug-toilet
+  friendly_name: Toilet
+  name_add_mac_suffix: false
+
+packages:
+  athom.smart-plug-v2: github://athom-tech/athom-configs/athom-smart-plug-v2.yaml
+
+api:
+  encryption:
+    key: MxRcoKsQfXLmyJtWjIZsZcrx77TR4ETFq1IYWRT2y2Y=
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: 10.3.1.97
+    gateway: 10.3.1.2
+    subnet: 255.255.0.0

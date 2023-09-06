@@ -1,0 +1,82 @@
+{% macro concat(prefix, preset) %}
+    {{ prefix ~ preset | lower }}
+{% endmacro %}
+
+{% macro percent_to_5_speed(percentage) %}
+    {% if percentage < 10 %}
+        Off
+    {% elif percentage < 30 %}
+        Silent
+    {% elif percentage < 50 %}
+        Low
+    {% elif percentage < 70 %}
+        Medium
+    {% elif percentage < 90 %}
+        High
+    {% else %}
+        Turbo
+    {% endif %}
+{% endmacro %}
+
+{% macro percent_to_4_speed(percentage) %}
+    {% if percentage < 10 %}
+        Off
+    {% elif percentage < 30 %}
+        Low
+    {% elif percentage < 60 %}
+        Medium
+    {% elif percentage < 80 %}
+        High
+    {% else %}
+        Turbo
+    {% endif %}
+{% endmacro %}
+
+{% macro preset_5_speed_to_percent(preset) %}
+    {% if preset == 'Turbo' %}
+        100
+    {% elif preset == 'High' %}
+        80
+    {% elif preset == 'Medium' %}
+        60
+    {% elif preset == 'Low' %}
+        40
+    {% elif preset == 'Silent' %}
+        20
+    {% else %}
+        0
+    {% endif %}              
+{% endmacro %}
+
+{% macro preset_4_speed_to_percent(preset) %}
+    {% if preset == 'Turbo' %}
+        100
+    {% elif preset == 'High' %}
+        75
+    {% elif preset == 'Medium' %}
+        50
+    {% elif preset == 'Low' %}
+        25
+    {% else %}
+        0
+    {% endif %}              
+{% endmacro %}
+
+{% macro average_2(sensorA, sensorB) %}
+    {% if states(sensorA) | is_number and
+            states(sensorB) | is_number 
+    %}
+        {% set aqi_a = states(sensorA) | float %}
+        {% set aqi_b = states(sensorB) | float %}
+        {{ (aqi_a + aqi_b) / 2.0 }}
+    {% else %}
+        {{ this.state }}
+    {% endif %}
+
+
+
+{% endmacro %}
+
+{# {% macro format_entity(entity_id) %}
+{{ state_attr(entity_id, 'friendly_name') }} - {{ states(entity_id) }}
+{% endmacro %} #}

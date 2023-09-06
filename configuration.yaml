@@ -1,0 +1,103 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+my:
+
+wake_on_lan:
+
+rest_command:
+  peloton_fan_power_ir:
+    url: "http://10.3.1.42/send.htm?remote=Vornado&command=POWER"
+  peloton_fan_plus_ir:
+    url: "http://10.3.1.42/send.htm?remote=Vornado&command=PLUS"
+  peloton_fan_minus_ir:
+    url: "http://10.3.1.42/send.htm?remote=Vornado&command=MINUS"
+
+logger:
+  default: info
+  logs:
+#    custom_components.nut: debug
+    custom_components.pyscript: info
+    custom_components.pyscript.file.relative_humidity_correction: info
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+  extra_module_url:
+    - /config/www/community/bar-card/bar-card.js
+
+
+# Text-to-speech
+tts:
+  - platform: google_translate
+
+lovelace:
+  mode: storage
+  # Add yaml dashboards
+  dashboards:
+    lovelace-generated: # Needs to contain a hyphen (-)
+      mode: yaml
+      filename: notexist.yaml
+      title: Generated
+      icon: mdi:tools
+      show_in_sidebar: true
+      require_admin: true
+    lovelace-yaml:
+      mode: yaml
+      title: Home
+      icon: mdi:home-assistant
+      show_in_sidebar: true
+      filename: dashboards.yaml
+
+#     lovelace:
+  # mode: yaml
+  # resources:
+  #   - url: /local/zigbee2mqtt-networkmap.js?v=0.8.0
+  #     type: module
+
+mqtt:
+  sensor:
+    - name: Zigbee2mqtt Networkmap
+      # if you change base_topic of Zigbee2mqtt, change state_topic accordingly
+      state_topic: zigbee2mqtt/bridge/response/networkmap
+      value_template: >-
+        {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+      # again, if you change base_topic of Zigbee2mqtt, change json_attributes_topic accordingly
+      json_attributes_topic: zigbee2mqtt/bridge/response/networkmap
+      json_attributes_template: "{{ value_json.data.value | tojson }}"
+
+
+  # switch:
+  #   - name: relay_top
+  #     unique_id: relay_top_switch
+  #     state_topic: "Relay/relays/0/state"
+  #     command_topic: "Relay/relays/0"
+  #     payload_on: "ON"
+  #     payload_off: "OFF"
+  #     icon: hass:lightbulb
+    
+  #   - name: relay_bottom
+  #     unique_id: relay_bottom_switch
+  #     state_topic: "Relay/relays/1/state"
+  #     command_topic: "Relay/relays/1"
+  #     payload_on: "ON"
+  #     payload_off: "OFF"
+  #     icon: hass:lightbulb
+
+
+
+automation: !include automations.yaml
+fan: !include_dir_merge_list fans/
+light: !include_dir_merge_list lights/
+lock: !include_dir_merge_list locks/
+scene: !include scenes.yaml
+script: !include scripts.yaml
+sensor: !include_dir_merge_list sensors/
+switch: !include_dir_merge_list switches/
+template: !include_dir_merge_list template_devices/
+
+
+
+

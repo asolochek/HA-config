@@ -1,0 +1,350 @@
+substitutions:
+  friendly_name: Bathroom Fan
+
+esphome:
+  name: bathroom-fan
+  friendly_name: Bathroom Fan
+  includes:
+    - humidity_correction.h
+
+esp32:
+  board: featheresp32-s2
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  level: INFO
+  logs:
+    sht3xd: ERROR
+    bme280: ERROR
+    sensor: ERROR
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "5AO1I1inyiUGMebqODxtknhuowibhETRfUpJzTWyi6s="
+
+ota:
+  password: "2db4befa4015abc84012f91c6ceb78f9"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Bathroom-Fan Fallback Hotspot"
+    password: "peMlpmKXvOtL"
+  manual_ip:
+    static_ip: 10.3.1.72
+    gateway: 10.3.1.2
+    subnet: 255.255.0.0
+
+captive_portal:
+
+globals:
+  - id: target_val
+    type: float
+    restore_value: yes
+    initial_value: "60.0"
+
+number: 
+  - platform: template
+    name: Humidity Trip Threshold
+    id: high_humidity_threshold
+    icon: mdi:cloud-percent
+    optimistic: True
+    restore_value: True
+    initial_value: 80
+    min_value: 30
+    max_value: 100
+    step: 1
+    set_action:
+      lambda: |-
+        ESP_LOGI("number", "trip threshold set from %.0f%% to %.0f%%", id(high_humidity_threshold).state, x);
+        auto controller_call = id(bathroom_fan_humidity_controller).make_call();
+        controller_call.set_target_temperature_high(x);
+        if(id(bathroom_fan_humidity_controller).action == CLIMATE_ACTION_IDLE)
+          id(target_val) = x;
+        controller_call.perform();
+
+  - platform: template
+    name: Clear Baseline Offset
+    id: baseline_offset
+    optimistic: True
+    restore_value: True
+    initial_value: 5
+    min_value: -20
+    max_value: 20
+    step: 1
+    set_action:
+      lambda: |-
+        float new_val = id(baseline_humidity).state + x;
+        ESP_LOGI("number", "clear threshold set to %.0f%%", new_val);
+        auto controller_call = id(bathroom_fan_humidity_controller).make_call();
+        controller_call.set_target_temperature_low(new_val);
+        id(target_val) = new_val;
+        controller_call.perform();
+
+  - platform: template
+    name: Idle Speed
+    id: fan_idle_speed
+    icon: mdi:fan-speed-1
+    optimistic: True
+    restore_value: True
+    initial_value: 35
+    min_value: 15
+    max_value: 50
+    step: 1
+    set_action:
+      lambda: |-
+        auto call = id(bathroom_fan).make_call();
+        if(id(bathroom_fan_humidity_controller).action == CLIMATE_ACTION_IDLE)
+          call.set_speed( x * 10.24 );
+        call.perform();
+
+  - platform: template
+    name: Cool Speed
+    id: fan_cool_speed
+    icon: mdi:fan-speed-2
+    optimistic: True
+    restore_value: True
+    initial_value: 80
+    min_value: 50
+    max_value: 100
+    step: 1
+    set_action:
+      lambda: |-
+        auto call = id(bathroom_fan).make_call();
+        if(id(bathroom_fan_humidity_controller).action == CLIMATE_ACTION_COOLING)
+          call.set_speed( x * 10.24 );
+        call.perform();
+
+climate:
+  - platform: bang_bang
+    name: "Humidity Controller"
+    id: bathroom_fan_humidity_controller
+    icon: mdi:cloud-perecent
+    sensor: humidity
+    visual:
+      min_temperature: 20
+      max_temperature: 100
+      temperature_step: 1
+    default_target_temperature_low: 100
+    default_target_temperature_high: 120
+    idle_action:
+      lambda: |-
+        auto fan_call = id(bathroom_fan).make_call();
+        fan_call.set_speed(id(fan_idle_speed).state * 10.24);
+        fan_call.perform();
+    cool_action:
+      lambda: |-
+        auto fan_call = id(bathroom_fan).make_call();
+        id(target_val) = id(baseline_humidity).state + id(baseline_offset).state;
+        fan_call.set_speed(id(fan_cool_speed).state * 10.24);
+        fan_call.perform();
+    
+
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: false
+
+switch:
+  - platform: gpio
+    id: i2c_power
+    restore_mode: ALWAYS_ON
+    pin: GPIO7
+  - platform: gpio
+    id: neopix_power
+    restore_mode: ALWAYS_ON
+    pin: GPIO21
+
+binary_sensor:
+  - platform: gpio
+    id: a_button
+    pin: 
+      number: GPIO9
+      mode: INPUT_PULLUP
+  - platform: gpio
+    id: b_button
+    pin: 
+      number: GPIO6
+      mode: INPUT_PULLUP
+  - platform: gpio
+    id: c_button
+    pin: 
+      number: GPIO5
+      mode: INPUT_PULLUP
+
+
+i2c:
+  - id: bus_a
+    sda: SDA
+    scl: SCL
+    frequency: 800kHz
+    scan: true
+    setup_priority: 700
+
+sensor:
+  - platform: bme280
+    i2c_id: bus_a
+    address: 0x77
+    update_interval: 10s
+#    temperature:
+#      name: "BME280 Temperature"
+#      oversampling: 16x
+#      id: bme280_temperature
+    pressure:
+      name: "BME280 Pressure"
+      id: bme280_pressure
+#    humidity:
+#      name: "BME280 Humidity"
+#      id: bme280_humidity
+
+  - platform: sht3xd
+    i2c_id: bus_a
+    address: 0x44
+    update_interval: 2s
+    temperature:
+      name: "Temperature"
+      id: temperature
+      filters:
+        - exponential_moving_average:
+            alpha: 0.1
+            send_every: 1
+    humidity:
+      name: "Humidity"
+      id: humidity
+      filters:
+        - exponential_moving_average:
+            alpha: 0.1
+            send_every: 1
+
+  - platform: uptime
+    name: $friendly_name Uptime
+    id: uptime_sensor
+
+  - platform: homeassistant
+    name: Baseline Humidity
+    id: baseline_humidity
+    entity_id: sensor.living_room_humidity
+    unit_of_measurement: "%"
+    internal: false
+
+  - platform: template
+    name: Dew Point
+    id: dew_point
+    unit_of_measurement: "°F"
+    icon: mdi:thermometer-water
+    update_interval: 4s
+    device_class: temperature
+    accuracy_decimals: 1
+    lambda: |-
+      float temp = id(temperature).state;
+      float hum = id(humidity).state;
+      float dew = compute_dew_point(temp, hum);
+      // ESP_LOGI("dew", "temperature: %.1f humidity: %.1f, dewpoint: %.1f", temp, hum, dew);
+      return c_to_f(dew);
+
+
+output:
+  - platform: ledc
+    pin: GPIO17
+    id: fan_pwm_high
+    frequency: 25000Hz
+  - platform: ledc
+    pin: GPIO18
+    id: fan_pwm_low
+    frequency: 25000Hz
+  - platform: ledc
+    pin: GPIO16
+    id: fan_enable
+    frequency: 25000Hz
+
+fan:
+  - platform: hbridge
+    id: bathroom_fan
+    name: "Bathroom Fan"
+    pin_a: fan_pwm_low
+    pin_b: fan_pwm_high
+    enable_pin: fan_enable
+    decay_mode: slow
+    restore_mode: RESTORE_DEFAULT_ON
+    speed_count: 1024
+
+light:
+  - platform: neopixelbus
+    id: neopixel_led
+    type: GRB
+    variant: WS2812
+    pin: GPIO33
+    num_leds: 1
+    name: "NeoPixel"
+
+
+external_components:
+  - source: my_components
+    components:
+      - ssd1306_base
+      - ssd1306_i2c
+      - ssd1306_spi
+
+font:
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura
+    size: 24
+  - file: "gfonts://Roboto"
+    id: roboto
+    size: 20
+  - file: "gfonts://Roboto+Mono"
+    id: roboto_mono
+    size: 22
+  - file: "fonts/JetBrainsMono-Regular.ttf"
+    id: jetbrains_mono
+    size: 22
+  - file: "fonts/Gomme10x20n.bdf"
+    id: gomme
+    size: 20
+  - file: "fonts/ter-u18n.bdf"
+    id: terminus18n
+    size: 18
+  - file: "fonts/ter-u18b.bdf"
+    id: terminus18b
+    size: 18    
+  - file: "fonts/ter-u20n.bdf"
+    id: terminus20n
+  - file: "fonts/ter-u20b.bdf"
+    id: terminus20b
+    size: 20
+  - file: "fonts/ter-u28b.bdf"
+    id: terminus28
+    size: 28
+  - file: "fonts/ter-u32b.bdf"
+    id: terminus32
+    size: 36
+
+display:
+  - platform: ssd1306_i2c
+    id: bathroom_fan_display
+    model: 'SH1107 128x64'
+    reset_pin: GPIO10
+    address: 0x3C
+    external_vcc: False
+    rotation: 270
+    offset_x: 0
+    offset_y: 96
+    update_interval: 0.5s
+    lambda: |-
+      auto fan_speed = id(bathroom_fan).state ? float(id(bathroom_fan).speed) / 1024.0 * 100 : 0;
+      it.printf(12, 5, id(terminus32), "%.0f%%", fan_speed);
+      it.printf(92, 0, id(terminus20n), "%.0f", float(id(temperature).state) * 9.0/5.0 + 32.0);
+      it.circle(116, 5, 2);
+      it.printf(120, 0, id(terminus20n), "F");
+      it.printf(92, 22, id(terminus20n), "%.0f%%", id(humidity).state);
+      it.printf(12, 48, id(terminus18n), "%.0f%%", id(target_val));
+      it.printf(92, 48, id(terminus18n), "%.0f%%", id(high_humidity_threshold).state);
+
+

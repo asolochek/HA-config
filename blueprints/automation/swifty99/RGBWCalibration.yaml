@@ -1,0 +1,112 @@
+blueprint:
+  name: RGBW Calibration
+  source_url: https://gist.github.com/swifty99/7fac6c0f26369331db90a1c5cecab278
+  description: Adjust a RGBW light to produce accurate white on a wide color tempeture
+    spectrum
+  domain: automation
+  input:
+    light_cal_r:
+      name: Red Calibration Value
+      description: Input number to calibrate the red part, slider 0 to 100 recommended
+      selector:
+        entity:
+          domain:
+          - input_number
+          multiple: false
+      default: ''
+    light_cal_g:
+      name: Green Calibration Value
+      description: Input number to calibrate the green part, slider 0 to 100 recommended
+      selector:
+        entity:
+          domain:
+          - input_number
+          multiple: false
+    light_cal_b:
+      name: Blue Calibration Value
+      description: Input number to calibrate the blue part, slider 0 to 100 recommended
+      selector:
+        entity:
+          domain:
+          - input_number
+          multiple: false
+    light_cal_w:
+      name: White Calibration Value
+      description: Input number to calibrate the white part, slider 0 to 100 recommended
+      selector:
+        entity:
+          domain:
+          - input_number
+          multiple: false
+    light_cal_brightness:
+      name: Total Brightness
+      description: The overall brightness of the light. If not set maximum brightness
+        will be used. slider 0 to 100 recommended
+      selector:
+        entity:
+          domain:
+          - input_number
+          multiple: false
+    light_cal_debug_topic:
+      name: MQTT debug topic
+      description: Optional. Outputs debug information and the calibrated values.
+      default: ''
+      selector:
+        text: {}
+    target_light:
+      name: Lights
+      description: The lights to calibrate, must be RGBW one.
+      selector:
+        target:
+          entity:
+          - domain:
+            - light
+variables:
+  light_cal_r_entity: !input light_cal_r
+  light_cal_value_r: '{{(states(light_cal_r_entity)| float) *2.55}}'
+  light_cal_g_entity: !input light_cal_g
+  light_cal_value_g: '{{(states(light_cal_g_entity)| float) *2.55}}'
+  light_cal_b_entity: !input light_cal_b
+  light_cal_value_b: '{{(states(light_cal_b_entity)| float) *2.55}}'
+  light_cal_w_entity: !input light_cal_w
+  light_cal_value_w: '{{(states(light_cal_w_entity)| float) *2.55}}'
+  light_cal_bright_entity: !input light_cal_brightness
+  light_cal_value_bright: ' {{(states(light_cal_bright_entity)| float) *2.55}}'
+  light_cal_mqtt_topic: !input light_cal_debug_topic
+trigger:
+- platform: state
+  entity_id: !input light_cal_r
+- platform: state
+  entity_id: !input light_cal_g
+- platform: state
+  entity_id: !input light_cal_b
+- platform: state
+  entity_id: !input light_cal_w
+- platform: state
+  entity_id: !input light_cal_brightness
+action:
+- service: light.turn_on
+  data:
+    rgbw_color:
+    - '{{light_cal_value_r}}'
+    - '{{light_cal_value_g}}'
+    - '{{light_cal_value_b}}'
+    - '{{light_cal_value_w}}'
+    brightness: '{{light_cal_value_bright}}'
+  target: !input target_light
+- alias: optional mqtt debug
+  choose:
+  - conditions: '{{(light_cal_mqtt_topic|length) > 5}}'
+    sequence:
+    - service: mqtt.publish
+      data:
+        topic: '{{light_cal_mqtt_topic}}'
+        payload_template: "{{\"\\n\"}}light_cal_value_r: {{light_cal_value_r|round(1)}}
+          \ {{\"\\n\"}}light_cal_value_g: {{light_cal_value_g|round(1)}}  {{\"\\n\"}}light_cal_value_b:
+          {{light_cal_value_b|round(1)}}  {{\"\\n\"}}light_cal_value_w: {{light_cal_value_w|round(1)}}
+          \ {{\"\\n\"}}light_cal_value_brightness: {{light_cal_value_bright|round()}}
+          \n"
+        retain: false
+  default:
+mode: single
+max_exceeded: silent

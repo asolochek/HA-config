@@ -1,0 +1,969 @@
+- id: '1686608078522'
+  name: Apple TV
+  entities:
+    media_player.living_room:
+      source_list:
+      - AUX
+      - AppleTV
+      - Bluetooth
+      - HEOS Music
+      - PC
+      - PS5
+      - Phono
+      - Switch
+      - TV Audio
+      - TiVo
+      sound_mode_list:
+      - MUSIC
+      - MOVIE
+      - GAME
+      - AUTO
+      - STANDARD
+      - VIRTUAL
+      - MATRIX
+      - ROCK ARENA
+      - JAZZ CLUB
+      - VIDEO GAME
+      - MONO MOVIE
+      - DIRECT
+      - PURE DIRECT
+      - DOLBY DIGITAL
+      - DTS SURROUND
+      - AURO3D
+      - MCH STEREO
+      - STEREO
+      - ALL ZONE STEREO
+      volume_level: 0.48
+      is_volume_muted: false
+      media_content_type: channel
+      media_title: AppleTV
+      source: AppleTV
+      sound_mode: DOLBY DIGITAL
+      sound_mode_raw: Dolby Audio - Dolby Surround
+      icon: mdi:audio-video
+      friendly_name: Receiver
+      supported_features: 69004
+      state: 'on'
+    media_player.living_room_tv:
+      source_list:
+      - Amazon Alexa
+      - Amazon Prime Video
+      - Apple TV
+      - Apps
+      - Art Gallery
+      - Disney+
+      - Explore Google Assistant
+      - Freevee
+      - HDMI 1
+      - HDMI 3
+      - HDMI 4
+      - Home Dashboard
+      - Hulu
+      - LG Channels
+      - Live TV
+      - Marantz Home Theater
+      - Max
+      - Media Player
+      - Netflix
+      - Peacock
+      - Shop Time
+      - Sling TV + Freestream
+      - Sports Alert
+      - TikTok
+      - Tubi
+      - Web Browser
+      - Who.Where.What?
+      - YouTube
+      - YouTube TV
+      - fuboTV
+      assumed_state: true
+      device_class: tv
+      friendly_name: Living Room TV
+      supported_features: 24505
+      volume_level: 0.38
+      is_volume_muted: false
+      source: Marantz Home Theater
+      sound_output: external_arc
+      state: 'on'
+  icon: mdi:apple
+  metadata: {}
+- id: '1686608152893'
+  name: Nintendo
+  entities:
+    media_player.living_room:
+      source_list:
+      - AUX
+      - AppleTV
+      - Bluetooth
+      - HEOS Music
+      - PC
+      - PS5
+      - Phono
+      - Switch
+      - TV Audio
+      - TiVo
+      sound_mode_list:
+      - MUSIC
+      - MOVIE
+      - GAME
+      - AUTO
+      - STANDARD
+      - VIRTUAL
+      - MATRIX
+      - ROCK ARENA
+      - JAZZ CLUB
+      - VIDEO GAME
+      - MONO MOVIE
+      - DIRECT
+      - PURE DIRECT
+      - DOLBY DIGITAL
+      - DTS SURROUND
+      - AURO3D
+      - MCH STEREO
+      - STEREO
+      - ALL ZONE STEREO
+      volume_level: 0.46
+      is_volume_muted: false
+      media_content_type: channel
+      media_title: Switch
+      source: Switch
+      sound_mode: DOLBY DIGITAL
+      sound_mode_raw: DOLBY AUDIO-DSUR
+      icon: mdi:audio-video
+      friendly_name: Receiver
+      supported_features: 69004
+      dynamic_eq: true
+      state: 'on'
+    media_player.tv:
+      source_list:
+      - Amazon Alexa
+      - Amazon Prime Video
+      - Apple TV
+      - Apps
+      - Art Gallery
+      - Disney+
+      - Explore Google Assistant
+      - Freevee
+      - HDMI 1
+      - HDMI 3
+      - HDMI 4
+      - Home Dashboard
+      - Hulu
+      - LG Channels
+      - Live TV
+      - Living Room Ap
+      - Max
+      - Media Player
+      - Netflix
+      - Peacock
+      - Shop Time
+      - Sling TV + Freestream
+      - Sports Alert
+      - TikTok
+      - Tubi
+      - Web Browser
+      - Who.Where.What?
+      - YouTube
+      - YouTube TV
+      - fuboTV
+      assumed_state: true
+      device_class: tv
+      friendly_name: TV
+      supported_features: 24505
+      sound_output: external_arc
+      volume_level: 0.36
+      is_volume_muted: false
+      source: Living Room Ap
+      state: 'on'
+  icon: mdi:nintendo-switch
+  metadata: {}
+- id: '1686608218556'
+  name: Playstation
+  entities:
+    media_player.living_room:
+      source_list:
+      - AUX
+      - AppleTV
+      - Bluetooth
+      - HEOS Music
+      - PC
+      - PS5
+      - Phono
+      - Switch
+      - TV Audio
+      - TiVo
+      sound_mode_list:
+      - MUSIC
+      - MOVIE
+      - GAME
+      - AUTO
+      - STANDARD
+      - VIRTUAL
+      - MATRIX
+      - ROCK ARENA
+      - JAZZ CLUB
+      - VIDEO GAME
+      - MONO MOVIE
+      - DIRECT
+      - PURE DIRECT
+      - DOLBY DIGITAL
+      - DTS SURROUND
+      - AURO3D
+      - MCH STEREO
+      - STEREO
+      - ALL ZONE STEREO
+      volume_level: 0.48
+      is_volume_muted: false
+      media_content_type: channel
+      media_title: PS5
+      source: PS5
+      sound_mode: M CH IN+DSUR
+      sound_mode_raw: M CH IN+DSUR
+      dynamic_eq: true
+      icon: mdi:audio-video
+      friendly_name: Receiver
+      supported_features: 69004
+      state: 'on'
+    media_player.tv:
+      source_list:
+      - Amazon Alexa
+      - Amazon Prime Video
+      - Apple TV
+      - Apps
+      - Art Gallery
+      - Disney+
+      - Explore Google Assistant
+      - Freevee
+      - HDMI 1
+      - HDMI 3
+      - HDMI 4
+      - Home Dashboard
+      - Hulu
+      - LG Channels
+      - Live TV
+      - Marantz Home Theater
+      - Max
+      - Media Player
+      - Netflix
+      - Peacock
+      - Shop Time
+      - Sling TV + Freestream
+      - Sports Alert
+      - TikTok
+      - Tubi
+      - Web Browser
+      - Who.Where.What?
+      - YouTube
+      - YouTube TV
+      - fuboTV
+      assumed_state: true
+      device_class: tv
+      friendly_name: TV
+      supported_features: 24505
+      sound_output: external_arc
+      volume_level: 0.38
+      is_volume_muted: false
+      source: Marantz Home Theater
+      state: 'on'
+  icon: mdi:sony-playstation
+  metadata: {}
+- id: '1686608314575'
+  name: Apple TV Music
+  entities:
+    media_player.living_room:
+      source_list:
+      - AUX
+      - AppleTV
+      - Bluetooth
+      - HEOS Music
+      - PC
+      - PS5
+      - Phono
+      - Switch
+      - TV Audio
+      - TiVo
+      sound_mode_list:
+      - MUSIC
+      - MOVIE
+      - GAME
+      - AUTO
+      - STANDARD
+      - VIRTUAL
+      - MATRIX
+      - ROCK ARENA
+      - JAZZ CLUB
+      - VIDEO GAME
+      - MONO MOVIE
+      - DIRECT
+      - PURE DIRECT
+      - DOLBY DIGITAL
+      - DTS SURROUND
+      - AURO3D
+      - MCH STEREO
+      - STEREO
+      - ALL ZONE STEREO
+      volume_level: 0.46
+      is_volume_muted: false
+      media_content_type: channel
+      media_title: AppleTV
+      source: AppleTV
+      sound_mode: STEREO
+      sound_mode_raw: STEREO
+      icon: mdi:audio-video
+      friendly_name: Receiver
+      supported_features: 69004
+      dynamic_eq: true
+      state: 'on'
+    media_player.tv:
+      source_list:
+      - Amazon Alexa
+      - Amazon Prime Video
+      - Apple TV
+      - Apps
+      - Art Gallery
+      - Disney+
+      - Explore Google Assistant
+      - Freevee
+      - HDMI 1
+      - HDMI 3
+      - HDMI 4
+      - Home Dashboard
+      - Hulu
+      - LG Channels
+      - Live TV
+      - Living Room Ap
+      - Max
+      - Media Player
+      - Netflix
+      - Peacock
+      - Shop Time
+      - Sling TV + Freestream
+      - Sports Alert
+      - TikTok
+      - Tubi
+      - Web Browser
+      - Who.Where.What?
+      - YouTube
+      - YouTube TV
+      - fuboTV
+      assumed_state: true
+      device_class: tv
+      friendly_name: TV
+      supported_features: 24505
+      sound_output: external_arc
+      volume_level: 0.36
+      is_volume_muted: false
+      source: Living Room Ap
+      state: 'on'
+  icon: mdi:music-note
+  metadata: {}
+- id: '1686609167132'
+  name: Tivo
+  entities:
+    media_player.living_room:
+      source_list:
+      - AUX
+      - AppleTV
+      - Bluetooth
+      - HEOS Music
+      - PC
+      - PS5
+      - Phono
+      - Switch
+      - TV Audio
+      - TiVo
+      sound_mode_list:
+      - MUSIC
+      - MOVIE
+      - GAME
+      - AUTO
+      - STANDARD
+      - VIRTUAL
+      - MATRIX
+      - ROCK ARENA
+      - JAZZ CLUB
+      - VIDEO GAME
+      - MONO MOVIE
+      - DIRECT
+      - PURE DIRECT
+      - DOLBY DIGITAL
+      - DTS SURROUND
+      - AURO3D
+      - MCH STEREO
+      - STEREO
+      - ALL ZONE STEREO
+      volume_level: 0.46
+      is_volume_muted: false
+      media_content_type: channel
+      media_title: TiVo
+      source: TiVo
+      sound_mode: DOLBY DIGITAL
+      sound_mode_raw: DOLBY AUDIO-DSUR
+      icon: mdi:audio-video
+      friendly_name: Receiver
+      supported_features: 69004
+      dynamic_eq: true
+      state: 'on'
+    media_player.tv:
+      source_list:
+      - Amazon Alexa
+      - Amazon Prime Video
+      - Apple TV
+      - Apps
+      - Art Gallery
+      - Disney+
+      - Explore Google Assistant
+      - Freevee
+      - HDMI 1
+      - HDMI 3
+      - HDMI 4
+      - Home Dashboard
+      - Hulu
+      - LG Channels
+      - Live TV
+      - Living Room Ap
+      - Max
+      - Media Player
+      - Netflix
+      - Peacock
+      - Shop Time
+      - Sling TV + Freestream
+      - Sports Alert
+      - TikTok
+      - Tubi
+      - Web Browser
+      - Who.Where.What?
+      - YouTube
+      - YouTube TV
+      - fuboTV
+      assumed_state: true
+      device_class: tv
+      friendly_name: TV
+      supported_features: 24505
+      volume_level: 0.36
+      is_volume_muted: false
+      source: Living Room Ap
+      sound_output: external_arc
+      state: 'on'
+  icon: mdi:television
+  metadata: {}
+- id: '1686609234428'
+  name: Bedroom Tivo Scene
+  entities:
+    remote.bedroom_hub:
+      friendly_name: Bedroom Hub
+      supported_features: 4
+      activity_list:
+      - Listen to Music
+      - Watch Tivo
+      - Watch AppleTV
+      - Listen to Records
+      current_activity: Watch Tivo
+      devices_list:
+      - Logitech Squeezebox
+      - Apple TV
+      - TiVo Premiere 4
+      - NAD Amp
+      - LG TV
+      last_activity: Watch Tivo
+      activity_starting:
+      state: 'on'
+    select.bedroom_hub_activities:
+      options:
+      - power_off
+      - Listen to Music
+      - Listen to Records
+      - Watch AppleTV
+      - Watch Tivo
+      icon: mdi:remote-tv
+      friendly_name: Bedroom Hub Activities
+      state: Watch Tivo
+    media_player.bedroom_tv:
+      source_list:
+      - AV
+      - Amazon Alexa
+      - Amazon Prime Video
+      - Apple TV
+      - Component
+      - Disney+
+      - HBO Max
+      - HDMI 1
+      - HDMI 2
+      - HDMI 3
+      - Hulu
+      - LG Channels
+      - LG Content Store
+      - Live TV
+      - Music
+      - Netflix
+      - Photo & Video
+      - Shop Time
+      - Sling TV
+      - Sports Alert
+      - Web Browser
+      assumed_state: true
+      device_class: tv
+      friendly_name: Bedroom TV
+      supported_features: 24509
+      sound_output: external_optical
+      volume_level: 0.1
+      is_volume_muted: false
+      source: HDMI 1
+      state: 'on'
+  metadata: {}
+  icon: mdi:television
+- id: '1686609288441'
+  name: Bedroom Apple TV
+  entities:
+    remote.bedroom_hub:
+      friendly_name: Bedroom Hub
+      supported_features: 4
+      activity_list:
+      - Listen to Music
+      - Watch Tivo
+      - Watch AppleTV
+      - Listen to Records
+      current_activity: Watch AppleTV
+      devices_list:
+      - Logitech Squeezebox
+      - Apple TV
+      - TiVo Premiere 4
+      - NAD Amp
+      - LG TV
+      last_activity: Watch AppleTV
+      activity_starting:
+      state: 'on'
+    select.bedroom_hub_activities:
+      options:
+      - power_off
+      - Listen to Music
+      - Listen to Records
+      - Watch AppleTV
+      - Watch Tivo
+      icon: mdi:remote-tv
+      friendly_name: Bedroom Hub Activities
+      state: Watch AppleTV
+    media_player.bedroom_tv:
+      source_list:
+      - AV
+      - Amazon Alexa
+      - Amazon Prime Video
+      - Apple TV
+      - Component
+      - Disney+
+      - HBO Max
+      - HDMI 1
+      - HDMI 2
+      - HDMI 3
+      - Hulu
+      - LG Channels
+      - LG Content Store
+      - Live TV
+      - Music
+      - Netflix
+      - Photo & Video
+      - Shop Time
+      - Sling TV
+      - Sports Alert
+      - Web Browser
+      assumed_state: true
+      device_class: tv
+      friendly_name: Bedroom TV
+      supported_features: 24509
+      sound_output: external_optical
+      volume_level: 0.1
+      is_volume_muted: false
+      source: HDMI 2
+      state: 'on'
+  icon: mdi:apple
+  metadata: {}
+- id: '1692165088066'
+  name: Bedtime
+  entities:
+    light.bedroom_closet_light:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - candle
+      - fireplace
+      - colorloop
+      - finish_effect
+      - stop_effect
+      - stop_hue_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      icon: mdi:ceiling-light
+      friendly_name: Bedroom Closet Light
+      supported_features: 44
+      state: 'off'
+    light.hallway_ceiling:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - candle
+      - channel_change
+      - colorloop
+      - finish_effect
+      - fireplace
+      - okay
+      - stop_effect
+      - stop_hue_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      entity_id:
+      - light.hallway_ceiling_zigbee_group
+      icon: mdi:wall-sconce-flat
+      friendly_name: Hallway Ceiling
+      supported_features: 44
+      state: 'off'
+    switch.adaptive_lighting_sleep_mode_bedroom_lamp:
+      icon: mdi:sleep
+      friendly_name: 'Adaptive Lighting Sleep Mode: Bedroom Lamp'
+      state: 'on'
+    light.bedroom_ceiling:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - candle
+      - channel_change
+      - colorloop
+      - finish_effect
+      - fireplace
+      - okay
+      - stop_effect
+      - stop_hue_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      entity_id:
+      - light.bedroom_ceiling_zigbee_group
+      icon: mdi:wall-sconce-flat
+      friendly_name: Bedroom Ceiling
+      supported_features: 44
+      state: 'off'
+    light.bedroom_lamp:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - candle
+      - fireplace
+      - colorloop
+      - finish_effect
+      - stop_effect
+      - stop_hue_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      icon: mdi:floor-lamp
+      friendly_name: Bedroom Lamp
+      supported_features: 44
+      color_mode: xy
+      brightness: 26
+      hs_color:
+      - 18.824
+      - 100
+      rgb_color:
+      - 255
+      - 80
+      - 0
+      xy_color:
+      - 0.666
+      - 0.329
+      state: 'on'
+  icon: mdi:bed-clock
+  metadata:
+    light.bedroom_closet_light:
+      entity_only: true
+    light.hallway_ceiling:
+      entity_only: true
+    switch.adaptive_lighting_sleep_mode_bedroom_lamp:
+      entity_only: true
+    light.bedroom_ceiling:
+      entity_only: true
+    light.bedroom_lamp:
+      entity_only: true
+- id: '1692165468660'
+  name: Day Mode
+  entities:
+    light.bedroom_closet_light:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - candle
+      - fireplace
+      - colorloop
+      - finish_effect
+      - stop_effect
+      - stop_hue_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      icon: mdi:ceiling-light
+      friendly_name: Bedroom Closet Light
+      supported_features: 44
+      state: 'off'
+    light.hallway_lights:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - candle
+      - channel_change
+      - colorloop
+      - finish_effect
+      - fireplace
+      - okay
+      - stop_effect
+      - stop_hue_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 5025
+      color_temp: 199
+      hs_color:
+      - 27.028
+      - 18.905
+      rgb_color:
+      - 255
+      - 228
+      - 206
+      xy_color:
+      - 0.371
+      - 0.349
+      entity_id:
+      - light.hallway_lights_zigbee_group
+      icon: mdi:lightbulb-group
+      friendly_name: Hallway Lights
+      supported_features: 44
+      state: 'on'
+    light.office_lights:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - candle
+      - channel_change
+      - colorloop
+      - finish_effect
+      - fireplace
+      - okay
+      - stop_effect
+      - stop_hue_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 5025
+      color_temp: 199
+      hs_color:
+      - 27.028
+      - 18.905
+      rgb_color:
+      - 255
+      - 228
+      - 206
+      xy_color:
+      - 0.371
+      - 0.349
+      entity_id:
+      - light.office_lights_group
+      icon: mdi:lightbulb-group
+      friendly_name: Office Lights
+      supported_features: 44
+      state: 'on'
+    light.living_room_lights:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 5025
+      color_temp: 199
+      hs_color:
+      - 27.028
+      - 18.905
+      rgb_color:
+      - 255
+      - 228
+      - 206
+      xy_color:
+      - 0.371
+      - 0.349
+      icon: mdi:led-strip-variant
+      friendly_name: Living Room Lights
+      supported_features: 32
+      state: 'on'
+    light.kitchen_lights:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - candle
+      - channel_change
+      - colorloop
+      - finish_effect
+      - fireplace
+      - okay
+      - stop_effect
+      - stop_hue_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 5025
+      color_temp: 199
+      hs_color:
+      - 27.028
+      - 18.905
+      rgb_color:
+      - 255
+      - 228
+      - 206
+      xy_color:
+      - 0.371
+      - 0.349
+      entity_id:
+      - light.kitchen_lights_zigbee_group
+      icon: mdi:lightbulb-group
+      friendly_name: Kitchen Lights
+      supported_features: 44
+      state: 'on'
+    light.bedroom_lights:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - candle
+      - channel_change
+      - colorloop
+      - finish_effect
+      - fireplace
+      - okay
+      - stop_effect
+      - stop_hue_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 5025
+      color_temp: 199
+      hs_color:
+      - 27.028
+      - 18.905
+      rgb_color:
+      - 255
+      - 228
+      - 206
+      xy_color:
+      - 0.371
+      - 0.349
+      entity_id:
+      - light.bedroom_lights_zigbee_group
+      icon: mdi:lightbulb-group
+      friendly_name: Bedroom Lights
+      supported_features: 44
+      state: 'on'
+    switch.bathroom_light:
+      friendly_name: Bathroom Light
+      state: 'on'
+  icon: mdi:coffin
+  metadata:
+    light.bedroom_closet_light:
+      entity_only: true
+    light.hallway_lights:
+      entity_only: true
+    light.office_lights:
+      entity_only: true
+    light.living_room_lights:
+      entity_only: true
+    light.kitchen_lights:
+      entity_only: true
+    light.bedroom_lights:
+      entity_only: true
+    switch.bathroom_light:
+      entity_only: true
+- id: '1692165961253'
+  name: 'Night '
+  entities:
+    light.all_lights:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - candle
+      - channel_change
+      - colorloop
+      - finish_effect
+      - fireplace
+      - okay
+      - stop_effect
+      - stop_hue_effect
+      supported_color_modes:
+      - color_temp
+      - hs
+      - onoff
+      - xy
+      entity_id:
+      - light.all_lights_zigbee_group
+      - light.living_room_lights
+      - light.bathroom_light
+      icon: mdi:lightbulb-group
+      friendly_name: All Lights
+      supported_features: 44
+      state: 'off'
+  icon: mdi:moon-waning-crescent
+  metadata:
+    light.all_lights:
+      entity_only: true

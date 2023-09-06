@@ -1,0 +1,209 @@
+blueprint:
+  name: Use RGBW as CT Light
+  source_url: https://gist.github.com/swifty99/e29e523002bbe6c0533edda9257dbea1
+  description: 'Control a RGBW Light as a CT controlled light with good color accuracy
+    an wide color temperature spectrum. Make sure you proved a calibration value for
+    each CT datapoint.
+
+    '
+  domain: automation
+  input:
+    rgbw_2_ct_target_ct:
+      name: Calibrated CT values
+      description: 'Use the color temperature values you calibrated the light against.
+        Five values recommende, three minimum.  Specify as List: eg [1900, 2100, 2600,
+        5500, 10000]. The calibration point in the middle shoould be native white
+        of your rgbW Values must be ascending.
+
+        '
+      selector:
+        object: {}
+      default:
+      - 1900
+      - 2100
+      - 2600
+      - 5500
+      - 10000
+    rgbw_2_red_calibration:
+      name: Calibrated Values for red channel
+      description: 'As CT goes from low to high, the red channel goes from a high
+        value to a low value. At base CT of native White it should be zero.  Values
+        to the right should be zero, too. A good starting ppoint may be [100, 100,
+        0, 0, 0], all LED calibration values 0..100
+
+        '
+      selector:
+        object: {}
+      default:
+      - 100
+      - 100
+      - 0
+      - 0
+      - 0
+    rgbw_2_green_calibration:
+      name: Calibrated Values for green channel
+      description: 'Green is special. It is neede at high an low CT, however probably
+        not while at base CT of W. Adjust to your liking.  A good starting ppoint
+        may be [50, 50, 0, 77, 88]
+
+        '
+      selector:
+        object: {}
+      default:
+      - 50
+      - 50
+      - 0
+      - 77
+      - 88
+    rgbw_2_blue_calibration:
+      name: Calibrated Values for blue channel
+      description: 'Higher values at higher CT. Schould be 0 at and below base CT.
+        Max at highest CT, maybe like this [100, 0, 0, 89, 100]
+
+        '
+      selector:
+        object: {}
+      default:
+      - 0
+      - 0
+      - 0
+      - 89
+      - 100
+    rgbw_2_white_calibration:
+      name: Calibrated Values for white channel
+      description: 'This is the base white. Good color rendition depends on this.
+        At base CT of this light it should be maxed. Do not set to 0 to achieve good
+        CRI  Starting point  [30, 70, 100, 72, 60]
+
+        '
+      selector:
+        object: {}
+      default:
+      - 30
+      - 70
+      - 100
+      - 72
+      - 60
+    rgbw_2_ct_requested_input:
+      name: Color Tempereture target
+      description: The RGBW light will be set to this color temperature. Automation
+        will trigger on this change
+      selector:
+        entity:
+          domain:
+          - input_number
+          multiple: false
+    rgbw_2_ct_mqtt_topic:
+      name: MQTT debug topic
+      description: Optional. Outputs debug information and the calibrated values.
+      default: ''
+      selector:
+        text: {}
+    target_light:
+      name: One! RGBW Light
+      description: The light to operate, must be RGBW one. Automation stucks if more
+        than one light is provided. They should have individual calibration anyaway.
+      selector:
+        target:
+          entity:
+          - domain:
+            - light
+variables:
+  rgbw_2_ct_requested_input: !input rgbw_2_ct_requested_input
+  rgbw_2_ct_target_ct: !input rgbw_2_ct_target_ct
+  rgbw_2_red_calibration: !input rgbw_2_red_calibration
+  rgbw_2_green_calibration: !input rgbw_2_green_calibration
+  rgbw_2_blue_calibration: !input rgbw_2_blue_calibration
+  rgbw_2_white_calibration: !input rgbw_2_white_calibration
+  rgbw_2_ct_debugmessage: looking good
+  rgbw_2_ct_mqtt_topic: !input rgbw_2_ct_mqtt_topic
+  target_light: !input target_light
+  rgbw_my: '{{state_attr(target_light.entity_id, ''color_mode'')}}'
+  target_light_brightness: '{{state_attr(target_light.entity_id, ''brightness'')}}'
+  blueprint_version: 2022-01-1
+trigger:
+- platform: state
+  entity_id: !input rgbw_2_ct_requested_input
+action:
+- alias: check input data, check light type
+  choose:
+  - conditions: "{{(( ((rgbw_2_ct_target_ct | length ) | int(0) )  == ((rgbw_2_red_calibration
+      | length) | int(0) ) == ((rgbw_2_blue_calibration | length) | int(0) ) == ((rgbw_2_white_calibration
+      | length) | int(0) ) == ((rgbw_2_green_calibration | length) | int(0) ) \n and
+      rgbw_my == 'rgbw'))}}\n"
+    sequence:
+    - alias: Calculate color data
+      variables:
+        mredList: '[{% for value in rgbw_2_ct_target_ct -%} {{(10**6 / value)|round
+          }} {%- if not loop.last %},{% endif %}{%- endfor %}]'
+        mred_target: '{{10**6 / (states(rgbw_2_ct_requested_input)|float) }}'
+        mred_index: "{% set mred_index = namespace(index=0) -%}    {%- if mred_target
+          > mredList[0] -%}  \n  0     \n{%- elif mred_target <= mredList[(mredList
+          |length)-1] -%}\n    {{(mredList|length)-2 }}   \n{%- else -%}  \n  {% for
+          value in mredList -%} \n    {% if value > mred_target %} {%- set mred_index.index
+          = loop.index -1 %}  {% endif %}\n  {%- endfor %} \n  {{ mred_index.index
+          \ }} \n{%- endif %}\n"
+        mred_offset: "{% if mred_target > mredList[0] %} \n  0   \n{%- elif mred_target
+          <= mredList[(mredList |length)-1] %} \n  1   \n{%- else -%}  \n  {{ (mred_target
+          - (mredList[mred_index])) /(mredList[mred_index +1] - mredList[mred_index])
+          }}   \n{%- endif %}\n"
+        r_value: '{{ rgbw_2_red_calibration[mred_index] + (rgbw_2_red_calibration[mred_index
+          +1] -rgbw_2_red_calibration[mred_index ]) *  mred_offset }}
+
+          '
+        g_value: '{{ rgbw_2_green_calibration[mred_index] + (rgbw_2_green_calibration[mred_index
+          +1] -rgbw_2_green_calibration[mred_index ]) * mred_offset }}
+
+          '
+        b_value: '{{ rgbw_2_blue_calibration[mred_index] + (rgbw_2_blue_calibration[mred_index
+          +1] -rgbw_2_blue_calibration[mred_index ]) * mred_offset }}
+
+          '
+        w_value: '{{ rgbw_2_white_calibration[mred_index] + (rgbw_2_white_calibration[mred_index
+          +1] -rgbw_2_white_calibration[mred_index ]) *  mred_offset }}
+
+          '
+    - alias: 'Apply color data to light, '
+      service: light.turn_on
+      data:
+        rgbw_color:
+        - '{{ r_value | float(0) * 2.55}}'
+        - '{{ g_value | float(0) * 2.55}}'
+        - '{{ b_value | float(0) * 2.55}}'
+        - '{{ w_value | float(0) * 2.55}}'
+      target: !input target_light
+    - alias: optional mqtt debug
+      choose:
+      - conditions: '{{(rgbw_2_ct_mqtt_topic|length) > 5}}'
+        sequence:
+        - service: mqtt.publish
+          data:
+            topic: '{{rgbw_2_ct_mqtt_topic}}'
+            payload_template: 'great:  {{rgbw_2_ct_mqtt_topic}} {{"\n"}}old bright:
+              {{target_light_brightness}} {{"\n"}}mredList: [{% for value in rgbw_2_ct_target_ct
+              -%} {{(10**6 / value)|round }} {%- if not loop.last %},{% endif %}{%-
+              endfor %}] {{"\n"}}mred_target: {{mred_target}} {{"\n"}}mred_index:
+              {{mred_index}} {{"\n"}}mred_offset: {{mred_offset }} {{"\n"}}RGBW: {{r_value}},
+              {{g_value}}, {{b_value}}, {{w_value}}
+
+              '
+            retain: false
+  default:
+  - alias: optional mqtt debug
+    choose:
+    - conditions: '{{(rgbw_2_ct_mqtt_topic|length) > 5}}'
+      sequence:
+      - service: mqtt.publish
+        data:
+          topic: '{{rgbw_2_ct_mqtt_topic}}'
+          payload_template: 'Calibration data points need equal data size, all need
+            to have {{rgbw_2_ct_target_ct| length}} values as CT data {{"\n"}}red
+            has {{(rgbw_2_red_calibration|length)}} values {{"\n"}}green has {{(rgbw_2_green_calibration|length)}}
+            values {{"\n"}}blue has {{(rgbw_2_blue_calibration|length)}} values {{"\n"}}white
+            has {{(rgbw_2_white_calibration|length)}} values
+
+            '
+          retain: false
+    default:
+mode: single
+max_exceeded: silent

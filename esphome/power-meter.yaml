@@ -1,0 +1,107 @@
+esphome:
+  name: power-meter
+  friendly_name: Power Meter
+
+
+esp32:
+#  board: featheresp32
+  board: adafruit_feather_esp32_v2
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  level: INFO
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "1R9vlbGtfXv91/MUPsFVdcu+YlSknU08q83PQnCGFoA="
+
+ota:
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esphome-Web-31125C"
+    password: "cAc5JhU9nAcy"
+#  manual_ip:
+#    static_ip: 10.3.1.193
+#    gateway: 10.3.1.2
+#    subnet: 255.255.0.0
+
+captive_portal:
+    
+
+# i2c:
+#   - id: bus_a
+#     sda: GPIO22 #SDA
+#     scl: GPIO20 #SCL
+#     frequency: 800kHz
+#     scan: True
+#     setup_priority: 700
+
+sensor:
+  - platform: homeassistant
+    name: Power
+    id: power
+    entity_id: sensor.mains_power_total
+    unit_of_measurement: 'W'
+    internal: true
+    filters:
+      - calibrate_polynomial:
+          degree: 5
+          datapoints:
+            - 0.0 -> 0
+            - 250 -> 500
+            - 500 -> 1000
+            - 1300 -> 2012
+            - 1500 -> 2240
+            - 2000 -> 2757
+            - 3000 -> 3660
+            - 5000 -> 5000            
+    on_value:
+      then:
+        - lambda: |-
+            float pct = x / 5000;
+            id(meter_output).set_level(pct);
+
+
+light:
+  - platform: neopixelbus
+    id: neopixel_led
+    type: GRB
+    variant: WS2812
+    pin: GPIO0
+    num_leds: 1
+    name: "NeoPixel"
+
+output:
+#  - platform: esp32_dac
+#    pin: 
+#      number: GPIO25
+#      mode:
+#        pullup: false
+#        input: false
+#    id: meter_output
+#    zero_means_zero: true
+
+  - platform: ledc
+    pin: GPIO4
+    id: meter_output
+    frequency: 25000Hz
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: false
+
+switch:
+  - platform: gpio
+    id: neopixel_power
+    restore_mode: ALWAYS_ON
+    pin: GPIO2

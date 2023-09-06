@@ -1,0 +1,316 @@
+- sensor:
+  - name: "PurpleAir Memory"
+    unique_id: purpleair_memory
+    state: "{{ state_attr('sensor.purpleair', 'Mem') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'Mem') ) }}"
+    icon: mdi:memory
+
+
+  - name: "PurpleAir ADC"
+    unique_id: purpleair_adc
+    state: "{{ state_attr('sensor.purpleair', 'Adc') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'Adc') ) }}"
+
+
+  - name: "PurpleAir Uptime"
+    unique_id: purpleair_uptime
+    unit_of_measurement: "seconds"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'uptime') ) }}"
+    state: "{{ state_attr('sensor.purpleair', 'uptime') }}"
+    icon: mdi:clock
+
+
+  - name: "PurpleAir Memory Fragmentation"
+    unique_id: purpleair_memory_fragmentation
+    state: "{{ state_attr('sensor.purpleair', 'memfrag') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'memfrag') ) }}"
+    icon: mdi:memory
+
+
+  - name: "PurpleAir Wifi RSSI"
+    unique_id: purpleair_wifi_rssi
+    state: "{{ state_attr('sensor.purpleair', 'rssi') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'rssi') ) }}"
+    unit_of_measurement: dBm
+    icon: mdi:wifi
+
+
+  - name: "PurpleAir Temperature"
+    unique_id: purpleair_temp
+    state: "{{ state_attr('sensor.purpleair', 'current_temp_f') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'current_temp_f') ) }}"
+    unit_of_measurement: "°F"
+    icon: mdi:thermometer
+
+
+  - name: "PurpleAir Humidity"
+    unique_id: purpleair_humidity
+    state: "{{ state_attr('sensor.purpleair', 'current_humidity') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'current_humidity') ) }}"
+    unit_of_measurement: "%"
+    icon: mdi:cloud-percent
+
+
+  - name: "PurpleAir Dewpoint"
+    unique_id: purpleair_dewpoint
+    state: "{{ state_attr('sensor.purpleair', 'current_dewpoint_f') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'current_dewpoint_f') ) }}"
+    unit_of_measurement: "°F"
+    icon: mdi:water-outline
+
+
+  - name: "PurpleAir Pressure"
+    unique_id: purpleair_pressure
+    state: "{{ state_attr('sensor.purpleair', 'pressure') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'pressure') ) }}"
+    unit_of_measurement: "hPa"
+    icon: mdi:gauge
+
+
+  - name: "PurpleAir AirQuality A"
+    unique_id: purpleair_airquality_a
+    state: "{{ state_attr('sensor.purpleair', 'pm2.5_aqi') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'pm2.5_aqi') ) }}"
+    unit_of_measurement: "AQI"
+    icon: mdi:weather-hazy
+
+  - name: "PurpleAir AirQuality B"
+    unique_id: purpleair_airquality_b
+    state: "{{ state_attr('sensor.purpleair', 'pm2.5_aqi_b') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'pm2.5_aqi_b') ) }}"
+    unit_of_measurement: "AQI"
+    icon: mdi:weather-hazy
+
+  - name: "PurpleAir AirQuality"
+    unique_id: purpleair_airquality
+    unit_of_measurement: "AQI"
+    icon: mdi:weather-hazy
+    availability: >
+       {{ is_number( state_attr('sensor.purpleair', 'pm2.5_aqi'))  and
+          is_number( state_attr('sensor.purpleair', 'pm2.5_aqi_b')) }}
+    state: >
+      {% from 'utils.jinja' import average_2 %}
+      {{ average_2('sensor.purpleair_airquality_a', 'sensor.purpleair_airquality_b') }}  
+
+
+  - name: "PurpleAir .3um Particle Count A"
+    unique_id: purpleair_p_0_3_um_a
+    state: "{{ state_attr('sensor.purpleair', 'p_0_3_um') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'p_0_3_um') ) }}"
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+
+  - name: "PurpleAir .3um Particle Count B"
+    unique_id: purpleair_p_0_3_um_b
+    state: "{{ state_attr('sensor.purpleair', 'p_0_3_um_b') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'p_0_3_um_b') ) }}"
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+
+  - name: "PurpleAir .3um Particle Count"
+    unique_id: purpleair_p_0_3_um
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+    availability: >
+      {{ is_number( states('sensor.purpleair_3um_particle_count_a') | float(2) ) and
+         is_number( states('sensor.purpleair_3um_particle_count_b') | float(2) ) }}
+    state: >
+      {% from 'utils.jinja' import average_2 %}
+      {{ average_2('sensor.purpleair_3um_particle_count_a', 'sensor.purpleair_3um_particle_count_b') }} 
+
+
+
+  - name: "PurpleAir .5um Particle Count A"
+    unique_id: purpleair_p_0_5_um_a
+    state: "{{ state_attr('sensor.purpleair', 'p_0_5_um') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'p_0_5_um') ) }}"
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+
+  - name: "PurpleAir .5um Particle Count B"
+    unique_id: purpleair_p_0_5_um_b
+    state: "{{ state_attr('sensor.purpleair', 'p_0_5_um_b') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'p_0_5_um_b') ) }}"
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+
+  - name: "PurpleAir .5um Particle Count"
+    unique_id: purpleair_p_0_5_um
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+    availability: >
+      {{ is_number( states('sensor.purpleair_5um_particle_count_a') | float(2) ) and
+         is_number( states('sensor.purpleair_5um_particle_count_b') | float(2) ) }}
+    state: >
+      {% from 'utils.jinja' import average_2 %}
+      {{ average_2('sensor.purpleair_5um_particle_count_a', 'sensor.purpleair_5um_particle_count_b') }} 
+
+    # {% set a = states('sensor.purpleair_5um_particle_count_a') | float(2) %}
+    # {% set b = states('sensor.purpleair_5um_particle_count_b') | float(2) %}
+    # {{ (a + b) / 2.0 }}
+
+
+  - name: "PurpleAir 1.0um Particle Count A"
+    unique_id: purpleair_p_1_0_um_a
+    state: "{{ state_attr('sensor.purpleair', 'p_1_0_um') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'p_1_0_um') ) }}"
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+
+  - name: "PurpleAir 1.0um Particle Count B"
+    unique_id: purpleair_p_1_0_um_b
+    state: "{{ state_attr('sensor.purpleair', 'p_1_0_um_b') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'p_1_0_um_b') ) }}"
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+
+  - name: "PurpleAir 1.0um Particle Count"
+    unique_id: purpleair_p_1_0_um
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+    availability: >
+      {{ is_number( states('sensor.purpleair_1_0um_particle_count_a') | float(2) ) and
+         is_number( states('sensor.purpleair_1_0um_particle_count_b') | float(2) ) }}
+    state: >
+      {% from 'utils.jinja' import average_2 %}
+      {{ average_2('sensor.purpleair_1_0um_particle_count_a', 'sensor.purpleair_1_0um_particle_count_b') }} 
+
+
+    # {% set a = states('sensor.purpleair_1_0um_particle_count_a') | float(2) %}
+    # {% set b = states('sensor.purpleair_1_0um_particle_count_b') | float(2) %}
+    # {{ (a + b) / 2.0 }}
+
+
+  - name: "PurpleAir 2.5um Particle Count A"
+    unique_id: purpleair_p_2_5_um_a
+    state: "{{ state_attr('sensor.purpleair', 'p_2_5_um') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'p_2_5_um') ) }}"
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+
+  - name: "PurpleAir 2.5um Particle Count B"
+    unique_id: purpleair_p_2_5_um_b
+    state: "{{ state_attr('sensor.purpleair', 'p_2_5_um_b') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'p_2_5_um_b') ) }}"
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+
+  - name: "PurpleAir 2.5um Particle Count"
+    unique_id: purpleair_p_2_5_um
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+    availability: >
+      {{ is_number( states('sensor.purpleair_2_5um_particle_count_a') | float(2) ) and
+         is_number( states('sensor.purpleair_2_5um_particle_count_b') | float(2) ) }}
+    state: >
+      {% from 'utils.jinja' import average_2 %}
+      {{ average_2('sensor.purpleair_2_5um_particle_count_a', 'sensor.purpleair_2_5um_particle_count_b') }} 
+
+    # {% set a = states('sensor.purpleair_2_5um_particle_count_a') | float(2) %}
+    # {% set b = states('sensor.purpleair_2_5um_particle_count_b') | float(2) %}
+    # {{ (a + b) / 2.0 }}
+
+
+  - name: "PurpleAir 5.0um Particle Count A"
+    unique_id: purpleair_p_5_0_um_a
+    state: "{{ state_attr('sensor.purpleair', 'p_5_0_um') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'p_5_0_um') ) }}"
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+
+  - name: "PurpleAir 5.0um Particle Count B"
+    unique_id: purpleair_p_5_0_um_b
+    state: "{{ state_attr('sensor.purpleair', 'p_5_0_um_b') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'p_5_0_um_b') ) }}"
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+
+  - name: "PurpleAir 5.0um Particle Count"
+    unique_id: purpleair_p_5_0_um
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+    availability: >
+      {{ is_number( states('sensor.purpleair_5_0um_particle_count_a') | float(2) ) and
+         is_number( states('sensor.purpleair_5_0um_particle_count_b') | float(2) ) }}
+    state: >
+      {% from 'utils.jinja' import average_2 %}
+      {{ average_2('sensor.purpleair_5_0um_particle_count_a', 'sensor.purpleair_5_0um_particle_count_b') }} 
+
+    # {% set a = states('sensor.purpleair_5_0um_particle_count_a') | float(2) %}
+    # {% set b = states('sensor.purpleair_5_0um_particle_count_b') | float(2) %}
+    # {{ (a + b) / 2.0 }}
+
+
+  - name: "PurpleAir 10.0um Particle Count A"
+    unique_id: purpleair_p_10_0_um_a
+    state: "{{ state_attr('sensor.purpleair', 'p_10_0_um') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'p_10_0_um') ) }}"
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+
+  - name: "PurpleAir 10.0um Particle Count B"
+    unique_id: purpleair_p_10_0_um_b
+    state: "{{ state_attr('sensor.purpleair', 'p_10_0_um_b') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'p_10_0_um_b') ) }}"
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+
+  - name: "PurpleAir 10.0um Particle Count"
+    unique_id: purpleair_p_10_0_um
+    unit_of_measurement: "um/dl"
+    icon: mdi:blur
+    availability: >
+      {{ is_number( states('sensor.purpleair_10_0um_particle_count_a') | float(2) ) and
+         is_number( states('sensor.purpleair_10_0um_particle_count_b') | float(2) ) }}
+    state: >
+      {% from 'utils.jinja' import average_2 %}
+      {{ average_2('sensor.purpleair_10_0um_particle_count_a', 'sensor.purpleair_10_0um_particle_count_b') }} 
+
+    # {% set a = states('sensor.purpleair_10_0um_particle_count_a') | float(2) %}
+    # {% set b = states('sensor.purpleair_10_0um_particle_count_b') | float(2) %}
+    # {{ (a + b) / 2.0 }}
+
+
+  - name: "PurpleAir 1.0um Mass A"
+    unique_id: purpleair_pm1_atm_a
+    state: "{{ state_attr('sensor.purpleair', 'pm1_0_atm') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'pm1_0_atm') ) }}"
+    unit_of_measurement: "ug/m3"
+    icon: mdi:blur
+
+  - name: "PurpleAir 1.0um Mass B"
+    unique_id: purpleair_pm1_atm_b
+    state: "{{ state_attr('sensor.purpleair', 'pm1_0_atm_b') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'pm1_0_atm_b') ) }}"
+    unit_of_measurement: "ug/m3"
+    icon: mdi:blur
+
+
+  - name: "PurpleAir 2.5um Mass A"
+    unique_id: purpleair_pm2_5_atm_a
+    state: "{{ state_attr('sensor.purpleair', 'pm2_5_atm') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'pm2_5_atm') ) }}"
+    unit_of_measurement: "ug/m3"
+    icon: mdi:blur
+
+  - name: "PurpleAir 2.5um Mass B"
+    unique_id: purpleair_pm2_5_atm_b
+    state: "{{ state_attr('sensor.purpleair', 'pm2_5_atm_b') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'pm2_5_atm_b') ) }}"
+    unit_of_measurement: "ug/m3"
+    icon: mdi:blur
+
+
+  - name: "PurpleAir 10.0um Mass A"
+    unique_id: purpleair_pm10_atm_a
+    state: "{{ state_attr('sensor.purpleair', 'pm10_0_atm') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'pm10_0_atm') ) }}"
+    unit_of_measurement: "ug/m3"
+    icon: mdi:blur
+
+  - name: "PurpleAir 10.0um Mass B"
+    unique_id: purpleair_pm10_atm_b
+    state: "{{ state_attr('sensor.purpleair', 'pm10_0_atm_b') }}"
+    availability: "{{ is_number( state_attr('sensor.purpleair', 'pm10_0_atm_b') ) }}"
+    unit_of_measurement: "ug/m3"
+    icon: mdi:blur

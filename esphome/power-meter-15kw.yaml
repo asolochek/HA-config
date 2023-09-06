@@ -1,0 +1,181 @@
+esphome:
+  name: power-meter-15kw
+  friendly_name: Power Meter 15kW
+  platformio_options:
+    board_build.flash_mode: dio
+
+esp32:
+  board: adafruit_feather_esp32s3
+  variant: esp32s3
+  framework:
+    type: arduino
+#    type: esp-idf
+# Enable logging
+logger:
+  level: INFO
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "ynGfaEiLcGoIbLZYZC8RPAUQ5Zykfw7KaAEbceT8JVo="
+
+ota:
+  password: "f1032615bf34151cfdabacad206096c9"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  manual_ip:
+    static_ip: 10.3.1.116
+    gateway: 10.3.1.2
+    subnet: 255.255.0.0
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Power-Meter-15kW"
+    password: "3YNltoMmXWXn"
+
+captive_portal:
+    
+
+# i2c:
+#   - id: bus_a
+#     sda: GPIO3
+#     scl: GPIO4
+# #    frequency: 100000Hz
+# #    frequency: 800kHz
+#     frequency: 50kHz
+#     scan: true
+#     setup_priority: 700
+
+
+
+# number:
+#   - platform: template
+#     name: Meter Test Nnumber
+#     id: test_number
+#     initial_value: 0
+#     min_value: 0
+#     max_value: 15000
+#     step: 1
+#     set_action:
+#       lambda: |-
+#         float pct = x / 15000;
+#         id(meter_output1).set_level(pct);
+#         id(meter_output2).set_level(pct);
+
+
+
+sensor:
+  - platform: homeassistant
+    name: Power
+    id: power
+#    entity_id: sensor.meter_test_sensor
+    entity_id: sensor.mains_power_total
+    unit_of_measurement: 'W'
+    internal: true
+    filters:
+      - calibrate_polynomial:
+          degree: 5
+          datapoints:
+            - 0.0 -> 0
+            - 2500 -> 2320
+            - 5000 -> 4630
+            - 7500 -> 7030
+            - 10000 -> 9300
+            - 12500 -> 11760
+            - 15000 -> 14150
+    on_value:
+      then:
+        - lambda: |-
+            float pct = x / 7500;
+            id(meter_output1).set_level(pct);
+            id(meter_output2).set_level(pct);
+
+#            float pct = x / 15000;
+
+output:
+#  - platform: esp32_dac
+#    pin: 
+#      number: GPIO25
+#      mode:
+#        pullup: false
+#        input: false
+#    id: meter_output
+#    zero_means_zero: true
+
+  - platform: ledc
+    pin: GPIO5
+    id: meter_output1
+    frequency: 25000Hz
+
+  - platform: ledc
+    pin: GPIO6
+    id: meter_output2
+    frequency: 25000Hz
+
+
+# sensor:
+#   - platform: sht4x
+#     i2c_id: bus_a
+#     address: 0x44
+#     temperature:
+#       id: meter_sht45_temperature
+#       name: "SHT45 Temperature"
+#     humidity:
+#       id: meter_sht45_humidity
+#       name: "SHT45 Humidity"
+#   - platform: tmp117
+#     i2c_id: bus_a
+#     address: 0x48
+#     id: meter_tmp117_temperature
+#     name: "TMP117 Temperature"
+#   - platform: bme280
+#     i2c_id: bus_a
+#     address: 0x77
+#     temperature:
+#       id: meter_bme280_temperature
+#       name: "BME280 Temperature"
+#     humidity:
+#       id: meter_bme280_humidity
+#       name: "BME280 Humidity"
+#   - platform: pmsa003i
+#     i2c_id: bus_a
+#     address: 0x12
+#     pm_1_0:
+#       name: "PM1.0"
+#     pm_2_5:
+#       name: "PM2.5"
+#     pm_10_0:
+#       name: "PM10.0"
+#     pmc_0_3:
+#       name: "PMC <0.3µm"
+#     pmc_0_5:
+#       name: "PMC <0.5µm"
+#     pmc_1_0:
+#       name: "PMC <1µm"
+#     pmc_2_5:
+#       name: "PMC <2.5µm"
+#     pmc_5_0:
+#       name: "PMC <5µm"
+#     pmc_10_0:
+#       name: "PMC <10µm"
+#     update_interval: 60s
+
+
+switch:
+  - platform: gpio
+    id: neopix_power
+    restore_mode: ALWAYS_ON
+    pin: GPIO21
+
+
+light:
+  - platform: neopixelbus
+    id: neopixel_led
+    type: GRB
+    variant: WS2812
+    pin: GPIO33
+    num_leds: 1
+    name: "NeoPixel"

@@ -1,0 +1,16 @@
+relative_humidity_correction:
+  name: Relative Humidity Correction
+  description: Get the temperature corrected relative humidity.
+  fields:
+    entity_id:
+      description: The entity in which to store the new value
+      example: input_number.corrected_humidity
+    initial_humidity:
+      description: The relative humidity value from a sensor
+      example: 60
+    initial_temperature:
+      description: The temperature for which the initial_humidity value was calculated in celsius
+      exmaple: 30
+    new_temperature:
+      description: The temperature for which you want the relative humidity value in celsius
+      example: 20

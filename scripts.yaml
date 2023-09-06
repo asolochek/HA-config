@@ -1,0 +1,204 @@
+run_appletv_music:
+  alias: Music
+  sequence:
+  - service: webostv.command
+    data:
+      entity_id: media_player.tv
+      command: POWER_ON
+  - service: scene.turn_on
+    target:
+      entity_id: scene.appletv_music
+    metadata: {}
+  mode: restart
+  icon: mdi:music
+apple_tv:
+  alias: Apple TV
+  sequence:
+  - service: webostv.command
+    data:
+      entity_id: media_player.tv
+      command: POWER_ON
+  - service: scene.turn_on
+    target:
+      entity_id: scene.watch_apple_tv
+    metadata: {}
+  mode: restart
+  icon: mdi:apple
+nintendo:
+  alias: Nintendo
+  sequence:
+  - service: webostv.command
+    data:
+      entity_id: media_player.tv
+      command: POWER_ON
+  - service: scene.turn_on
+    target:
+      entity_id: scene.play_nintendo
+    metadata: {}
+  mode: restart
+  icon: mdi:nintendo-switch
+playstation:
+  alias: Playstation
+  sequence:
+  - service: webostv.command
+    data:
+      entity_id: media_player.tv
+      command: POWER_ON
+  - service: scene.turn_on
+    target:
+      entity_id: scene.play_playstation
+    metadata: {}
+  mode: restart
+  icon: mdi:sony-playstation
+tivo:
+  alias: Tivo
+  sequence:
+  - service: webostv.command
+    data:
+      entity_id: media_player.tv
+      command: POWER_ON
+  - service: scene.turn_on
+    target:
+      entity_id: scene.tivo
+    metadata: {}
+  mode: restart
+  icon: mdi:television
+all_lights_off:
+  alias: All Lights Off
+  sequence:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id:
+      - light.all_lights_zigbee_group
+      - light.crawl_space_lights
+      - light.office_string_lights
+      - light.bathroom_light
+      - light.living_room_ceiling
+  mode: single
+  icon: mdi:lightbulb-group-off
+goodnight:
+  alias: 'Goodnight '
+  sequence:
+  - service: script.all_lights_off
+    data: {}
+  - service: media_player.turn_off
+    data: {}
+    target:
+      entity_id: media_player.living_room_tv
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id:
+      - input_boolean.bedroom_filter_lights
+      - input_boolean.livingroom_filter_lights
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id:
+      - switch.adaptive_lighting_sleep_mode_hallway
+      - switch.adaptive_lighting_sleep_mode_living_room
+      - switch.adaptive_lighting_sleep_mode_office
+      - switch.adaptive_lighting_sleep_mode_kitchen
+      - switch.adaptive_lighting_sleep_mode_bedroom
+  mode: single
+  icon: mdi:weather-night
+air_conditioners_on:
+  alias: Air Conditioners On
+  sequence:
+  - device_id: 4b987c6c5611f851761cceac2d341f5e
+    domain: climate
+    entity_id: 0b2e89c8d9dde29d44a86d06541aee11
+    type: set_hvac_mode
+    hvac_mode: cool
+  - device_id: 4d342d88be4e71bf65993a020f1fc6b9
+    domain: climate
+    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    type: set_hvac_mode
+    hvac_mode: cool
+  - device_id: 6833b84bb9fbdfd52286d43e14fa7596
+    domain: climate
+    entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
+    type: set_hvac_mode
+    hvac_mode: cool
+  mode: single
+  icon: mdi:air-conditioner
+adapt_all_lights:
+  alias: Adapt All Lights
+  sequence:
+  - service: adaptive_lighting.apply
+    data:
+      lights:
+      - light.living_room_lights
+      - light.kitchen_lights
+      - light.hallway_lights
+      - light.office_lights
+      - light.bedroom_lights
+    enabled: false
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id:
+      - switch.adaptive_lighting_sleep_mode_bedroom
+      - switch.adaptive_lighting_sleep_mode_hallway
+      - switch.adaptive_lighting_sleep_mode_kitchen
+      - switch.adaptive_lighting_sleep_mode_living_room
+      - switch.adaptive_lighting_sleep_mode_office
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id:
+      - switch.adaptive_lighting_sleep_mode_bedroom
+      - switch.adaptive_lighting_sleep_mode_hallway
+      - switch.adaptive_lighting_sleep_mode_kitchen
+      - switch.adaptive_lighting_sleep_mode_living_room
+      - switch.adaptive_lighting_sleep_mode_office
+  mode: single
+  icon: mdi:brightness-auto
+max_air_conditioning:
+  alias: Max Air Conditioning
+  sequence:
+  - service: script.air_conditioners_on
+    data: {}
+  - service: climate.set_fan_mode
+    data:
+      fan_mode: HIGH
+    target:
+      entity_id:
+      - climate.living_room_air_conditioner
+      - climate.bedroom_air_conditioner
+      - climate.office_air_conditioner
+  mode: single
+  icon: mdi:air-conditioner
+air_conditioning_off:
+  alias: Air Conditioning Off
+  sequence:
+  - service: climate.set_hvac_mode
+    data:
+      hvac_mode: 'off'
+    target:
+      entity_id:
+      - climate.bedroom_air_conditioner
+      - climate.living_room_air_conditioner
+      - climate.office_air_conditioner
+  mode: single
+  icon: mdi:air-conditioner
+day_lights:
+  alias: Day Lights
+  sequence:
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id:
+      - light.living_room_ceiling
+      - light.bathroom_light
+      - light.hallway_lights
+      - light.bedroom_lights
+      - light.office_lights
+      - light.kitchen_lights
+  mode: single

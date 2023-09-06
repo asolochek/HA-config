@@ -1,0 +1,27 @@
+substitutions:
+  name: "kitchen-presence"
+  friendly_name: Kitchen Presence
+
+packages:
+  Athom_Technology.Presence_Sensor: github://asolochek/athom-configs/athom-presence-sensor.yaml
+
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+  friendly_name: ${friendly_name}
+
+api:
+  encryption:
+    key: zfYm9mBs9Z+NJbFlOWbVm+cFYduome8WvW6un1yCxKs=
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: 10.3.1.75
+    gateway: 10.3.1.2
+    subnet: 255.255.0.0
+
+logger:
+  #level: DEBUG
+   level: INFO

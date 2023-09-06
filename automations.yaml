@@ -1,0 +1,1055 @@
+- id: '1686618194582'
+  alias: Turn on Livingroom TV
+  description: Turns on the livingroom tv when required
+  trigger:
+  - platform: device
+    device_id: 516ac9d51d3bd882ceb88995c0e9a279
+    domain: webostv
+    type: webostv.turn_on
+  condition: []
+  action:
+  - service: wake_on_lan.send_magic_packet
+    data:
+      broadcast_port: 9
+      mac: b0:37:95:d5:eb:69
+      broadcast_address: 255.255.255.255
+  mode: single
+- id: '1686618273321'
+  alias: Turn on Bedroom TV
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 55ba5311202a9ada8dfeb8cb8f8f8943
+    domain: webostv
+    type: webostv.turn_on
+  condition: []
+  action:
+  - service: wake_on_lan.send_magic_packet
+    data:
+      broadcast_port: 9
+      mac: 58:fd:b1:ab:8e:73
+      broadcast_address: 255.255.255.255
+  mode: single
+- id: '1686711618853'
+  alias: Workout fan auto on
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.aaron_on_peloton_heart_rate_current
+    above: 130
+    id: workout_fan_auto_started
+  condition:
+  - condition: state
+    entity_id: input_boolean.standing_fan_auto_enabled
+    state: 'on'
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_select.standing_fan_mode
+      state: 'off'
+    - condition: state
+      entity_id: input_select.standing_fan_mode
+      state: unknown
+  action:
+  - service: input_select.select_option
+    data:
+      option: auto
+    target:
+      entity_id: input_select.standing_fan_mode
+  - service: fan.turn_on
+    data: {}
+    target:
+      device_id: 764b262e94b4094f7b8d88713bad1290
+  mode: single
+- id: '1686711777584'
+  alias: Workout fan auto off
+  description: ''
+  trigger:
+  - type: not_running
+    platform: device
+    device_id: e4ea4923eab39ca70ae3805e7cc9a285
+    entity_id: binary_sensor.aaron_on_peloton_workout
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+    id: workout_stopped
+  condition:
+  - condition: state
+    entity_id: input_select.standing_fan_mode
+    state: auto
+  action:
+  - service: fan.turn_off
+    data: {}
+    target:
+      entity_id:
+      - fan.living_room_standing_fan
+  - service: input_select.select_option
+    data:
+      option: 'off'
+    target:
+      entity_id: input_select.standing_fan_mode
+  mode: single
+- id: '1686886746116'
+  alias: Standing fan on transition
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 808ab41e34066446ec46ee06a8d35f8f
+    entity_id: light.standing_fan
+    domain: light
+  - platform: state
+    entity_id:
+    - fan.living_room_standing_fan
+    to: 'on'
+    from:
+  condition:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: input_select.standing_fan_mode
+      state: auto
+  action:
+  - service: input_select.select_option
+    data:
+      option: 'on'
+    target:
+      entity_id: input_select.standing_fan_mode
+  mode: single
+- id: '1686889578143'
+  alias: Standing fan off transition
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: 808ab41e34066446ec46ee06a8d35f8f
+    entity_id: light.standing_fan
+    domain: light
+  - platform: state
+    entity_id:
+    - fan.living_room_standing_fan
+    to: 'off'
+  condition: []
+  action:
+  - service: input_select.select_option
+    data:
+      option: 'off'
+    target:
+      entity_id: input_select.standing_fan_mode
+  mode: single
+- id: '1686910516025'
+  alias: Office unoccupied
+  description: ''
+  trigger:
+  - type: not_occupied
+    platform: device
+    device_id: ee3ec0a57e41420932d477d269cd70eb
+    entity_id: 37f8ec4222f4b6fe5daceb71de99f532
+    domain: binary_sensor
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id: light.office_lights
+  mode: single
+- id: '1686936873918'
+  alias: Bedroom receiver off with tv
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 55ba5311202a9ada8dfeb8cb8f8f8943
+    domain: media_player
+    entity_id: media_player.bedroom_tv
+    type: turned_off
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 29523c412ba5bd7581785ff7c92aded6
+    entity_id: remote.bedroom_hub
+    domain: remote
+  mode: single
+- id: '1686970239679'
+  alias: Bedroom filter lights auto on
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 59b6690aa5a60f44d6d886a771ea4c7d
+    entity_id: light.sf_bedroom_ceiling_1
+    domain: light
+  condition:
+  - condition: sun
+    after: sunrise
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.bedroom_filter_lights
+  mode: single
+- id: '1686970313828'
+  alias: Bedroom filter lights auto off
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: 59b6690aa5a60f44d6d886a771ea4c7d
+    entity_id: light.sf_bedroom_ceiling_1
+    domain: light
+  condition:
+  - condition: sun
+    after: sunset
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.bedroom_filter_lights
+  mode: single
+- id: '1686971151557'
+  alias: 'Livingroom filter lights auto on '
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: 0
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.livingroom_filter_lights
+  mode: single
+- id: '1686971187922'
+  alias: Livingroom filter lights auto off
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 0
+  condition: []
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.livingroom_filter_lights
+  mode: single
+- id: '1687227766070'
+  alias: Kitchen fan power
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.kitchen_fan_power
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.kitchen_fan_power
+        state: 'on'
+      sequence:
+      - service: input_button.press
+        data: {}
+        target:
+          entity_id: input_button.kitchen_fan_on
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.kitchen_fan_power
+        state: 'off'
+      sequence:
+      - service: input_button.press
+        data: {}
+        target:
+          entity_id: input_button.kitchen_fan_off
+  mode: single
+- id: '1687228796727'
+  alias: Kitchen fan direction
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_select.kitchen_fan_direction
+    to:
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_select.kitchen_fan_direction
+        state: forward
+      sequence:
+      - service: input_button.press
+        data: {}
+        target:
+          entity_id: input_button.kitchen_fan_in
+    - conditions:
+      - condition: state
+        entity_id: input_select.kitchen_fan_direction
+        state: reverse
+      sequence:
+      - service: input_button.press
+        data: {}
+        target:
+          entity_id: input_button.kitchen_fan_out
+  mode: single
+- id: '1687229789519'
+  alias: Kitchen fan auto mode
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.kitchen_fan_auto_mode
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.kitchen_fan_auto_mode
+        state: 'on'
+      sequence:
+      - service: input_button.press
+        data: {}
+        target:
+          entity_id: input_button.kitchen_fan_auto
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.kitchen_fan_auto_mode
+        state: 'off'
+      sequence:
+      - service: input_button.press
+        data: {}
+        target:
+          entity_id: input_button.kitchen_fan_auto_off
+  mode: single
+- id: '1687231247879'
+  alias: 'Kitchen fan temperature auto on '
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.ecobee_temperature
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+    above: 76
+  - type: running
+    platform: device
+    device_id: e4ea4923eab39ca70ae3805e7cc9a285
+    entity_id: binary_sensor.aaron_on_peloton_workout
+    domain: binary_sensor
+    enabled: false
+  - platform: state
+    entity_id:
+    - binary_sensor.aaron_on_peloton_workout
+    to: 'on'
+  condition:
+  - condition: numeric_state
+    entity_id: climate.ecobee
+    attribute: temperature
+    below: 70
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.kitchen_fan_power
+  - service: input_select.select_option
+    data:
+      option: reverse
+    target:
+      entity_id: input_select.kitchen_fan_direction
+  mode: single
+- id: '1687231424056'
+  alias: Kitchen fan temperature auto off
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.ecobee_temperature
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+    below: 72
+  - platform: numeric_state
+    entity_id: sensor.bedroom_ecobee_temperature
+    below: 69
+  condition: []
+  action:
+  - service: fan.turn_off
+    data: {}
+    target:
+      entity_id: fan.kitchen_fan
+  mode: single
+- id: '1687234802998'
+  alias: Sleep mode on
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:00:00'
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.adaptive_lighting_sleep_mode_bedroom_lamp
+  mode: single
+- id: '1687235046134'
+  alias: Sleep mode off
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: 0
+  condition: []
+  action:
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.adaptive_lighting_sleep_mode_bedroom_lamp
+  mode: single
+- id: '1687242459466'
+  alias: Apple tv pause bridge
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_button.livingroom_apple_tv_pause
+  condition: []
+  action:
+  - service: media_player.media_pause
+    data: {}
+    target:
+      entity_id: media_player.living_room_appletv
+  mode: single
+- id: '1687244305614'
+  alias: Livingroom apple tv play bridge
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_button.livingroom_apple_tv_play
+  condition: []
+  action:
+  - service: media_player.media_play
+    data: {}
+    target:
+      entity_id: media_player.living_room_appletv
+  mode: single
+- id: '1687391684109'
+  alias: peloton fan power button
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_button.peloton_fan_power_button
+  condition: []
+  action:
+  - service: rest_command.peloton_fan_power_ir
+    data: {}
+  mode: single
+- id: '1687395998304'
+  alias: peloton fan minus
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_button.peloton_minus_button
+  condition: []
+  action:
+  - service: rest_command.peloton_fan_minus_ir
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 300
+  - service: rest_command.peloton_fan_minus_ir
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 300
+  - service: rest_command.peloton_fan_minus_ir
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 300
+  - service: rest_command.peloton_fan_minus_ir
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 300
+  - service: rest_command.peloton_fan_minus_ir
+    data: {}
+  mode: single
+- id: '1687396160615'
+  alias: peloton fan plus
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_button.peloton_fan_plus_button
+  condition: []
+  action:
+  - service: rest_command.peloton_fan_plus_ir
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 300
+  - service: rest_command.peloton_fan_plus_ir
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 300
+  - service: rest_command.peloton_fan_plus_ir
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 300
+  - service: rest_command.peloton_fan_plus_ir
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 300
+  - service: rest_command.peloton_fan_plus_ir
+    data: {}
+  mode: single
+- id: '1687396382954'
+  alias: Peloton Fan Auto Off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.aaron_on_peloton_workout
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+    to: 'off'
+    from: 'on'
+  condition:
+  - condition: state
+    entity_id: fan.peloton_fan
+    state: 'on'
+  action:
+  - service: fan.turn_off
+    data: {}
+    target:
+      entity_id: fan.peloton_fan
+  mode: single
+- id: '1687991678279'
+  alias: 'Bedside switch on '
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: dde73a12422db41240f011bef1e40a8b
+    entity_id: switch.bedside_switch_switch
+    domain: switch
+  condition: []
+  action:
+  - type: turn_on
+    device_id: d2bec99ca6bf7d44d4a650e15728d07c
+    entity_id: light.bedroom_ceiling
+    domain: light
+  mode: single
+- id: '1687991721485'
+  alias: Bedside switch off
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: dde73a12422db41240f011bef1e40a8b
+    entity_id: switch.bedside_switch_switch
+    domain: switch
+  condition: []
+  action:
+  - type: turn_off
+    device_id: d2bec99ca6bf7d44d4a650e15728d07c
+    entity_id: light.bedroom_ceiling
+    domain: light
+  mode: single
+- id: '1688520226655'
+  alias: Living Room Airconditioner Auto Off
+  description: Turn off livingroom AC when window opens
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.living_room_windows
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: device
+    device_id: 4b987c6c5611f851761cceac2d341f5e
+    domain: climate
+    entity_id: climate.livingroom_airconditioner
+    type: is_hvac_mode
+    hvac_mode: cool
+  action:
+  - device_id: 4b987c6c5611f851761cceac2d341f5e
+    domain: climate
+    entity_id: climate.livingroom_airconditioner
+    type: set_hvac_mode
+    hvac_mode: 'off'
+  mode: single
+- id: '1688587556389'
+  alias: Bedroom Airconditioner Auto Off
+  description: Turn off bedroom AC when a window is opened
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.bedroom_windows
+    from:
+    to: 'on'
+  condition:
+  - condition: or
+    conditions:
+    - condition: device
+      device_id: a5c3bfcaf44fc2ebf43389cfacf7d44f
+      domain: climate
+      entity_id: climate.bedroom_airconditioner
+      type: is_hvac_mode
+      hvac_mode: cool
+    - condition: device
+      device_id: a5c3bfcaf44fc2ebf43389cfacf7d44f
+      domain: climate
+      entity_id: climate.bedroom_airconditioner
+      type: is_hvac_mode
+      hvac_mode: dry
+    - condition: device
+      device_id: a5c3bfcaf44fc2ebf43389cfacf7d44f
+      domain: climate
+      entity_id: climate.bedroom_airconditioner
+      type: is_hvac_mode
+      hvac_mode: fan_only
+  action:
+  - device_id: a5c3bfcaf44fc2ebf43389cfacf7d44f
+    domain: climate
+    entity_id: climate.bedroom_airconditioner
+    type: set_hvac_mode
+    hvac_mode: 'off'
+  mode: single
+- id: '1688606850903'
+  alias: Bathroom Fan Auto Threshold
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: fan.bathroom_fan
+    attribute: percentage
+    above: number.bathroom_fan_idle_speed
+  condition: []
+  action:
+  - service: number.set_value
+    data:
+      value: '{{ states(''sensor.living_room_humidity'')|float + 5.0 }}'
+    target:
+      entity_id: number.bathroom_fan_humidity_clear_threshold
+    enabled: true
+  mode: single
+- id: '1689042230107'
+  alias: Living Room Ceiling Color Temp
+  description: ''
+  use_blueprint:
+    path: swifty99/RGBW2CTLight.yaml
+    input:
+      rgbw_2_ct_requested_input: input_number.living_room_ceiling_color_temp
+      target_light:
+        entity_id: light.living_room_ceiling
+      rgbw_2_ct_target_ct:
+      - 2000
+      - 2500
+      - 3000
+      - 5000
+      - 6535
+      rgbw_2_red_calibration:
+      - 100
+      - 90
+      - 0
+      - 0
+      - 0
+      rgbw_2_green_calibration:
+      - 65
+      - 60
+      - 0
+      - 45
+      - 60
+      rgbw_2_blue_calibration:
+      - 0
+      - 0
+      - 0
+      - 50
+      - 65
+      rgbw_2_white_calibration:
+      - 0
+      - 85
+      - 100
+      - 80
+      - 80
+- id: '1689099025587'
+  alias: RGBW Calibration
+  description: ''
+  use_blueprint:
+    path: swifty99/RGBWCalibration.yaml
+    input:
+      light_cal_r: input_number.red_cal
+      light_cal_g: input_number.green_cal
+      light_cal_b: input_number.blue_cal
+      light_cal_w: input_number.white_cal
+      light_cal_brightness: input_number.bright_cal
+      target_light:
+        entity_id: light.living_room_ceiling
+- id: '1689142844176'
+  alias: Peloton Fan Auto On
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.aaron_on_peloton_workout
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+  condition:
+  - condition: state
+    entity_id: fan.peloton_fan
+    state: 'off'
+  action:
+  - service: fan.turn_on
+    data: {}
+    target:
+      entity_id: fan.peloton_fan
+  mode: single
+- id: '1689211764991'
+  alias: Office Light Switch
+  description: ''
+  use_blueprint:
+    path: richlee91/zha_lutron_aurora_blueprint - toggle.yaml
+    input:
+      sensitivity: 1
+      remote: 4ff060ba2568dbebf963963b35f9272a
+      light:
+        entity_id: light.office_lights
+- id: '1689213160453'
+  alias: Kitchen Light Switch
+  description: ''
+  use_blueprint:
+    path: richlee91/zha_lutron_aurora_blueprint - toggle.yaml
+    input:
+      remote: 4babd9e8a30d6b7de780827c0e3b14f7
+      light:
+        entity_id: light.kitchen_lights
+      sensitivity: 1
+- id: '1689214043664'
+  alias: Hallway Light Switch
+  description: ''
+  use_blueprint:
+    path: richlee91/zha_lutron_aurora_blueprint - toggle.yaml
+    input:
+      remote: 703190f1d97b8e2d051f4aa18c98041d
+      light:
+        entity_id: light.hallway_lights
+      sensitivity: 1
+- id: '1689220051839'
+  alias: Bedroom Light Switch
+  description: ''
+  use_blueprint:
+    path: richlee91/zha_lutron_aurora_blueprint - toggle.yaml
+    input:
+      remote: 3fc2502d88893fcf95586a983e8d5368
+      sensitivity: 1
+      light:
+        entity_id: light.bedroom_lights
+- id: '1689229319560'
+  alias: Living Room Light Switch
+  description: ''
+  use_blueprint:
+    path: richlee91/zha_lutron_aurora_blueprint - toggle.yaml
+    input:
+      remote: f9442f80cbf1b43c6f491e8a7969db51
+      light:
+        entity_id: light.living_room_lights
+      sensitivity: 1
+- id: '1689458270429'
+  alias: Bathroom fan return to idle
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: fan.bathroom_fan
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+    attribute: percentage
+    above: number.bathroom_fan_idle_speed
+  condition:
+  - condition: state
+    entity_id: climate.bathroom_fan_humidity_controller
+    attribute: hvac_action
+    state: idle
+  action:
+  - service: fan.set_percentage
+    data:
+      percentage: '{{ states(''number.bathroom_fan_idle_speed'') }}'
+    target:
+      entity_id: fan.bathroom_fan
+  - service: fan.set_direction
+    data:
+      direction: forward
+    target:
+      entity_id: fan.bathroom_fan
+  mode: single
+- id: '1689729580504'
+  alias: Aaron arrives home
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.aaron_solochek
+    zone: zone.home
+    event: enter
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      area_id:
+      - hallway
+      - living_room
+      - kitchen
+  mode: single
+- id: '1689729841116'
+  alias: Aaron leaves home
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.aaron_solochek
+    zone: zone.home
+    event: leave
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id: light.all_lights_zigbee_group
+  mode: single
+- id: '1689914996388'
+  alias: Kitchen Fan Off Trigger
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.kitchen_fan_power
+    to: 'off'
+  condition: []
+  action:
+  - service: input_button.press
+    data: {}
+    target:
+      entity_id: input_button.kitchen_fan_off
+  mode: single
+- id: '1689915056014'
+  alias: Kitchen Fan On Trigger
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.kitchen_fan_power
+    to: 'on'
+  condition: []
+  action:
+  - service: input_button.press
+    data: {}
+    target:
+      entity_id: input_button.kitchen_fan_on
+  mode: single
+- id: '1690373246907'
+  alias: Bedroom fans auto off
+  description: ''
+  trigger:
+  - platform: time
+    at: 05:30:00
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.bedroom_air_quality_temperature
+    below: 67
+  action:
+  - service: cover.close_cover
+    data: {}
+    target:
+      entity_id: cover.bedroom_closet_window
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.bedroom_fan_plug
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.bedroom_fan_plug
+  mode: single
+- id: '1691371154961'
+  alias: Bedroom Humidity Correction
+  description: Reads the humidity/temp from the espresense device and corrects it
+    for actual room temperature
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.espresense_bedroom_humidity
+  condition: []
+  action:
+  - service: pyscript.humidity_correction
+    data:
+      dest_id: input_number.bedroom_corrected_humidity
+      initial_humidity: sensor.espresense_bedroom_humidity
+      initial_temperature: sensor.espresense_bedroom_temperature
+      new_temperature: sensor.bedroom_ecobee_temperature
+  mode: single
+- id: '1691879070103'
+  alias: Bedroom Air Conditioner Turned on
+  description: ''
+  trigger:
+  - platform: device
+    device_id: a5c3bfcaf44fc2ebf43389cfacf7d44f
+    domain: climate
+    entity_id: 97413f0f22bbbf6226f78aa73729fdf6
+    type: hvac_mode_changed
+    to: cool
+  condition:
+  - condition: state
+    entity_id: binary_sensor.bedroom_closet_window_open
+    state: 'on'
+  action:
+  - service: cover.close_cover
+    data: {}
+    target:
+      entity_id: cover.bedroom_closet_window
+  mode: single
+- id: '1691882214924'
+  alias: 'Bedroom Closet fans on '
+  description: 'Turn off AC if fans are turned on '
+  trigger:
+  - platform: state
+    entity_id:
+    - fan.bedroom_closet_fans
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: device
+    device_id: a5c3bfcaf44fc2ebf43389cfacf7d44f
+    domain: climate
+    entity_id: 97413f0f22bbbf6226f78aa73729fdf6
+    type: is_hvac_mode
+    hvac_mode: cool
+  action:
+  - service: climate.set_hvac_mode
+    data:
+      hvac_mode: 'off'
+    target:
+      entity_id: climate.bedroom_air_conditioner
+  mode: single
+- id: '1691955924272'
+  alias: MQTT Publish Max Test
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bedroom_power
+    above: sensor.mqtt_sensor_bedroom_power_mqtt_max
+  condition: []
+  action:
+  - service: mqtt.publish
+    data:
+      qos: '1'
+      retain: true
+      topic: homeassistant/sensor/max/bedroom_power
+      payload_template: '{{ states(''sensor.bedroom_power'') }}'
+  mode: single
+- id: '1693694108785'
+  alias: Living room purifier auto on
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.living_room_air_quality_index
+    above: 30
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  condition: []
+  action:
+  - service: fan.turn_on
+    data: {}
+    target:
+      entity_id: fan.living_room_purifier
+  mode: single
+- id: '1693694154040'
+  alias: 'Bedroom Purifier auto on '
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bedroom_air_quality_aqi
+    above: 30
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  condition: []
+  action:
+  - service: fan.turn_on
+    data: {}
+    target:
+      entity_id: fan.bedroom_purifier
+  mode: single
+- id: '1693694232661'
+  alias: Living room purifier auto off
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.living_room_air_quality_index
+    below: 5
+  condition: []
+  action:
+  - service: fan.turn_off
+    data: {}
+    target:
+      entity_id: fan.living_room_purifier
+  mode: single
+- id: '1693694272863'
+  alias: Bedroom Purifier auto off
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bedroom_air_quality_aqi
+    below: 5
+  condition:
+  - condition: state
+    entity_id: fan.bedroom_purifier
+    state: 'on'
+  action:
+  - service: fan.turn_off
+    data: {}
+    target:
+      entity_id:
+      - fan.bedroom_purifier_for_homekit
+  mode: single
