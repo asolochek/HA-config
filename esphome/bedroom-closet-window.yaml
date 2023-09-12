@@ -134,6 +134,17 @@ binary_sensor:
       inverted: true
     internal: true
     
+  - platform: gpio
+    id: closet_motion
+    name: Closet Motion
+    pin:
+      number: GPIO2
+      mode:
+        input: true
+        pullup: false
+      inverted: false
+    internal: false
+
   - platform: template
     id: bedroom_closet_window_open
     lambda: 'return !id(window_closed_sensor).state;'

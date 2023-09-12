@@ -1086,3 +1086,37 @@
     target:
       entity_id: light.front_porch
   mode: single
+- id: '1694560280897'
+  alias: Bedroom Closet Motion Light On
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.bedroom_closet_window_closet_motion
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.bedroom_closet_light
+  mode: single
+- id: '1694560354122'
+  alias: Bedroom Closet Motion Light Off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.bedroom_closet_window_closet_motion
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+    to: 'off'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id: light.bedroom_closet_light
+  mode: single
