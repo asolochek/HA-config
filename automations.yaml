@@ -378,6 +378,7 @@
   - platform: numeric_state
     entity_id: sensor.bedroom_ecobee_temperature
     below: 69
+    enabled: false
   condition: []
   action:
   - service: fan.turn_off
