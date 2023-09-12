@@ -85,6 +85,9 @@ views:
           - entity: light.front_entry_light
             name: Front Entry
             template: light_template
+          - entity: light.front_porch
+            name: Front Porch
+            template: light_template
           - entity: switch.adaptive_lighting_hallway
             name: Adaptive
             template: light_template
