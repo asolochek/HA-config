@@ -1,5 +1,46 @@
+anchors:
+  all_templates: &all_templates
+    templates:
+      - name: light_template
+        template: 
+          show_icon: true
+          state_color: true
+          tap_action:
+            action: toggle
+          double_tap_action:
+            action: more-info
+          icon:
+            template:
+              styles: >
+                if (entity.state == "off") return 'color: gray';
+                else return;
+      - name: window_template
+        template:
+          show_icon: true
+          state_color: true
+          icon:
+            # change the icon to match window state
+            template:
+              icon: >
+                if (entity.state == "on") return 'mdi:window-open';  
+                else return 'mdi:window-closed';
+      - name: fan_template
+        template:
+          show_icon: true
+          state_color: true
+          tap_action:
+            action: toggle
+          double_tap_action:
+            action: more-info
+          icon:
+            template:
+              styles: >
+                if (entity.state == "off") return 'color: gray';
+                else return;
+
 title: Control
 views:
+
 
 
 ########################################################
@@ -31,30 +72,12 @@ views:
         show_icon: false
         view-layout:
           grid-area: main
-        templates:
-          - name: light_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              double_tap_action:
-                action: more-info
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
-          - name: window_template
-            template:
-              show_icon: true
-              state_color: true
-              icon:
-                # change the icon to match window state
-                template:
-                  icon: >
-                    if (entity.state == "on") return 'mdi:window-open';  
-                    else return 'mdi:window-closed';
+        tap_action:
+          action: call-service
+          service: light.toggle
+          target:
+            entity_id: light.hallway_lights
+        <<: *all_templates
         entities:
           - entity: light.hallway_ceiling
             name: Ceiling
@@ -256,42 +279,12 @@ views:
         show_icon: false
         view-layout:
           grid-area: main
-        templates:
-          - name: light_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              double_tap_action:
-                action: more-info
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
-          - name: window_template
-            template:
-              show_icon: true
-              state_color: true
-              icon:
-                template:
-                  icon: >
-                    if (entity.state == "on") return 'mdi:window-open';  
-                    else return 'mdi:window-closed';
-          - name: fan_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              double_tap_action:
-                action: more-info
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
+        tap_action:
+          action: call-service
+          service: light.toggle
+          target:
+            entity_id: light.kitchen_lights
+        <<: *all_templates
         info_entities:
           - entity: binary_sensor.kitchen_presence_occupancy
             show_icon: true
@@ -344,43 +337,12 @@ views:
         show_icon: false
         view-layout:
           grid-area: main
-        templates:
-          - name: light_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              double_tap_action:
-                action: more-info
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
-          - name: window_template
-            template:
-              show_icon: true
-              state_color: true
-              icon:
-                template:
-                  icon: >
-                    if (entity.state == "on") return 'mdi:window-open';  
-                    else return 'mdi:window-closed';
-          - name: fan_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              double_tap_action:
-                action: more-info
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
-
+        tap_action:
+          action: call-service
+          service: light.toggle
+          target:
+            entity_id: light.laundry_room_lights
+        <<: *all_templates
         rows:
           - entities:
             - entity: light.laundry_room_light
@@ -426,33 +388,12 @@ views:
         show_icon: false
         view-layout:
           grid-area: main
-        templates:
-          - name: light_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              double_tap_action:
-                action: more-info
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
-          - name: fan_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              double_tap_action:
-                action: more-info
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
+        tap_action:
+          action: call-service
+          service: light.toggle
+          target:
+            entity_id: light.bathroom_lights
+        <<: *all_templates
         entities:
           - entity: light.bathroom_light
             name: Ceiling
@@ -525,20 +466,12 @@ views:
         show_icon: false
         view-layout:
           grid-area: main
-        templates:
-          - name: light_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              double_tap_action:
-                action: more-info 
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
+        tap_action:
+          action: call-service
+          service: light.toggle
+          target:
+            entity_id: light.garage_lights
+        <<: *all_templates
         entities:
           - entity: light.garage_light
             template: light_template
@@ -572,43 +505,12 @@ views:
         show_icon: false
         view-layout:
           grid-area: main
-        templates:
-          - name: light_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              double_tap_action:
-                action: more-info
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
-          - name: window_template
-            template:
-              show_icon: true
-              state_color: true
-              icon:
-                template:
-                  icon: >
-                    if (entity.state == "on") return 'mdi:window-open';  
-                    else return 'mdi:window-closed';
-          - name: fan_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              double_tap_action:
-                action: more-info
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
-
+        tap_action:
+          action: call-service
+          service: light.toggle
+          target:
+            entity_id: light.living_room_lights
+        <<: *all_templates
         rows:
           - entities:
             - entity: light.living_room_ceiling
@@ -890,29 +792,12 @@ views:
         show_icon: false
         view-layout:
           grid-area: main
-        templates:
-          - name: light_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              double_tap_action:
-                action: more-info
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
-          - name: window_template
-            template:
-              show_icon: true
-              state_color: true
-              icon:
-                template:
-                  icon: >
-                    if (entity.state == "on") return 'mdi:window-open';  
-                    else return 'mdi:window-closed';
+        tap_action:
+          action: call-service
+          service: light.toggle
+          target:
+            entity_id: light.crawl_space_lights
+        <<: *all_templates
         rows:
           - entities:
             - entity: light.crawl_space_lights
@@ -974,29 +859,12 @@ views:
         show_icon: false
         view-layout:
           grid-area: main
-        templates:
-          - name: light_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              double_tap_action:
-                action: more-info
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
-          - name: window_template
-            template:
-              show_icon: true
-              state_color: true
-              icon:
-                template:
-                  icon: >
-                    if (entity.state == "on") return 'mdi:window-open';  
-                    else return 'mdi:window-closed';
+        tap_action:
+          action: call-service
+          service: light.toggle
+          target:
+            entity_id: light.office_lights
+        <<: *all_templates
         entities:
           - entity: light.office_ceiling
             name: Ceiling
@@ -1158,40 +1026,12 @@ views:
       - type: custom:room-card
         title: Bedroom
         show_icon: false
-        templates:
-          - name: light_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
-          - name: window_template
-            template:
-              show_icon: true
-              state_color: true
-              icon:
-                template:
-                  icon: >
-                    if (entity.state == "on") return 'mdi:window-open';  
-                    else return 'mdi:window-closed';
-          - name: fan_template
-            template:
-              show_icon: true
-              state_color: true
-              tap_action:
-                action: toggle
-              double_tap_action:
-                action: more-info
-              icon:
-                template:
-                  styles: >
-                    if (entity.state == "off") return 'color: gray';
-                    else return;
+        tap_action:
+          action: call-service
+          service: light.toggle
+          target:
+            entity_id: light.bedroom_lights
+        <<: *all_templates
         entities:
           - entity: light.bedroom_ceiling
             name: Ceiling
