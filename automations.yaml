@@ -1058,3 +1058,31 @@
       entity_id:
       - fan.bedroom_purifier_for_homekit
   mode: single
+- id: '1694549588237'
+  alias: Front Porch Light Auto Off
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: '60'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id: light.front_porch
+  mode: single
+- id: '1694549692218'
+  alias: Front Porch Light Auto On
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: '-60'
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.front_porch
+  mode: single
