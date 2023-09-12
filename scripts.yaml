@@ -75,13 +75,24 @@ all_lights_off:
       - light.office_string_lights
       - light.bathroom_light
       - light.living_room_ceiling
+  - type: turn_off
+    device_id: 5b2e8bcb341adc089e8b63e701f00ff8
+    entity_id: 1b31fce08e9669051b72fb6aef5d6cb1
+    domain: light
   mode: single
   icon: mdi:lightbulb-group-off
 goodnight:
   alias: 'Goodnight '
   sequence:
-  - service: script.all_lights_off
+  - service: switch.turn_on
     data: {}
+    target:
+      entity_id:
+      - switch.adaptive_lighting_sleep_mode_hallway
+      - switch.adaptive_lighting_sleep_mode_living_room
+      - switch.adaptive_lighting_sleep_mode_office
+      - switch.adaptive_lighting_sleep_mode_kitchen
+      - switch.adaptive_lighting_sleep_mode_bedroom
   - service: media_player.turn_off
     data: {}
     target:
@@ -92,15 +103,22 @@ goodnight:
       entity_id:
       - input_boolean.bedroom_filter_lights
       - input_boolean.livingroom_filter_lights
-  - service: switch.turn_on
+  - service: script.all_lights_off
     data: {}
-    target:
-      entity_id:
-      - switch.adaptive_lighting_sleep_mode_hallway
-      - switch.adaptive_lighting_sleep_mode_living_room
-      - switch.adaptive_lighting_sleep_mode_office
-      - switch.adaptive_lighting_sleep_mode_kitchen
-      - switch.adaptive_lighting_sleep_mode_bedroom
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 200
+  - service: script.all_lights_off
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - service: script.all_lights_off
+    data: {}
   mode: single
   icon: mdi:weather-night
 air_conditioners_on:
@@ -191,6 +209,16 @@ air_conditioning_off:
 day_lights:
   alias: Day Lights
   sequence:
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id:
+      - switch.adaptive_lighting_sleep_mode_bedroom
+      - switch.adaptive_lighting_sleep_mode_bedroom_lamp
+      - switch.adaptive_lighting_sleep_mode_hallway
+      - switch.adaptive_lighting_sleep_mode_kitchen
+      - switch.adaptive_lighting_sleep_mode_living_room
+      - switch.adaptive_lighting_sleep_mode_office
   - service: light.turn_on
     data: {}
     target:
@@ -201,4 +229,30 @@ day_lights:
       - light.bedroom_lights
       - light.office_lights
       - light.kitchen_lights
+      - light.bedroom_closet_light
   mode: single
+  icon: mdi:coffin
+bedtime:
+  alias: Bedtime
+  sequence:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.adaptive_lighting_sleep_mode_bedroom_lamp
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.bedroom_lamp
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id:
+      - light.bedroom_ceiling
+      - light.hallway_ceiling
+      - light.bedroom_closet_light
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.bedroom_filter_lights
+  mode: single
+  icon: mdi:bed
