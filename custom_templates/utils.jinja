@@ -62,7 +62,7 @@
     {% endif %}              
 {% endmacro %}
 
-{% macro average_2(sensorA, sensorB) %}
+{% macro average_2(sensorA, sensorB, this) %}
     {% if states(sensorA) | is_number and
             states(sensorB) | is_number 
     %}
@@ -70,7 +70,8 @@
         {% set aqi_b = states(sensorB) | float %}
         {{ (aqi_a + aqi_b) / 2.0 }}
     {% else %}
-        {{ this.state }}
+        {% set avg = states(this) | float (0) %}
+        {{ avg }}
     {% endif %}
 
 

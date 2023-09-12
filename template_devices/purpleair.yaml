@@ -90,7 +90,7 @@
           is_number( state_attr('sensor.purpleair', 'pm2.5_aqi_b')) }}
     state: >
       {% from 'utils.jinja' import average_2 %}
-      {{ average_2('sensor.purpleair_airquality_a', 'sensor.purpleair_airquality_b') }}  
+      {{ average_2('sensor.purpleair_airquality_a', 'sensor.purpleair_airquality_b', 'sensor.purpleair_airquality') }}  
 
 
   - name: "PurpleAir .3um Particle Count A"
@@ -116,7 +116,7 @@
          is_number( states('sensor.purpleair_3um_particle_count_b') | float(2) ) }}
     state: >
       {% from 'utils.jinja' import average_2 %}
-      {{ average_2('sensor.purpleair_3um_particle_count_a', 'sensor.purpleair_3um_particle_count_b') }} 
+      {{ average_2('sensor.purpleair_3um_particle_count_a', 'sensor.purpleair_3um_particle_count_b', 'sensor.purpleair_3um_particle_count') }} 
 
 
 
@@ -143,7 +143,7 @@
          is_number( states('sensor.purpleair_5um_particle_count_b') | float(2) ) }}
     state: >
       {% from 'utils.jinja' import average_2 %}
-      {{ average_2('sensor.purpleair_5um_particle_count_a', 'sensor.purpleair_5um_particle_count_b') }} 
+      {{ average_2('sensor.purpleair_5um_particle_count_a', 'sensor.purpleair_5um_particle_count_b', 'sensor.purpleair_5um_particle_count') }} 
 
     # {% set a = states('sensor.purpleair_5um_particle_count_a') | float(2) %}
     # {% set b = states('sensor.purpleair_5um_particle_count_b') | float(2) %}
@@ -173,7 +173,7 @@
          is_number( states('sensor.purpleair_1_0um_particle_count_b') | float(2) ) }}
     state: >
       {% from 'utils.jinja' import average_2 %}
-      {{ average_2('sensor.purpleair_1_0um_particle_count_a', 'sensor.purpleair_1_0um_particle_count_b') }} 
+      {{ average_2('sensor.purpleair_1_0um_particle_count_a', 'sensor.purpleair_1_0um_particle_count_b', 'sensor.purpleair_1_0um_particle_count') }} 
 
 
     # {% set a = states('sensor.purpleair_1_0um_particle_count_a') | float(2) %}
@@ -204,7 +204,7 @@
          is_number( states('sensor.purpleair_2_5um_particle_count_b') | float(2) ) }}
     state: >
       {% from 'utils.jinja' import average_2 %}
-      {{ average_2('sensor.purpleair_2_5um_particle_count_a', 'sensor.purpleair_2_5um_particle_count_b') }} 
+      {{ average_2('sensor.purpleair_2_5um_particle_count_a', 'sensor.purpleair_2_5um_particle_count_b', 'sensor.purpleair_2_5um_particle_count') }} 
 
     # {% set a = states('sensor.purpleair_2_5um_particle_count_a') | float(2) %}
     # {% set b = states('sensor.purpleair_2_5um_particle_count_b') | float(2) %}
@@ -234,7 +234,7 @@
          is_number( states('sensor.purpleair_5_0um_particle_count_b') | float(2) ) }}
     state: >
       {% from 'utils.jinja' import average_2 %}
-      {{ average_2('sensor.purpleair_5_0um_particle_count_a', 'sensor.purpleair_5_0um_particle_count_b') }} 
+      {{ average_2('sensor.purpleair_5_0um_particle_count_a', 'sensor.purpleair_5_0um_particle_count_b', 'sensor.purpleair_5_0um_particle_count') }}  
 
     # {% set a = states('sensor.purpleair_5_0um_particle_count_a') | float(2) %}
     # {% set b = states('sensor.purpleair_5_0um_particle_count_b') | float(2) %}
@@ -264,7 +264,7 @@
          is_number( states('sensor.purpleair_10_0um_particle_count_b') | float(2) ) }}
     state: >
       {% from 'utils.jinja' import average_2 %}
-      {{ average_2('sensor.purpleair_10_0um_particle_count_a', 'sensor.purpleair_10_0um_particle_count_b') }} 
+      {{ average_2('sensor.purpleair_10_0um_particle_count_a', 'sensor.purpleair_10_0um_particle_count_b', 'sensor.purpleair_10_0um_particle_count') }} 
 
     # {% set a = states('sensor.purpleair_10_0um_particle_count_a') | float(2) %}
     # {% set b = states('sensor.purpleair_10_0um_particle_count_b') | float(2) %}
