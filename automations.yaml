@@ -1043,6 +1043,10 @@
   - platform: numeric_state
     entity_id: sensor.bedroom_air_quality_aqi
     below: 5
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
   condition:
   - condition: state
     entity_id: fan.bedroom_purifier
