@@ -144,6 +144,8 @@ devices:
     friendly_name: Front Entry Light
   '0x001788010d67b5d0':
     friendly_name: Laundry Room Light
+  '0x001788010d65d634':
+    friendly_name: Front Porch
 device_options:
   legacy: false
 groups:
