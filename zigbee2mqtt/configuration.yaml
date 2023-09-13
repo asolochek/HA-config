@@ -84,8 +84,6 @@ devices:
     friendly_name: Office Bench Lights
   '0x00158d00093e743c':
     friendly_name: Office String Lights
-  '0xffff000fe7fd2677':
-    friendly_name: Office Dimmer
   '0x000d6f0005856a4c':
     friendly_name: Living Room Standing Fan
   '0xb0ce1814036c3465':
