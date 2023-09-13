@@ -5,7 +5,7 @@ serial:
   disable_led: false
 frontend:
   port: 8099
-permit_join: true
+permit_join: false
 mqtt:
   server: '!/config/secrets.yaml mqtt_server'
   user: '!/config/secrets.yaml mqtt_user'
