@@ -146,12 +146,45 @@ adapt_all_lights:
   sequence:
   - service: adaptive_lighting.apply
     data:
+      entity_id: switch.adaptive_lighting_adapt_color_living_room
       lights:
-      - light.living_room_lights
-      - light.kitchen_lights
-      - light.hallway_lights
-      - light.office_lights
-      - light.bedroom_lights
+      - light.living_room_ceiling
+    enabled: true
+  - service: adaptive_lighting.apply
+    data:
+      entity_id: switch.adaptive_lighting_adapt_color_bedroom_lamp
+    enabled: true
+  - service: adaptive_lighting.apply
+    data:
+      entity_id: switch.adaptive_lighting_adapt_color_kitchen
+    enabled: true
+  - service: adaptive_lighting.apply
+    data:
+      entity_id: switch.adaptive_lighting_adapt_color_hallway
+    enabled: true
+  - service: adaptive_lighting.apply
+    data:
+      entity_id: switch.adaptive_lighting_adapt_color_office
+    enabled: true
+  - service: adaptive_lighting.apply
+    data:
+      entity_id: switch.adaptive_lighting_adapt_color_bedroom
+    enabled: true
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id:
+      - switch.adaptive_lighting_sleep_mode_bedroom
+      - switch.adaptive_lighting_sleep_mode_hallway
+      - switch.adaptive_lighting_sleep_mode_kitchen
+      - switch.adaptive_lighting_sleep_mode_living_room
+      - switch.adaptive_lighting_sleep_mode_office
+    enabled: false
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
     enabled: false
   - service: switch.turn_on
     data: {}
@@ -162,20 +195,7 @@ adapt_all_lights:
       - switch.adaptive_lighting_sleep_mode_kitchen
       - switch.adaptive_lighting_sleep_mode_living_room
       - switch.adaptive_lighting_sleep_mode_office
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 2
-      milliseconds: 0
-  - service: switch.turn_off
-    data: {}
-    target:
-      entity_id:
-      - switch.adaptive_lighting_sleep_mode_bedroom
-      - switch.adaptive_lighting_sleep_mode_hallway
-      - switch.adaptive_lighting_sleep_mode_kitchen
-      - switch.adaptive_lighting_sleep_mode_living_room
-      - switch.adaptive_lighting_sleep_mode_office
+    enabled: false
   mode: single
   icon: mdi:brightness-auto
 max_air_conditioning:
