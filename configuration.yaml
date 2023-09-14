@@ -34,7 +34,6 @@ tts:
   - platform: google_translate
 
 lovelace:
-  mode: storage
   # Add yaml dashboards
   dashboards:
     lovelace-generated: # Needs to contain a hyphen (-)
@@ -51,40 +50,23 @@ lovelace:
       show_in_sidebar: true
       filename: dashboards.yaml
 
-#     lovelace:
+
   # mode: yaml
   # resources:
   #   - url: /local/zigbee2mqtt-networkmap.js?v=0.8.0
   #     type: module
 
-mqtt:
-  sensor:
-    - name: Zigbee2mqtt Networkmap
-      # if you change base_topic of Zigbee2mqtt, change state_topic accordingly
-      state_topic: zigbee2mqtt/bridge/response/networkmap
-      value_template: >-
-        {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
-      # again, if you change base_topic of Zigbee2mqtt, change json_attributes_topic accordingly
-      json_attributes_topic: zigbee2mqtt/bridge/response/networkmap
-      json_attributes_template: "{{ value_json.data.value | tojson }}"
 
-
-  # switch:
-  #   - name: relay_top
-  #     unique_id: relay_top_switch
-  #     state_topic: "Relay/relays/0/state"
-  #     command_topic: "Relay/relays/0"
-  #     payload_on: "ON"
-  #     payload_off: "OFF"
-  #     icon: hass:lightbulb
-    
-  #   - name: relay_bottom
-  #     unique_id: relay_bottom_switch
-  #     state_topic: "Relay/relays/1/state"
-  #     command_topic: "Relay/relays/1"
-  #     payload_on: "ON"
-  #     payload_off: "OFF"
-  #     icon: hass:lightbulb
+# mqtt:
+  # sensor:
+  #   - name: Zigbee2mqtt Networkmap
+  #     # if you change base_topic of Zigbee2mqtt, change state_topic accordingly
+  #     state_topic: zigbee2mqtt/bridge/response/networkmap
+  #     value_template: >-
+  #       {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+  #     # again, if you change base_topic of Zigbee2mqtt, change json_attributes_topic accordingly
+  #     json_attributes_topic: zigbee2mqtt/bridge/response/networkmap
+  #     json_attributes_template: "{{ value_json.data.value | tojson }}"
 
 
 
