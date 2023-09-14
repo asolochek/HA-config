@@ -193,7 +193,6 @@ sensor:
   - platform: template
     name: "AQI"
     id: aqi
-    unit_of_measurement: AQI
     device_class: AQI
     state_class: measurement
     icon: mdi:weather-hazy
