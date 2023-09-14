@@ -1,0 +1,1064 @@
+
+########################################################
+########################################################
+#
+#                     Home View
+#
+########################################################
+########################################################
+#!include /config/lovelace/anchors.yaml
+
+path: default_view
+title: Home
+type: custom:vertical-layout
+layout:
+  max_cols: 3
+cards:
+
+
+########################################################
+#
+#                  Hallway + Entry
+#
+########################################################
+  - type: custom:room-card
+    title: Hallway
+    show_icon: false
+    view-layout:
+      grid-area: main
+    tap_action:
+      action: call-service
+      service: light.toggle
+      target:
+        entity_id: light.hallway_lights
+    templates: &all_templates
+      - name: light_template
+        template: 
+          show_icon: true
+          state_color: true
+          tap_action:
+            action: toggle
+          double_tap_action:
+            action: more-info
+          icon:
+            template:
+              styles: >
+                if (entity.state == "off") return 'color: gray';
+                else return;
+      - name: window_template
+        template:
+          show_icon: true
+          state_color: true
+          icon:
+            # change the icon to match window state
+            template:
+              icon: >
+                if (entity.state == "on") return 'mdi:window-open';  
+                else return 'mdi:window-closed';
+      - name: fan_template
+        template:
+          show_icon: true
+          state_color: true
+          tap_action:
+            action: toggle
+          double_tap_action:
+            action: more-info
+          icon:
+            template:
+              styles: >
+                if (entity.state == "off") return 'color: gray';
+                else return;
+    entities:
+      - entity: light.hallway_ceiling
+        name: Ceiling
+        template: light_template
+      - entity: light.front_entry_light
+        name: Front Entry
+        template: light_template
+      - entity: light.front_porch
+        name: Front Porch
+        template: light_template
+      - entity: switch.adaptive_lighting_hallway
+        name: Adaptive
+        template: light_template
+      - entity: camera.door_high
+        name: Door Cam
+      - entity: camera.door_package_camera
+        name: Package Cam
+      - entity: lock.front_door
+        name: Buzzer
+        show_icon: true
+        state_color: true
+        icon:
+          conditions:
+            - icon: mdi:lock-open-variant
+              condition: equals
+              entity: lock.front_door
+              value: "unlocked"
+        tap_action:
+          action: toggle
+          confirmation: true
+
+    info_entities:
+      - entity: sensor.ecobee_humidity
+        format: precision1
+      - entity: sensor.ecobee_temperature
+        format: precision1
+        unit: ºF
+      - entity: binary_sensor.front_door
+        name: Front Door
+        show_icon: true
+        state_color: true
+        icon:
+          conditions:
+            - icon: mdi:door-open
+              condition: equals
+              entity: binary_sensor.front_door
+              value: "on"
+      - entity: binary_sensor.ecobee_occupancy
+        show_icon: true
+        state_color: true
+    cards:
+      - type: custom:simple-thermostat
+        entity: climate.ecobee    
+        step: row
+        control: true
+        layout:
+          mode:
+            headings: false
+            names: true
+            icons: true
+        header:
+          icon: mdi:thermostat
+
+      - type: custom:expander-card
+        gap: 0.2em
+        padding: 0.0em
+        clear: false
+        title: Networking
+        overlay-margin: 0.2em
+        child-padding: 0.2em
+        button-background: transparent     
+        cards: 
+          # Power
+          - type: custom:expander-card
+            gap: 0.2em
+            padding: 0.0em
+            clear: false
+            title: Expander
+            overlay-margin: 0.2em
+            child-padding: 0.2em
+            button-background: transparent
+            title-card:
+              name: Network Power
+              show_name: true
+              show_icon: true
+              type: button
+              tap_action:
+                action: more-info
+              entity: sensor.network_rack_plug_power
+              show_state: true
+              icon_height: 30px
+            title-card-button-overlay: true
+            cards:
+              - type: entities
+                entities:
+                  - entity: sensor.network_rack_plug_current
+                    name: Current
+                  - entity: sensor.network_rack_plug_voltage
+                    name: Voltage
+                  - entity: sensor.network_rack_plug_total_energy
+                    name: Energy Total
+          # UPS          
+          - type: custom:expander-card
+            gap: 0.2em
+            padding: 0.0em
+            clear: false
+            title: Network UPS
+            overlay-margin: 0.2em
+            child-padding: 0.2em
+            button-background: transparent
+            title-card:
+              name: Network UPS
+              show_name: true
+              show_icon: true
+              type: button
+              tap_action:
+                action: more-info
+              entity: sensor.rackups_status
+              show_state: true
+              icon_height: 30px
+            title-card-button-overlay: true
+            cards:
+              - type: entities
+                entities:
+                  - entity: sensor.rackups_battery_charge
+                    name: Battery Charge
+                  - entity: sensor.rackups_battery_runtime
+                    name: Runtime (seconds)
+          # NVR
+          - type: custom:expander-card
+            gap: 0.2em
+            padding: 0.0em
+            clear: false
+            title: Unifi NVR
+            overlay-margin: 0.2em
+            child-padding: 0.2em
+            button-background: transparent
+            cards:
+              - type: entities
+                entities:
+                  - entity: binary_sensor.nvr_hdd_1
+                    name: Hdd 1
+                  - entity: binary_sensor.nvr_hdd_2
+                    name: Hdd 2
+                  - entity: sensor.nvr_cpu_temperature
+                    name: CPU Temperature
+                  - entity: sensor.nvr_cpu_utilization
+                    name: CPU Utilitization
+                  - entity: sensor.nvr_memory_utilization
+                    name: Memory Utilization
+                  - entity: sensor.nvr_storage_utilization
+                    name: Storage Utilization
+                  - entity: sensor.nvr_recording_capacity
+                    name: Recording Time
+                  - entity: sensor.nvr_uptime
+                    name: Uptime
+          # Gateway
+          - type: custom:expander-card
+            gap: 0.2em
+            padding: 0.0em
+            clear: false
+            title: Unifi Gateway
+            overlay-margin: 0.2em
+            child-padding: 0.2em
+            button-background: transparent
+            cards:
+              - type: entities
+                entities:
+                  - entity: sensor.router_rx_kib_s
+                    name: Rx KiB/s
+                  - entity: sensor.router_tx_kib_s
+                    name: Tx KiB/s
+                  - entity: sensor.router_bytes_received
+                    name: Bytes Received
+                  - entity: sensor.router_bytes_sent
+                    name: Bytes Sent
+                  - entity: sensor.router_rx_packets_s
+                    name: Rx Packets/s
+                  - entity: sensor.router_tx_packets_s
+                    name: Tx Packets/s
+                  - entity: sensor.router_packets_received
+                    name: Packets Received
+                  - entity: sensor.router_packets_sent
+                    name: Packets Sent
+      # Power
+      - type: glance
+        title: false
+        entities:
+          - entity: sensor.network_rack_plug_power
+            name: Network
+
+
+
+
+########################################################
+#
+#                     Kitchen
+#
+########################################################
+  - type: custom:room-card
+    title: Kitchen
+    show_icon: false
+    view-layout:
+      grid-area: main
+    tap_action:
+      action: call-service
+      service: light.toggle
+      target:
+        entity_id: light.kitchen_lights
+    templates: *all_templates
+    info_entities:
+      - entity: binary_sensor.kitchen_presence_occupancy
+        show_icon: true
+        state_color: true
+    rows:
+      - entities:
+        - entity: light.kitchen_ceiling
+          name: Ceiling
+          template: light_template
+        - entity: light.kitchen_counter_east
+          name: East Counter
+          template: light_template
+        - entity: light.kitchen_counter_west
+          name: West Counter
+          template: light_template
+        - entity: switch.adaptive_lighting_kitchen
+          name: Adaptive
+          template: light_template
+        - entity: fan.kitchen_fan
+          name: Fan
+          template: fan_template
+    cards:
+      # Power
+      - type: glance
+        title: false
+        entities:
+          - entity: sensor.kitchen_se_corner_power
+            name: SE Corner
+            show_name: true
+            show_state: true
+            show_icon: true
+          - entity: sensor.refrigerator_power
+            name: Refrigerator
+          - entity: sensor.kitchen_fan_plug_power
+            name: Fan
+          - entity: sensor.stove_hood_power
+            name: Hood
+          - entity: sensor.dishwasher_power
+            name: Dishwasher
+
+
+
+########################################################
+#
+#                     Laundry Room
+#
+########################################################
+  - type: custom:room-card
+    title: Laundry Room
+    show_icon: false
+    view-layout:
+      grid-area: main
+    tap_action:
+      action: call-service
+      service: light.toggle
+      target:
+        entity_id: light.laundry_room_lights
+    templates: *all_templates
+#      - <<: *all_templates
+    rows:
+      - entities:
+        - entity: light.laundry_room_light
+          name: Ceiling
+          template: light_template
+        - entity: fan.litter_box_fan
+          name: Fan
+          template: fan_template
+    info_entities:
+      - entity: binary_sensor.back_door_contact
+        show_icon: true
+        state_color: true
+        icon:
+          conditions:
+            - icon: mdi:door-open
+              condition: equals
+              entity: binary_sensor.back_door_contact
+              value: "on"
+    cards:
+      # Power
+      - type: glance
+        title: false
+        entities:
+          - entity: sensor.network_plug_power
+            name: Network
+            show_name: true
+            show_state: true
+            show_icon: true
+          - entity: sensor.laundry_machine_plug_power
+            name: Laundry Machine
+          - entity: sensor.litter_box_fan_power
+            name: Litter Box Fan
+
+
+
+########################################################
+#
+#                      Bathroom
+#
+########################################################
+  - type: custom:room-card
+    title: Bathroom
+    show_icon: false
+    view-layout:
+      grid-area: main
+    tap_action:
+      action: call-service
+      service: light.toggle
+      target:
+        entity_id: light.bathroom_lights
+    templates:
+      - <<: *all_templates
+    entities:
+      - entity: light.bathroom_light
+        name: Ceiling
+        state_color: true
+        template: light_template
+      - entity: fan.bathroom_fan
+        state_color: true
+        template: fan_template
+      - entity: light.bathroom_fan_neopixel
+        name: LED
+        state_color: true
+        template: light_template
+    info_entities:
+      - entity: sensor.bathroom_fan_humidity
+        format: precision1
+      - entity: sensor.bathroom_fan_temperature
+        format: precision1
+        unit: ºF
+    cards:
+      # Power
+      - type: glance
+        title: false
+        entities:
+          - entity: sensor.toilet_plug_power
+            name: Toilet
+          - entity: sensor.bathroom_outlet_power
+            name: Outlet
+
+  - type: custom:mini-graph-card
+    name: Bathroom Fan Tracking
+    animate: false
+    smoothing: false
+    points_per_hour: 30
+    hours_to_show: 4
+    upper_bound: 100
+    lower_bound: 25
+    aggregate_func: last
+    entities:
+      - entity: sensor.bathroom_fan_humidity
+        name: Humidity
+        color: "#44BED1"
+        smoothing: false
+        show_state: true
+      - entity: fan.bathroom_fan
+        attribute: 'percentage'
+        name: Fan Speed
+        color: "#A78338"
+        show_fill: false
+        smoothing: false
+        show_points: false
+        show_state: true
+      - entity: sensor.bathroom_fan_baseline_humidity
+        name: Target Humidity
+        color: '#D24E3A'
+        show_fill: false
+        show_points: false
+        show_state: true
+
+
+
+
+########################################################
+#
+#                      Garage
+#
+########################################################
+  - type: custom:room-card
+    title: Garage
+    show_icon: false
+    view-layout:
+      grid-area: main
+    tap_action:
+      action: call-service
+      service: light.toggle
+      target:
+        entity_id: light.garage_lights
+    templates: *all_templates
+    entities:
+      - entity: light.garage_light
+        template: light_template
+    info_entities:
+      - entity: binary_sensor.garage_door_open
+        name: Garage Door
+        show_icon: true
+        state_color: true
+        icon:
+          conditions:
+            - icon: mdi:garage-open
+              condition: equals
+              entity: binary_sensor.garage_door_open
+              value: "on"        
+      - entity: binary_sensor.garage_interior_motion
+        show_icon: true
+        state_color: true
+
+
+
+  # Start new column
+  - type: custom:layout-break
+
+########################################################
+#
+#                     Living Room
+#
+########################################################
+  - type: custom:room-card
+    title: Living Room
+    show_icon: false
+    view-layout:
+      grid-area: main
+    tap_action:
+      action: call-service
+      service: light.toggle
+      target:
+        entity_id: light.living_room_lights
+    templates: *all_templates
+    rows:
+      - entities:
+        - entity: light.living_room_ceiling
+          name: Ceiling
+          template: light_template
+        - entity: switch.adaptive_lighting_living_room
+          name: Adaptive
+          template: light_template
+        - entity: input_boolean.livingroom_filter_lights
+          name: Purifier
+          icon: mdi:car-light-fog
+          template: light_template
+        - entity: fan.living_room_purifier
+          name: Purifier
+          icon: mdi:air-purifier
+          template: fan_template
+        - entity: fan.living_room_standing_fan
+          name: Standing Fan
+          template: fan_template
+        - entity: fan.peloton_fan
+          name: Peloton Fan
+          template: fan_template
+        - entity: camera.cat_camera_high
+          name: Cat Cam
+        - entity: switch.adaptive_lighting_living_room_ceiling
+          name: Adaptive
+          template: light_template
+      - entities:
+        - entity: light.living_room_closet_light
+          name: Closet
+          template: light_template
+    info_entities:
+      - entity: sensor.living_room_humidity
+        format: precision0
+      - entity: sensor.living_room_temperature
+        format: precision0
+        unit: ºF
+      - entity: binary_sensor.living_room_windows
+        template: window_template
+        name: Windows
+      - entity: binary_sensor.living_room_presence_occupancy
+        show_icon: true
+        state_color: true
+    cards:
+      # Air Conditioner
+      - type: custom:simple-thermostat
+        entity: climate.living_room_air_conditioner
+        step: row
+        control: true
+        decimals: 0
+        step_size: 1
+        layout:
+          mode:
+            headings: false
+            names: true
+            icons: true
+        header:
+          name: Living Room Air Conditioner
+      # Power
+      - type: glance
+        title: false
+        entities:
+          - entity: sensor.living_room_air_conditioner_power
+            name: AC
+            show_name: true
+            show_state: true
+            show_icon: true
+          - entity: sensor.living_room_air_conditioner_plug_power
+            name: AC Plug
+          - entity: sensor.living_room_av_power
+            name: AV
+          - entity: sensor.living_room_couch_plug_power
+            name: Couch
+          - entity: sensor.living_room_leds_power
+            name: LEDs
+          - entity: sensor.living_room_standing_fan_power
+            name: Big Fan
+          - entity: sensor.peloton_fan_plug_power
+            name: Small Fan
+          - entity: sensor.guitar_amp_plug_power
+            name: Guitar
+
+  # Media Control
+  - type: media-control
+    entity: media_player.living_room_appletv
+    name: Apple TV
+
+  - type: custom:mini-graph-card
+    name: Living Room Air Quality
+    icon: mdi:face-mask-outline
+    unit: AQI
+    update_interval: 60
+    animate: false
+    smoothing: true
+    points_per_hour: 3
+    hours_to_show: 24
+    show_points: true
+    aggregate_func: last
+    entities:
+      - entity: sensor.living_room_air_quality_index 
+        name: AQI
+        show_points: true
+        show_fill: false
+    color_thresholds:
+      - value: 0
+        color: '#5DD939'
+      - value: 51
+        color: '#FFFB46'
+      - value: 101
+        color: '#EE7826'
+      - value: 151
+        color: '#E82E18'
+      - value: 201
+        color: '#7A3F88'
+      - value: 301
+        color: '#691520'
+
+  - type: custom:mini-graph-card
+    name: Living Room CO2
+    icon: mdi:molecule-co2
+    update_interval: 60
+    animate: false
+    smoothing: true
+    points_per_hour: 6
+    hours_to_show: 12
+    aggregate_func: last
+    entities:
+      - entity: sensor.living_room_co2
+        show_points: true
+        show_fill: false
+    color_thresholds:
+      - value: 0
+        color: '#3B9BD9'
+      - value: 400
+        color: '#409650'
+      - value: 800
+        color: '#D8C641'
+      - value: 1200
+        color: '#DA6A3D'
+      - value: 2000
+        color: '#BF5033'
+      - value: 2500
+        color: '#80251B'
+
+  - type: custom:expander-card
+    gap: 0.2em
+    padding: 0.0em
+    clear: false
+    title: Peloton
+    overlay-margin: 0.2em
+    child-padding: 0.2em
+    button-background: transparent
+    title-card-button-overlay: true
+    cards:
+      - type: glance
+        title: false
+        entities:
+          - entity: sensor.aaron_on_peloton_total_output
+            name: Total Output
+            show_name: true
+            show_state: true
+            show_icon: true
+          - entity: sensor.aaron_on_peloton_active_calories
+            name: Active Calories
+          - entity: sensor.aaron_on_peloton_total_calories
+            name: Total Calories
+  
+
+########################################################
+#
+#                     Crawl Space
+#
+########################################################
+  - type: custom:room-card
+    title: Crawl Space
+    show_icon: false
+    view-layout:
+      grid-area: main
+    tap_action:
+      action: call-service
+      service: light.toggle
+      target:
+        entity_id: light.crawl_space_lights
+    templates: *all_templates
+    rows:
+      - entities:
+        - entity: light.crawl_space_lights
+          name: Lights
+          template: light_template
+        - entity: light.crawl_space_sensor_neopixel
+          template: light_template
+    info_entities:
+      - entity: sensor.crawl_space_lights_power
+        format: precision1
+      - entity: sensor.crawl_space_sensor_humidity
+        format: precision1
+      - entity: sensor.crawl_space_sensor_temperature
+        format: precision1
+        unit: ºF
+
+  - type: custom:mini-graph-card
+    name: Indoor/Outdoor/Crawl Space Temperatures
+    animate: false
+    smoothing: false
+    points_per_hour: 30
+    hours_to_show: 24
+    upper_bound: 130
+    lower_bound: 40
+    aggregate_func: last
+    entities:
+      - entity: sensor.crawl_space_sensor_temperature
+        name: Crawl Space Temperature
+        color: '#D24E3A'
+        show_fill: false
+        smoothing: false
+        show_state: true
+      - entity: sensor.purpleair_temperature
+        name: Outdoor Temperature
+        color: "#44BED1"
+        smoothing: false
+        show_fill: false
+        show_state: true
+      - entity: sensor.living_room_temperature
+        name: Living Room Temperature
+        color: "#A78338"
+        show_fill: false
+        smoothing: false
+        show_state: true
+
+
+
+
+  - type: custom:layout-break
+
+
+########################################################
+#
+#                     Office
+#
+########################################################
+  - type: custom:room-card
+    title: Office
+    show_icon: false
+    view-layout:
+      grid-area: main
+    tap_action:
+      action: call-service
+      service: light.toggle
+      target:
+        entity_id: light.office_lights
+    templates: *all_templates
+    entities:
+      - entity: light.office_ceiling
+        name: Ceiling
+        template: light_template
+      - entity: light.office_string_lights
+        name: String Lights
+        template: light_template
+      - entity: light.office_desk_lights
+        name: Desk
+        template: light_template
+      - entity: light.office_bench_lights
+        name: Bench
+        template: light_template
+      - entity: light.piano_light
+        name: Piano Light
+        template: light_template
+      - entity: switch.adaptive_lighting_office
+        name: Adaptive
+        template: light_template
+    info_entities:
+      - entity: sensor.office_air_quality_humidity
+        format: precision1
+      - entity: sensor.office_air_quality_temperature
+        format: precision1
+      - entity: binary_sensor.office_east_window
+        template: window_template
+        name: Windows
+      - entity: binary_sensor.office_presence_occupancy
+        show_icon: true
+        state_color: true
+    cards:
+      - type: custom:simple-thermostat
+        entity: climate.office_air_conditioner
+        step: row
+        control: true
+        decimals: 0
+        step_size: 1
+        layout:
+          mode:
+            headings: false
+            names: true
+            icons: true
+        header: 
+          name: Office Air Conditioner
+      - type: glance
+        title: false
+        entities:
+          - entity: sensor.office_20a_power
+            name: Desk
+          - entity: sensor.piano_bench_power
+            name: Piano
+          - entity: sensor.office_air_conditioner_plug_power
+            name: AC
+          - entity: sensor.office_string_lights_power
+            name: Bulbs
+          - entity: sensor.printer_plug_power
+            name: Printer
+      - type: custom:expander-card
+        gap: 0.2em
+        padding: 0.0em
+        clear: false
+        title: Printer
+        overlay-margin: 0.2em
+        child-padding: 0.2em
+        button-background: transparent     
+        cards: 
+          - type: glance
+            title: Toner
+            entities:
+              - entity: sensor.xerox_workcentre_6515_black_toner_cartridge_pn_genuine_xerox_r_toner_sn25005c0028160000
+                name: Black
+              - entity: sensor.xerox_workcentre_6515_cyan_toner_cartridge_pn_genuine_xerox_r_toner_snd9005c0004160000
+                name: Cyan
+              - entity: sensor.xerox_workcentre_6515_magenta_toner_cartridge_pn_genuine_xerox_r_toner_sn35005c0031160000
+                name: Magenta
+              - entity: sensor.xerox_workcentre_6515_yellow_toner_cartridge_pn_genuine_xerox_r_toner_sn77005c000c180000
+                name: Yellow
+          - type: glance
+            title: Drum
+            entities:
+              - entity: sensor.xerox_workcentre_6515_black_drum_cartridge_pn_108r01420
+                name: Black
+              - entity: sensor.xerox_workcentre_6515_cyan_drum_cartridge_pn_108r01417
+                name: Cyan
+              - entity: sensor.xerox_workcentre_6515_magenta_drum_cartridge_pn_108r01418
+                name: Magenta
+              - entity: sensor.xerox_workcentre_6515_yellow_drum_cartridge_pn_108r01419
+                name: Yellow
+
+
+  - type: custom:mini-graph-card
+    name: Office Air Quality
+    icon: mdi:face-mask-outline
+    update_interval: 60
+    animate: false
+    smoothing: true
+    points_per_hour: 3
+    hours_to_show: 24
+    show_points: true
+    aggregate_func: last
+    entities:
+      - entity: sensor.office_air_quality_aqi
+        name: AQI
+        show_points: true
+        show_fill: false
+    color_thresholds:
+      - value: 0
+        color: '#5DD939'
+      - value: 51
+        color: '#FFFB46'
+      - value: 101
+        color: '#EE7826'
+      - value: 151
+        color: '#E82E18'
+      - value: 201
+        color: '#7A3F88'
+      - value: 301
+        color: '#691520'
+
+  - type: custom:mini-graph-card
+    name: Office CO2
+    icon: mdi:molecule-co2
+    update_interval: 60
+    animate: false
+    smoothing: true
+    points_per_hour: 6
+    hours_to_show: 12
+    aggregate_func: last
+    entities:
+      - entity: sensor.office_air_quality_co2
+        show_points: true
+        show_fill: false
+    color_thresholds:
+      - value: 0
+        color: '#3B9BD9'
+      - value: 400
+        color: '#409650'
+      - value: 800
+        color: '#D8C641'
+      - value: 1200
+        color: '#DA6A3D'
+      - value: 2000
+        color: '#BF5033'
+      - value: 2500
+        color: '#80251B'
+
+
+
+########################################################
+#
+#                        Bedroom
+#
+########################################################
+  - type: custom:room-card
+    title: Bedroom
+    show_icon: false
+    tap_action:
+      action: call-service
+      service: light.toggle
+      target:
+        entity_id: light.bedroom_lights
+    templates: *all_templates
+    entities:
+      - entity: light.bedroom_ceiling
+        name: Ceiling
+        template: light_template
+      - entity: light.bedroom_lamp
+        name: Lamp
+        template: light_template
+      - entity: switch.adaptive_lighting_bedroom
+        name: Adaptive
+        template: light_template
+      - entity: input_boolean.bedroom_filter_lights
+        name: Purifier
+        icon: mdi:car-light-fog
+        template: light_template
+      - entity: fan.bedroom_purifier
+        name: Purifier
+        icon: mdi:air-purifier
+        template: fan_template
+      - entity: light.bedroom_closet_light
+        name: Closet
+        template: light_template
+      - entity: fan.bedroom_closet_fans
+        name: Closet Fans
+        template: fan_template
+      - entity: cover.bedroom_closet_window
+        name: Closet Window
+        state_color: true
+        tap_action:
+          action: toggle
+    info_entities:
+      - entity: sensor.bedroom_air_quality_humidity
+        format: precision1
+      - entity: sensor.bedroom_air_quality_temperature
+        format: precision1
+        unit: ºF
+      - entity: binary_sensor.bedroom_windows
+        template: window_template
+        name: Windows
+      - entity: binary_sensor.bedroom_closet_window_open
+        template: window_template
+        name: Closet Window
+      - entity: binary_sensor.bedroom_presence_occupancy
+        show_icon: true
+        state_color: true
+    cards:
+      - type: custom:simple-thermostat
+        entity: climate.bedroom_air_conditioner
+        step: row
+        control: true
+        decimals: 0
+        step_size: 1
+        layout:
+          mode:
+            headings: false
+            names: true
+            icons: true
+        header:
+          name: Bedroom Air Conditioner
+      - type: glance
+        title: false
+        entities:
+          - entity: sensor.bedroom_air_conditioner_plug_power
+            name: AC
+          - entity: sensor.bedroom_av_power
+            name: AV
+          - entity: sensor.bedroom_fan_plug_power
+            name: Fan
+          - entity: sensor.bedroom_purifier_plug_power
+            name: Purifier
+          - entity: sensor.bedroom_closet_window_plug_power
+            name: Closet Power
+  
+  - type: custom:mini-graph-card
+    name: Bedroom Air Quality
+    icon: mdi:face-mask-outline
+    update_interval: 60
+    animate: false
+    smoothing: true
+    points_per_hour: 3
+    hours_to_show: 24
+    show_points: false
+    aggregate_func: last
+    entities:
+      - entity: sensor.bedroom_air_quality_aqi
+        name: AQI
+        show_points: true
+        show_fill: false
+    color_thresholds:
+      - value: 0
+        color: '#5DD939'
+      - value: 51
+        color: '#FFFB46'
+      - value: 101
+        color: '#EE7826'
+      - value: 151
+        color: '#E82E18'
+      - value: 201
+        color: '#7A3F88'
+      - value: 301
+        color: '#691520'
+
+  - type: custom:mini-graph-card
+    name: Bedroom CO2
+    icon: mdi:molecule-co2
+    update_interval: 60
+    animate: false
+    smoothing: true
+    points_per_hour: 6
+    hours_to_show: 12
+    aggregate_func: last
+    entities:
+      - entity: sensor.bedroom_air_quality_co2
+        show_points: true
+        show_fill: false
+    color_thresholds:
+      - value: 0
+        color: '#3B9BD9'
+      - value: 400
+        color: '#409650'
+      - value: 800
+        color: '#D8C641'
+      - value: 1200
+        color: '#DA6A3D'
+      - value: 2000
+        color: '#BF5033'
+      - value: 2500
+        color: '#80251B'
+
+
+
+########################################################
+#
+#                  Locations
+#
+########################################################
+
+  - type: entities
+    entities:
+      - entity: sensor.aaron_s_watch
+      - entity: sensor.ham
+      - entity: sensor.bacon
+      - entity: sensor.carpaccio
+      - entity: sensor.thao_s_phone
+      - entity: sensor.thao_s_watch

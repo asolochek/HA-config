@@ -1,0 +1,179 @@
+
+########################################################
+########################################################
+#
+#                   Outside View
+#
+########################################################
+########################################################
+
+path: outside
+title: Outside
+type: custom:grid-layout
+layout:
+  max_width: 300
+
+cards:
+  - type: custom:weather-card
+    entity: weather.ecobee
+    number_of_forecasts: '5'
+    view_layout:
+      height: 100
+  - type: custom:apexcharts-card
+    graph_span: 24h
+    view_layout:
+      height: 200
+    header:
+      show: true
+      title: Purple Air Temperature and Humidity
+      show_states: true
+      colorize_states: true
+
+    series:
+      - entity: sensor.purpleair_temperature
+        curve: smooth
+        type: line
+        group_by:
+          duration: 10min
+          func: avg
+      - entity: sensor.purpleair_humidity
+        curve: smooth
+        type: line
+        group_by:
+          duration: 30min
+          func: avg
+      - entity: sensor.purpleair_dewpoint   
+        curve: smooth
+        name: Dewpoint
+        group_by:
+          duration: 30min
+          func: avg
+
+
+  - type: custom:apexcharts-card
+    experimental:
+      color_threshold: true
+    graph_span: 24h
+    view_layout:
+      height: 100
+    show:
+      last_updated: true
+    header:
+      show: true
+      title: Purple Air Quality
+      show_states: true
+      colorize_states: true
+    series:
+      - entity: sensor.purpleair_airquality
+        name: AQI
+        unit: ' '
+        curve: smooth
+        type: line
+        show:
+          extremas: true
+        fill_raw: last
+        group_by:
+          duration: 10min
+          func: avg
+          fill: last
+        color_threshold:
+          - value: 0
+            color: '#5DD939'
+          - value: 75
+            color: '#FFFB46'
+          - value: 125
+            color: '#EE7826'
+          - value: 175
+            color: '#E82E18'
+          - value: 225
+            color: '#7A3F88'
+          - value: 301
+            color: '#691520'
+
+  - type: custom:apexcharts-card
+    graph_span: 24h
+    view_layout:
+      height: 200
+    header:
+      show: true
+      title: Purple Air Particle Count
+      show_states: true
+      colorize_states: true
+    series:
+      - entity: sensor.purpleair_3um_particle_count
+        name: "0.3μm"
+        unit: /dl
+        curve: smooth
+        type: line
+        group_by:
+          duration: 10min
+          func: avg
+      - entity: sensor.purpleair_5um_particle_count
+        name: "0.5μm"
+        unit: /dl
+        curve: smooth
+        type: line
+        group_by:
+          duration: 10min
+          func: avg
+      - entity: sensor.purpleair_1_0um_particle_count
+        name: "1.0μm"
+        unit: /dl
+        curve: smooth
+        group_by:
+          duration: 10min
+          func: avg
+      - entity: sensor.purpleair_2_5um_particle_count
+        name: "2.5μm"
+        unit: /dl
+        curve: smooth
+        group_by:
+          duration: 10min
+          func: avg
+      - entity: sensor.purpleair_5_0um_particle_count
+        name: "5.0μm"
+        unit: /dl
+        curve: smooth
+        group_by:
+          duration: 10min
+          func: avg
+      - entity: sensor.purpleair_10_0um_particle_count
+        name: "10.0μm"
+        unit: /dl
+        curve: smooth
+        group_by:
+          duration: 10min
+          func: avg
+
+  - type: custom:apexcharts-card
+    graph_span: 24h
+    view_layout:
+      height: 200
+    header:
+      show: true
+      title: Temperatures
+      show_states: true
+      colorize_states: true
+    all_series_config:
+      curve: straight
+      type: line
+      group_by:
+        duration: 10min
+        func: avg
+        fill: last
+      show:
+        extremas: true
+    series:
+      - entity: sensor.crawl_space_sensor_temperature
+        name: Crawl Space Temperature
+        color: '#D24E3A'
+      
+      - entity: sensor.purpleair_temperature
+        name: Outdoor Temperature
+        color: "#44BED1"
+    
+      - entity: sensor.living_room_temperature
+        name: Living Room Temperature
+        color: "#A78338"
+    
+

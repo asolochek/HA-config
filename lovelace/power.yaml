@@ -1,0 +1,66 @@
+########################################################
+########################################################
+#
+#                   Power View
+#
+########################################################
+########################################################
+
+path: power
+title: Power
+type: custom:grid-layout
+layout:
+  max_width: 1000
+  max_cols: 1
+
+
+
+
+cards:
+- type: gauge
+  min: 0
+  max: 8000
+  entity: sensor.mains_power_total
+  name: Current Power Usage
+  needle: true
+  severity: 
+    green: 0
+    yellow: 3000
+    red: 6000
+
+- type: custom:auto-entities
+  card: 
+    type: custom:bar-card
+    max: 2000
+    title: Power Draw
+    animation: true
+    speed: 1
+    icon: mdi:lightning-bolt
+    decimal: 1
+  sort:
+    method: state
+    numeric: true
+    reverse: true
+  filter:
+    template: |-
+      {% for state in states.sensor -%}
+        
+        {%- if (state.entity_id | regex_match("^sensor.*_power$", ignorecase=False)) -%}
+          {{
+            {
+              'entity': state.entity_id,
+              'name': state.attributes.friendly_name|regex_replace(find='(:|)(Plug|Outlet|)(Power|Plug)', replace='', ignorecase=True),
+              'target': 1
+            }
+          }},
+        {%- endif -%}
+      {%- endfor -%}
+
+    exclude:
+      - entity_id: "*apparent*"
+      - entity_id: "*reactive*"
+      - entity_id: "*_and_*"
+      - entity_id: "*circuit*"
+      - integration: group
+
+

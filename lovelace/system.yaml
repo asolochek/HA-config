@@ -1,0 +1,225 @@
+
+path: system
+title: System
+id: system
+icon: mdi:desktop-classic
+
+cards:
+  - cards:
+      - cards:
+          - template: usage_graph_line_template
+            type: custom:decluttering-card
+            variables:
+              - title: CPU Usage
+              - entity: sensor.processor_use
+        type: horizontal-stack
+      - cards:
+          - template: usage_graph_column_template
+            type: custom:decluttering-card
+            variables:
+              - title: RAM Usage
+              - entity: sensor.memory_use_percent
+          - type: custom:apexcharts-card
+            graph_span: 24h
+            experimental:
+              color_threshold: true
+            header:
+              show: true
+              title: Swap Usage
+            series:
+              - entity: sensor.swap_use
+                type: area
+                name: Swap
+                stroke_width: 0
+                show:
+                  extremas: false
+                color_threshold:
+                  - color: '#FF0000'
+                    value: 500
+                  - color: '#FFA500'
+                    value: 250
+                  - color: '#008000'
+                    value: 0
+                group_by:
+                  func: avg
+                  duration: 1hr
+        type: horizontal-stack
+      - cards:
+          - template: usage_graph_column_2_template
+            type: custom:decluttering-card
+            variables:
+              - title: Disk (in GB)
+              - entity: sensor.disk_use_home
+          - template: usage_graph_column_2_template
+            type: custom:decluttering-card
+            variables:
+              - title: HA DB (in MB)
+              - entity: sensor.hass_db_size
+        type: horizontal-stack
+    type: vertical-stack
+  - type: vertical-stack
+    cards:
+      - entities:
+          - entity: sensor.last_boot
+          - entities:
+              - entity: sensor.installed_version
+                name: Running
+                units: '%'
+              - entity: sensor.latest_available_version
+                name: Latest
+            entity: sensor.installed_version
+            icon: mdi:home-assistant
+            name: HA Version (Release)
+            show_state: false
+            type: custom:multiple-entity-row
+          - entity: sensor.latest_available_beta
+            icon: hass:beta
+          - entity: sensor.cert_expiry_timestamp_[REDACTED]
+            name: SSL Cert Expires (FreeDNS)
+          - entity: sensor.cert_expiry_timestamp_[REDACTED]
+            name: SSL Cert Expires (New Domain)
+          - entity: input_select.default_log_level
+          - entity: input_select.notify_select
+        show_header_toggle: false
+        type: entities
+      - type: grid
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.count_automations
+            primary_info: state
+            secondary_info: none
+            fill_container: false
+            tap_action:
+              action: more-info
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon_color: grey
+          - type: custom:mushroom-entity-card
+            entity: sensor.count_scripts
+            primary_info: state
+            secondary_info: none
+            fill_container: false
+            icon_color: grey
+          - type: custom:mushroom-entity-card
+            entity: sensor.count_sensors
+            primary_info: state
+            secondary_info: none
+          - type: custom:mushroom-entity-card
+            entity: sensor.count_switches
+            primary_info: state
+            secondary_info: none
+            tap_action:
+              action: more-info
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+          - type: custom:mushroom-entity-card
+            entity: sensor.count_lights
+            primary_info: state
+            secondary_info: none
+            tap_action:
+              action: more-info
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+          - type: custom:mushroom-entity-card
+            entity: sensor.count_fans
+            primary_info: state
+            secondary_info: none
+            tap_action:
+              action: more-info
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+          - type: custom:mushroom-entity-card
+            entity: sensor.count_zwave
+            primary_info: state
+            secondary_info: name
+            name: Zwave Nodes
+            tap_action:
+              action: more-info
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon_color: green
+          - type: custom:mushroom-entity-card
+            entity: sensor.count_unavailable
+            icon: mdi:alert-octagram
+            primary_info: state
+            secondary_info: name
+            name: Unavailable
+            tap_action:
+              action: more-info
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon_color: red
+        square: false
+        columns: 2
+  - type: vertical-stack
+    cards:
+      - entitypart: dockerhost4_home_assistant
+        logo: /local/systemicons/homeassistant.png
+        name: Home Assistant Prod Container
+        type: custom:docker-card
+      - entitypart: dockerhost4_home_assistant_beta
+        logo: /local/systemicons/homeassistant.png
+        name: Home Assistant Beta Container
+        type: custom:docker-card
+  - cards:
+      - cards:
+          - show_name: true
+            show_icon: true
+            entity: script.upgrade_system
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.upgrade_system
+            type: entity-button
+            name: Update Image
+            icon: mdi:cloud-download
+          - entity: script.restart_system
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.restart_system
+            type: entity-button
+            name: Restart Container
+            icon: mdi:restart
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: backup.create
+              data: {}
+              target: {}
+            name: Manual Backup
+            icon: mdi:cloud-upload
+            hold_action:
+              action: none
+        type: horizontal-stack
+      - show_name: true
+        show_icon: true
+        type: button
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-admin/r620
+        name: R620 iDrac
+        icon: mdi:server-network
+        show_state: false
+        icon_height: 100px
+        hold_action:
+          action: none
+    type: vertical-stack
+
+
