@@ -118,6 +118,9 @@ cards:
       - entity: lock.front_door
         name: Buzzer
         template: lock_template
+      - entity: fan.floor_fan
+        name: Floor Fan
+        template: fan_template
 
     info_entities:
       - entity: sensor.ecobee_humidity
