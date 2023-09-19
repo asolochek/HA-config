@@ -274,6 +274,17 @@ fan:
     decay_mode: slow
     restore_mode: RESTORE_DEFAULT_ON
     speed_count: 1024
+    on_turn_on:
+      lambda: |-
+        auto call = id(bathroom_fan_humidity_controller).make_call();
+        call.set_mode("COOL");
+        call.perform();
+    on_turn_off:
+      lambda: |-
+        auto call = id(bathroom_fan_humidity_controller).make_call();
+        call.set_mode("OFF");
+        call.perform();
+
 
 light:
   - platform: neopixelbus
