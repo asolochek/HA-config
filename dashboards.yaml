@@ -1,4 +1,3 @@
-
 title: Control
 views:
   - !include /config/lovelace/home.yaml
