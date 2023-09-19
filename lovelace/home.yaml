@@ -84,6 +84,20 @@ cards:
               styles: >
                 if (entity.state == "off") return 'color: gray';
                 else return;
+      - name: lock_template
+        template:
+          show_icon: true
+          state_color: true
+          tap_action:
+            action: toggle
+            confirmation: true
+          double_tap_action:
+            action: more-info
+          icon:
+            template:
+              icon: >
+                if (entity.state == "unlocked") return 'mdi:lock-open-variant';
+                else return 'mdi:lock';
     entities:
       - entity: light.hallway_ceiling
         name: Ceiling
@@ -103,17 +117,7 @@ cards:
         name: Package Cam
       - entity: lock.front_door
         name: Buzzer
-        show_icon: true
-        state_color: true
-        icon:
-          conditions:
-            - icon: mdi:lock-open-variant
-              condition: equals
-              entity: lock.front_door
-              value: "unlocked"
-        tap_action:
-          action: toggle
-          confirmation: true
+        template: lock_template
 
     info_entities:
       - entity: sensor.ecobee_humidity
