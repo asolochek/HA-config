@@ -752,6 +752,22 @@ cards:
 
 
 
+########################################################
+#
+#                  Locations
+#
+########################################################
+
+  - type: entities
+    entities:
+      - entity: sensor.aaron_s_watch
+      - entity: sensor.ham
+      - entity: sensor.bacon
+      - entity: sensor.carpaccio
+      - entity: sensor.thao_s_phone
+      - entity: sensor.thao_s_watch
+
+
 
   - type: custom:layout-break
 
@@ -1069,17 +1085,3 @@ cards:
 
 
 
-########################################################
-#
-#                  Locations
-#
-########################################################
-
-  - type: entities
-    entities:
-      - entity: sensor.aaron_s_watch
-      - entity: sensor.ham
-      - entity: sensor.bacon
-      - entity: sensor.carpaccio
-      - entity: sensor.thao_s_phone
-      - entity: sensor.thao_s_watch
