@@ -19,36 +19,6 @@ cards:
     number_of_forecasts: '5'
     view_layout:
       height: 100
-  - type: custom:apexcharts-card
-    graph_span: 24h
-    view_layout:
-      height: 200
-    header:
-      show: true
-      title: Purple Air Temperature and Humidity
-      show_states: true
-      colorize_states: true
-
-    series:
-      - entity: sensor.purpleair_temperature
-        curve: smooth
-        type: line
-        group_by:
-          duration: 10min
-          func: avg
-      - entity: sensor.purpleair_humidity
-        curve: smooth
-        type: line
-        group_by:
-          duration: 30min
-          func: avg
-      - entity: sensor.purpleair_dewpoint   
-        curve: smooth
-        name: Dewpoint
-        group_by:
-          duration: 30min
-          func: avg
-
 
   - type: custom:apexcharts-card
     experimental:
@@ -89,6 +59,70 @@ cards:
             color: '#7A3F88'
           - value: 301
             color: '#691520'
+
+  - type: custom:apexcharts-card
+    graph_span: 24h
+    view_layout:
+      height: 200
+    header:
+      show: true
+      title: Temperatures
+      show_states: true
+      colorize_states: true
+    all_series_config:
+      curve: straight
+      type: line
+      group_by:
+        duration: 10min
+        func: avg
+        fill: last
+      show:
+        extremas: true
+    series:
+      - entity: sensor.crawl_space_sensor_temperature
+        name: Crawl Space Temperature
+        color: '#D24E3A'
+      
+      - entity: sensor.purpleair_temperature
+        name: Outdoor Temperature
+        color: "#44BED1"
+    
+      - entity: sensor.living_room_temperature
+        name: Living Room Temperature
+        color: "#A78338"
+
+
+
+  - type: custom:apexcharts-card
+    graph_span: 24h
+    view_layout:
+      height: 200
+    header:
+      show: true
+      title: Purple Air Temperature and Humidity
+      show_states: true
+      colorize_states: true
+
+    series:
+      - entity: sensor.purpleair_temperature
+        curve: smooth
+        type: line
+        group_by:
+          duration: 10min
+          func: avg
+      - entity: sensor.purpleair_humidity
+        curve: smooth
+        type: line
+        group_by:
+          duration: 30min
+          func: avg
+      - entity: sensor.purpleair_dewpoint   
+        curve: smooth
+        name: Dewpoint
+        group_by:
+          duration: 30min
+          func: avg
+
 
   - type: custom:apexcharts-card
     graph_span: 24h
@@ -145,35 +179,5 @@ cards:
           duration: 10min
           func: avg
 
-  - type: custom:apexcharts-card
-    graph_span: 24h
-    view_layout:
-      height: 200
-    header:
-      show: true
-      title: Temperatures
-      show_states: true
-      colorize_states: true
-    all_series_config:
-      curve: straight
-      type: line
-      group_by:
-        duration: 10min
-        func: avg
-        fill: last
-      show:
-        extremas: true
-    series:
-      - entity: sensor.crawl_space_sensor_temperature
-        name: Crawl Space Temperature
-        color: '#D24E3A'
-      
-      - entity: sensor.purpleair_temperature
-        name: Outdoor Temperature
-        color: "#44BED1"
-    
-      - entity: sensor.living_room_temperature
-        name: Living Room Temperature
-        color: "#A78338"
     
 
