@@ -18,6 +18,22 @@ cards:
 
 ########################################################
 #
+#                     General
+#
+########################################################
+  - type: custom:room-card
+    title: General
+    show_icon: true
+    view-layout:
+      grid-area: main
+    entities:
+      - entity: script.day_lights
+      - entity: script.goodnight
+      - entity: script.adapt_all_lights
+
+
+########################################################
+#
 #                  Hallway + Entry
 #
 ########################################################
