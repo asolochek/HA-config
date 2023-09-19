@@ -1006,6 +1006,11 @@ cards:
           - entity: sensor.bedroom_closet_window_plug_power
             name: Closet Power
   
+  # Media Control
+  - type: media-control
+    entity: media_player.bedroom_appletv
+    name: Apple TV
+
   - type: custom:mini-graph-card
     name: Bedroom Air Quality
     icon: mdi:face-mask-outline
