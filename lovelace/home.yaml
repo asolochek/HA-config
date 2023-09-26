@@ -775,8 +775,8 @@ cards:
 
   - type: entities
     entities:
-      - entity: sensor.aaron_s_watch
       - entity: sensor.ham
+      - entity: sensor.aaron_s_watch
       - entity: sensor.bacon
       - entity: sensor.carpaccio
       - entity: sensor.thao_s_phone
