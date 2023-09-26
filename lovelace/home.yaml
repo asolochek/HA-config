@@ -28,9 +28,17 @@ cards:
       grid-area: main
     entities:
       - entity: script.day_lights
+        tap_action:
+          action: call-service
+          service: script.day_lights
       - entity: script.goodnight
+        tap_action:
+          action: call-service
+          service: script.goodnight
       - entity: script.adapt_all_lights
-
+        tap_action:
+          action: call-service
+          service: script.adapt_all_lights
 
 ########################################################
 #
