@@ -193,7 +193,7 @@ adapt_all_lights:
       minutes: 0
       seconds: 2
       milliseconds: 0
-    enabled: false
+    enabled: true
   - service: switch.turn_off
     data: {}
     target:
