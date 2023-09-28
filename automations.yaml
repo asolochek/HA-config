@@ -1123,7 +1123,25 @@
       minutes: 0
       seconds: 30
     to: 'off'
-  condition: []
+  - platform: time_pattern
+    minutes: /5
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: light.bedroom_closet_light
+      state: 'on'
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 0
+    - condition: state
+      entity_id: binary_sensor.bedroom_closet_window_closet_motion
+      state: 'off'
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 30
   action:
   - service: light.turn_off
     data: {}
