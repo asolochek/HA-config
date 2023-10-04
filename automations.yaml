@@ -1149,6 +1149,7 @@
       entity_id: light.bedroom_closet_light
   mode: single
 - id: '1695651606674'
+  alias: Sunrise Actions
   description: ''
   trigger:
   - platform: sun
@@ -1168,6 +1169,7 @@
       - switch.adaptive_lighting_sleep_mode_office
   mode: single
 - id: '1695651659423'
+  alias: Sunset Actions
   description: ''
   trigger:
   - platform: sun

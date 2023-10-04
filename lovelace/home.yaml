@@ -31,6 +31,10 @@ cards:
         tap_action:
           action: call-service
           service: script.day_lights
+      - entity: script.bedtime
+        tap_action:
+          action: call-service
+          service: script.bedtime
       - entity: script.goodnight
         tap_action:
           action: call-service
