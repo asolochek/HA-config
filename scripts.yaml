@@ -201,7 +201,7 @@ adapt_all_lights:
       - switch.adaptive_lighting_sleep_mode_living_room
     enabled: true
   mode: single
-  icon: mdi:brightness-auto
+  icon: mdi:theme-light-dark
 max_air_conditioning:
   alias: Max Air Conditioning
   sequence:
@@ -216,7 +216,7 @@ max_air_conditioning:
       - climate.bedroom_air_conditioner
       - climate.office_air_conditioner
   mode: single
-  icon: mdi:air-conditioner
+  icon: mdi:snowflake
 air_conditioning_off:
   alias: Air Conditioning Off
   sequence:
@@ -229,7 +229,7 @@ air_conditioning_off:
       - climate.living_room_air_conditioner
       - climate.office_air_conditioner
   mode: single
-  icon: mdi:air-conditioner
+  icon: mdi:snowflake-off
 day_lights:
   alias: Day Lights
   sequence:
