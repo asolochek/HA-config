@@ -8,8 +8,8 @@ esp32:
   board: adafruit_feather_esp32s3
   variant: esp32s3
   framework:
-    type: arduino
-#    type: esp-idf
+#    type: arduino
+    type: esp-idf
 # Enable logging
 logger:
   level: INFO
@@ -21,6 +21,9 @@ api:
 
 ota:
   password: "f1032615bf34151cfdabacad206096c9"
+
+bluetooth_proxy:
+  active: true
 
 wifi:
   ssid: !secret wifi_ssid
@@ -116,54 +119,6 @@ output:
     frequency: 25000Hz
 
 
-# sensor:
-#   - platform: sht4x
-#     i2c_id: bus_a
-#     address: 0x44
-#     temperature:
-#       id: meter_sht45_temperature
-#       name: "SHT45 Temperature"
-#     humidity:
-#       id: meter_sht45_humidity
-#       name: "SHT45 Humidity"
-#   - platform: tmp117
-#     i2c_id: bus_a
-#     address: 0x48
-#     id: meter_tmp117_temperature
-#     name: "TMP117 Temperature"
-#   - platform: bme280
-#     i2c_id: bus_a
-#     address: 0x77
-#     temperature:
-#       id: meter_bme280_temperature
-#       name: "BME280 Temperature"
-#     humidity:
-#       id: meter_bme280_humidity
-#       name: "BME280 Humidity"
-#   - platform: pmsa003i
-#     i2c_id: bus_a
-#     address: 0x12
-#     pm_1_0:
-#       name: "PM1.0"
-#     pm_2_5:
-#       name: "PM2.5"
-#     pm_10_0:
-#       name: "PM10.0"
-#     pmc_0_3:
-#       name: "PMC <0.3µm"
-#     pmc_0_5:
-#       name: "PMC <0.5µm"
-#     pmc_1_0:
-#       name: "PMC <1µm"
-#     pmc_2_5:
-#       name: "PMC <2.5µm"
-#     pmc_5_0:
-#       name: "PMC <5µm"
-#     pmc_10_0:
-#       name: "PMC <10µm"
-#     update_interval: 60s
-
-
 switch:
   - platform: gpio
     id: neopix_power
@@ -171,11 +126,11 @@ switch:
     pin: GPIO21
 
 
-light:
-  - platform: neopixelbus
-    id: neopixel_led
-    type: GRB
-    variant: WS2812
-    pin: GPIO33
-    num_leds: 1
-    name: "NeoPixel"
+# light:
+#   - platform: neopixelbus
+#     id: neopixel_led
+#     type: GRB
+#     variant: WS2812
+#     pin: GPIO33
+#     num_leds: 1
+#     name: "NeoPixel"

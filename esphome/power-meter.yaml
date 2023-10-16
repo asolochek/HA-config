@@ -7,7 +7,10 @@ esp32:
 #  board: featheresp32
   board: adafruit_feather_esp32_v2
   framework:
-    type: arduino
+    type: esp-idf
+    version: recommended
+    sdkconfig_options:
+      COMPILER_OPTIMIZATION_SIZE: y
 
 # Enable logging
 logger:
@@ -20,6 +23,8 @@ api:
 
 ota:
 
+bluetooth_proxy:
+  active: true
 
 wifi:
   ssid: !secret wifi_ssid
@@ -34,7 +39,7 @@ wifi:
 #    gateway: 10.3.1.2
 #    subnet: 255.255.0.0
 
-captive_portal:
+# captive_portal:
     
 
 # i2c:
@@ -71,14 +76,14 @@ sensor:
             id(meter_output).set_level(pct);
 
 
-light:
-  - platform: neopixelbus
-    id: neopixel_led
-    type: GRB
-    variant: WS2812
-    pin: GPIO0
-    num_leds: 1
-    name: "NeoPixel"
+# light:
+#   - platform: neopixelbus
+#     id: neopixel_led
+#     type: GRB
+#     variant: WS2812
+#     pin: GPIO0
+#     num_leds: 1
+#     name: "NeoPixel"
 
 output:
 #  - platform: esp32_dac
