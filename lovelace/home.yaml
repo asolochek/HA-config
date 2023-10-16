@@ -40,9 +40,21 @@ cards:
           action: call-service
           service: script.goodnight
       - entity: script.adapt_all_lights
+        name: Force Adapt
         tap_action:
           action: call-service
           service: script.adapt_all_lights
+      - entity: script.max_air_conditioning
+        name: Max AC
+        tap_action:
+          action: call-service
+          service: script.max_air_conditioning
+      - entity: script.air_conditioning_off
+        name: AC Off
+        tap_action:
+          action: call-service
+          service: script.air_conditioning_off
+
 
 ########################################################
 #
