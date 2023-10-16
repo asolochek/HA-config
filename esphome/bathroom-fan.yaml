@@ -286,14 +286,14 @@ fan:
         call.perform();
 
 
-light:
-  - platform: neopixelbus
-    id: neopixel_led
-    type: GRB
-    variant: WS2812
-    pin: GPIO33
-    num_leds: 1
-    name: "NeoPixel"
+# light:
+#   - platform: neopixelbus
+#     id: neopixel_led
+#     type: GRB
+#     variant: WS2812
+#     pin: GPIO33
+#     num_leds: 1
+#     name: "NeoPixel"
 
 
 external_components:
