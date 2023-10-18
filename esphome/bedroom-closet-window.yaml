@@ -76,12 +76,20 @@ switch:
     lambda: 'return id(fan_power_relay).state;'
     turn_on_action:
       - if:
-          condition: 
-            binary_sensor.is_on: window_closed_sensor
+          condition:
+            or:
+              - binary_sensor.is_on: window_closed_sensor
+              - binary_sensor.is_off: window_open_sensor_2
           then:
             - cover.open: bedroom_closet_window
-            - delay: 5s
-      - switch.turn_on: fan_power_relay
+            - delay: 6s
+      - if:
+          condition:
+            and:
+              - binary_sensor.is_off: window_closed_sensor
+              - binary_sensor.is_on: window_open_sensor_2
+          then:
+            - switch.turn_on: fan_power_relay
     turn_off_action:
       - switch.turn_off: fan_power_relay
 
@@ -151,6 +159,12 @@ binary_sensor:
     name: Window Closed
     icon: mdi:window
     device_class: window
+
+  - platform: homeassistant
+    name: Zigbee Window Sensor
+    id: window_open_sensor_2
+    entity_id: binary_sensor.bedroom_closet_window_sensor
+    internal: false
 
 
 cover:
