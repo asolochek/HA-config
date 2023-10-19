@@ -51,7 +51,7 @@ captive_portal:
 globals:
   - id: target_val
     type: float
-    restore_value: yes
+    restore_value: no
     initial_value: "60.0"
 
 number: 
@@ -238,6 +238,37 @@ sensor:
     entity_id: sensor.living_room_humidity
     unit_of_measurement: "%"
     internal: false
+    on_value:
+      lambda: |-
+        float new_val;
+        if (isnan(x)) {
+          ESP_LOGE("baseline", "Error reading baseline humidity!");
+          new_val = 60;
+        }
+        else {
+          new_val = id(baseline_offset).state + x;
+        }
+        ESP_LOGI("baseline", "clear threshold set to %.0f%%", new_val);
+        auto controller_call = id(bathroom_fan_humidity_controller).make_call();
+        controller_call.set_target_temperature_low(new_val);
+        id(target_val) = new_val;
+        controller_call.perform();
+
+  # - platform: homeassistant
+  #   name: Baseline Humidity
+  #   id: baseline_humidity
+  #   entity_id: sensor.bedroom_air_quality_humidity
+  #   unit_of_measurement: "%"
+  #   internal: false
+  #   on_value:
+  #     lambda: |-
+  #       float new_val = id(baseline_offset).state + x;
+  #       ESP_LOGI("baseline", "clear threshold set to %.0f%%", new_val);
+  #       auto controller_call = id(bathroom_fan_humidity_controller).make_call();
+  #       controller_call.set_target_temperature_low(new_val);
+  #       id(target_val) = new_val;
+  #       controller_call.perform();
+
 
   - platform: template
     name: Dew Point
