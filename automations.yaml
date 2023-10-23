@@ -826,6 +826,11 @@
     entity_id: person.aaron_solochek
     zone: zone.home
     event: enter
+  - platform: state
+    entity_id:
+    - device_tracker.aarons_watch
+    from: not_home
+    to: home
   condition: []
   action:
   - service: light.turn_on
@@ -1177,4 +1182,19 @@
     offset: '0'
   condition: []
   action: []
+  mode: single
+- id: '1697851358987'
+  alias: Thao's Home
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - device_tracker.thao_watch
+    from: not_home
+    to: home
+  condition: []
+  action:
+  - service: notify.mobile_app_ham
+    data:
+      message: Thao's Home
   mode: single
