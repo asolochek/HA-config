@@ -550,7 +550,7 @@ cards:
       action: call-service
       service: light.toggle
       target:
-        entity_id: light.living_room_lights
+        entity_id: light.living_room_ceiling
     templates: *all_templates
     rows:
       - entities:
