@@ -65,6 +65,7 @@ number:
     min_value: 30
     max_value: 100
     step: 1
+    mode: box
     set_action:
       lambda: |-
         ESP_LOGI("number", "trip threshold set from %.0f%% to %.0f%%", id(high_humidity_threshold).state, x);
@@ -83,6 +84,7 @@ number:
     min_value: -20
     max_value: 20
     step: 1
+    mode: box
     set_action:
       lambda: |-
         float new_val = id(baseline_humidity).state + x;
@@ -102,6 +104,7 @@ number:
     min_value: 15
     max_value: 50
     step: 1
+    mode: box
     set_action:
       lambda: |-
         auto call = id(bathroom_fan).make_call();
@@ -119,6 +122,7 @@ number:
     min_value: 50
     max_value: 100
     step: 1
+    mode: box
     set_action:
       lambda: |-
         auto call = id(bathroom_fan).make_call();
