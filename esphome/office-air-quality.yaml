@@ -47,8 +47,12 @@ wifi:
     ssid: "Office-Air-Quality"
     password: "iONQeJLJuQDN"
 
-captive_portal:
-    
+#captive_portal:
+
+button:
+  - platform: restart
+    name: "Restart"
+    entity_category: "CONFIG"
 
 i2c:
   - id: bus_a

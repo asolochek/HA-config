@@ -30,8 +30,12 @@ wifi:
     gateway: 10.3.1.2
     subnet: 255.255.0.0
 
-captive_portal:
+#captive_portal:
     
+button:
+  - platform: restart
+    name: "Restart"
+    entity_category: "CONFIG"
 
 status_led:
   pin: 
