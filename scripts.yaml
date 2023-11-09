@@ -1,68 +1,33 @@
-run_appletv_music:
-  alias: Music
-  sequence:
-  - service: webostv.command
-    data:
-      entity_id: media_player.tv
-      command: POWER_ON
-  - service: scene.turn_on
-    target:
-      entity_id: scene.appletv_music
-    metadata: {}
-  mode: restart
-  icon: mdi:music
-apple_tv:
-  alias: Apple TV
-  sequence:
-  - service: webostv.command
-    data:
-      entity_id: media_player.tv
-      command: POWER_ON
-  - service: scene.turn_on
-    target:
-      entity_id: scene.watch_apple_tv
-    metadata: {}
-  mode: restart
-  icon: mdi:apple
-nintendo:
-  alias: Nintendo
-  sequence:
-  - service: webostv.command
-    data:
-      entity_id: media_player.tv
-      command: POWER_ON
-  - service: scene.turn_on
-    target:
-      entity_id: scene.play_nintendo
-    metadata: {}
-  mode: restart
-  icon: mdi:nintendo-switch
 playstation:
   alias: Playstation
   sequence:
-  - service: webostv.command
-    data:
-      entity_id: media_player.tv
-      command: POWER_ON
+  - service: script.living_room_tv_turn_on
+    data: {}
+  - service: media_player.turn_on
+    data: {}
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
   - service: scene.turn_on
     target:
       entity_id: scene.play_playstation
     metadata: {}
+    enabled: false
+  - service: media_player.select_source
+    data:
+      source: PS5
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.select_sound_mode
+    data:
+      sound_mode: DOLBY DIGITAL
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.volume_set
+    data: {}
+    target:
+      entity_id: media_player.living_room
   mode: restart
   icon: mdi:sony-playstation
-tivo:
-  alias: Tivo
-  sequence:
-  - service: webostv.command
-    data:
-      entity_id: media_player.tv
-      command: POWER_ON
-  - service: scene.turn_on
-    target:
-      entity_id: scene.tivo
-    metadata: {}
-  mode: restart
-  icon: mdi:television
 all_lights_off:
   alias: All Lights Off
   sequence:
@@ -280,3 +245,116 @@ bedtime:
       entity_id: input_boolean.bedroom_filter_lights
   mode: single
   icon: mdi:bed
+nintendo:
+  alias: Nintendo
+  sequence:
+  - service: script.living_room_tv_turn_on
+    data: {}
+  - service: media_player.turn_on
+    data: {}
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.select_source
+    data:
+      source: Switch
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.select_sound_mode
+    data:
+      sound_mode: DOLBY DIGITAL
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.volume_set
+    data: {}
+    target:
+      entity_id: media_player.living_room
+  mode: restart
+  icon: mdi:nintendo-switch
+apple_tv:
+  alias: Apple TV
+  sequence:
+  - service: script.living_room_tv_turn_on
+    data: {}
+  - service: media_player.turn_on
+    data: {}
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.select_source
+    data:
+      source: AppleTV
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.select_sound_mode
+    data:
+      sound_mode: DOLBY DIGITAL
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.55
+    target:
+      entity_id: media_player.living_room
+    enabled: false
+  mode: restart
+  icon: mdi:apple
+tivo:
+  alias: Tivo
+  sequence:
+  - service: script.living_room_tv_turn_on
+    data: {}
+  - service: media_player.turn_on
+    data: {}
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.select_source
+    data:
+      source: TiVo
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.select_sound_mode
+    data:
+      sound_mode: DOLBY DIGITAL
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.volume_set
+    data: {}
+    target:
+      entity_id: media_player.living_room
+  mode: restart
+  icon: mdi:television-classic
+apple_tv_music:
+  alias: Apple TV Music
+  sequence:
+  - service: script.living_room_tv_turn_on
+    data: {}
+  - service: media_player.turn_on
+    data: {}
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.select_source
+    data:
+      source: AppleTV
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.select_sound_mode
+    data:
+      sound_mode: STEREO
+    target:
+      device_id: 0f884b9e46116da8295560f82bba789f
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.55
+    target:
+      entity_id: media_player.living_room
+  mode: restart
+  icon: mdi:apple
+living_room_tv_turn_on:
+  alias: Living Room TV Turn On
+  sequence:
+  - service: wake_on_lan.send_magic_packet
+    data:
+      broadcast_port: 9
+      mac: b0:37:95:d5:eb:69
+      broadcast_address: 255.255.255.255
+  mode: single
+  icon: mdi:television
