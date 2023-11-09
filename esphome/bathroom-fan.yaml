@@ -69,9 +69,9 @@ number:
     set_action:
       lambda: |-
         ESP_LOGI("number", "trip threshold set from %.0f%% to %.0f%%", id(high_humidity_threshold).state, x);
-        auto controller_call = id(bathroom_fan_humidity_controller).make_call();
+        auto controller_call = id(humidity_controller).make_call();
         controller_call.set_target_temperature_high(x);
-        //if(id(bathroom_fan_humidity_controller).action == CLIMATE_ACTION_IDLE)
+        //if(id(humidity_controller).action == CLIMATE_ACTION_IDLE)
         //  id(target_val) = x;
         controller_call.perform();
 
@@ -89,7 +89,7 @@ number:
       lambda: |-
         float new_val = id(baseline_humidity).state + x;
         ESP_LOGI("number", "clear threshold set to %.0f%%", new_val);
-        auto controller_call = id(bathroom_fan_humidity_controller).make_call();
+        auto controller_call = id(humidity_controller).make_call();
         controller_call.set_target_temperature_low(new_val);
         id(target_val) = new_val;
         controller_call.perform();
@@ -108,7 +108,7 @@ number:
     set_action:
       lambda: |-
         auto call = id(bathroom_fan).make_call();
-        if(id(bathroom_fan_humidity_controller).action == CLIMATE_ACTION_IDLE)
+        if(id(humidity_controller).action == CLIMATE_ACTION_IDLE)
           call.set_speed( x * 10.24 );
         call.perform();
 
@@ -126,14 +126,14 @@ number:
     set_action:
       lambda: |-
         auto call = id(bathroom_fan).make_call();
-        if(id(bathroom_fan_humidity_controller).action == CLIMATE_ACTION_COOLING)
+        if(id(humidity_controller).action == CLIMATE_ACTION_COOLING)
           call.set_speed( x * 10.24 );
         call.perform();
 
 climate:
   - platform: bang_bang
     name: "Humidity Controller"
-    id: bathroom_fan_humidity_controller
+    id: humidity_controller
     icon: mdi:cloud-perecent
     sensor: humidity
     visual:
@@ -253,7 +253,7 @@ sensor:
           new_val = id(baseline_offset).state + x;
         }
         ESP_LOGI("baseline", "clear threshold set to %.0f%%", new_val);
-        auto controller_call = id(bathroom_fan_humidity_controller).make_call();
+        auto controller_call = id(humidity_controller).make_call();
         controller_call.set_target_temperature_low(new_val);
         id(target_val) = new_val;
         controller_call.perform();
@@ -268,7 +268,7 @@ sensor:
   #     lambda: |-
   #       float new_val = id(baseline_offset).state + x;
   #       ESP_LOGI("baseline", "clear threshold set to %.0f%%", new_val);
-  #       auto controller_call = id(bathroom_fan_humidity_controller).make_call();
+  #       auto controller_call = id(humidity_controller).make_call();
   #       controller_call.set_target_temperature_low(new_val);
   #       id(target_val) = new_val;
   #       controller_call.perform();
@@ -316,13 +316,13 @@ fan:
     speed_count: 1024
     on_turn_on:
       lambda: |-
-        auto call = id(bathroom_fan_humidity_controller).make_call();
-        call.set_mode("COOL");
+        auto call = id(humidity_controller).make_call();
+        call.set_mode(CLIMATE_MODE_COOL);
         call.perform();
     on_turn_off:
       lambda: |-
-        auto call = id(bathroom_fan_humidity_controller).make_call();
-        call.set_mode("OFF");
+        auto call = id(humidity_controller).make_call();
+        call.set_mode(CLIMATE_MODE_OFF);
         call.perform();
 
 
