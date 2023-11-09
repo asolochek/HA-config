@@ -831,6 +831,7 @@
     - device_tracker.aarons_watch
     from: not_home
     to: home
+    enabled: false
   condition: []
   action:
   - service: light.turn_on
