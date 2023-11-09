@@ -173,16 +173,50 @@ switch:
 
 binary_sensor:
   - platform: gpio
+    name: "Controller Power Button"
     id: a_button
     pin: 
       number: GPIO9
       mode: INPUT_PULLUP
+    on_press: 
+      - lambda: |-
+          auto controller_call = id(humidity_controller).make_call();
+          auto fan_call = id(bathroom_fan).make_call();    
+          if(id(humidity_controller).mode == CLIMATE_MODE_OFF) {
+            controller_call.set_mode(CLIMATE_MODE_COOL);
+            fan_call.set_speed(id(fan_idle_speed).state * 10.24);
+          }
+          else {
+            controller_call.set_mode(CLIMATE_MODE_OFF);
+          }
+          controller_call.perform();
+          fan_call.perform();
+    on_double_click:
+      min_length: 50ms
+      max_length: 350ms
+      then:
+        - lambda: |-
+            auto controller_call = id(humidity_controller).make_call();
+            auto fan_call = id(bathroom_fan).make_call();
+            if(id(humidity_controller).mode == CLIMATE_MODE_OFF) {
+              controller_call.set_mode(CLIMATE_MODE_COOL);
+              fan_call.set_state(true);
+              fan_call.set_speed(id(fan_idle_speed).state * 10.24);
+            }
+            else {
+              controller_call.set_mode(CLIMATE_MODE_OFF);
+              fan_call.set_state(false);
+            }
+            controller_call.perform();
+            fan_call.perform();
   - platform: gpio
+    name: "Speed Up"
     id: b_button
     pin: 
       number: GPIO6
       mode: INPUT_PULLUP
   - platform: gpio
+    name: "Speed Down"
     id: c_button
     pin: 
       number: GPIO5
@@ -359,6 +393,12 @@ font:
   - file: "fonts/Gomme10x20n.bdf"
     id: gomme
     size: 20
+  - file: "fonts/ter-u14n.bdf"
+    id: terminus14n
+    size: 14
+  - file: "fonts/ter-u16n.bdf"
+    id: terminus16n
+    size: 16
   - file: "fonts/ter-u18n.bdf"
     id: terminus18n
     size: 18
@@ -395,7 +435,11 @@ display:
       it.circle(116, 5, 2);
       it.printf(120, 0, id(terminus20n), "F");
       it.printf(92, 22, id(terminus20n), "%.0f%%", id(humidity).state);
-      it.printf(12, 48, id(terminus18n), "%.0f%%", id(target_val));
-      it.printf(92, 48, id(terminus18n), "%.0f%%", id(high_humidity_threshold).state);
-
+      if (id(humidity_controller).mode == CLIMATE_MODE_OFF) {
+        it.printf(12, 48, id(terminus14n), "Controller Off");
+      }
+      else {
+        it.printf(12, 48, id(terminus18n), "%.0f%%", id(target_val));
+        it.printf(92, 48, id(terminus18n), "%.0f%%", id(high_humidity_threshold).state);
+      }
 
