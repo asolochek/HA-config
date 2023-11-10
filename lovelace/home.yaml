@@ -583,6 +583,28 @@ cards:
         - entity: light.living_room_closet_light
           name: Closet
           template: light_template
+        - entity: script.apple_tv
+          name: AppleTV
+          tap_action:
+            action: call-service
+            service: script.apple_tv
+        - entity: script.apple_tv_music
+          name: Music
+          tap_action:
+            action: call-service
+            service: script.apple_tv_music
+        - entity: script.playstation
+          name: PS5
+          tap_action:
+            action: call-service
+            service: script.playstation
+        - entity: script.nintendo
+          name: Switch
+          tap_action:
+            action: call-service
+            service: script.nintendo
+
+
     info_entities:
       - entity: sensor.living_room_humidity
         format: precision0
