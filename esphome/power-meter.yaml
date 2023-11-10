@@ -4,13 +4,15 @@ esphome:
 
 
 esp32:
-#  board: featheresp32
-  board: adafruit_feather_esp32_v2
+  board: adafruit_qtpy_esp32
+  variant: esp32s3
   framework:
-    type: esp-idf
-    version: recommended
-    sdkconfig_options:
-      COMPILER_OPTIMIZATION_SIZE: y
+    type: arduino
+    # type: esp-idf
+    # version: recommended
+    # sdkconfig_options:
+    #   COMPILER_OPTIMIZATION_SIZE: y
+
 
 # Enable logging
 logger:
@@ -32,29 +34,27 @@ wifi:
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "Esphome-Web-31125C"
+    ssid: "Power-Meter"
     password: "cAc5JhU9nAcy"
 #  manual_ip:
-#    static_ip: 10.3.1.193
+#    static_ip: 10.3.1.46
 #    gateway: 10.3.1.2
 #    subnet: 255.255.0.0
 
 # captive_portal:
     
+button:
+  - platform: restart
+    name: "Restart"
+    entity_category: "CONFIG"
 
-# i2c:
-#   - id: bus_a
-#     sda: GPIO22 #SDA
-#     scl: GPIO20 #SCL
-#     frequency: 800kHz
-#     scan: True
-#     setup_priority: 700
 
 sensor:
   - platform: homeassistant
     name: Power
     id: power
     entity_id: sensor.mains_power_total
+#    entity_id: sensor.meter_test_sensor
     unit_of_measurement: 'W'
     internal: true
     filters:
@@ -62,13 +62,16 @@ sensor:
           degree: 5
           datapoints:
             - 0.0 -> 0
-            - 250 -> 500
-            - 500 -> 1000
-            - 1300 -> 2012
-            - 1500 -> 2240
-            - 2000 -> 2757
-            - 3000 -> 3660
-            - 5000 -> 5000            
+            - 200 -> 400
+            - 500 -> 990
+            - 1300 -> 1980
+            - 1500 -> 2205
+            - 2000 -> 2715
+            - 3000 -> 3600
+            - 3500 -> 3975
+            - 4000 -> 4310
+            - 4500 -> 4630
+            - 5000 -> 4925            
     on_value:
       then:
         - lambda: |-
@@ -76,37 +79,30 @@ sensor:
             id(meter_output).set_level(pct);
 
 
-# light:
-#   - platform: neopixelbus
-#     id: neopixel_led
-#     type: GRB
-#     variant: WS2812
-#     pin: GPIO0
-#     num_leds: 1
-#     name: "NeoPixel"
+
+light:
+  - platform: neopixelbus
+    id: neopixel_led
+    type: GRB
+    variant: WS2812
+    pin: GPIO5
+    num_leds: 1
+    name: "NeoPixel"
 
 output:
-#  - platform: esp32_dac
-#    pin: 
-#      number: GPIO25
-#      mode:
-#        pullup: false
-#        input: false
-#    id: meter_output
-#    zero_means_zero: true
-
   - platform: ledc
-    pin: GPIO4
+    pin: GPIO14
     id: meter_output
     frequency: 25000Hz
 
-status_led:
-  pin:
-    number: GPIO13
-    inverted: false
 
 switch:
   - platform: gpio
     id: neopixel_power
     restore_mode: ALWAYS_ON
-    pin: GPIO2
+    pin: GPIO8
+
+  - platform: gpio
+    id: meter_ground
+    restore_mode: ALWAYS_OFF
+    pin: GPIO33
