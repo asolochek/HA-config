@@ -20,10 +20,10 @@ esp32:
 # Enable logging
 logger:
   level: INFO
-  logs:
-    sht3xd: ERROR
-    bme280: ERROR
-    sensor: ERROR
+#  logs:
+#    sht3xd: ERROR
+#    bme280: ERROR
+#    sensor: ERROR
 
 # Enable Home Assistant API
 api:
