@@ -154,6 +154,7 @@ sensor:
     id: pm_1_0
     device_class: PM1
     unit_of_measurement: µg/m³
+    state_class: measurement
     icon: mdi:grain
 
     update_interval: 1s
@@ -169,6 +170,7 @@ sensor:
     device_class: PM25
     icon: mdi:smoke
     unit_of_measurement: µg/m³
+    state_class: measurement
     update_interval: 1s
     filters:
       - sliding_window_moving_average:
@@ -182,6 +184,7 @@ sensor:
     device_class: PM10
     icon: mdi:flower-pollen
     unit_of_measurement: µg/m³
+    state_class: measurement
     update_interval: 1s
     filters:
       - sliding_window_moving_average:
