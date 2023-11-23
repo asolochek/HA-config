@@ -95,11 +95,6 @@
   alias: Standing fan on transition
   description: ''
   trigger:
-  - platform: device
-    type: turned_on
-    device_id: 808ab41e34066446ec46ee06a8d35f8f
-    entity_id: light.standing_fan
-    domain: light
   - platform: state
     entity_id:
     - fan.living_room_standing_fan
@@ -122,15 +117,11 @@
   alias: Standing fan off transition
   description: ''
   trigger:
-  - platform: device
-    type: turned_off
-    device_id: 808ab41e34066446ec46ee06a8d35f8f
-    entity_id: light.standing_fan
-    domain: light
   - platform: state
     entity_id:
     - fan.living_room_standing_fan
     to: 'off'
+    from: 'on'
   condition: []
   action:
   - service: input_select.select_option
@@ -179,11 +170,11 @@
   alias: Bedroom filter lights auto on
   description: ''
   trigger:
-  - platform: device
-    type: turned_on
-    device_id: 59b6690aa5a60f44d6d886a771ea4c7d
-    entity_id: light.sf_bedroom_ceiling_1
-    domain: light
+  - platform: state
+    entity_id:
+    - light.bedroom_ceiling_zigbee_group
+    from: 'off'
+    to: 'on'
   condition:
   - condition: sun
     after: sunrise
@@ -197,11 +188,11 @@
   alias: Bedroom filter lights auto off
   description: ''
   trigger:
-  - platform: device
-    type: turned_off
-    device_id: 59b6690aa5a60f44d6d886a771ea4c7d
-    entity_id: light.sf_bedroom_ceiling_1
-    domain: light
+  - platform: state
+    entity_id:
+    - light.bedroom_ceiling_zigbee_group
+    to: 'off'
+    from: 'on'
   condition:
   - condition: sun
     after: sunset
@@ -618,33 +609,33 @@
   - platform: state
     entity_id:
     - binary_sensor.bedroom_windows
-    from:
+    from: 'off'
     to: 'on'
   condition:
   - condition: or
     conditions:
     - condition: device
-      device_id: a5c3bfcaf44fc2ebf43389cfacf7d44f
+      device_id: 6833b84bb9fbdfd52286d43e14fa7596
       domain: climate
-      entity_id: climate.bedroom_airconditioner
-      type: is_hvac_mode
-      hvac_mode: cool
-    - condition: device
-      device_id: a5c3bfcaf44fc2ebf43389cfacf7d44f
-      domain: climate
-      entity_id: climate.bedroom_airconditioner
+      entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
       type: is_hvac_mode
       hvac_mode: dry
     - condition: device
-      device_id: a5c3bfcaf44fc2ebf43389cfacf7d44f
+      device_id: 6833b84bb9fbdfd52286d43e14fa7596
       domain: climate
-      entity_id: climate.bedroom_airconditioner
+      entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
+      type: is_hvac_mode
+      hvac_mode: cool
+    - condition: device
+      device_id: 6833b84bb9fbdfd52286d43e14fa7596
+      domain: climate
+      entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
       type: is_hvac_mode
       hvac_mode: fan_only
   action:
-  - device_id: a5c3bfcaf44fc2ebf43389cfacf7d44f
+  - device_id: 6833b84bb9fbdfd52286d43e14fa7596
     domain: climate
-    entity_id: climate.bedroom_airconditioner
+    entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
     type: set_hvac_mode
     hvac_mode: 'off'
   mode: single
@@ -938,9 +929,9 @@
   description: ''
   trigger:
   - platform: device
-    device_id: a5c3bfcaf44fc2ebf43389cfacf7d44f
+    device_id: 6833b84bb9fbdfd52286d43e14fa7596
     domain: climate
-    entity_id: 97413f0f22bbbf6226f78aa73729fdf6
+    entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
     type: hvac_mode_changed
     to: cool
   condition:
@@ -964,9 +955,9 @@
     to: 'on'
   condition:
   - condition: device
-    device_id: a5c3bfcaf44fc2ebf43389cfacf7d44f
+    device_id: 6833b84bb9fbdfd52286d43e14fa7596
     domain: climate
-    entity_id: 97413f0f22bbbf6226f78aa73729fdf6
+    entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
     type: is_hvac_mode
     hvac_mode: cool
   action:
@@ -975,22 +966,6 @@
       hvac_mode: 'off'
     target:
       entity_id: climate.bedroom_air_conditioner
-  mode: single
-- id: '1691955924272'
-  alias: MQTT Publish Max Test
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.bedroom_power
-    above: sensor.mqtt_sensor_bedroom_power_mqtt_max
-  condition: []
-  action:
-  - service: mqtt.publish
-    data:
-      qos: '1'
-      retain: true
-      topic: homeassistant/sensor/max/bedroom_power
-      payload_template: '{{ states(''sensor.bedroom_power'') }}'
   mode: single
 - id: '1693694108785'
   alias: Living room purifier auto on
