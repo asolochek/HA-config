@@ -61,6 +61,7 @@ cards:
       - entity_id: "*reactive*"
       - entity_id: "*_and_*"
       - entity_id: "*circuit*"
+      - entity_id: "*_ble_*"
       - integration: group
 
 
