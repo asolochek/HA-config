@@ -232,17 +232,18 @@ cards:
               type: button
               tap_action:
                 action: more-info
-              entity: sensor.rackups_status
+              entity: sensor.rack_ups_status
               show_state: true
               icon_height: 30px
             title-card-button-overlay: true
             cards:
               - type: entities
                 entities:
-                  - entity: sensor.rackups_battery_charge
+                  - entity: sensor.rack_ups_battery_charge
                     name: Battery Charge
-                  - entity: sensor.rackups_battery_runtime
+                  - entity: sensor.rack_ups_battery_runtime
                     name: Runtime (seconds)
+
           # NVR
           - type: custom:expander-card
             gap: 0.2em
@@ -1033,6 +1034,8 @@ cards:
         state_color: true
         tap_action:
           action: toggle
+        hold_action:
+          action: more-info
     info_entities:
       - entity: sensor.bedroom_air_quality_humidity
         format: precision1
