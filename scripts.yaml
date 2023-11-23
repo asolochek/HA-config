@@ -23,7 +23,8 @@ playstation:
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
   - service: media_player.volume_set
-    data: {}
+    data:
+      volume_level: 0.4
     target:
       entity_id: media_player.living_room
   mode: restart
@@ -265,7 +266,8 @@ nintendo:
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
   - service: media_player.volume_set
-    data: {}
+    data:
+      volume_level: 0.4
     target:
       entity_id: media_player.living_room
   mode: restart
@@ -291,10 +293,10 @@ apple_tv:
       device_id: 0f884b9e46116da8295560f82bba789f
   - service: media_player.volume_set
     data:
-      volume_level: 0.55
+      volume_level: 0.5
     target:
       entity_id: media_player.living_room
-    enabled: false
+    enabled: true
   mode: restart
   icon: mdi:apple
 tivo:
@@ -317,7 +319,8 @@ tivo:
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
   - service: media_player.volume_set
-    data: {}
+    data:
+      volume_level: 0.5
     target:
       entity_id: media_player.living_room
   mode: restart
@@ -343,7 +346,7 @@ apple_tv_music:
       device_id: 0f884b9e46116da8295560f82bba789f
   - service: media_player.volume_set
     data:
-      volume_level: 0.55
+      volume_level: 0.5
     target:
       entity_id: media_player.living_room
   mode: restart
