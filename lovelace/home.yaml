@@ -188,127 +188,127 @@ cards:
         header:
           icon: mdi:thermostat
 
-      - type: custom:expander-card
-        gap: 0.2em
-        padding: 0.0em
-        clear: false
-        title: Networking
-        overlay-margin: 0.2em
-        child-padding: 0.2em
-        button-background: transparent     
-        cards: 
+      # - type: custom:expander-card
+      #   gap: 0.2em
+      #   padding: 0.0em
+      #   clear: false
+      #   title: Networking
+      #   overlay-margin: 0.2em
+      #   child-padding: 0.2em
+      #   button-background: transparent     
+      #   cards: 
           # Power
-          - type: custom:expander-card
-            gap: 0.2em
-            padding: 0.0em
-            clear: false
-            title: Expander
-            overlay-margin: 0.2em
-            child-padding: 0.2em
-            button-background: transparent
-            title-card:
-              name: Network Power
-              show_name: true
-              show_icon: true
-              type: button
-              tap_action:
-                action: more-info
-              entity: sensor.network_rack_plug_power
-              show_state: true
-              icon_height: 30px
-            title-card-button-overlay: true
-            cards:
-              - type: entities
-                entities:
-                  - entity: sensor.network_rack_plug_current
-                    name: Current
-                  - entity: sensor.network_rack_plug_voltage
-                    name: Voltage
-                  - entity: sensor.network_rack_plug_total_energy
-                    name: Energy Total
+          # - type: custom:expander-card
+          #   gap: 0.2em
+          #   padding: 0.0em
+          #   clear: false
+          #   title: Expander
+          #   overlay-margin: 0.2em
+          #   child-padding: 0.2em
+          #   button-background: transparent
+          #   title-card:
+          #     name: Network Power
+          #     show_name: true
+          #     show_icon: true
+          #     type: button
+          #     tap_action:
+          #       action: more-info
+          #     entity: sensor.network_rack_plug_power
+          #     show_state: true
+          #     icon_height: 30px
+          #   title-card-button-overlay: true
+          #   cards:
+          #     - type: entities
+          #       entities:
+          #         - entity: sensor.network_rack_plug_current
+          #           name: Current
+          #         - entity: sensor.network_rack_plug_voltage
+          #           name: Voltage
+          #         - entity: sensor.network_rack_plug_total_energy
+          #           name: Energy Total
           # UPS          
-          - type: custom:expander-card
-            gap: 0.2em
-            padding: 0.0em
-            clear: false
-            title: Network UPS
-            overlay-margin: 0.2em
-            child-padding: 0.2em
-            button-background: transparent
-            title-card:
-              name: Network UPS
-              show_name: true
-              show_icon: true
-              type: button
-              tap_action:
-                action: more-info
-              entity: sensor.rackups_status
-              show_state: true
-              icon_height: 30px
-            title-card-button-overlay: true
-            cards:
-              - type: entities
-                entities:
-                  - entity: sensor.rackups_battery_charge
-                    name: Battery Charge
-                  - entity: sensor.rackups_battery_runtime
-                    name: Runtime (seconds)
-          # NVR
-          - type: custom:expander-card
-            gap: 0.2em
-            padding: 0.0em
-            clear: false
-            title: Unifi NVR
-            overlay-margin: 0.2em
-            child-padding: 0.2em
-            button-background: transparent
-            cards:
-              - type: entities
-                entities:
-                  - entity: binary_sensor.nvr_hdd_1
-                    name: Hdd 1
-                  - entity: binary_sensor.nvr_hdd_2
-                    name: Hdd 2
-                  - entity: sensor.nvr_cpu_temperature
-                    name: CPU Temperature
-                  - entity: sensor.nvr_cpu_utilization
-                    name: CPU Utilitization
-                  - entity: sensor.nvr_memory_utilization
-                    name: Memory Utilization
-                  - entity: sensor.nvr_storage_utilization
-                    name: Storage Utilization
-                  - entity: sensor.nvr_recording_capacity
-                    name: Recording Time
-                  - entity: sensor.nvr_uptime
-                    name: Uptime
-          # Gateway
-          - type: custom:expander-card
-            gap: 0.2em
-            padding: 0.0em
-            clear: false
-            title: Unifi Gateway
-            overlay-margin: 0.2em
-            child-padding: 0.2em
-            button-background: transparent
-            cards:
-              - type: entities
-                entities:
-                  - entity: sensor.router_rx_kib_s
-                    name: Rx KiB/s
-                  - entity: sensor.router_tx_kib_s
-                    name: Tx KiB/s
-                  - entity: sensor.router_bytes_received
-                    name: Bytes Received
-                  - entity: sensor.router_bytes_sent
-                    name: Bytes Sent
-                  - entity: sensor.router_rx_packets_s
-                    name: Rx Packets/s
-                  - entity: sensor.router_tx_packets_s
-                    name: Tx Packets/s
-                  - entity: sensor.router_packets_received
-                    name: Packets Received
-                  - entity: sensor.router_packets_sent
-                    name: Packets Sent
+          # - type: custom:expander-card
+          #   gap: 0.2em
+          #   padding: 0.0em
+          #   clear: false
+          #   title: Network UPS
+          #   overlay-margin: 0.2em
+          #   child-padding: 0.2em
+          #   button-background: transparent
+          #   title-card:
+          #     name: Network UPS
+          #     show_name: true
+          #     show_icon: true
+          #     type: button
+          #     tap_action:
+          #       action: more-info
+          #     entity: sensor.rack_ups_status
+          #     show_state: true
+          #     icon_height: 30px
+          #   title-card-button-overlay: true
+          #   cards:
+      # - type: entities
+      #   entities:
+      #     - entity: sensor.rack_ups_battery_charge
+      #       name: Battery Charge
+      #     - entity: sensor.rack_ups_battery_runtime
+      #       name: Runtime (seconds)
+      #     # NVR
+      #     - type: custom:expander-card
+      #       gap: 0.2em
+      #       padding: 0.0em
+      #       clear: false
+      #       title: Unifi NVR
+      #       overlay-margin: 0.2em
+      #       child-padding: 0.2em
+      #       button-background: transparent
+      #       cards:
+      #         - type: entities
+      #           entities:
+      #             - entity: binary_sensor.nvr_hdd_1
+      #               name: Hdd 1
+      #             - entity: binary_sensor.nvr_hdd_2
+      #               name: Hdd 2
+      #             - entity: sensor.nvr_cpu_temperature
+      #               name: CPU Temperature
+      #             - entity: sensor.nvr_cpu_utilization
+      #               name: CPU Utilitization
+      #             - entity: sensor.nvr_memory_utilization
+      #               name: Memory Utilization
+      #             - entity: sensor.nvr_storage_utilization
+      #               name: Storage Utilization
+      #             - entity: sensor.nvr_recording_capacity
+      #               name: Recording Time
+      #             - entity: sensor.nvr_uptime
+      #               name: Uptime
+      #     # Gateway
+      #     - type: custom:expander-card
+      #       gap: 0.2em
+      #       padding: 0.0em
+      #       clear: false
+      #       title: Unifi Gateway
+      #       overlay-margin: 0.2em
+      #       child-padding: 0.2em
+      #       button-background: transparent
+      #       cards:
+      #         - type: entities
+      #           entities:
+      #             - entity: sensor.router_rx_kib_s
+      #               name: Rx KiB/s
+      #             - entity: sensor.router_tx_kib_s
+      #               name: Tx KiB/s
+      #             - entity: sensor.router_bytes_received
+      #               name: Bytes Received
+      #             - entity: sensor.router_bytes_sent
+      #               name: Bytes Sent
+      #             - entity: sensor.router_rx_packets_s
+      #               name: Rx Packets/s
+      #             - entity: sensor.router_tx_packets_s
+      #               name: Tx Packets/s
+      #             - entity: sensor.router_packets_received
+      #               name: Packets Received
+      #             - entity: sensor.router_packets_sent
+      #               name: Packets Sent
       # Power
       - type: glance
         title: false
