@@ -37,6 +37,7 @@ button:
     name: "Restart"
     entity_category: "CONFIG"
 
+
 status_led:
   pin: 
     number: GPIO0
@@ -111,14 +112,18 @@ switch:
     id: window_open_switch
     restore_mode: ALWAYS_OFF
     pin: GPIO5
-    internal: true
+    name: "Window Open"
+    entity_category: "CONFIG"
+    internal: false
     interlock: [window_close_switch]
 
   - platform: gpio
     id: window_close_switch
     restore_mode: ALWAYS_OFF
     pin: GPIO4
-    internal: true
+    name: "Window Close"
+    entity_category: "CONFIG"
+    internal: false
     interlock: [window_open_switch]
 
   - platform: gpio
