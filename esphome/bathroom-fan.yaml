@@ -175,6 +175,20 @@ switch:
     id: neopix_power
     restore_mode: ALWAYS_ON
     pin: GPIO21
+  - platform: template
+    name: "Display Invert"
+    id: display_invert
+    lambda: |-
+      return id(bathroom_fan_display).is_invert();
+    turn_on_action:
+      lambda: |-
+        id(bathroom_fan_display).set_invert(true);
+    turn_off_action:
+      lambda: |-
+        id(bathroom_fan_display).set_invert(false);
+
+
+
 
 binary_sensor:
   - platform: gpio
