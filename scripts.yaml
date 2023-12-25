@@ -26,6 +26,19 @@ playstation:
     data: {}
     target:
       entity_id: media_player.living_room
+  - if:
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: media_player.living_room
+        attribute: source
+        state: PS5
+    then:
+    - service: media_player.select_source
+      data:
+        source: PS5
+      target:
+        entity_id: media_player.living_room
   mode: restart
   icon: mdi:sony-playstation
 all_lights_off:
