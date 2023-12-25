@@ -95,11 +95,6 @@
   alias: Standing fan on transition
   description: ''
   trigger:
-  - platform: device
-    type: turned_on
-    device_id: 808ab41e34066446ec46ee06a8d35f8f
-    entity_id: light.standing_fan
-    domain: light
   - platform: state
     entity_id:
     - fan.living_room_standing_fan
@@ -126,6 +121,7 @@
     entity_id:
     - fan.living_room_standing_fan
     to: 'off'
+    from: 'on'
   condition: []
   action:
   - service: input_select.select_option
