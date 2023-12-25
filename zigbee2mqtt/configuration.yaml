@@ -239,3 +239,6 @@ groups:
       - 0x0017880106ab6404/11
       - 0x001788010944a507/11
       - 0x0017880109449a57/11
+ota:
+  ikea_ota_use_test_url: false
+  disable_automatic_update_check: true
