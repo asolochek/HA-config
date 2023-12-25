@@ -33,6 +33,7 @@ MODELS = {
     "SH1106_96X16": SSD1306Model.SH1106_MODEL_96_16,
     "SH1106_64X48": SSD1306Model.SH1106_MODEL_64_48,
     "SH1107_128X64": SSD1306Model.SH1107_MODEL_128_64,
+    "SH1107_128X128": SSD1306Model.SH1107_MODEL_128_128,
     "SSD1305_128X32": SSD1306Model.SSD1305_MODEL_128_32,
     "SSD1305_128X64": SSD1306Model.SSD1305_MODEL_128_64,
 }
@@ -73,7 +74,6 @@ SSD1306_SCHEMA = display.FULL_DISPLAY_SCHEMA.extend(
 
 
 async def setup_ssd1306(var, config):
-    await cg.register_component(var, config)
     await display.register_display(var, config)
 
     cg.add(var.set_model(config[CONF_MODEL]))

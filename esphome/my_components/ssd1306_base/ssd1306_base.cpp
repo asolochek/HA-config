@@ -89,10 +89,11 @@ void SSD1306::setup() {
   } else if (this->is_sh1107_()) {
     // Enable charge pump (0xAD)
     this->command(SH1107_COMMAND_CHARGE_PUMP);
-    if (this->external_vcc_)
+    if (this->external_vcc_) {
       this->command(0x8A);
-    else
+    } else {
       this->command(0x8B);
+    }
   } else {
     // Enable charge pump (0x8D)
     this->command(SSD1306_COMMAND_CHARGE_PUMP);
@@ -105,10 +106,10 @@ void SSD1306::setup() {
 
   // Set addressing mode to horizontal (0x20)
   this->command(SSD1306_COMMAND_MEMORY_MODE);
-  if (!this->is_sh1107_())
+  if (!this->is_sh1107_()) {
     // SH1107 memory mode is a 1 byte command
     this->command(0x00);
-
+  }
   // X flip mode (0xA0, 0xA1)
   this->command(SSD1306_COMMAND_SEGRE_MAP | this->flip_x_);
 
@@ -136,6 +137,7 @@ void SSD1306::setup() {
         this->command(0x12);
         break;
       case SH1107_MODEL_128_64:
+      case SH1107_MODEL_128_128:
         // Not used, but prevents build warning
         break;
     }
@@ -152,7 +154,9 @@ void SSD1306::setup() {
   // Set V_COM (0xDB)
   this->command(SSD1306_COMMAND_SET_VCOM_DETECT);
   switch (this->model_) {
+    case SH1106_MODEL_128_64:
     case SH1107_MODEL_128_64:
+    case SH1107_MODEL_128_128:
       this->command(0x35);
       break;
     case SSD1306_MODEL_72_40:
@@ -184,7 +188,7 @@ void SSD1306::setup() {
   this->turn_on();
 }
 void SSD1306::display() {
-  if (this->is_sh1106_() | this->is_sh1107_()) {
+  if (this->is_sh1106_() || this->is_sh1107_()) {
     this->write_display_data();
     return;
   }
@@ -218,9 +222,7 @@ bool SSD1306::is_sh1106_() const {
   return this->model_ == SH1106_MODEL_96_16 || this->model_ == SH1106_MODEL_128_32 ||
          this->model_ == SH1106_MODEL_128_64;
 }
-bool SSD1306::is_sh1107_() const {
-  return this->model_ == SH1107_MODEL_128_64;
-}
+bool SSD1306::is_sh1107_() const { return this->model_ == SH1107_MODEL_128_64 || this->model_ == SH1107_MODEL_128_128; }
 bool SSD1306::is_ssd1305_() const {
   return this->model_ == SSD1305_MODEL_128_64 || this->model_ == SSD1305_MODEL_128_64;
 }
@@ -263,6 +265,7 @@ void SSD1306::turn_off() {
 int SSD1306::get_height_internal() {
   switch (this->model_) {
     case SH1107_MODEL_128_64:
+    case SH1107_MODEL_128_128:
       return 128;
     case SSD1306_MODEL_128_32:
     case SSD1306_MODEL_64_32:
@@ -293,6 +296,7 @@ int SSD1306::get_width_internal() {
     case SH1106_MODEL_128_64:
     case SSD1305_MODEL_128_32:
     case SSD1305_MODEL_128_64:
+    case SH1107_MODEL_128_128:
       return 128;
     case SSD1306_MODEL_96_16:
     case SH1106_MODEL_96_16:
