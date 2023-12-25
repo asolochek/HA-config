@@ -54,6 +54,16 @@ cards:
         tap_action:
           action: call-service
           service: script.air_conditioning_off
+      - entity: script.christmas_lights
+        name: Xmas
+        tap_action:
+          action: call-service
+          service: script.christmas_lights
+      - entity: script.christmas_lights_alternate
+        name: Xmas2
+        tap_action:
+          action: call-service
+          service: script.christmas_lights_alternate
 
 
 ########################################################

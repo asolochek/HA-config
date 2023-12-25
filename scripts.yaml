@@ -358,3 +358,125 @@ living_room_tv_turn_on:
       broadcast_address: 255.255.255.255
   mode: single
   icon: mdi:television
+christmas_lights:
+  alias: Christmas Lights
+  sequence:
+  - service: script.disable_all_adaptive_lights
+    data: {}
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.laundry_room_light
+      - light.kitchen_counter_west
+      - light.kitchen_ceiling_1_1
+      - light.kitchen_ceiling_1_2
+      - light.kitchen_ceiling_1_3
+      - light.office_desk_lights
+      - light.front_porch
+      - light.hallway_ceiling_zigbee_group
+      - light.office_ceiling_group
+      - light.bedroom_lamp
+      - light.bedroom_closet_light
+    data:
+      rgb_color:
+      - 255
+      - 0
+      - 0
+      brightness_pct: 100
+  - service: light.turn_on
+    data:
+      rgb_color:
+      - 0
+      - 255
+      - 0
+      brightness_pct: 100
+    target:
+      entity_id:
+      - light.kitchen_ceiling_2_1
+      - light.kitchen_ceiling_2_2
+      - light.kitchen_ceiling_2_3
+      - light.bedroom_ceiling_zigbee_group
+      - light.front_entry_light
+      - light.living_room_ceiling
+      - light.office_bench_lights
+      - light.kitchen_counter_east
+      - light.piano_light
+  mode: single
+  icon: mdi:pine-tree
+enable_all_adaptive_lights:
+  alias: Enable All Adaptive Lights
+  sequence:
+  - service: switch.turn_on
+    target:
+      entity_id:
+      - switch.adaptive_lighting_bedroom
+      - switch.adaptive_lighting_bedroom_lamp
+      - switch.adaptive_lighting_hallway
+      - switch.adaptive_lighting_living_room
+      - switch.adaptive_lighting_kitchen
+      - switch.adaptive_lighting_office
+    data: {}
+  mode: single
+  icon: mdi:sun-thermometer
+disable_all_adaptive_lights:
+  alias: Disable All Adaptive Lights
+  sequence:
+  - service: switch.turn_off
+    target:
+      entity_id:
+      - switch.adaptive_lighting_bedroom
+      - switch.adaptive_lighting_bedroom_lamp
+      - switch.adaptive_lighting_hallway
+      - switch.adaptive_lighting_living_room
+      - switch.adaptive_lighting_kitchen
+      - switch.adaptive_lighting_office
+      device_id: []
+      area_id: []
+    data: {}
+  mode: single
+  icon: mdi:sun-thermometer-outline
+christmas_lights_alternate:
+  alias: Christmas Lights (Alternate)
+  sequence:
+  - service: script.disable_all_adaptive_lights
+    data: {}
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.laundry_room_light
+      - light.kitchen_counter_west
+      - light.kitchen_ceiling_1_1
+      - light.kitchen_ceiling_1_2
+      - light.kitchen_ceiling_1_3
+      - light.office_desk_lights
+      - light.front_porch
+      - light.hallway_ceiling_zigbee_group
+      - light.office_ceiling_group
+      - light.bedroom_lamp
+      - light.bedroom_closet_light
+    data:
+      rgb_color:
+      - 0
+      - 255
+      - 0
+      brightness_pct: 100
+  - service: light.turn_on
+    data:
+      rgb_color:
+      - 255
+      - 0
+      - 0
+      brightness_pct: 100
+    target:
+      entity_id:
+      - light.kitchen_ceiling_2_1
+      - light.kitchen_ceiling_2_2
+      - light.kitchen_ceiling_2_3
+      - light.bedroom_ceiling_zigbee_group
+      - light.front_entry_light
+      - light.living_room_ceiling
+      - light.office_bench_lights
+      - light.kitchen_counter_east
+      - light.piano_light
+  mode: single
+  icon: mdi:pine-tree-variant
