@@ -109,6 +109,8 @@ air_conditioners_on:
 adapt_all_lights:
   alias: Adapt All Lights
   sequence:
+  - service: script.enable_all_adaptive_lights
+    data: {}
   - service: switch.turn_off
     data: {}
     target:
