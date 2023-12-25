@@ -1183,3 +1183,18 @@
     data:
       message: Thao's Home
   mode: single
+- id: '1701253992219'
+  alias: Bathroom Displays Invert
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:00:00
+  - platform: time
+    at: '20:00:00'
+  condition: []
+  action:
+  - service: switch.toggle
+    data: {}
+    target:
+      entity_id: switch.bathroom_fan_display_invert
+  mode: single
