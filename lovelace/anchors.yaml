@@ -1,0 +1,39 @@
+anchors:
+  all_templates: &all_templates
+    templates:
+      - name: light_template
+        template: 
+          show_icon: true
+          state_color: true
+          tap_action:
+            action: toggle
+          double_tap_action:
+            action: more-info
+          icon:
+            template:
+              styles: >
+                if (entity.state == "off") return 'color: gray';
+                else return;
+      - name: window_template
+        template:
+          show_icon: true
+          state_color: true
+          icon:
+            # change the icon to match window state
+            template:
+              icon: >
+                if (entity.state == "on") return 'mdi:window-open';  
+                else return 'mdi:window-closed';
+      - name: fan_template
+        template:
+          show_icon: true
+          state_color: true
+          tap_action:
+            action: toggle
+          double_tap_action:
+            action: more-info
+          icon:
+            template:
+              styles: >
+                if (entity.state == "off") return 'color: gray';
+                else return;
