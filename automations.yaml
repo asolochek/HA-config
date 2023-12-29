@@ -547,38 +547,6 @@
     target:
       entity_id: fan.peloton_fan
   mode: single
-- id: '1687991678279'
-  alias: 'Bedside switch on '
-  description: ''
-  trigger:
-  - platform: device
-    type: turned_on
-    device_id: dde73a12422db41240f011bef1e40a8b
-    entity_id: switch.bedside_switch_switch
-    domain: switch
-  condition: []
-  action:
-  - type: turn_on
-    device_id: d2bec99ca6bf7d44d4a650e15728d07c
-    entity_id: light.bedroom_ceiling
-    domain: light
-  mode: single
-- id: '1687991721485'
-  alias: Bedside switch off
-  description: ''
-  trigger:
-  - platform: device
-    type: turned_off
-    device_id: dde73a12422db41240f011bef1e40a8b
-    entity_id: switch.bedside_switch_switch
-    domain: switch
-  condition: []
-  action:
-  - type: turn_off
-    device_id: d2bec99ca6bf7d44d4a650e15728d07c
-    entity_id: light.bedroom_ceiling
-    domain: light
-  mode: single
 - id: '1688520226655'
   alias: Living Room Airconditioner Auto Off
   description: Turn off livingroom AC when window opens
