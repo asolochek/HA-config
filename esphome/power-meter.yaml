@@ -17,6 +17,8 @@ esp32:
 # Enable logging
 logger:
   level: INFO
+  hardware_uart: UART0
+
 
 # Enable Home Assistant API
 api:
