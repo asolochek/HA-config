@@ -106,8 +106,6 @@ devices:
     friendly_name: Living Room South East Window
   '0x00158d0009df4175':
     friendly_name: Front Door
-  '0x7c25e4000010a4fb':
-    friendly_name: Bedside Switch
   '0x00178801042a79be':
     friendly_name: Bedroom Lamp
   '0x0017880103eeb09e':
