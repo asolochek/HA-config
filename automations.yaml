@@ -38,6 +38,10 @@
     entity_id: sensor.aaron_on_peloton_heart_rate_current
     above: 130
     id: workout_fan_auto_started
+  - platform: numeric_state
+    entity_id:
+    - sensor.thao_on_peloton_heart_rate_current
+    above: 130
   condition:
   - condition: state
     entity_id: input_boolean.standing_fan_auto_enabled
@@ -50,6 +54,18 @@
     - condition: state
       entity_id: input_select.standing_fan_mode
       state: unknown
+  - condition: or
+    conditions:
+    - type: is_running
+      condition: device
+      device_id: 1deeadfbd47d7c685f34e5cde1231e47
+      entity_id: 5d26af4dd72c295b10062e9e83ba6efa
+      domain: binary_sensor
+    - type: is_running
+      condition: device
+      device_id: e4ea4923eab39ca70ae3805e7cc9a285
+      entity_id: 66d2f572455c2a7d225a314d54e4df46
+      domain: binary_sensor
   action:
   - service: input_select.select_option
     data:
@@ -72,9 +88,18 @@
     domain: binary_sensor
     for:
       hours: 0
-      minutes: 0
-      seconds: 30
+      minutes: 1
+      seconds: 0
     id: workout_stopped
+  - type: not_running
+    platform: device
+    device_id: 1deeadfbd47d7c685f34e5cde1231e47
+    entity_id: 5d26af4dd72c295b10062e9e83ba6efa
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
   condition:
   - condition: state
     entity_id: input_select.standing_fan_mode
@@ -537,6 +562,15 @@
       seconds: 30
     to: 'off'
     from: 'on'
+  - platform: state
+    entity_id:
+    - binary_sensor.thao_on_peloton_workout
+    from: 'on'
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
   condition:
   - condition: state
     entity_id: fan.peloton_fan
@@ -683,6 +717,14 @@
   - platform: state
     entity_id:
     - binary_sensor.aaron_on_peloton_workout
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+  - platform: state
+    entity_id:
+    - binary_sensor.thao_on_peloton_workout
     to: 'on'
     for:
       hours: 0
@@ -1069,8 +1111,8 @@
     - binary_sensor.bedroom_closet_window_closet_motion
     for:
       hours: 0
-      minutes: 0
-      seconds: 30
+      minutes: 1
+      seconds: 0
     to: 'off'
   - platform: time_pattern
     minutes: /5
@@ -1089,8 +1131,8 @@
       state: 'off'
       for:
         hours: 0
-        minutes: 0
-        seconds: 30
+        minutes: 1
+        seconds: 0
   action:
   - service: light.turn_off
     data: {}
