@@ -829,6 +829,8 @@ cards:
       - entity: sensor.carpaccio
       - entity: sensor.thao_s_phone
       - entity: sensor.thao_s_watch
+      - entity: binary_sensor.10_0_1_1
+      - entity: binary_sensor.128_237_157_37
 
 
 

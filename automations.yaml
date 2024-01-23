@@ -1157,3 +1157,53 @@
     target:
       entity_id: switch.bathroom_fan_display_invert
   mode: single
+- id: '1704920718213'
+  alias: Someone Comes Home
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - device_tracker.aarons_watch
+    - device_tracker.thao_watch
+    - device_tracker.ham_ble
+    from: not_home
+    to: home
+  - platform: state
+    entity_id:
+    - sensor.thao_s_phone
+    from: not_home
+  - platform: device
+    device_id: 22777d2f3d0cd0034f66e7efd6c85664
+    domain: device_tracker
+    entity_id: face6a3a3c1ff3ea6468bec8f024fff9
+    type: enters
+    zone: zone.home
+  condition:
+  - condition: sun
+    after: sunset
+  - condition: or
+    conditions:
+    - condition: sun
+      after: sunset
+    - condition: numeric_state
+      entity_id: sensor.living_room_presence_light_sensor
+      below: 10
+    - condition: numeric_state
+      entity_id: sensor.kitchen_presence_light_sensor
+      below: 10
+  action:
+  - wait_for_trigger:
+    - type: opened
+      platform: device
+      device_id: c4fc2ed608a793675ded3c0623a42ebf
+      entity_id: 804077174d2bb120d98f6fe6750f98bd
+      domain: binary_sensor
+    continue_on_timeout: false
+    timeout:
+      hours: 0
+      minutes: 4
+      seconds: 0
+      milliseconds: 0
+  - service: script.welcome_lights
+    data: {}
+  mode: single
