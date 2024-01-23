@@ -32,6 +32,9 @@ esp32:
 logger:
   level: DEBUG
 
+bluetooth_proxy:
+  active: true
+
 # Enable Home Assistant API
 api:
   encryption:
