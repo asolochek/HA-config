@@ -235,6 +235,7 @@ day_lights:
       - light.office_lights
       - light.kitchen_lights
       - light.bedroom_closet_light
+      - light.laundry_room_lights
   mode: single
   icon: mdi:coffin
 bedtime:
@@ -498,3 +499,17 @@ christmas_lights_alternate:
       - light.piano_light
   mode: single
   icon: mdi:pine-tree-variant
+welcome_lights:
+  alias: Welcome Lights
+  sequence:
+  - service: light.turn_on
+    metadata: {}
+    data:
+      transition: 0
+    target:
+      entity_id:
+      - light.hallway_lights
+      - light.kitchen_lights
+      - light.living_room_lights
+  mode: single
+  icon: mdi:home-import-outline
