@@ -155,7 +155,9 @@ climate:
     cool_action:
       lambda: |-
         auto fan_call = id(bathroom_fan).make_call();
-        id(target_val) = id(baseline_humidity).state + id(baseline_offset).state;
+        float clear_humidity = id(baseline_humidity).state + id(baseline_offset).state; 
+        if(clear_humidity <= 60) clear_humidity = 60;
+        id(target_val) = clear_humidity;
         fan_call.set_speed(id(fan_cool_speed).state * 10.24);
         fan_call.perform();
     
