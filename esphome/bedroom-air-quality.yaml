@@ -3,6 +3,8 @@ esphome:
   friendly_name: Bedroom Air Quality
   platformio_options:
     board_build.flash_mode: dio
+    build_flags: -Os
+    build_unflags: -O2
   includes:
     - aqi.h
     - humidity_correction.h
@@ -16,9 +18,9 @@ esp32:
     type: arduino
 
 # Enable logging
-logger:
+#logger:
   #level: DEBUG
-   level: INFO
+  # level: INFO
   # logs:
   #   pmsa003i: ERROR
   #   scd4x: ERROR
