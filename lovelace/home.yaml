@@ -593,6 +593,9 @@ cards:
         - entity: light.living_room_closet_light
           name: Closet
           template: light_template
+        - entity: switch.living_room_south_grow_light
+          name: Grow Light
+          template: light_template
         - entity: script.apple_tv
           name: AppleTV
           tap_action:
