@@ -30,7 +30,7 @@ esp32:
     type: esp-idf
 
 logger:
-  level: DEBUG
+  level: INFO
 
 bluetooth_proxy:
   active: true
