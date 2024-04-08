@@ -25,6 +25,9 @@ logger:
     bme280: ERROR
     sensor: ERROR
 
+#bluetooth_proxy:
+#  active: true
+
 # Enable Home Assistant API
 api:
   encryption:
