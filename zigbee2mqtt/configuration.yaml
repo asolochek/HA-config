@@ -144,6 +144,8 @@ devices:
     friendly_name: Front Porch
   '0x00158d0009ee038b':
     friendly_name: Bedroom Closet Window Sensor
+  '0xf0d1b80000077af5':
+    friendly_name: Living Room South Grow Light
 device_options:
   legacy: false
 groups:
