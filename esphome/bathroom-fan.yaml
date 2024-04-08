@@ -306,6 +306,7 @@ sensor:
         }
         else {
           new_val = id(baseline_offset).state + x;
+          if (new_val < 60) new_val = 60;
         }
         ESP_LOGI("baseline", "clear threshold set to %.0f%%", new_val);
         auto controller_call = id(humidity_controller).make_call();
