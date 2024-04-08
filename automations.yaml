@@ -1158,6 +1158,10 @@
       - switch.adaptive_lighting_sleep_mode_kitchen
       - switch.adaptive_lighting_sleep_mode_living_room
       - switch.adaptive_lighting_sleep_mode_office
+  - service: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.auto_lights_disabled
+    data: {}
   mode: single
 - id: '1695651659423'
   alias: Sunset Actions
@@ -1176,13 +1180,42 @@
   - platform: state
     entity_id:
     - device_tracker.thao_watch
-    from: not_home
+    from:
     to: home
-  condition: []
+  - platform: state
+    entity_id:
+    - device_tracker.thao_phone
+    from:
+    to: home
+  - platform: state
+    entity_id:
+    - device_tracker.thao_phone_2
+    to: home
+    from:
+  - platform: state
+    entity_id:
+    - device_tracker.thao_watch_2
+    from:
+    to: home
+  condition:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: input_boolean.thao_s_home
+      state: 'off'
+    enabled: false
+  - condition: state
+    entity_id: input_boolean.thao_s_home
+    state: 'off'
   action:
   - service: notify.mobile_app_ham
     data:
       message: Thao's Home
+  - service: input_boolean.turn_on
+    target:
+      entity_id:
+      - input_boolean.thao_s_home
+    data: {}
   mode: single
 - id: '1701253992219'
   alias: Bathroom Displays Invert
@@ -1221,8 +1254,6 @@
     type: enters
     zone: zone.home
   condition:
-  - condition: sun
-    after: sunset
   - condition: or
     conditions:
     - condition: sun
@@ -1246,6 +1277,126 @@
       minutes: 4
       seconds: 0
       milliseconds: 0
-  - service: script.welcome_lights
+  - if:
+    - condition: state
+      entity_id: input_boolean.auto_lights_disabled
+      state: 'off'
+    then:
+    - service: script.welcome_lights
+      data: {}
+  mode: single
+- id: '1706996915630'
+  alias: Disable Welcome Lights At Night
+  description: Disable the welcome lights when someone goes to walk the dog
+  trigger:
+  - platform: state
+    entity_id:
+    - device_tracker.aarons_watch
+    - device_tracker.thao_watch
+    - device_tracker.ham_ble
+    from: home
+    to: not_home
+  - platform: device
+    device_id: 22777d2f3d0cd0034f66e7efd6c85664
+    domain: device_tracker
+    entity_id: face6a3a3c1ff3ea6468bec8f024fff9
+    type: leaves
+    zone: zone.home
+  - platform: state
+    entity_id:
+    - sensor.thao_s_phone
+    to: not_home
+  condition:
+  - condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.living_room_presence_light_sensor
+      below: 10
+    - condition: numeric_state
+      entity_id: sensor.kitchen_presence_light_sensor
+      below: 10
+    - condition: time
+      after: 00:00:00
+      before: 06:00:00
+      weekday:
+      - sun
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+  action:
+  - service: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.auto_lights_disabled
+    data: {}
+  mode: single
+- id: '1711506282692'
+  alias: Grow Light On
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:15:00
+  condition: []
+  action:
+  - service: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.living_room_south_grow_light
+  mode: single
+- id: '1711506319291'
+  alias: Grow Light Off
+  description: ''
+  trigger:
+  - platform: time
+    at: '19:15:00'
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id:
+      - switch.living_room_south_grow_light
+    data: {}
+  mode: single
+- id: '1712364725887'
+  alias: Thao Leaves
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - device_tracker.thao_watch_2
+    from: home
+    to:
+  - platform: state
+    entity_id:
+    - device_tracker.thao_phone_2
+    from: home
+    to:
+  condition:
+  - condition: and
+    conditions:
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: device_tracker.thao_phone_2
+        state: not_home
+      - condition: state
+        entity_id: device_tracker.thao_phone_2
+        state: unavailable
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: device_tracker.thao_watch_2
+        state: not_home
+      - condition: state
+        entity_id: device_tracker.thao_watch_2
+        state: unavailable
+  action:
+  - service: input_boolean.turn_off
+    target:
+      entity_id:
+      - input_boolean.thao_s_home
     data: {}
   mode: single
