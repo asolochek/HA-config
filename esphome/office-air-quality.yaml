@@ -44,9 +44,9 @@ wifi:
     subnet: 255.255.0.0
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Office-Air-Quality"
-    password: "iONQeJLJuQDN"
+  #ap:
+   # ssid: "Office-Air-Quality"
+   # password: "iONQeJLJuQDN"
 
 #captive_portal:
 

@@ -32,9 +32,9 @@ wifi:
     subnet: 255.255.0.0
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "crawl-space-sensor"
-    password: "3YNltoMmXWXn"
+ # ap:
+ #   ssid: "crawl-space-sensor"
+ #   password: "3YNltoMmXWXn"
 
 #captive_portal:
     

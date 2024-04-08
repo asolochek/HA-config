@@ -38,9 +38,9 @@ wifi:
   password: !secret wifi_password
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Bathroom-Fan Fallback Hotspot"
-    password: "peMlpmKXvOtL"
+#  ap:
+#    ssid: "Bathroom-Fan Fallback Hotspot"
+#    password: "peMlpmKXvOtL"
   manual_ip:
     static_ip: 10.3.1.72
     gateway: 10.3.1.2
