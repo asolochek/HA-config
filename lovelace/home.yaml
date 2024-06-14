@@ -10,7 +10,8 @@
 
 path: default_view
 title: Home
-type: custom:vertical-layout
+type: custom:layout-card
+layout_type: custom:vertical-layout
 layout:
   max_cols: 3
 cards:
