@@ -134,8 +134,6 @@ devices:
     friendly_name: Bedroom South Window
   '0x00158d0009df4042':
     friendly_name: Bedroom North Window
-  '0x001788010d65d5d3':
-    friendly_name: Front Entry Light
   '0x001788010d67b5d0':
     friendly_name: Laundry Room Light
   '0x001788010d65d634':
@@ -146,6 +144,8 @@ devices:
     friendly_name: Living Room South Grow Light
   '0x001788010d67ce3e':
     friendly_name: Kitchen Ceiling 2-1
+  '0x001788010dab64c2':
+    friendly_name: Front Entry Light
 device_options:
   legacy: false
 groups:
@@ -186,7 +186,7 @@ groups:
       - 0x001788010b6dd5fe/11
       - 0x001788010b6dd864/11
       - 0x0017880106ab4ab8/11
-      - 0x001788010d65d5d3/11
+      - 0x001788010dab64c2/11
   '7':
     friendly_name: All Lights Zigbee Group
     devices:
@@ -211,9 +211,9 @@ groups:
       - 0x0017880106ab6404/11
       - 0x001788010944a507/11
       - 0x0017880109449a57/11
-      - 0x001788010d65d5d3/11
       - 0x001788010d67b5d0/11
       - 0x001788010d67ce3e/11
+      - 0x001788010dab64c2/11
   '8':
     friendly_name: Kitchen Ceiling Zigbee Group
     devices:
