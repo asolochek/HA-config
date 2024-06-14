@@ -513,3 +513,23 @@ welcome_lights:
       - light.living_room_lights
   mode: single
   icon: mdi:home-import-outline
+front_door_unlock:
+  alias: Front door unlock
+  sequence:
+  - if:
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: device_tracker.aarons_watch_3
+        state: home
+      - condition: state
+        entity_id: device_tracker.ham
+        state: home
+    then:
+    - service: lock.unlock
+      metadata: {}
+      data: {}
+      target:
+        entity_id: lock.front_door
+  mode: single
+  icon: mdi:lock-open-variant-outline
