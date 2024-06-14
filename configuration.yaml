@@ -17,6 +17,7 @@ rest_command:
 logger:
   default: info
   logs:
+    homeassistant.components.mqtt: warning
 #    custom_components.nut: debug
     custom_components.pyscript: info
     custom_components.pyscript.file.relative_humidity_correction: info
