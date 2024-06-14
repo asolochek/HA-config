@@ -19,7 +19,7 @@ esp32:
 
 # Enable logging
 logger:
-  level: INFO
+  level: ERROR
   logs:
     sht3xd: ERROR
     bme280: ERROR
@@ -401,6 +401,13 @@ external_components:
       - ssd1306_base
       - ssd1306_i2c
       - ssd1306_spi
+      - sht3xd
+
+#  - source:
+#      type: git
+#      url: https://github.com/mrtoy-me/esphome-my-components
+#      ref: main
+#    components: [ sht3xd ]
 
 font:
   - file: "fonts/Futura-Medium-01.ttf"
