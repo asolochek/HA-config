@@ -44,10 +44,10 @@ wifi:
 #  ap:
 #    ssid: "Bathroom-Fan Fallback Hotspot"
 #    password: "peMlpmKXvOtL"
-  manual_ip:
-    static_ip: 10.3.1.72
-    gateway: 10.3.1.2
-    subnet: 255.255.0.0
+#  manual_ip:
+#    static_ip: 10.3.1.72
+#    gateway: 10.3.1.2
+#    subnet: 255.255.0.0
 
 #captive_portal:
 
