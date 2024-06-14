@@ -526,6 +526,10 @@ cards:
     entities:
       - entity: light.garage_light
         template: light_template
+      - entity: camera.garage_exterior_high
+        name: Exterior
+      - entity: camera.garage_interior_high
+        name: Interior
     info_entities:
       - entity: binary_sensor.garage_door_open
         name: Garage Door
