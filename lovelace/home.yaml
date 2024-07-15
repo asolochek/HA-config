@@ -1067,7 +1067,7 @@ cards:
       - entity: binary_sensor.bedroom_windows
         template: window_template
         name: Windows
-      - entity: binary_sensor.bedroom_closet_window_open
+      - entity: binary_sensor.bedroom_closet_window_closed
         template: window_template
         name: Closet Window
       - entity: binary_sensor.bedroom_presence_occupancy

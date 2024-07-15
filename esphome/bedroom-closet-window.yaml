@@ -171,7 +171,7 @@ binary_sensor:
     internal: false
 
   - platform: template
-    id: bedroom_closet_window_open
+    id: bedroom_closet_window_closed
     lambda: 'return !id(window_closed_sensor).state;'
     name: Window Closed
     icon: mdi:window

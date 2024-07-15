@@ -144,7 +144,7 @@ binary_sensor:
     
 
   - platform: template
-    id: office_window_open
+    id: office_window_closed
     lambda: 'return !id(window_closed_sensor).state;'
     name: Window Closed
     icon: mdi:window
@@ -154,7 +154,7 @@ binary_sensor:
     name: Zigbee Window Sensor
     id: window_open_sensor_2
     entity_id: binary_sensor.office_east_window
-    internal: true
+    internal: false
 
 
 cover:
