@@ -11,7 +11,6 @@ esphome:
 
 esp32:
   board: adafruit_qtpy_esp32
-#  variant: esp32s3
   framework:
     type: arduino
 
@@ -20,8 +19,9 @@ logger:
   level: ERROR
   hardware_uart: UART0
   # logs:
+  #   component: ERROR
   #   pmsa003i: ERROR
-  #   scd4x: ERROR
+  #   scd4x: DEBUG
   #   sensor: DEBUG
   #   st7789v: ERROR
 
@@ -80,7 +80,9 @@ switch:
   - platform: gpio
     id: neopix_power
     restore_mode: ALWAYS_ON
-    pin: GPIO8
+    pin: 
+      number: GPIO8
+      ignore_pin_validation_error: true
 
 sensor:
   - platform: scd4x
@@ -231,7 +233,9 @@ light:
     id: neopixel_led
     type: GRB
     variant: WS2812
-    pin: GPIO5
+    pin: 
+      number: GPIO5
+      ignore_pin_validation_error: true
     num_leds: 1
     name: "NeoPixel"
 
@@ -239,7 +243,9 @@ light:
 display:
   - platform: st7789v
     model: Custom
-    cs_pin: GPIO7
+    cs_pin: 
+      number: GPIO7
+      ignore_pin_validation_error: true
     dc_pin: GPIO27
     reset_pin: GPIO15
     height: 320
