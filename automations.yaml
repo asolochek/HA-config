@@ -438,6 +438,10 @@
     - input_button.livingroom_apple_tv_pause
   condition: []
   action:
+  - service: media_player.turn_on
+    target:
+      device_id: fd05d6b84c78d8accb583974bc1ba777
+    data: {}
   - service: media_player.media_pause
     data: {}
     target:
@@ -779,7 +783,7 @@
       remote: 3fc2502d88893fcf95586a983e8d5368
       sensitivity: 1
       light:
-        entity_id: light.bedroom_lights
+        entity_id: light.bedroom_ceiling
 - id: '1689229319560'
   alias: Living Room Light Switch
   description: ''
