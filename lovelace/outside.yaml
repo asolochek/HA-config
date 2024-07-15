@@ -15,7 +15,7 @@ layout:
 
 cards:
   - type: custom:weather-card
-    entity: weather.ecobee
+    entity: weather.thermostat
     number_of_forecasts: '5'
     view_layout:
       height: 100

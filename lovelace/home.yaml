@@ -158,9 +158,9 @@ cards:
         template: fan_template
 
     info_entities:
-      - entity: sensor.ecobee_humidity
+      - entity: sensor.thermostat_humidity
         format: precision1
-      - entity: sensor.ecobee_temperature
+      - entity: sensor.thermostat_temperature
         format: precision1
         unit: ºF
       - entity: binary_sensor.front_door
@@ -173,12 +173,12 @@ cards:
               condition: equals
               entity: binary_sensor.front_door
               value: "on"
-      - entity: binary_sensor.ecobee_occupancy
+      - entity: binary_sensor.termostat_occupancy
         show_icon: true
         state_color: true
     cards:
       - type: custom:simple-thermostat
-        entity: climate.ecobee    
+        entity: climate.thermostat    
         step: row
         control: true
         layout:
@@ -880,6 +880,11 @@ cards:
       - entity: switch.adaptive_lighting_office
         name: Adaptive
         template: light_template
+      - entity: cover.office_window
+        name: Office Window
+        state_color: true
+        tap_action:
+          action: toggle
     info_entities:
       - entity: sensor.office_air_quality_humidity
         format: precision1
