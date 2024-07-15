@@ -32,11 +32,13 @@ api:
     key: "xMwA4GGa1Mdesco5Bm+VUfqwWZr1bBok1AzeWI4MTMo="
 
 ota:
+  platform: esphome
   password: "10065348d8bbbf057758e70959c3dddc"
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  use_address: air-quality-office.sf.aberrant.org
 
   # manual_ip:
   #   static_ip: 10.3.1.38

@@ -11,7 +11,7 @@ substitutions:
   # Current Limit in Amps. AU Plug = 10. IL, BR, EU, UK, US Plug = 16.
   current_limit : "16"
   # Define a domain for this device to use. i.e. iot.home.lan (so device will appear as athom-smart-plug-v2.iot.home.lan in DNS/DHCP logs)
-  dns_domain: ""
+  dns_domain: ".sf.aberrant.org"
   # Set timezone of the smart plug. Useful if the plug is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney")
   timezone: ""
   # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken
@@ -28,6 +28,8 @@ api:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  domain: "${dns_domain}"
+  use_address: plug-toilet.sf.aberrant.org
   # manual_ip:
   #   static_ip: 10.3.1.97
   #   gateway: 10.3.1.2
@@ -56,6 +58,7 @@ preferences:
 #api:
 
 ota:
+  platform: esphome
 
 logger:
   level: INFO

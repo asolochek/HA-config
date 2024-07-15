@@ -20,6 +20,7 @@ api:
     key: "ynGfaEiLcGoIbLZYZC8RPAUQ5Zykfw7KaAEbceT8JVo="
 
 ota:
+  platform: esphome
   password: "f1032615bf34151cfdabacad206096c9"
 
 bluetooth_proxy:
@@ -28,6 +29,7 @@ bluetooth_proxy:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  use_address: power-meter-15kw.sf.aberrant.org
 
   # manual_ip:
   #   static_ip: 10.3.1.116
