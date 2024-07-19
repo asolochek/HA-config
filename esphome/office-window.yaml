@@ -127,6 +127,7 @@ binary_sensor:
     internal: false
     filters: 
       - delayed_off: 1s
+      - delayed_on: 500ms
           
 
   - platform: gpio
@@ -180,4 +181,4 @@ cover:
     stop_action:
       - switch.turn_off: window_close_switch
       - switch.turn_off: window_open_switch
-    max_duration: 40s
+    max_duration: 50s
