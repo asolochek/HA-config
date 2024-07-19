@@ -97,10 +97,10 @@ output:
 
 
 switch:
-  - platform: gpio
-    id: neopixel_power
-    restore_mode: ALWAYS_ON
-    pin: GPIO8
+  # - platform: gpio
+  #   id: neopixel_power
+  #   restore_mode: ALWAYS_ON
+  #   pin: GPIO8
 
   - platform: gpio
     id: meter_ground

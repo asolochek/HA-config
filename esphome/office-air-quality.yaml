@@ -229,15 +229,15 @@ light:
     restore_mode: ALWAYS_ON
     default_transition_length: 0.1s
 
-  - platform: neopixelbus
-    id: neopixel_led
-    type: GRB
-    variant: WS2812
-    pin: 
-      number: GPIO5
-      ignore_pin_validation_error: true
-    num_leds: 1
-    name: "NeoPixel"
+#  - platform: neopixelbus
+#    id: neopixel_led
+#    type: GRB
+#    variant: WS2812
+#    pin: 
+#      number: GPIO5
+#      ignore_pin_validation_error: true
+#    num_leds: 1
+#    name: "NeoPixel"
 
 
 display:
