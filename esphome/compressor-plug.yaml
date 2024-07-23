@@ -8,7 +8,7 @@ esphome:
 logger:
   baud_rate: 0 # (UART logging interferes with cse7766)
   logs:
-    sensor: DEBUG # (Overide any global setting, to VERBOSE will spamming the cse7766 sensors)
+    sensor: WARN # (Overide any global setting, to VERBOSE will spamming the cse7766 sensors)
 
 uart:
   rx_pin: RX
