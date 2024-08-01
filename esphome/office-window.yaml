@@ -58,13 +58,6 @@ button:
     entity_category: "CONFIG"
 
 
-# status_led:
-#   pin: 
-#     number: GPIO23
-#     inverted: False
-
-
-
 switch:
   - platform: gpio
     id: window_close_switch
@@ -89,6 +82,37 @@ output:
   - platform: ledc
     pin: GPIO23
     id: green_button_led
+    frequency: 1220Hz
+
+light:
+  - platform: monochromatic
+    output: green_button_led
+    id: button_light
+    name: "Button"
+    default_transition_length: .2s
+    restore_mode: RESTORE_AND_OFF
+#    internal: true
+    effects:
+      - lambda:
+          name: Breathing
+          update_interval: 1s
+          lambda: |-
+            static bool state = true;
+            static int color = 1;
+            auto call = id(button_light).turn_on();
+            call.set_transition_length(1000);
+            call.set_brightness(1.0);
+            if (state)
+            {
+              call.set_brightness(1.0);
+            }
+            else
+            {
+              call.set_brightness(0.20);
+            }
+            call.perform();
+            state = !state;
+
 
 binary_sensor:
   - platform: gpio
@@ -166,11 +190,17 @@ cover:
 
     open_action:
       - switch.turn_on: window_open_switch
+      - light.turn_on:
+          id: button_light
+          effect: Breathing
     open_duration: 32.6s
     open_endstop: window_open_sensor
 
     close_action:
       - switch.turn_on: window_close_switch
+      - light.turn_on:
+          id: button_light
+          effect: Breathing
     close_duration: 33.4s
     close_endstop: window_closed_sensor
     # on_closed:
@@ -181,4 +211,5 @@ cover:
     stop_action:
       - switch.turn_off: window_close_switch
       - switch.turn_off: window_open_switch
+      - light.turn_off: button_light
     max_duration: 50s
