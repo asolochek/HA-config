@@ -533,3 +533,21 @@ front_door_unlock:
         entity_id: lock.front_door
   mode: single
   icon: mdi:lock-open-variant-outline
+naptime:
+  alias: Naptime
+  sequence:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id:
+      - light.hallway_ceiling
+      - light.bedroom_closet_light
+      - light.bathroom_lights
+      - light.bedroom_lights
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.bedroom_filter_lights
+  mode: single
+  icon: mdi:bed
+  description: ''
