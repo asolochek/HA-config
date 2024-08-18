@@ -1086,10 +1086,11 @@
     offset: '-3600'
   condition: []
   action:
-  - service: light.turn_on
-    data: {}
+  - data:
+      brightness_pct: 100
     target:
       entity_id: light.front_porch
+    action: light.turn_on
   mode: single
 - id: '1694560280897'
   alias: Bedroom Closet Motion Light On
