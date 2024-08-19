@@ -5,15 +5,17 @@ esphome:
   name: bathroom-fan
   friendly_name: Bathroom Fan
   includes:
+    - aqi.h
     - humidity_correction.h
+    - color_utils.h
+
+  on_boot:
+    priority: 900
+    then:
+      - lambda: "pinMode(7, OUTPUT); digitalWrite(7, HIGH);"
 
 esp32:
-  board: featheresp32-s2
-  # framework:
-  #   type: esp-idf
-  #   version: recommended
-  #   sdkconfig_options:
-  #     COMPILER_OPTIMIZATION_SIZE: y
+  board: adafruit_feather_esp32s2_tft
   framework:
     type: arduino
 
@@ -53,6 +55,14 @@ wifi:
 
 #captive_portal:
 
+time:
+  - platform: sntp
+    id: sntp_time
+    timezone: America/Los_Angeles
+
+  - platform: homeassistant
+    id: ha_time
+
 button:
   - platform: restart
     name: "Restart"
@@ -63,6 +73,8 @@ globals:
     type: float
     restore_value: no
     initial_value: "60.0"
+
+
 
 number: 
   - platform: template
@@ -80,7 +92,7 @@ number:
       lambda: |-
         ESP_LOGI("number", "trip threshold set from %.0f%% to %.0f%%", id(high_humidity_threshold).state, x);
         auto controller_call = id(humidity_controller).make_call();
-        controller_call.set_target_temperature_high(x);
+        controller_call.set_target_temperature_high(f_to_c(x));
         //if(id(humidity_controller).action == CLIMATE_ACTION_IDLE)
         //  id(target_val) = x;
         controller_call.perform();
@@ -97,10 +109,10 @@ number:
     mode: box
     set_action:
       lambda: |-
-        float new_val = id(baseline_humidity).state + x;
+        float new_val = id(baseline_dew_point).state + x;
         ESP_LOGI("number", "clear threshold set to %.0f%%", new_val);
         auto controller_call = id(humidity_controller).make_call();
-        controller_call.set_target_temperature_low(new_val);
+        controller_call.set_target_temperature_low(f_to_c(new_val));
         id(target_val) = new_val;
         controller_call.perform();
 
@@ -145,13 +157,13 @@ climate:
     name: "Humidity Controller"
     id: humidity_controller
     icon: mdi:cloud-perecent
-    sensor: humidity
+    sensor: dew_point
     visual:
-      min_temperature: 20
-      max_temperature: 100
+      min_temperature: 20 °F
+      max_temperature: 100 °F
       temperature_step: 1
-    default_target_temperature_low: 100
-    default_target_temperature_high: 120
+    default_target_temperature_low: 60 °F
+    default_target_temperature_high: 80 °F
     idle_action:
       lambda: |-
         auto fan_call = id(bathroom_fan).make_call();
@@ -160,9 +172,9 @@ climate:
     cool_action:
       lambda: |-
         auto fan_call = id(bathroom_fan).make_call();
-        float clear_humidity = id(baseline_humidity).state + id(baseline_offset).state; 
-        if(clear_humidity <= 60) clear_humidity = 60;
-        id(target_val) = clear_humidity;
+        float clear_point = id(baseline_dew_point).state; // + id(baseline_offset).state; 
+        // if(clear_point <= 60) clear_point = 60;
+        id(target_val) = clear_point;
         fan_call.set_speed(id(fan_cool_speed).state * 10.24);
         fan_call.perform();
     
@@ -182,17 +194,17 @@ switch:
     id: neopix_power
     restore_mode: ALWAYS_ON
     pin: GPIO21
-  - platform: template
-    name: "Display Invert"
-    id: display_invert
-    lambda: |-
-      return id(bathroom_fan_display).is_invert();
-    turn_on_action:
-      lambda: |-
-        id(bathroom_fan_display).set_invert(true);
-    turn_off_action:
-      lambda: |-
-        id(bathroom_fan_display).set_invert(false);
+  # - platform: template
+  #   name: "Display Invert"
+  #   id: display_invert
+  #   lambda: |-
+  #     return id(bathroom_fan_display).is_invert();
+  #   turn_on_action:
+  #     lambda: |-
+  #       id(bathroom_fan_display).set_invert(true);
+  #   turn_off_action:
+  #     lambda: |-
+  #       id(bathroom_fan_display).set_invert(false);
 
 
 
@@ -202,8 +214,10 @@ binary_sensor:
     name: "Controller Power Button"
     id: a_button
     pin: 
-      number: GPIO9
+      number: GPIO0
       mode: INPUT_PULLUP
+    filters:
+      - invert:
     on_press: 
       - lambda: |-
           auto controller_call = id(humidity_controller).make_call();
@@ -239,40 +253,33 @@ binary_sensor:
     name: "Speed Up"
     id: b_button
     pin: 
-      number: GPIO6
+      number: GPIO1
       mode: INPUT_PULLUP
+    filters:
+      - invert:
   - platform: gpio
     name: "Speed Down"
     id: c_button
     pin: 
-      number: GPIO5
+      number: GPIO2
       mode: INPUT_PULLUP
-
+    filters:
+      - invert:
 
 i2c:
   - id: bus_a
-    sda: SDA
-    scl: SCL
+    sda: GPIO3
+    scl: GPIO4
     frequency: 800kHz
     scan: true
     setup_priority: 700
 
-sensor:
-  - platform: bme280_i2c
-    i2c_id: bus_a
-    address: 0x77
-    update_interval: 10s
-#    temperature:
-#      name: "BME280 Temperature"
-#      oversampling: 16x
-#      id: bme280_temperature
-    pressure:
-      name: "BME280 Pressure"
-      id: bme280_pressure
-#    humidity:
-#      name: "BME280 Humidity"
-#      id: bme280_humidity
+spi:
+  clk_pin: GPIO36
+  mosi_pin: GPIO35
+  miso_pin: GPIO37
 
+sensor:
   - platform: sht3xd
     i2c_id: bus_a
     address: 0x44
@@ -302,43 +309,56 @@ sensor:
     entity_id: sensor.living_room_humidity
     unit_of_measurement: "%"
     internal: false
-    on_value:
-      lambda: |-
-        float new_val;
-        if (isnan(x)) {
-          ESP_LOGE("baseline", "Error reading baseline humidity!");
-          new_val = 60;
-        }
-        else {
-          new_val = id(baseline_offset).state + x;
-          if (new_val < 60) new_val = 60;
-        }
-        ESP_LOGI("baseline", "clear threshold set to %.0f%%", new_val);
-        auto controller_call = id(humidity_controller).make_call();
-        controller_call.set_target_temperature_low(new_val);
-        id(target_val) = new_val;
-        controller_call.perform();
+    # on_value:
+    #   lambda: |-
+    #     float new_val;
+    #     if (isnan(x)) {
+    #       ESP_LOGE("baseline", "Error reading baseline humidity!");
+    #       new_val = 60;
+    #     }
+    #     else {
+    #       new_val = id(baseline_offset).state + x;
+    #       if (new_val < 60) new_val = 60;
+    #     }
+    #     ESP_LOGI("baseline", "clear threshold set to %.0f%%", new_val);
+    #     auto controller_call = id(humidity_controller).make_call();
+    #     controller_call.set_target_temperature_low(new_val);
+    #     id(target_val) = new_val;
+    #     controller_call.perform();
 
-  # - platform: homeassistant
-  #   name: Baseline Humidity
-  #   id: baseline_humidity
-  #   entity_id: sensor.bedroom_air_quality_humidity
-  #   unit_of_measurement: "%"
-  #   internal: false
-  #   on_value:
-  #     lambda: |-
-  #       float new_val = id(baseline_offset).state + x;
-  #       ESP_LOGI("baseline", "clear threshold set to %.0f%%", new_val);
-  #       auto controller_call = id(humidity_controller).make_call();
-  #       controller_call.set_target_temperature_low(new_val);
-  #       id(target_val) = new_val;
-  #       controller_call.perform();
+  - platform: homeassistant
+    name: Baseline Temperature
+    id: baseline_temperature
+    entity_id: sensor.living_room_temperature
+    unit_of_measurement: "°F"
+    internal: false
 
+
+  - platform: template
+    name: Baseline Dew Point
+    id: baseline_dew_point
+    unit_of_measurement: "°F"     
+    icon: mdi:thermometer-water
+    update_interval: 4s
+    device_class: temperature
+    accuracy_decimals: 1
+    lambda: |-
+      float temp = id(baseline_temperature).state;
+      float dp = 60;
+      float hum = id(baseline_humidity).state + id(baseline_offset).state;
+      if (hum < 60) hum = 60;
+      float dew = compute_dew_point(f_to_c(temp), hum);
+      dp = c_to_f(dew);
+      auto controller_call = id(humidity_controller).make_call();
+      controller_call.set_target_temperature_low(f_to_c(dp));
+      id(target_val) = dp;
+      controller_call.perform();
+      return dp;
 
   - platform: template
     name: Dew Point
     id: dew_point
-    unit_of_measurement: "°F"
+    unit_of_measurement: "°C"
     icon: mdi:thermometer-water
     update_interval: 4s
     device_class: temperature
@@ -348,8 +368,9 @@ sensor:
       float hum = id(humidity).state;
       float dew = compute_dew_point(temp, hum);
       // ESP_LOGI("dew", "temperature: %.1f humidity: %.1f, dewpoint: %.1f", temp, hum, dew);
-      return c_to_f(dew);
+      return dew;
 
+ 
 
 output:
   - platform: ledc
@@ -387,14 +408,14 @@ fan:
         call.perform();
 
 
-# light:
-#   - platform: neopixelbus
-#     id: neopixel_led
-#     type: GRB
-#     variant: WS2812
-#     pin: GPIO33
-#     num_leds: 1
-#     name: "NeoPixel"
+light:
+  - platform: neopixelbus
+    id: neopixel_led
+    type: GRB
+    variant: WS2812
+    pin: GPIO33
+    num_leds: 1
+    name: "NeoPixel"
 
 
 external_components:
@@ -413,14 +434,17 @@ external_components:
 
 font:
   - file: "fonts/Futura-Medium-01.ttf"
-    id: futura
+    id: futura24
     size: 24
-  - file: "gfonts://Roboto"
-    id: roboto
-    size: 20
-  - file: "gfonts://Roboto+Mono"
-    id: roboto_mono
-    size: 22
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura32
+    size: 28
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura36
+    size: 36
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura48
+    size: 50
   - file: "fonts/JetBrainsMono-Regular.ttf"
     id: jetbrains_mono
     size: 22
@@ -449,31 +473,110 @@ font:
     size: 28
   - file: "fonts/ter-u32b.bdf"
     id: terminus32
-    size: 36
+    size: 42
+  - file: "gfonts://Roboto+Mono"
+    id: roboto_mono
+    size: 42
+  - file: 
+      type: gfonts
+      family: "Chakra Petch"
+      weight: 500
+      italic: false
+    id: chakra_petch
+    size: 42 
+  - file: 
+      type: gfonts
+      family: Orbitron
+      weight: 800
+      italic: false
+    id: orbitron
+    size: 42
+
+color:
+  - id: color_red
+    hex: 'e82e18'
+  - id: color_blue
+    hex: '0080ff'
+  - id: color_green
+    hex: '5dd939'
+  - id: color_yellow
+    hex: 'fffb46'
+  - id: color_orange
+    hex: 'ee7826'
+
+graph:
+  - id: humidity_graph
+    duration: 40min
+    min_value: 50
+    max_value: 100
+    width: 240
+    height: 60
+    border: false
+    traces:
+      - sensor: dew_point
+        color: color_green
+      - sensor: humidity
+        color: color_blue
+      - sensor: baseline_dew_point
+        color: color_yellow
+
 
 display:
-  - platform: ssd1306_i2c
+  - platform: st7789v
     id: bathroom_fan_display
-    model: 'SH1107 128x64'
-    reset_pin: GPIO10
-    address: 0x3C
-    external_vcc: False
-    rotation: 270
-    offset_x: 0
-    offset_y: 96
+    model: TTGO TDisplay 135x240
+    backlight_pin: GPIO45
+    cs_pin: GPIO42
+    dc_pin: GPIO40
+    reset_pin: GPIO41
+    rotation: 90
     update_interval: 0.5s
     lambda: |-
       auto fan_speed = id(bathroom_fan).state ? float(id(bathroom_fan).speed) / 1024.0 * 100 : 0;
-      it.printf(12, 5, id(terminus32), "%.0f%%", fan_speed);
-      it.printf(92, 0, id(terminus20n), "%.0f", float(id(temperature).state) * 9.0/5.0 + 32.0);
-      it.circle(116, 5, 2);
-      it.printf(120, 0, id(terminus20n), "F");
-      it.printf(92, 22, id(terminus20n), "%.0f%%", id(humidity).state);
-      if (id(humidity_controller).mode == CLIMATE_MODE_OFF) {
-        it.printf(12, 48, id(terminus14n), "Controller Off");
-      }
-      else {
-        it.printf(12, 48, id(terminus18n), "%.0f%%", id(target_val));
-        it.printf(92, 48, id(terminus18n), "%.0f%%", id(high_humidity_threshold).state);
-      }
+
+      it.printf(4, 3, id(futura48), "%.0f%%", fan_speed);
+      it.printf(178, 0, id(futura32), "%.0f", c_to_f(float(id(temperature).state)));
+      it.circle(219, 12, 4);
+      it.circle(219, 12, 3);
+      it.printf(224, 0, id(futura32), "F");
+      it.printf(178, 36, id(futura32), "%.0f%%", id(humidity).state);
+      it.graph(0, 75, id(humidity_graph));
+
+#      it.printf(178, 0, id(futura32), "%.0f", float(id(temperature).state) * 9.0/5.0 + 32.0);
+  # if (id(humidity_controller).mode == CLIMATE_MODE_OFF) {
+  #   it.printf(0, 110, id(futura24), "Controller Off");
+  # }
+  # else {
+  #   it.printf(0, 110, id(futura24), Color(blue), "%.0f%%", id(target_val));
+  #   it.printf(188, 110, id(futura24), Color(red), "%.0f%%", id(high_humidity_threshold).state);
+  # }
+
+#      it.rectangle(0, 0, 240, 135, Color(red));
+#      it.printf(156, 0, id(futura32), "%.0f°F", float(id(temperature).state) * 9.0/5.0 + 32.0);
+
+# display:
+#   - platform: ssd1306_i2c
+#     id: bathroom_fan_display
+#     model: 'SH1107 128x64'
+#     reset_pin: GPIO10
+#     address: 0x3C
+#     external_vcc: False
+#     rotation: 270
+#     offset_x: 0
+#     offset_y: 96
+#     update_interval: 0.5s
+#     lambda: |-
+#       auto fan_speed = id(bathroom_fan).state ? float(id(bathroom_fan).speed) / 1024.0 * 100 : 0;
+#       it.printf(12, 5, id(terminus32), "%.0f%%", fan_speed);
+#       it.printf(92, 0, id(terminus20n), "%.0f", float(id(temperature).state) * 9.0/5.0 + 32.0);
+#       it.circle(116, 5, 2);
+#       it.printf(120, 0, id(terminus20n), "F");
+#       it.printf(92, 22, id(terminus20n), "%.0f%%", id(humidity).state);
+#       if (id(humidity_controller).mode == CLIMATE_MODE_OFF) {
+#         it.printf(12, 48, id(terminus14n), "Controller Off");
+#       }
+#       else {
+#         it.printf(12, 48, id(terminus18n), "%.0f%%", id(target_val));
+#         it.printf(92, 48, id(terminus18n), "%.0f%%", id(high_humidity_threshold).state);
+#       }
 
