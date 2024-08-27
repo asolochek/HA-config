@@ -48,6 +48,15 @@ float compute_dew_point(float tempC, float humidity)
     return (b * p) / (a - p);
 }
 
+float dew_point_to_RH(float tempC, float dpC)
+{
+  const float a = 17.625;
+  const float b = 243.04;
+
+  float rh = 100 * (exp(a * dpC / (b + dpC)) / exp(a * tempC / (b + tempC)));
+  return rh;
+}
+
 float sat_pressure(float tempC)
 {
     /// Using equation2 from https://www.engineersedge.com/calculators/water_vapor_saturation_pressure_15730.htm
