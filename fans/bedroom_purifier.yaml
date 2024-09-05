@@ -1,8 +1,8 @@
 - platform: template
   fans:
     bedroom_purifier:
-      unique_id: bedroom_purifier
-      friendly_name: "Bedroom Purifier"
+      unique_id: bedroom_purifier_2
+      friendly_name: "Bedroom Purifier Old"
       speed_count: 5
       value_template: "{{ states('input_boolean.bedroom_purifier_power_state') }}"
       preset_mode_template: "{{ states('input_select.bedroom_purifier_preset') }}"
@@ -48,24 +48,30 @@
       unique_id: bedroom_purifier_for_homekit
       friendly_name: "Bedroom Purifier"
       value_template: "{{ states('fan.bedroom_purifier') }}"
-      preset_mode_template: "{{ states('input_select.bedroom_purifier_speed') }}"
-      percentage_template: >-
-        {% from 'utils.jinja' import preset_5_speed_to_percent %}
-        {{ preset_5_speed_to_percent(states('input_select.bedroom_purifier_preset')) }}
+      percentage_template: "{{ states('fan.bedroom_purifier') }}"
+ #     preset_mode_template: "{{ states('input_select.bedroom_purifier_speed') }}"
+ #     percentage_template: >-
+ #       {% from 'utils.jinja' import preset_5_speed_to_percent %}
+ #       {{ preset_5_speed_to_percent(states('input_select.bedroom_purifier_preset')) }}
       speed_count: 5
       turn_on:
-        service: fan.turn_on
+        action: fan.turn_on
         data:
           entity_id: fan.bedroom_purifier
       turn_off:
-        - service: fan.turn_off
+        - action: fan.turn_off
           data:
             entity_id: fan.bedroom_purifier
       set_percentage:
-        - service: fan.set_preset_mode
+        - action: fan.set_percentage
           target:
             entity_id: fan.bedroom_purifier
           data:
-            preset_mode: >
-              {% from 'utils.jinja' import percent_to_5_speed %}
-              {{ percent_to_5_speed(percentage) }}
+            percentage: "{{ percentage }}"
+        # - action: fan.set_preset_mode
+        #   target:
+        #     entity_id: fan.bedroom_purifier
+        #   data:
+        #    preset_mode: >
+        #      {% from 'utils.jinja' import percent_to_5_speed %}
+        #      {{ percent_to_5_speed(percentage) }}
