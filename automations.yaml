@@ -981,13 +981,13 @@
     to: cool
   condition:
   - condition: state
-    entity_id: binary_sensor.bedroom_closet_window_open
-    state: 'on'
+    entity_id: cover.bedroom_closet_window
+    state: open
   action:
-  - service: cover.close_cover
-    data: {}
+  - data: {}
     target:
       entity_id: cover.bedroom_closet_window
+    action: cover.close_cover
   mode: single
 - id: '1691882214924'
   alias: 'Bedroom Closet fans on '
@@ -1435,4 +1435,79 @@
       entity_id:
       - input_boolean.thao_s_home
     data: {}
+  mode: single
+- id: '1725390359299'
+  alias: Office Air Conditioner Turns On
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 4d342d88be4e71bf65993a020f1fc6b9
+    domain: climate
+    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    type: hvac_mode_changed
+    to: cool
+  condition:
+  - condition: state
+    state: open
+    entity_id: cover.office_window
+  action:
+  - data: {}
+    action: cover.close_cover
+    target:
+      device_id: 16d8400cc7d608972a9bd92665f9be76
+  mode: single
+- id: '1725390531625'
+  alias: Office Window Opens
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 16d8400cc7d608972a9bd92665f9be76
+    domain: cover
+    entity_id: 8213b9ba02ce5d0ddf7f2eb05e7f82dd
+    type: opening
+  condition:
+  - condition: device
+    device_id: 4d342d88be4e71bf65993a020f1fc6b9
+    domain: climate
+    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    type: is_hvac_mode
+    hvac_mode: cool
+  action:
+  - device_id: 4d342d88be4e71bf65993a020f1fc6b9
+    domain: climate
+    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    type: set_hvac_mode
+    hvac_mode: 'off'
+  mode: single
+- id: '1725390709722'
+  alias: Office High Temperature
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id:
+    - sensor.office_air_quality_temperature
+    above: 78
+  condition: []
+  action:
+  - device_id: 4d342d88be4e71bf65993a020f1fc6b9
+    domain: climate
+    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    type: set_hvac_mode
+    hvac_mode: cool
+  mode: single
+- id: '1725394841935'
+  alias: Office Low Temperature
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id:
+    - sensor.office_air_quality_temperature
+    below: 71
+  condition: []
+  action:
+  - device_id: 4d342d88be4e71bf65993a020f1fc6b9
+    domain: climate
+    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    type: set_hvac_mode
+    hvac_mode: 'off'
   mode: single
