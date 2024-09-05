@@ -637,6 +637,9 @@ cards:
         state_color: true
     cards:
       # Air Conditioner
+      # - type: custom:mini-climate
+      #   entity: climate.living_room_air_conditioner
+      #   name: "Living Room Air Conditioner"
       - type: custom:simple-thermostat
         entity: climate.living_room_air_conditioner
         step: row
@@ -897,6 +900,36 @@ cards:
         show_icon: true
         state_color: true
     cards:
+      # - type: custom:mini-climate
+      #   entity: climate.office_air_conditioner
+      #   name: "Air Conditioner"
+      #   toggle:
+      #     hide: true
+      #     default: true
+      #   temperature:
+      #     unit: '°F'
+      #     source: 
+      #       entity: sensor.office_air_quality_temperature
+      #   target_temperature:
+      #     unit: '°F'
+      #     change_action: >
+      #       (value, entity) => this.call_service('climate', 'set_temperature', {entity_id: entity.entity_id, temperature: value })
+      #   buttons:
+      #     power:
+      #       icon: mdi:power
+      #       state:
+      #         mapper: "state => (state == 'off' ? 'off' : 'on')"
+      #       order: 1
+      #       location: "main"
+      #       toggle_action: >
+      #         (state, entity) => this.call_service('climate', 'toggle', {entity_id: entity.entity_id })
+      #   tap_action:
+      #     action: more-info
+      #     entity: climate.office_air_conditioner
+
+        # secondary_info:
+        #   type: fan-mode
+        #   icon: 'mdi:fan'
       - type: custom:simple-thermostat
         entity: climate.office_air_conditioner
         step: row
