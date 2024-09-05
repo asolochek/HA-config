@@ -58,7 +58,7 @@
     state: "{{ state_attr('sensor.purpleair', 'current_dewpoint_f') }}"
     availability: "{{ is_number( state_attr('sensor.purpleair', 'current_dewpoint_f') ) }}"
     unit_of_measurement: "°F"
-    device_class: humidity
+    device_class: temperature
     icon: mdi:water-outline
 
 
