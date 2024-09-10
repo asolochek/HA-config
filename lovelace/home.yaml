@@ -838,6 +838,7 @@ cards:
       - entity: sensor.aaron_s_watch
       - entity: sensor.bacon
       - entity: sensor.carpaccio
+      - entity: sensor.paio
       - entity: sensor.thao_s_phone
       - entity: sensor.thao_s_watch
       - entity: binary_sensor.10_0_1_1
