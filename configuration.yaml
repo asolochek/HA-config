@@ -46,7 +46,7 @@ lovelace:
       require_admin: true
     lovelace-yaml:
       mode: yaml
-      title: Home
+      title: Control
       icon: mdi:home-assistant
       show_in_sidebar: true
       filename: dashboards.yaml
