@@ -14,26 +14,26 @@
         - "High"
         - "Turbo"
       turn_on:
-        - service: input_button.press
+        - action: input_button.press
           data:
             entity_id: input_button.kitchen_fan_on          
       turn_off:
-        - service: input_button.press
+        - action: input_button.press
           data:
             entity_id: input_button.kitchen_fan_off
       set_direction:
-        service: input_select.select_option
+        action: input_select.select_option
         target:
           entity_id: input_select.kitchen_fan_direction
         data:
           option: "{{ direction }}"
       set_preset_mode:
-        - service: input_button.press
+        - action: input_button.press
           data:
             entity_id: >
               {% from 'utils.jinja' import concat %}
               {{ concat('input_button.kitchen_fan_', preset_mode) }}
-        - service: input_select.select_option
+        - action: input_select.select_option
           target:
             entity_id: input_select.kitchen_fan_speed
           data:
@@ -50,21 +50,21 @@
         {{ preset_4_speed_to_percent(states('input_select.kitchen_fan_speed')) }}      
       speed_count: 4
       turn_on:
-        service: fan.turn_on
+        action: fan.turn_on
         data:
           entity_id: fan.kitchen_fan
       turn_off:
-        - service: fan.turn_off
+        - action: fan.turn_off
           data:
             entity_id: fan.kitchen_fan
       set_direction:
-        service: fan.set_direction
+        action: fan.set_direction
         target:
           entity_id: fan.kitchen_fan
         data:
           direction: "{{ direction }}"
       set_percentage:
-        - service: fan.set_preset_mode
+        - action: fan.set_preset_mode
           target:
             entity_id: fan.kitchen_fan
           data:

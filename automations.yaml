@@ -8,7 +8,7 @@
     type: webostv.turn_on
   condition: []
   action:
-  - service: wake_on_lan.send_magic_packet
+  - action: wake_on_lan.send_magic_packet
     data:
       broadcast_port: 9
       mac: b0:37:95:d5:eb:69
@@ -24,7 +24,7 @@
     type: webostv.turn_on
   condition: []
   action:
-  - service: wake_on_lan.send_magic_packet
+  - action: wake_on_lan.send_magic_packet
     data:
       broadcast_port: 9
       mac: 58:fd:b1:ab:8e:73
@@ -67,12 +67,12 @@
       entity_id: 66d2f572455c2a7d225a314d54e4df46
       domain: binary_sensor
   action:
-  - service: input_select.select_option
+  - action: input_select.select_option
     data:
       option: auto
     target:
       entity_id: input_select.standing_fan_mode
-  - service: fan.turn_on
+  - action: fan.turn_on
     data: {}
     target:
       device_id: 764b262e94b4094f7b8d88713bad1290
@@ -105,12 +105,12 @@
     entity_id: input_select.standing_fan_mode
     state: auto
   action:
-  - service: fan.turn_off
+  - action: fan.turn_off
     data: {}
     target:
       entity_id:
       - fan.living_room_standing_fan
-  - service: input_select.select_option
+  - action: input_select.select_option
     data:
       option: 'off'
     target:
@@ -132,7 +132,7 @@
       entity_id: input_select.standing_fan_mode
       state: auto
   action:
-  - service: input_select.select_option
+  - action: input_select.select_option
     data:
       option: 'on'
     target:
@@ -149,7 +149,7 @@
     from: 'on'
   condition: []
   action:
-  - service: input_select.select_option
+  - action: input_select.select_option
     data:
       option: 'off'
     target:
@@ -170,7 +170,7 @@
       seconds: 0
   condition: []
   action:
-  - service: light.turn_off
+  - action: light.turn_off
     data: {}
     target:
       entity_id: light.office_lights
@@ -204,7 +204,7 @@
   - condition: sun
     after: sunrise
   action:
-  - service: input_boolean.turn_on
+  - action: input_boolean.turn_on
     data: {}
     target:
       entity_id: input_boolean.bedroom_filter_lights
@@ -222,7 +222,7 @@
   - condition: sun
     after: sunset
   action:
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     data: {}
     target:
       entity_id: input_boolean.bedroom_filter_lights
@@ -236,7 +236,7 @@
     offset: 0
   condition: []
   action:
-  - service: input_boolean.turn_on
+  - action: input_boolean.turn_on
     data: {}
     target:
       entity_id: input_boolean.livingroom_filter_lights
@@ -250,7 +250,7 @@
     offset: 0
   condition: []
   action:
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     data: {}
     target:
       entity_id: input_boolean.livingroom_filter_lights
@@ -270,7 +270,7 @@
         entity_id: input_boolean.kitchen_fan_power
         state: 'on'
       sequence:
-      - service: input_button.press
+      - action: input_button.press
         data: {}
         target:
           entity_id: input_button.kitchen_fan_on
@@ -279,7 +279,7 @@
         entity_id: input_boolean.kitchen_fan_power
         state: 'off'
       sequence:
-      - service: input_button.press
+      - action: input_button.press
         data: {}
         target:
           entity_id: input_button.kitchen_fan_off
@@ -300,7 +300,7 @@
         entity_id: input_select.kitchen_fan_direction
         state: forward
       sequence:
-      - service: input_button.press
+      - action: input_button.press
         data: {}
         target:
           entity_id: input_button.kitchen_fan_in
@@ -309,7 +309,7 @@
         entity_id: input_select.kitchen_fan_direction
         state: reverse
       sequence:
-      - service: input_button.press
+      - action: input_button.press
         data: {}
         target:
           entity_id: input_button.kitchen_fan_out
@@ -329,7 +329,7 @@
         entity_id: input_boolean.kitchen_fan_auto_mode
         state: 'on'
       sequence:
-      - service: input_button.press
+      - action: input_button.press
         data: {}
         target:
           entity_id: input_button.kitchen_fan_auto
@@ -338,7 +338,7 @@
         entity_id: input_boolean.kitchen_fan_auto_mode
         state: 'off'
       sequence:
-      - service: input_button.press
+      - action: input_button.press
         data: {}
         target:
           entity_id: input_button.kitchen_fan_auto_off
@@ -348,7 +348,8 @@
   description: ''
   trigger:
   - platform: numeric_state
-    entity_id: sensor.ecobee_temperature
+    entity_id:
+    - sensor.thermostat_temperature
     for:
       hours: 0
       minutes: 0
@@ -366,15 +367,14 @@
     to: 'on'
   condition:
   - condition: numeric_state
-    entity_id: climate.ecobee
-    attribute: temperature
+    entity_id: climate.thermostat
     below: 70
   action:
-  - service: input_boolean.turn_on
+  - action: input_boolean.turn_on
     data: {}
     target:
       entity_id: input_boolean.kitchen_fan_power
-  - service: input_select.select_option
+  - action: input_select.select_option
     data:
       option: reverse
     target:
@@ -385,19 +385,21 @@
   description: ''
   trigger:
   - platform: numeric_state
-    entity_id: sensor.ecobee_temperature
+    entity_id:
+    - sensor.thermostat_temperature
     for:
       hours: 0
       minutes: 1
       seconds: 0
     below: 72
   - platform: numeric_state
-    entity_id: sensor.bedroom_ecobee_temperature
+    entity_id:
+    - sensor.bedroom_temperature
     below: 69
     enabled: false
   condition: []
   action:
-  - service: fan.turn_off
+  - action: fan.turn_off
     data: {}
     target:
       entity_id: fan.kitchen_fan
@@ -410,7 +412,7 @@
     at: '22:00:00'
   condition: []
   action:
-  - service: switch.turn_on
+  - action: switch.turn_on
     data: {}
     target:
       entity_id: switch.adaptive_lighting_sleep_mode_bedroom_lamp
@@ -424,7 +426,7 @@
     offset: 0
   condition: []
   action:
-  - service: switch.turn_off
+  - action: switch.turn_off
     data: {}
     target:
       entity_id: switch.adaptive_lighting_sleep_mode_bedroom_lamp
@@ -501,7 +503,7 @@
     - input_button.peloton_fan_power_button
   condition: []
   action:
-  - service: rest_command.peloton_fan_power_ir
+  - action: rest_command.peloton_fan_power_ir
     data: {}
   mode: single
 - id: '1687395998304'
@@ -513,35 +515,35 @@
     - input_button.peloton_minus_button
   condition: []
   action:
-  - service: rest_command.peloton_fan_minus_ir
+  - action: rest_command.peloton_fan_minus_ir
     data: {}
   - delay:
       hours: 0
       minutes: 0
       seconds: 0
       milliseconds: 300
-  - service: rest_command.peloton_fan_minus_ir
+  - action: rest_command.peloton_fan_minus_ir
     data: {}
   - delay:
       hours: 0
       minutes: 0
       seconds: 0
       milliseconds: 300
-  - service: rest_command.peloton_fan_minus_ir
+  - action: rest_command.peloton_fan_minus_ir
     data: {}
   - delay:
       hours: 0
       minutes: 0
       seconds: 0
       milliseconds: 300
-  - service: rest_command.peloton_fan_minus_ir
+  - action: rest_command.peloton_fan_minus_ir
     data: {}
   - delay:
       hours: 0
       minutes: 0
       seconds: 0
       milliseconds: 300
-  - service: rest_command.peloton_fan_minus_ir
+  - action: rest_command.peloton_fan_minus_ir
     data: {}
   mode: single
 - id: '1687396160615'
@@ -553,35 +555,35 @@
     - input_button.peloton_fan_plus_button
   condition: []
   action:
-  - service: rest_command.peloton_fan_plus_ir
+  - action: rest_command.peloton_fan_plus_ir
     data: {}
   - delay:
       hours: 0
       minutes: 0
       seconds: 0
       milliseconds: 300
-  - service: rest_command.peloton_fan_plus_ir
+  - action: rest_command.peloton_fan_plus_ir
     data: {}
   - delay:
       hours: 0
       minutes: 0
       seconds: 0
       milliseconds: 300
-  - service: rest_command.peloton_fan_plus_ir
+  - action: rest_command.peloton_fan_plus_ir
     data: {}
   - delay:
       hours: 0
       minutes: 0
       seconds: 0
       milliseconds: 300
-  - service: rest_command.peloton_fan_plus_ir
+  - action: rest_command.peloton_fan_plus_ir
     data: {}
   - delay:
       hours: 0
       minutes: 0
       seconds: 0
       milliseconds: 300
-  - service: rest_command.peloton_fan_plus_ir
+  - action: rest_command.peloton_fan_plus_ir
     data: {}
   mode: single
 - id: '1687396382954'
@@ -611,7 +613,7 @@
     entity_id: fan.peloton_fan
     state: 'on'
   action:
-  - service: fan.turn_off
+  - action: fan.turn_off
     data: {}
     target:
       entity_id: fan.peloton_fan
@@ -686,7 +688,7 @@
     above: number.bathroom_fan_idle_speed
   condition: []
   action:
-  - service: number.set_value
+  - action: number.set_value
     data:
       value: '{{ states(''sensor.living_room_humidity'')|float + 5.0 }}'
     target:
@@ -770,7 +772,7 @@
     entity_id: fan.peloton_fan
     state: 'off'
   action:
-  - service: fan.turn_on
+  - action: fan.turn_on
     data: {}
     target:
       entity_id: fan.peloton_fan
@@ -843,12 +845,12 @@
     attribute: hvac_action
     state: idle
   action:
-  - service: fan.set_percentage
+  - action: fan.set_percentage
     data:
       percentage: '{{ states(''number.bathroom_fan_idle_speed'') }}'
     target:
       entity_id: fan.bathroom_fan
-  - service: fan.set_direction
+  - action: fan.set_direction
     data:
       direction: forward
     target:
@@ -870,7 +872,7 @@
     enabled: false
   condition: []
   action:
-  - service: light.turn_on
+  - action: light.turn_on
     data: {}
     target:
       area_id:
@@ -888,7 +890,7 @@
     event: leave
   condition: []
   action:
-  - service: light.turn_off
+  - action: light.turn_off
     data: {}
     target:
       entity_id: light.all_lights_zigbee_group
@@ -903,7 +905,7 @@
     to: 'off'
   condition: []
   action:
-  - service: input_button.press
+  - action: input_button.press
     data: {}
     target:
       entity_id: input_button.kitchen_fan_off
@@ -918,7 +920,7 @@
     to: 'on'
   condition: []
   action:
-  - service: input_button.press
+  - action: input_button.press
     data: {}
     target:
       entity_id: input_button.kitchen_fan_on
@@ -934,11 +936,11 @@
     entity_id: sensor.bedroom_air_quality_temperature
     below: 67
   action:
-  - service: cover.close_cover
+  - action: cover.close_cover
     data: {}
     target:
       entity_id: cover.bedroom_closet_window
-  - service: switch.turn_off
+  - action: switch.turn_off
     data: {}
     target:
       entity_id: switch.bedroom_fan_plug
@@ -947,7 +949,7 @@
       minutes: 0
       seconds: 5
       milliseconds: 0
-  - service: switch.turn_on
+  - action: switch.turn_on
     data: {}
     target:
       entity_id: switch.bedroom_fan_plug
@@ -962,7 +964,7 @@
     - sensor.espresense_bedroom_humidity
   condition: []
   action:
-  - service: pyscript.humidity_correction
+  - action: pyscript.humidity_correction
     data:
       dest_id: input_number.bedroom_corrected_humidity
       initial_humidity: sensor.espresense_bedroom_humidity
@@ -1006,7 +1008,7 @@
     type: is_hvac_mode
     hvac_mode: cool
   action:
-  - service: climate.set_hvac_mode
+  - action: climate.set_hvac_mode
     data:
       hvac_mode: 'off'
     target:
@@ -1025,7 +1027,7 @@
       seconds: 0
   condition: []
   action:
-  - service: fan.turn_on
+  - action: fan.turn_on
     data: {}
     target:
       entity_id: fan.living_room_purifier
@@ -1043,7 +1045,7 @@
       seconds: 0
   condition: []
   action:
-  - service: fan.turn_on
+  - action: fan.turn_on
     data: {}
     target:
       entity_id: fan.bedroom_purifier
@@ -1057,7 +1059,7 @@
     below: 5
   condition: []
   action:
-  - service: fan.turn_off
+  - action: fan.turn_off
     data: {}
     target:
       entity_id: fan.living_room_purifier
@@ -1078,7 +1080,7 @@
     entity_id: fan.bedroom_purifier
     state: 'on'
   action:
-  - service: fan.turn_off
+  - action: fan.turn_off
     data: {}
     target:
       entity_id:
@@ -1093,11 +1095,11 @@
     offset: '3600'
   condition: []
   action:
-  - service: light.turn_off
+  - action: light.turn_off
     data: {}
     target:
       entity_id: light.front_porch
-  - service: switch.turn_off
+  - action: switch.turn_off
     data: {}
     target:
       entity_id:
@@ -1133,7 +1135,7 @@
     to: 'on'
   condition: []
   action:
-  - service: light.turn_on
+  - action: light.turn_on
     data: {}
     target:
       entity_id: light.bedroom_closet_light
@@ -1170,7 +1172,7 @@
         minutes: 1
         seconds: 0
   action:
-  - service: light.turn_off
+  - action: light.turn_off
     data: {}
     target:
       entity_id: light.bedroom_closet_light
@@ -1184,7 +1186,7 @@
     offset: '0'
   condition: []
   action:
-  - service: switch.turn_off
+  - action: switch.turn_off
     data: {}
     target:
       entity_id:
@@ -1194,7 +1196,7 @@
       - switch.adaptive_lighting_sleep_mode_kitchen
       - switch.adaptive_lighting_sleep_mode_living_room
       - switch.adaptive_lighting_sleep_mode_office
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     target:
       entity_id: input_boolean.auto_lights_disabled
     data: {}
@@ -1244,10 +1246,10 @@
     entity_id: input_boolean.thao_s_home
     state: 'off'
   action:
-  - service: notify.mobile_app_ham
+  - action: notify.mobile_app_ham
     data:
       message: Thao's Home
-  - service: input_boolean.turn_on
+  - action: input_boolean.turn_on
     target:
       entity_id:
       - input_boolean.thao_s_home
@@ -1263,7 +1265,7 @@
     at: '20:00:00'
   condition: []
   action:
-  - service: switch.toggle
+  - action: switch.toggle
     data: {}
     target:
       entity_id: switch.bathroom_fan_display_invert
@@ -1318,7 +1320,7 @@
       entity_id: input_boolean.auto_lights_disabled
       state: 'off'
     then:
-    - service: script.welcome_lights
+    - action: script.welcome_lights
       data: {}
   mode: single
 - id: '1706996915630'
@@ -1363,7 +1365,7 @@
       - fri
       - sat
   action:
-  - service: input_boolean.turn_on
+  - action: input_boolean.turn_on
     target:
       entity_id: input_boolean.auto_lights_disabled
     data: {}
@@ -1373,28 +1375,27 @@
   description: ''
   trigger:
   - platform: time
-    at: 07:15:00
+    at: 08:00:00
   condition: []
   action:
-  - service: switch.turn_on
+  - action: switch.turn_on
     metadata: {}
     data: {}
     target:
-      entity_id: switch.living_room_south_grow_light
+      entity_id: switch.grow_lights
   mode: single
 - id: '1711506319291'
   alias: Grow Light Off
   description: ''
   trigger:
   - platform: time
-    at: '19:15:00'
+    at: '18:00:00'
   condition: []
   action:
-  - service: switch.turn_off
-    target:
-      entity_id:
-      - switch.living_room_south_grow_light
+  - action: switch.turn_off
     data: {}
+    target:
+      entity_id: switch.grow_lights
   mode: single
 - id: '1712364725887'
   alias: Thao Leaves
@@ -1430,7 +1431,7 @@
         entity_id: device_tracker.thao_watch_2
         state: unavailable
   action:
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     target:
       entity_id:
       - input_boolean.thao_s_home
@@ -1503,7 +1504,13 @@
     entity_id:
     - sensor.office_air_quality_temperature
     below: 71
-  condition: []
+  condition:
+  - condition: device
+    device_id: 4d342d88be4e71bf65993a020f1fc6b9
+    domain: climate
+    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    type: is_hvac_mode
+    hvac_mode: cool
   action:
   - device_id: 4d342d88be4e71bf65993a020f1fc6b9
     domain: climate

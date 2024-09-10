@@ -13,31 +13,31 @@
         - "High"
         - "Turbo"
       turn_on:
-        - service: input_button.press
+        - action: input_button.press
           data:
             entity_id: input_button.living_room_purifier_on
-        - service: input_boolean.turn_on
+        - action: input_boolean.turn_on
           data:
             entity_id: input_boolean.living_room_purifier_power_state  
       turn_off:
-        - service: input_button.press
+        - action: input_button.press
           data:
             entity_id: input_button.living_room_purifier_off
-        - service: input_boolean.turn_off
+        - action: input_boolean.turn_off
           data:
             entity_id: input_boolean.living_room_purifier_power_state  
       set_preset_mode:
-        - service: input_button.press
+        - action: input_button.press
           data:
             entity_id: >
               {% from 'utils.jinja' import concat %}
               {{ concat('input_button.living_room_purifier_', preset_mode) }}        
-        - service: input_boolean.turn_{{ 'on' if preset_mode != Off else 'off' }}
+        - action: input_boolean.turn_{{ 'on' if preset_mode != Off else 'off' }}
           data:
             entity_id: input_boolean.living_room_purifier_power_state
 
         - condition: "{{ preset_mode != Off }}"
-        - service: input_select.select_option
+        - action: input_select.select_option
           target:
             entity_id: input_select.living_room_purifier_preset
           data:
@@ -48,7 +48,7 @@
       unique_id: living_room_purifier_for_homekit
       friendly_name: "Living Room Purifier"
       value_template: "{{ states('fan.living_room_purifier') }}"
-      percentage_template: "{{ states('fan.living_room_purifier') }}"
+      percentage_template: "{{ states('fan.living_room_purifier')|int(0) }}"
 #      preset_mode_template: "{{ states('input_select.living_room_purifier_speed') }}"
 #      percentage_template: >-
 #        {% from 'utils.jinja' import preset_5_speed_to_percent %}

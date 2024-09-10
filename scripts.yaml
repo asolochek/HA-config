@@ -1,28 +1,28 @@
 playstation:
   alias: Playstation
   sequence:
-  - service: script.living_room_tv_turn_on
+  - action: script.living_room_tv_turn_on
     data: {}
-  - service: media_player.turn_on
+  - action: media_player.turn_on
     data: {}
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: scene.turn_on
+  - action: scene.turn_on
     target:
       entity_id: scene.play_playstation
     metadata: {}
     enabled: false
-  - service: media_player.select_source
+  - action: media_player.select_source
     data:
       source: PS5
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.select_sound_mode
+  - action: media_player.select_sound_mode
     data:
       sound_mode: DOLBY DIGITAL
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.volume_set
+  - action: media_player.volume_set
     data:
       volume_level: 0.4
     target:
@@ -35,7 +35,7 @@ playstation:
         attribute: source
         state: PS5
     then:
-    - service: media_player.select_source
+    - action: media_player.select_source
       data:
         source: PS5
       target:
@@ -45,7 +45,7 @@ playstation:
 all_lights_off:
   alias: All Lights Off
   sequence:
-  - service: light.turn_off
+  - action: light.turn_off
     data: {}
     target:
       entity_id:
@@ -63,7 +63,7 @@ all_lights_off:
 goodnight:
   alias: 'Goodnight '
   sequence:
-  - service: switch.turn_on
+  - action: switch.turn_on
     data: {}
     target:
       entity_id:
@@ -72,31 +72,31 @@ goodnight:
       - switch.adaptive_lighting_sleep_mode_office
       - switch.adaptive_lighting_sleep_mode_kitchen
       - switch.adaptive_lighting_sleep_mode_bedroom
-  - service: media_player.turn_off
+  - action: media_player.turn_off
     data: {}
     target:
       entity_id: media_player.living_room_tv
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     data: {}
     target:
       entity_id:
       - input_boolean.bedroom_filter_lights
       - input_boolean.livingroom_filter_lights
-  - service: script.all_lights_off
+  - action: script.all_lights_off
     data: {}
   - delay:
       hours: 0
       minutes: 0
       seconds: 0
       milliseconds: 200
-  - service: script.all_lights_off
+  - action: script.all_lights_off
     data: {}
   - delay:
       hours: 0
       minutes: 0
       seconds: 1
       milliseconds: 0
-  - service: script.all_lights_off
+  - action: script.all_lights_off
     data: {}
   mode: single
   icon: mdi:weather-night
@@ -123,9 +123,9 @@ air_conditioners_on:
 adapt_all_lights:
   alias: Adapt All Lights
   sequence:
-  - service: script.enable_all_adaptive_lights
+  - action: script.enable_all_adaptive_lights
     data: {}
-  - service: switch.turn_off
+  - action: switch.turn_off
     data: {}
     target:
       entity_id:
@@ -136,34 +136,34 @@ adapt_all_lights:
       - switch.adaptive_lighting_sleep_mode_kitchen
       - switch.adaptive_lighting_sleep_mode_office
     enabled: true
-  - service: adaptive_lighting.apply
+  - action: adaptive_lighting.apply
     data:
       lights:
       - light.living_room_ceiling
       entity_id: switch.adaptive_lighting_living_room
       adapt_color: true
     enabled: true
-  - service: adaptive_lighting.apply
+  - action: adaptive_lighting.apply
     data:
       entity_id: switch.adaptive_lighting_adapt_color_bedroom_lamp
     enabled: true
-  - service: adaptive_lighting.apply
+  - action: adaptive_lighting.apply
     data:
       entity_id: switch.adaptive_lighting_adapt_color_kitchen
     enabled: true
-  - service: adaptive_lighting.apply
+  - action: adaptive_lighting.apply
     data:
       entity_id: switch.adaptive_lighting_adapt_color_hallway
     enabled: true
-  - service: adaptive_lighting.apply
+  - action: adaptive_lighting.apply
     data:
       entity_id: switch.adaptive_lighting_adapt_color_office
     enabled: true
-  - service: adaptive_lighting.apply
+  - action: adaptive_lighting.apply
     data:
       entity_id: switch.adaptive_lighting_adapt_color_bedroom
     enabled: true
-  - service: switch.turn_on
+  - action: switch.turn_on
     data: {}
     target:
       entity_id:
@@ -175,7 +175,7 @@ adapt_all_lights:
       seconds: 2
       milliseconds: 0
     enabled: true
-  - service: switch.turn_off
+  - action: switch.turn_off
     data: {}
     target:
       entity_id:
@@ -186,9 +186,9 @@ adapt_all_lights:
 max_air_conditioning:
   alias: Max Air Conditioning
   sequence:
-  - service: script.air_conditioners_on
+  - action: script.air_conditioners_on
     data: {}
-  - service: climate.set_fan_mode
+  - action: climate.set_fan_mode
     data:
       fan_mode: HIGH
     target:
@@ -201,7 +201,7 @@ max_air_conditioning:
 air_conditioning_off:
   alias: Air Conditioning Off
   sequence:
-  - service: climate.set_hvac_mode
+  - action: climate.set_hvac_mode
     data:
       hvac_mode: 'off'
     target:
@@ -214,7 +214,7 @@ air_conditioning_off:
 day_lights:
   alias: Day Lights
   sequence:
-  - service: switch.turn_off
+  - action: switch.turn_off
     data: {}
     target:
       entity_id:
@@ -224,7 +224,7 @@ day_lights:
       - switch.adaptive_lighting_sleep_mode_kitchen
       - switch.adaptive_lighting_sleep_mode_living_room
       - switch.adaptive_lighting_sleep_mode_office
-  - service: light.turn_on
+  - action: light.turn_on
     data: {}
     target:
       entity_id:
@@ -241,22 +241,22 @@ day_lights:
 bedtime:
   alias: Bedtime
   sequence:
-  - service: switch.turn_on
+  - action: switch.turn_on
     data: {}
     target:
       entity_id: switch.adaptive_lighting_sleep_mode_bedroom_lamp
-  - service: light.turn_on
+  - action: light.turn_on
     data: {}
     target:
       entity_id: light.bedroom_lamp
-  - service: light.turn_off
+  - action: light.turn_off
     data: {}
     target:
       entity_id:
       - light.bedroom_ceiling
       - light.hallway_ceiling
       - light.bedroom_closet_light
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     data: {}
     target:
       entity_id: input_boolean.bedroom_filter_lights
@@ -265,23 +265,23 @@ bedtime:
 nintendo:
   alias: Nintendo
   sequence:
-  - service: script.living_room_tv_turn_on
+  - action: script.living_room_tv_turn_on
     data: {}
-  - service: media_player.turn_on
+  - action: media_player.turn_on
     data: {}
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.select_source
+  - action: media_player.select_source
     data:
       source: Switch
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.select_sound_mode
+  - action: media_player.select_sound_mode
     data:
       sound_mode: DOLBY DIGITAL
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.volume_set
+  - action: media_player.volume_set
     data:
       volume_level: 0.4
     target:
@@ -291,23 +291,23 @@ nintendo:
 apple_tv:
   alias: Apple TV
   sequence:
-  - service: script.living_room_tv_turn_on
+  - action: script.living_room_tv_turn_on
     data: {}
-  - service: media_player.turn_on
+  - action: media_player.turn_on
     data: {}
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.select_source
+  - action: media_player.select_source
     data:
       source: AppleTV
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.select_sound_mode
+  - action: media_player.select_sound_mode
     data:
       sound_mode: DOLBY DIGITAL
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.volume_set
+  - action: media_player.volume_set
     data:
       volume_level: 0.5
     target:
@@ -318,23 +318,23 @@ apple_tv:
 tivo:
   alias: Tivo
   sequence:
-  - service: script.living_room_tv_turn_on
+  - action: script.living_room_tv_turn_on
     data: {}
-  - service: media_player.turn_on
+  - action: media_player.turn_on
     data: {}
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.select_source
+  - action: media_player.select_source
     data:
       source: TiVo
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.select_sound_mode
+  - action: media_player.select_sound_mode
     data:
       sound_mode: DOLBY DIGITAL
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.volume_set
+  - action: media_player.volume_set
     data:
       volume_level: 0.5
     target:
@@ -344,23 +344,23 @@ tivo:
 apple_tv_music:
   alias: Apple TV Music
   sequence:
-  - service: script.living_room_tv_turn_on
+  - action: script.living_room_tv_turn_on
     data: {}
-  - service: media_player.turn_on
+  - action: media_player.turn_on
     data: {}
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.select_source
+  - action: media_player.select_source
     data:
       source: AppleTV
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.select_sound_mode
+  - action: media_player.select_sound_mode
     data:
       sound_mode: STEREO
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
-  - service: media_player.volume_set
+  - action: media_player.volume_set
     data:
       volume_level: 0.5
     target:
@@ -370,7 +370,7 @@ apple_tv_music:
 living_room_tv_turn_on:
   alias: Living Room TV Turn On
   sequence:
-  - service: wake_on_lan.send_magic_packet
+  - action: wake_on_lan.send_magic_packet
     data:
       broadcast_port: 9
       mac: b0:37:95:d5:eb:69
@@ -380,9 +380,9 @@ living_room_tv_turn_on:
 christmas_lights:
   alias: Christmas Lights
   sequence:
-  - service: script.disable_all_adaptive_lights
+  - action: script.disable_all_adaptive_lights
     data: {}
-  - service: light.turn_on
+  - action: light.turn_on
     target:
       entity_id:
       - light.laundry_room_light
@@ -402,7 +402,7 @@ christmas_lights:
       - 0
       - 0
       brightness_pct: 100
-  - service: light.turn_on
+  - action: light.turn_on
     data:
       rgb_color:
       - 0
@@ -425,7 +425,7 @@ christmas_lights:
 enable_all_adaptive_lights:
   alias: Enable All Adaptive Lights
   sequence:
-  - service: switch.turn_on
+  - action: switch.turn_on
     target:
       entity_id:
       - switch.adaptive_lighting_bedroom
@@ -440,7 +440,7 @@ enable_all_adaptive_lights:
 disable_all_adaptive_lights:
   alias: Disable All Adaptive Lights
   sequence:
-  - service: switch.turn_off
+  - action: switch.turn_off
     target:
       entity_id:
       - switch.adaptive_lighting_bedroom
@@ -457,9 +457,9 @@ disable_all_adaptive_lights:
 christmas_lights_alternate:
   alias: Christmas Lights (Alternate)
   sequence:
-  - service: script.disable_all_adaptive_lights
+  - action: script.disable_all_adaptive_lights
     data: {}
-  - service: light.turn_on
+  - action: light.turn_on
     target:
       entity_id:
       - light.laundry_room_light
@@ -479,7 +479,7 @@ christmas_lights_alternate:
       - 255
       - 0
       brightness_pct: 100
-  - service: light.turn_on
+  - action: light.turn_on
     data:
       rgb_color:
       - 255
@@ -502,7 +502,7 @@ christmas_lights_alternate:
 welcome_lights:
   alias: Welcome Lights
   sequence:
-  - service: light.turn_on
+  - action: light.turn_on
     metadata: {}
     data:
       transition: 0
@@ -526,7 +526,7 @@ front_door_unlock:
         entity_id: device_tracker.ham
         state: home
     then:
-    - service: lock.unlock
+    - action: lock.unlock
       metadata: {}
       data: {}
       target:
@@ -536,7 +536,7 @@ front_door_unlock:
 naptime:
   alias: Naptime
   sequence:
-  - service: light.turn_off
+  - action: light.turn_off
     data: {}
     target:
       entity_id:
@@ -544,7 +544,7 @@ naptime:
       - light.bedroom_closet_light
       - light.bathroom_lights
       - light.bedroom_lights
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     data: {}
     target:
       entity_id: input_boolean.bedroom_filter_lights

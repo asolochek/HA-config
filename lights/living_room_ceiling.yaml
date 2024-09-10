@@ -5,36 +5,36 @@
       unique_id: living_room_template_light
       value_template: "{{ states('light.living_room_ceiling') == 'on' }}"
       turn_on:
-        - service: light.turn_on
+        - action: light.turn_on
           data:
             entity_id: light.living_room_ceiling
-        # - service: system_log.write
+        # - action: system_log.write
         #   data:
         #     message: "Turn on"
         #     level: error
           # data:
           #   value: 
           #   entity_id: light.living_room_ceiling 
-        # - service: input_number.set_value
+        # - action: input_number.set_value
         #   data:
         #     value: "{{ '%.0f' | format((1000000.0 / color_temp) - 3.0 | float(0)) }}"
         #     entity_id: input_number.living_room_ceiling_color_temp
       turn_off:
-        service: light.turn_off
+        action: light.turn_off
         data:
           entity_id: light.living_room_ceiling
       set_level:
-        service: light.turn_on
+        action: light.turn_on
         data:
           entity_id: light.living_room_ceiling
           brightness: "{{ brightness }}"
       set_temperature:
-        - service: input_number.set_value
+        - action: input_number.set_value
           data:
             value: "{{ '%.0f' | format((1000000.0 / color_temp) - 3.0 | float(0)) }}"
             entity_id: input_number.living_room_ceiling_color_temp
       set_color:
-        - service: light.turn_on
+        - action: light.turn_on
           data_template:
             entity_id: 
               - light.living_room_ceiling
@@ -43,7 +43,7 @@
               - "{{ hs[0] }}"
               - "{{ hs[1] }}"
       # set_effect:
-      #   - service: light.turn_on
+      #   - action: light.turn_on
       #     data_template:
       #       entity_id:
       #         - light.living_room_ceiling
