@@ -74,8 +74,6 @@ devices:
     friendly_name: Printer Plug
   '0x0017880108e2a549':
     friendly_name: Office Ceiling 1
-  '0x0017880108e54503':
-    friendly_name: Office Ceiling 2
   '0x0017880108e2d3ba':
     friendly_name: Office Ceiling 3
   '0x0017880109107ed2':
@@ -113,7 +111,7 @@ devices:
   '0x00178801039d730e':
     friendly_name: Bedroom Ceiling 2
   '0x00178801063878cb':
-    friendly_name: Bedroom Closet Light
+    friendly_name: Office Ceiling 2
   '0x001788010b6dd9a9':
     friendly_name: Kitchen Ceiling 1-1
   '0x0017880106d9db2d':
@@ -155,16 +153,16 @@ groups:
     friendly_name: Office Ceiling Zigbee Group
     devices:
       - 0x0017880108e2a549/11
-      - 0x0017880108e54503/11
       - 0x0017880108e2d3ba/11
+      - 0x00178801063878cb/11
   '2':
     friendly_name: Office Lights Zigbee Group
     devices:
       - 0x00178801091086eb/11
       - 0x0017880108e2a549/11
-      - 0x0017880108e54503/11
       - 0x0017880108e2d3ba/11
       - 0x0017880109107ed2/11
+      - 0x00178801063878cb/11
   '3':
     friendly_name: Hallway Ceiling Zigbee Group
     devices:
@@ -202,7 +200,6 @@ groups:
       - 0x001788010b39e879/11
       - 0x00178801091086eb/11
       - 0x0017880108e2a549/11
-      - 0x0017880108e54503/11
       - 0x0017880108e2d3ba/11
       - 0x0017880109107ed2/11
       - 0x0017880108e2d93f/11
