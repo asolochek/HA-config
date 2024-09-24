@@ -22,7 +22,7 @@ esphome:
     name: ${project_name}
     version: ${project_version}
   includes:
-    - humidity_correction.h
+    - common/humidity_correction.h
 
 esp32:
   board: esp32dev

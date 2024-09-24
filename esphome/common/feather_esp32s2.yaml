@@ -1,0 +1,33 @@
+substitutions:
+  board_type: adafruit_feather_esp32s2
+
+packages:
+  device_base: !include 
+    file: esp32.yaml
+    vars:
+      sda: GPIO3
+      scl: GPIO4
+  wifi: !include wifi.yaml
+  neo: !include
+    file: neopixel.yaml
+    vars:
+      power_pin: GPIO21
+      neopixel_pin: GPIO33
+
+
+spi: 
+  clk_pin: GPIO36
+  mosi_pin: GPIO35
+  miso_pin: GPIO37
+
+switch:
+  - platform: gpio
+    id: i2c_power
+    restore_mode: ALWAYS_ON
+    pin: GPIO7
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: false
+

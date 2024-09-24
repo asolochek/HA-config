@@ -1,261 +1,43 @@
-esphome:
-  name: office-air-quality
+substitutions:
+  device_name: office-air-quality
   friendly_name: Office Air Quality
-  platformio_options:
-    board_build.flash_mode: dio
-  includes:
-    - aqi.h
-    - humidity_correction.h
-    - color_utils.h
+  board_type: adafruit_qtpy_esp32
+  fqdn: air-quality-office.sf.aberrant.org
+
+packages:
+  device_base: !include common/qtpy_esp32.yaml
+  fonts: !include common/fonts.yaml
+  scd: !include common/scd4x.yaml
+  pmsa: !include common/pmsa003i.yaml
+  dp: !include common/dew_point.yaml
+  display: !include
+    file: common/st7789v.yaml
+    vars:
+      name: office_display
+      backlight: GPIO26
+      dcpin: GPIO27
+      cspin: GPIO7
+      resetpin: GPIO15
 
 
-esp32:
-  board: adafruit_qtpy_esp32
-  framework:
-    type: arduino
-
-# Enable logging
-logger:
-  level: ERROR
-  hardware_uart: UART0
-  # logs:
-  #   component: ERROR
-  #   pmsa003i: ERROR
-  #   scd4x: DEBUG
-  #   sensor: DEBUG
-  #   st7789v: ERROR
-
-
-# Enable Home Assistant API
-api:
-  encryption:
-    key: "xMwA4GGa1Mdesco5Bm+VUfqwWZr1bBok1AzeWI4MTMo="
+esphome:
+  on_boot:
+    - lambda: |-
+        id(my_ota).set_auth_password("rtzNxXXpqbD6YxZi");
 
 ota:
   platform: esphome
+  id: my_ota
   password: "10065348d8bbbf057758e70959c3dddc"
 
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  use_address: air-quality-office.sf.aberrant.org
-
-  # manual_ip:
-  #   static_ip: 10.3.1.38
-  #   gateway: 10.3.1.2
-  #   subnet: 255.255.0.0
-
-
-button:
-  - platform: restart
-    name: "Restart"
-    entity_category: "CONFIG"
 
 i2c:
-  - id: bus_a
-    sda: GPIO22
-    scl: GPIO19
-#    frequency: 100000Hz
-#    frequency: 800kHz
+  - id: !extend bus_a
     frequency: 50kHz
-    scan: true
-    setup_priority: 700
-
-spi: 
-  clk_pin: GPIO14
-  mosi_pin: GPIO13
-  miso_pin: GPIO12
-
-
-time:
-  - platform: sntp
-    id: sntp_time
-    timezone: America/Los_Angeles
-
-  - platform: homeassistant
-    id: ha_time
-
-
-switch:
-  - platform: gpio
-    id: neopix_power
-    restore_mode: ALWAYS_ON
-    pin: 
-      number: GPIO8
-      ignore_pin_validation_error: true
-
-sensor:
-  - platform: scd4x
-    i2c_id: bus_a
-    address: 0x62
-    update_interval: 5s
-    co2:
-      name: "CO2"
-      id: co2
-    temperature:
-      name: "Temperature"
-      id: temperature
-      accuracy_decimals: 1
-    humidity:
-      name: "Humidity"
-      id: humidity
-      accuracy_decimals: 1
-
-  - platform: template
-    name: Dew Point
-    id: dew_point
-    unit_of_measurement: "°F"
-    icon: mdi:thermometer-water
-    update_interval: 5s
-    device_class: temperature
-    accuracy_decimals: 1
-    lambda: |-
-      float temp = id(temperature).state;
-      float hum = id(humidity).state;
-      float dew = compute_dew_point(temp, hum);
-      // ESP_LOGI("dew", "temperature: %.1f humidity: %.1f, dewpoint: %.1f", temp, hum, dew);
-      return c_to_f(dew);
-
-  # Raw sensor values updated at 1s, but kept internal to be used for
-  # template sensor values exposed to HA
-  - platform: pmsa003i
-    i2c_id: bus_a
-    address: 0x12
-    pm_1_0:
-      id: pm_1_0_raw
-    pm_2_5:
-      id: pm_2_5_raw
-    pm_10_0:
-      id: pm_10_raw
-#     pmc_0_3:
-#       id: pmc_0_3_raw
-# #      name: "PMC <0.3µm"
-#     pmc_0_5:
-#       id: pcm_0_5_raw
-# #      name: "PMC <0.5µm"
-#     pmc_1_0:
-#       id: pmc_1_0_raw
-# #      name: "PMC <1µm"
-#     pmc_2_5:
-#       id: pmc_2_5_raw
-# #      name: "PMC <2.5µm"
-#     pmc_5_0:
-#       id: pmc_5_0_raw
-# #      name: "PMC <5µm"
-#     pmc_10_0:
-#       id: pmc_10_0_raw
-# #      name: "PMC <10µm"
-    update_interval: 1s
-
-
-  - platform: template
-    name: "PM1.0"
-    id: pm_1_0
-    device_class: PM1
-    unit_of_measurement: µg/m³
-    state_class: measurement
-    icon: mdi:grain
-
-    update_interval: 1s
-    filters:
-      - sliding_window_moving_average:
-          window_size: 15
-          send_every: 15
-          send_first_at: 15
-    lambda: "return(id(pm_1_0_raw).state);"
-  - platform: template
-    name: "PM2.5"
-    id: pm_2_5
-    device_class: PM25
-    icon: mdi:smoke
-    unit_of_measurement: µg/m³
-    state_class: measurement
-    update_interval: 1s
-    filters:
-      - sliding_window_moving_average:
-          window_size: 15
-          send_every: 15
-          send_first_at: 15
-    lambda: "return(id(pm_2_5_raw).state);"
-  - platform: template
-    name: "PM10.0"
-    id: pm_10
-    device_class: PM10
-    icon: mdi:flower-pollen
-    unit_of_measurement: µg/m³
-    state_class: measurement
-    update_interval: 1s
-    filters:
-      - sliding_window_moving_average:
-          window_size: 15
-          send_every: 15
-          send_first_at: 15
-    lambda: "return(id(pm_10_raw).state);"
-  - platform: template
-    name: "AQI"
-    id: aqi
-    device_class: AQI
-    state_class: measurement
-    icon: mdi:weather-hazy
-    accuracy_decimals: 0
-    filters:
-      - clamp:
-          min_value: 0.0
-          max_value: 500
-      - sliding_window_moving_average:
-          window_size: 15
-          send_every: 15
-          send_first_at: 15
-    lambda: |-
-      float pm2_5 = id(pm_2_5_raw).state;
-      float pm10 = id(pm_10_raw).state;
-      float aqi2_5 = get_pm2_5_aqi(pm2_5);
-      float aqi10 = get_pm10_aqi(pm10);
-      float aqi = aqi2_5 > aqi10 ? aqi2_5 : aqi10;
-      ESP_LOGI("AQI", "Computed AQI: %.0f from %.2f PM2.5 and %.2f PM10", aqi, pm2_5, pm10);
-      return(aqi);
-    update_interval: 1s
-
-
-output:
-  - platform: ledc
-    id: backlight_output
-    pin: GPIO26
-
-light:
-  - platform: monochromatic
-    output: backlight_output
-    name: "Backlight"
-    restore_mode: ALWAYS_ON
-    default_transition_length: 0.1s
-
-#  - platform: neopixelbus
-#    id: neopixel_led
-#    type: GRB
-#    variant: WS2812
-#    pin: 
-#      number: GPIO5
-#      ignore_pin_validation_error: true
-#    num_leds: 1
-#    name: "NeoPixel"
 
 
 display:
-  - platform: st7789v
-    model: Custom
-    cs_pin: 
-      number: GPIO7
-      ignore_pin_validation_error: true
-    dc_pin: GPIO27
-    reset_pin: GPIO15
-    height: 320
-    width: 172
-    offset_height: 34
-    offset_width: 0
-    rotation: 90
-#    backlight_pin: GPIO26
-    id: office_display
-    update_interval: 0.5s
+  - id: !extend office_display
     lambda: |-
       unsigned int co2_val = round(id(co2).state);
       unsigned int aqi_val = round(id(aqi).state);
@@ -271,61 +53,4 @@ display:
       it.printf(62, 120, id(futura32), ":");
       it.printf(100, 104, id(futura60), Color(co2RGB), " %d", co2_val);
   
-
-  #    it.rectangle(0, 0, 320, 172);  
-  #    it.print(0, 0, id(terminus28), "Hello World!");
-
-font:
-  - file: "fonts/Futura-Medium-01.ttf"
-    id: futura14
-    size: 14
-  - file: "fonts/Futura-Medium-01.ttf"
-    id: futura16
-    size: 16
-  - file: "fonts/Futura-Medium-01.ttf"
-    id: futura32
-    size: 32
-    # glyphs: |
-    #   !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz₂
-  - file: "fonts/Futura-Medium-01.ttf"
-    id: futura40
-    size: 40
-  - file: "fonts/Futura-Medium-01.ttf"
-    id: futura48
-    size: 48
-  - file: "fonts/Futura-Medium-01.ttf"
-    id: futura60
-    size: 60
-  - file: "fonts/Futura-Medium-01.ttf"
-    id: futura84
-    size: 84
-  - file: "gfonts://Roboto"
-    id: roboto
-    size: 20
-  - file: "gfonts://Roboto+Mono"
-    id: roboto_mono
-    size: 22
-  - file: "fonts/JetBrainsMono-Regular.ttf"
-    id: jetbrains_mono
-    size: 22
-  - file: "fonts/Gomme10x20n.bdf"
-    id: gomme
-    size: 20
-  - file: "fonts/ter-u18n.bdf"
-    id: terminus18n
-    size: 18
-  - file: "fonts/ter-u18b.bdf"
-    id: terminus18b
-    size: 18    
-  - file: "fonts/ter-u20n.bdf"
-    id: terminus20n
-  - file: "fonts/ter-u20b.bdf"
-    id: terminus20b
-    size: 20
-  - file: "fonts/ter-u28b.bdf"
-    id: terminus28
-    size: 28
-  - file: "fonts/ter-u32b.bdf"
-    id: terminus32
-    size: 36
 

@@ -1,0 +1,83 @@
+font:
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura14
+    size: 14
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura16
+    size: 16
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura24
+    size: 24
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura32
+    size: 32
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura36
+    size: 36
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura40
+    size: 40
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura48
+    size: 48
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura50
+    size: 50
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura60
+    size: 60
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura84
+    size: 84
+  - file: "gfonts://Roboto"
+    id: roboto
+    size: 20
+  - file: "gfonts://Roboto+Mono"
+    id: roboto_mono22
+    size: 22
+  - file: "gfonts://Roboto+Mono"
+    id: roboto_mono42
+    size: 42
+  - file: "fonts/JetBrainsMono-Regular.ttf"
+    id: jetbrains_mono
+    size: 22
+  - file: "fonts/Gomme10x20n.bdf"
+    id: gomme
+    size: 20
+  - file: "fonts/ter-u14n.bdf"
+    id: terminus14n
+    size: 14
+  - file: "fonts/ter-u16n.bdf"
+    id: terminus16n
+    size: 16
+  - file: "fonts/ter-u18n.bdf"
+    id: terminus18n
+    size: 18
+  - file: "fonts/ter-u18b.bdf"
+    id: terminus18b
+    size: 18    
+  - file: "fonts/ter-u20n.bdf"
+    id: terminus20n
+  - file: "fonts/ter-u20b.bdf"
+    id: terminus20b
+    size: 20
+  - file: "fonts/ter-u28b.bdf"
+    id: terminus28
+    size: 28
+  - file: "fonts/ter-u32b.bdf"
+    id: terminus32
+    size: 36
+  - file: 
+      type: gfonts
+      family: "Chakra Petch"
+      weight: 500
+      italic: false
+    id: chakra_petch
+    size: 42 
+  - file: 
+      type: gfonts
+      family: Orbitron
+      weight: 800
+      italic: false
+    id: orbitron
+    size: 42

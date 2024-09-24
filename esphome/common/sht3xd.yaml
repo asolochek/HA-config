@@ -1,0 +1,19 @@
+sensor:
+  - platform: sht3xd
+    i2c_id: bus_a
+    address: 0x44
+    update_interval: 2s
+    temperature:
+      name: "Temperature"
+      id: temperature
+      filters:
+        - exponential_moving_average:
+            alpha: 0.1
+            send_every: 1
+    humidity:
+      name: "Humidity"
+      id: humidity
+      filters:
+        - exponential_moving_average:
+            alpha: 0.1
+            send_every: 1

@@ -1,0 +1,32 @@
+sensor:
+  - platform: scd4x
+    i2c_id: bus_a
+    address: 0x62
+    update_interval: 1s
+    co2:
+      name: "CO2"
+      id: co2
+      filters:
+        - sliding_window_moving_average:
+            window_size: 15
+            send_every: 15
+            send_first_at: 5
+    temperature:
+      name: "Temperature"
+      id: temperature
+      accuracy_decimals: 1
+      filters:
+        - sliding_window_moving_average:
+            window_size: 15
+            send_every: 15
+            send_first_at: 5
+
+    humidity:
+      name: "Humidity"
+      id: humidity
+      accuracy_decimals: 1
+      filters:
+        - sliding_window_moving_average:
+            window_size: 15
+            send_every: 15
+            send_first_at: 5

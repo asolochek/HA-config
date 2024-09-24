@@ -1,0 +1,21 @@
+substitutions:
+  board_type: adafruit_qtpy_esp32
+
+packages:
+  device_base: !include esp32.yaml
+  wifi: !include wifi.yaml
+
+i2c:
+  - id: bus_a
+    sda: GPIO22
+    scl: GPIO19
+#    frequency: 100000Hz
+    frequency: 800kHz
+#    frequency: 50kHz
+    scan: true
+    setup_priority: 700
+
+spi: 
+  clk_pin: GPIO14
+  mosi_pin: GPIO13
+  miso_pin: GPIO12

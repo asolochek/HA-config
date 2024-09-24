@@ -1,61 +1,11 @@
-esphome:
-  name: office-window
+substitutions:
+  device_name: office-window
   friendly_name: Office Window
+  fqdn: office-window.sf.aberrant.org
 
-esp32:
-  board: esp32dev
-  framework:
-    type: arduino
-
-# Enable logging
-logger:
-
-# Enable Home Assistant API
-api:
-  encryption:
-    key: "HHiMksdsRw1ZnkcifdjtV3Of5eyv5MG5YQsV80V4ej4="
-
-ota:
-  - platform: esphome
-    password: "174c751ff04417e5c0d9610bf3962422"
-
-ethernet:
-  type: RTL8201
-  mdc_pin: GPIO16
-  mdio_pin: GPIO17
-  clk_mode: GPIO0_IN
-  phy_addr: 0
-  phy_registers:
-    - address: 0x10
-      value: 0x1FFA
-      page_id: 0x07
-
-  use_address: office-window.sf.aberrant.org
-  # manual_ip:
-  #   static_ip: 10.3.1.74
-  #   gateway: 10.3.1.2
-  #   subnet: 255.255.0.0
-  #   dns1: 10.3.1.2
-
-
-# wifi:
-#   ssid: !secret wifi_ssid
-#   password: !secret wifi_password
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  # ap:
-  #   ssid: "Office-Window Fallback Hotspot"
-  #   password: "G0MGQtzsSxHp"
-
-#captive_portal:
-
-bluetooth_proxy:
-  active: true
-
-button:
-  - platform: restart
-    name: "Restart"
-    entity_category: "CONFIG"
+packages:
+  device_base: !include common/common.yaml
+  ethernet: !include common/wesp32.yaml
 
 
 switch:
@@ -130,16 +80,6 @@ binary_sensor:
     on_press:
       - cover.toggle: office_window
   
-  
-  # - platform: gpio
-  #   id: unused1
-  #   pin:
-  #     number: GPIO14
-  #     mode:
-  #       input: true
-  #       pullup: false
-  #   internal: true
-
   - platform: gpio
     id: window_closed_sensor
     pin:
@@ -153,7 +93,6 @@ binary_sensor:
       - delayed_off: 1s
       - delayed_on: 500ms
           
-
   - platform: gpio
     id: window_open_sensor
     pin:
@@ -165,8 +104,6 @@ binary_sensor:
     internal: false
     filters: 
       - delayed_off: 1s
-          
-    
 
   - platform: template
     id: office_window_closed

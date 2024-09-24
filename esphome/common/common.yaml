@@ -1,0 +1,61 @@
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  includes:
+    - common/aqi.h
+    - common/humidity_correction.h
+    - common/color_utils.h
+
+
+
+#Include this block when migrating a config to using the shared config
+# esphome:
+#   on_boot:
+#     - lambda: |-
+#         id(my_ota).set_auth_password("newpass");
+#
+# ota:
+#   platform: esphome
+#   id: my_ota
+#   password: <copied from old config>
+
+
+
+# Enable logging
+logger:
+  level: INFO
+  hardware_uart: UART0
+  logs:
+    component: ERROR
+    scd4x: INFO
+
+
+# Enable Home Assistant API
+api:
+
+
+ota:
+  platform: esphome
+  id: my_ota
+  password: !secret ota_password
+
+
+button:
+  - platform: restart
+    name: "Restart"
+    entity_category: "CONFIG"
+
+
+time:
+  - platform: sntp
+    id: sntp_time
+    timezone: America/Los_Angeles
+
+  - platform: homeassistant
+    id: ha_time
+
+
+sensor:
+  - platform: uptime
+    name: Uptime
+    id: uptime_sensor

@@ -1,0 +1,19 @@
+defaults:
+  sda: SDA
+  scl: SCL
+
+packages:
+  device_base: !include common.yaml
+
+esp32:
+  board: ${board_type}
+  framework:
+    type: arduino
+
+i2c:
+  - id: bus_a
+    sda: $sda
+    scl: $scl
+    frequency: 800kHz
+    scan: true
+    setup_priority: 700

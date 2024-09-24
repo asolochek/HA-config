@@ -1,0 +1,17 @@
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+ethernet:
+  type: RTL8201
+  mdc_pin: GPIO16
+  mdio_pin: GPIO17
+  clk_mode: GPIO0_IN
+  phy_addr: 0
+  phy_registers:
+    - address: 0x10
+      value: 0x1FFA
+      page_id: 0x07
+
+  use_address: ${fqdn}

@@ -841,9 +841,9 @@
     above: number.bathroom_fan_idle_speed
   condition:
   - condition: state
-    entity_id: climate.bathroom_fan_humidity_controller
-    attribute: hvac_action
     state: idle
+    entity_id: climate.bathroom_fan_humidity_controller_stage_1
+    attribute: hvac_action
   action:
   - action: fan.set_percentage
     data:
@@ -1138,7 +1138,8 @@
   - action: light.turn_on
     data: {}
     target:
-      entity_id: light.bedroom_closet_light
+      entity_id:
+      - light.bedroom_closet_light
   mode: single
 - id: '1694560354122'
   alias: Bedroom Closet Motion Light Off
@@ -1487,7 +1488,7 @@
   - platform: numeric_state
     entity_id:
     - sensor.office_air_quality_temperature
-    above: 78
+    above: 81
   condition: []
   action:
   - device_id: 4d342d88be4e71bf65993a020f1fc6b9

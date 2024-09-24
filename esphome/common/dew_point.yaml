@@ -1,0 +1,19 @@
+defaults:
+  temperature_name: temperature
+  humidity_name: humidity
+
+sensor:
+  - platform: template
+    name: Dew Point
+    id: dew_point
+    unit_of_measurement: "°F"
+    icon: mdi:thermometer-water
+    update_interval: 5s
+    device_class: temperature
+    accuracy_decimals: 1
+    lambda: |-
+      float temp = id(temperature).state;
+      float hum = id(humidity).state;
+      float dew = compute_dew_point(temp, hum);
+      // ESP_LOGI("dew", "temperature: %.1f humidity: %.1f, dewpoint: %.1f", temp, hum, dew);
+      return c_to_f(dew);
