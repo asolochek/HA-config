@@ -9,6 +9,12 @@ font:
     id: futura24
     size: 24
   - file: "fonts/Futura-Medium-01.ttf"
+    id: futura28
+    size: 28
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura30
+    size: 30
+  - file: "fonts/Futura-Medium-01.ttf"
     id: futura32
     size: 32
   - file: "fonts/Futura-Medium-01.ttf"
