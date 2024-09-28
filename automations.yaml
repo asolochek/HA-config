@@ -1519,3 +1519,98 @@
     type: set_hvac_mode
     hvac_mode: 'off'
   mode: single
+- id: '1727422190427'
+  alias: Thao WFH Begin
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - device_tracker.thaos_work_laptop
+    from:
+    to: home
+  - platform: state
+    entity_id:
+    - binary_sensor.10_3_1_31
+    to: 'on'
+    from:
+  condition:
+  - condition: and
+    conditions:
+    - condition: time
+      after: 08:00:00
+      before: '17:00:00'
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+    - condition: state
+      entity_id: sensor.thao_s_phone
+      state: living_room
+  action:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.cat_camera_privacy_mode
+  - action: notify.mobile_app_ham
+    data:
+      message: Thao's WFH Begin
+  mode: single
+- id: '1727422854484'
+  alias: Thao WFH End
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - device_tracker.thaos_work_laptop
+    from: home
+    to: not_home
+    enabled: true
+  - platform: state
+    entity_id:
+    - device_tracker.thaos_work_laptop
+    from: home
+    to: unknown
+    enabled: true
+  - platform: state
+    entity_id:
+    - device_tracker.thaos_work_laptop
+    from: home
+    to: unavailable
+    enabled: true
+  - platform: state
+    entity_id:
+    - binary_sensor.10_3_1_31
+    to: 'off'
+    from:
+  condition: []
+  action:
+  - action: switch.turn_off
+    target:
+      entity_id:
+      - switch.cat_camera_privacy_mode
+    data: {}
+  - action: notify.mobile_app_ham
+    data:
+      message: Thao's WFH End
+  mode: single
+- id: '1727486858594'
+  alias: Thao WFH Force Stop
+  description: Stop WFH at 5
+  trigger:
+  - platform: time
+    at: '17:00:00'
+  condition:
+  - condition: state
+    entity_id: switch.cat_camera_privacy_mode
+    state: 'on'
+  action:
+  - action: automation.trigger
+    target:
+      entity_id: automation.thao_wfh_stop
+    data:
+      skip_condition: true
+  mode: single
