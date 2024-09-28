@@ -518,11 +518,11 @@ display:
       auto fan_speed = id(bathroom_fan).state ? float(id(bathroom_fan).speed) / 1024.0 * 100 : 0;
 
       it.printf(4, 3, id(futura50), "%.0f%%", fan_speed);
-      it.printf(178, 0, id(futura32), "%.0f", c_to_f(float(id(temperature).state)));
+      it.printf(178, 0, id(futura28), "%.0f", c_to_f(float(id(temperature).state)));
       it.circle(219, 12, 4);
       it.circle(219, 12, 3);
-      it.printf(224, 0, id(futura32), "F");
-      it.printf(178, 36, id(futura32), Color(yellow), "%.0f%%", id(humidity).state);
+      it.printf(224, 0, id(futura28), "F");
+      it.printf(178, 36, id(futura28), Color(yellow), "%.0f%%", id(humidity).state);
       if (id(humidity_controller_stage1).mode == CLIMATE_MODE_OFF) {
         it.printf(0, 110, id(futura24), "Controller Off");
       }
