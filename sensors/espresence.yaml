@@ -1,0 +1,57 @@
+
+- platform: mqtt_room
+  unique_id: ham_beacon
+  device_id: ham
+  name: 'ham'
+  state_topic: 'espresense/devices/ham'
+  timeout: 10
+  away_timeout: 120
+
+- platform: mqtt_room
+  unique_id: aaron_watch_beacon
+  device_id: !secret aaron_watch_irk
+  name: 'aaron''s watch'
+  state_topic: !secret aaron_watch_topic
+  timeout: 10
+  away_timeout: 120
+
+- platform: mqtt_room
+  unique_id: thaos_watch_beacon
+  device_id: !secret thao_watch_irk
+  name: 'thao''s watch'
+  state_topic: !secret thao_watch_topic
+  timeout: 10
+  away_timeout: 120    
+
+- platform: mqtt_room
+  unique_id: thaos_phone_beacon
+  device_id: thao_s_phone
+  name: 'thao''s phone'
+  state_topic: 'espresense/devices/thao_s_phone'
+  timeout: 10
+  away_timeout: 120  
+
+- platform: mqtt_room
+  unique_id: bacon_beacon
+  device_id: bacon
+  name: 'bacon'
+  state_topic: 'espresense/devices/bacon'
+  timeout: 10
+  away_timeout: 120  
+
+- platform: mqtt_room
+  unique_id: carpaccio_beacon
+  device_id: !secret carpaccio_irk
+  name: 'carpaccio'
+  state_topic: !secret carpaccio_topic
+  timeout: 10
+  away_timeout: 120 
+
+- platform: mqtt_room
+  unique_id: paio_beacon
+  device_id: !secret paio_irk
+  name: 'paio'
+  state_topic: !secret paio_topic
+  timeout: 10
+  away_timeout: 120
+
