@@ -92,6 +92,8 @@ sensor:
     lambda: |-
       float pm2_5 = id(pm_2_5_raw).state;
       float pm10 = id(pm_10_raw).state;
+      if (pm2_5 != pm2_5) pm2_5 = 0.0;
+      if (pm10 != pm10) pm10 = 0.0;
       float aqi2_5 = get_pm2_5_aqi(pm2_5);
       float aqi10 = get_pm10_aqi(pm10);
       float aqi = aqi2_5 > aqi10 ? aqi2_5 : aqi10;
