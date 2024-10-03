@@ -1,11 +1,13 @@
 substitutions:
   device_name: office-air-quality
   friendly_name: Office Air Quality
-  board_type: adafruit_qtpy_esp32
   fqdn: air-quality-office.sf.aberrant.org
 
 packages:
-  device_base: !include common/qtpy_esp32.yaml
+  device_base: !include 
+    file: common/qtpy_esp32.yaml
+    vars:
+      i2c_frequency: 50kHz
   fonts: !include common/fonts.yaml
   scd: !include common/scd4x.yaml
   pmsa: !include common/pmsa003i.yaml
@@ -18,22 +20,6 @@ packages:
       dcpin: GPIO27
       cspin: GPIO7
       resetpin: GPIO15
-
-
-esphome:
-  on_boot:
-    - lambda: |-
-        id(my_ota).set_auth_password("rtzNxXXpqbD6YxZi");
-
-ota:
-  platform: esphome
-  id: my_ota
-  password: "10065348d8bbbf057758e70959c3dddc"
-
-
-i2c:
-  - id: !extend bus_a
-    frequency: 50kHz
 
 
 display:

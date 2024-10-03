@@ -5,7 +5,13 @@ substitutions:
   fqdn: air-quality-bedroom.sf.aberrant.org
 
 packages:
-  device_base: !include common/esp32.yaml
+  device_base: !include 
+    file: common/esp32.yaml
+    vars:
+      sda: GPIO41
+      scl: GPIO40
+      i2c_frequency: 50kHz
+      board_type: $board_type
   wifi: !include common/wifi.yaml
   pmsa: !include common/pmsa003i.yaml
   dp: !include common/dew_point.yaml
@@ -14,23 +20,6 @@ packages:
     vars:
       power_pin: GPIO38
       neopixel_pin: GPIO39
-
-
-esphome:
-  platformio_options:
-    board_build.flash_mode: dio
-    build_flags: -Os
-    build_unflags: -O2
-
-
-i2c:
-  - id: bus_a
-    sda: GPIO41
-    scl: GPIO40
-    frequency: 50kHz
-    scan: true
-    setup_priority: 700
-
 
 
 sensor:

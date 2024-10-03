@@ -1,19 +1,18 @@
+defaults:
+  i2c_frequency: 800kHz
+
 substitutions:
   board_type: adafruit_qtpy_esp32
 
 packages:
-  device_base: !include esp32.yaml
+  device_base: !include 
+    file: esp32.yaml 
+    vars:
+      sda: GPIO22
+      scl: GPIO19
+      i2c_frequency: $i2c_frequency
   wifi: !include wifi.yaml
 
-i2c:
-  - id: bus_a
-    sda: GPIO22
-    scl: GPIO19
-#    frequency: 100000Hz
-    frequency: 800kHz
-#    frequency: 50kHz
-    scan: true
-    setup_priority: 700
 
 spi: 
   clk_pin: GPIO14

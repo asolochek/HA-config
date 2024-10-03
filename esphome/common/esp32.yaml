@@ -1,6 +1,8 @@
 defaults:
   sda: SDA
   scl: SCL
+  i2c_frequency: 800kHz
+  board_type: esp32dev
 
 packages:
   device_base: !include common.yaml
@@ -14,6 +16,6 @@ i2c:
   - id: bus_a
     sda: $sda
     scl: $scl
-    frequency: 800kHz
+    frequency: $i2c_frequency
     scan: true
     setup_priority: 700

@@ -1,11 +1,10 @@
 substitutions:
   device_name: power-meter
   friendly_name: Power Meter
-  board_type: adafruit_qtpy_esp32
   fqdn: power-meter.sf.aberrant.org
 
 packages:
-  device_base: !include common/common.yaml
+  device_base: !include common/qtpy_esp32.yaml
   wifi: !include common/wifi.yaml
 
 
@@ -18,6 +17,7 @@ ota:
   platform: esphome
   id: my_ota
 
+spi: !remove
 
 
 sensor:
