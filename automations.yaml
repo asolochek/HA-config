@@ -1274,25 +1274,25 @@
 - id: '1704920718213'
   alias: Someone Comes Home
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - device_tracker.aarons_watch
     - device_tracker.thao_watch
     - device_tracker.ham_ble
     from: not_home
     to: home
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - sensor.thao_s_phone
     from: not_home
-  - platform: device
-    device_id: 22777d2f3d0cd0034f66e7efd6c85664
+    trigger: state
+  - device_id: 22777d2f3d0cd0034f66e7efd6c85664
     domain: device_tracker
-    entity_id: face6a3a3c1ff3ea6468bec8f024fff9
+    entity_id: fc0f8236c2c84530a7812e15ec94b0bd
     type: enters
+    trigger: device
     zone: zone.home
-  condition:
+  conditions:
   - condition: or
     conditions:
     - condition: sun
@@ -1303,13 +1303,13 @@
     - condition: numeric_state
       entity_id: sensor.kitchen_presence_light_sensor
       below: 10
-  action:
+  actions:
   - wait_for_trigger:
     - type: opened
-      platform: device
       device_id: c4fc2ed608a793675ded3c0623a42ebf
       entity_id: 804077174d2bb120d98f6fe6750f98bd
       domain: binary_sensor
+      trigger: device
     continue_on_timeout: false
     timeout:
       hours: 0
@@ -1327,25 +1327,25 @@
 - id: '1706996915630'
   alias: Disable Welcome Lights At Night
   description: Disable the welcome lights when someone goes to walk the dog
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - device_tracker.aarons_watch
     - device_tracker.thao_watch
     - device_tracker.ham_ble
     from: home
     to: not_home
-  - platform: device
-    device_id: 22777d2f3d0cd0034f66e7efd6c85664
+    trigger: state
+  - device_id: 22777d2f3d0cd0034f66e7efd6c85664
     domain: device_tracker
-    entity_id: face6a3a3c1ff3ea6468bec8f024fff9
+    entity_id: fc0f8236c2c84530a7812e15ec94b0bd
     type: leaves
+    trigger: device
     zone: zone.home
-  - platform: state
-    entity_id:
+  - entity_id:
     - sensor.thao_s_phone
     to: not_home
-  condition:
+    trigger: state
+  conditions:
   - condition: and
     conditions:
     - condition: numeric_state
@@ -1365,7 +1365,7 @@
       - thu
       - fri
       - sat
-  action:
+  actions:
   - action: input_boolean.turn_on
     target:
       entity_id: input_boolean.auto_lights_disabled
@@ -1586,7 +1586,10 @@
     - binary_sensor.10_3_1_31
     to: 'off'
     from:
-  condition: []
+  condition:
+  - condition: state
+    entity_id: switch.cat_camera_privacy_mode
+    state: 'on'
   action:
   - action: switch.turn_off
     target:
@@ -1608,6 +1611,11 @@
     entity_id: switch.cat_camera_privacy_mode
     state: 'on'
   action:
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.cat_camera_privacy_mode
   - action: automation.trigger
     target:
       entity_id: automation.thao_wfh_stop
