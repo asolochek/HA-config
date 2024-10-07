@@ -1,5 +1,23 @@
 
 - platform: mqtt_room
+  unique_id: aarons_watch_beacon
+#  device_id: !secret aarons_watch_irk
+  device_id: aarons_watch
+  name: 'aaron''s watch'
+#  state_topic: !secret aarons_watch_topic
+  state_topic: 'espresense/devices/aarons_watch'
+  timeout: 10
+  away_timeout: 120
+
+- platform: mqtt_room
+  unique_id: thaos_watch_beacon
+  device_id: !secret thaos_watch_irk
+  name: 'thao''s watch'
+  state_topic: !secret thaos_watch_topic
+  timeout: 10
+  away_timeout: 120    
+
+- platform: mqtt_room
   unique_id: ham_beacon
   device_id: ham
   name: 'ham'
@@ -8,24 +26,8 @@
   away_timeout: 120
 
 - platform: mqtt_room
-  unique_id: aaron_watch_beacon
-  device_id: !secret aaron_watch_irk
-  name: 'aaron''s watch'
-  state_topic: !secret aaron_watch_topic
-  timeout: 10
-  away_timeout: 120
-
-- platform: mqtt_room
-  unique_id: thaos_watch_beacon
-  device_id: !secret thao_watch_irk
-  name: 'thao''s watch'
-  state_topic: !secret thao_watch_topic
-  timeout: 10
-  away_timeout: 120    
-
-- platform: mqtt_room
   unique_id: thaos_phone_beacon
-  device_id: thao_s_phone
+  device_id: thaos_phone
   name: 'thao''s phone'
   state_topic: 'espresense/devices/thao_s_phone'
   timeout: 10
@@ -49,9 +51,9 @@
 
 - platform: mqtt_room
   unique_id: paio_beacon
-  device_id: !secret paio_irk
+  device_id: paio
   name: 'paio'
-  state_topic: !secret paio_topic
+  state_topic: 'espresense/devices/paio'
   timeout: 10
   away_timeout: 120
 
