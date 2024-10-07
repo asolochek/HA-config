@@ -41,9 +41,9 @@
 
 - platform: mqtt_room
   unique_id: carpaccio_beacon
-  device_id: !secret carpaccio_irk
+  device_id: carpaccio
   name: 'carpaccio'
-  state_topic: !secret carpaccio_topic
+  state_topic: 'espresense/devices/carpaccio'
   timeout: 10
   away_timeout: 120 
 
