@@ -1,7 +1,6 @@
 substitutions:
   device_name: bedroom-closet-window
   friendly_name: Bedroom Closet Window
-  board_type: adafruit_feather_esp32s2_tft
   fqdn: fan-bedroom-closet.sf.aberrant.org
 
 packages:
@@ -52,15 +51,6 @@ switch:
       - switch.turn_off: fan_power_relay
 
   - platform: gpio
-    id: window_open_switch
-    restore_mode: ALWAYS_OFF
-    pin: GPIO5
-    name: "Window Open"
-    entity_category: "CONFIG"
-    internal: false
-    interlock: [window_close_switch]
-
-  - platform: gpio
     id: window_close_switch
     restore_mode: ALWAYS_OFF
     pin: GPIO4
@@ -68,6 +58,15 @@ switch:
     entity_category: "CONFIG"
     internal: false
     interlock: [window_open_switch]
+
+  - platform: gpio
+    id: window_open_switch
+    restore_mode: ALWAYS_OFF
+    pin: GPIO5
+    name: "Window Open"
+    entity_category: "CONFIG"
+    internal: false
+    interlock: [window_close_switch]
 
   - platform: gpio
     id: fan_power_relay
