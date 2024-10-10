@@ -1,10 +1,8 @@
 
 - platform: mqtt_room
   unique_id: aarons_watch_beacon
-#  device_id: !secret aarons_watch_irk
   device_id: aarons_watch
   name: 'aaron''s watch'
-#  state_topic: !secret aarons_watch_topic
   state_topic: 'espresense/devices/aarons_watch'
   timeout: 10
   away_timeout: 120
