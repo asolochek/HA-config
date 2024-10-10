@@ -74,8 +74,22 @@
         {{ avg }}
     {% endif %}
 
+{% endmacro %}
 
-
+{% macro invert_cover_state(state) %}
+    {% if state == 'Opening' %}
+        'Closing'
+    {% elif state == 'Open' %}
+        'Closed'
+    {% elif state == 'Closing' %}
+        'Opening'
+    {% elif state == 'Closed' %}
+        'Open'
+    {% elif state == 'Unavailable' %}
+        'Unavailable'
+    {% else %}
+        'Unknown'
+    {% endif %}              
 {% endmacro %}
 
 {# {% macro format_entity(entity_id) %}
