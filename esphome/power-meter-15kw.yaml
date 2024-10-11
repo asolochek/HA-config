@@ -39,11 +39,10 @@ sensor:
     on_value:
       then:
         - lambda: |-
-            float pct = x / 7500;
+            float pct = x / 7500; // 15000
             id(meter_output1).set_level(pct);
             id(meter_output2).set_level(pct);
 
-#            float pct = x / 15000;
 
 output:
   - platform: ledc
