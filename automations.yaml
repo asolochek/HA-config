@@ -1215,28 +1215,28 @@
 - id: '1697851358987'
   alias: Thao's Home
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - device_tracker.thao_watch
     from:
     to: home
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - device_tracker.thao_phone
     from:
     to: home
-  - platform: state
-    entity_id:
-    - device_tracker.thao_phone_2
-    to: home
-    from:
-  - platform: state
-    entity_id:
-    - device_tracker.thao_watch_2
-    from:
-    to: home
-  condition:
+    trigger: state
+  - entity_id:
+    - sensor.thaos_phone
+    to:
+    from: unavailable
+    trigger: state
+  - entity_id:
+    - sensor.thaos_watch
+    from: unavailable
+    to:
+    trigger: state
+  conditions:
   - condition: not
     conditions:
     - condition: state
@@ -1246,7 +1246,7 @@
   - condition: state
     entity_id: input_boolean.thao_s_home
     state: 'off'
-  action:
+  actions:
   - action: notify.mobile_app_ham
     data:
       message: Thao's Home
@@ -1522,18 +1522,18 @@
 - id: '1727422190427'
   alias: Thao WFH Begin
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - device_tracker.thaos_work_laptop
     from:
     to: home
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - binary_sensor.10_3_1_31
     to: 'on'
     from:
-  condition:
+    trigger: state
+  conditions:
   - condition: and
     conditions:
     - condition: time
@@ -1547,9 +1547,9 @@
       - fri
       - sat
     - condition: state
-      entity_id: sensor.thao_s_phone
+      entity_id: sensor.thaos_phone
       state: living_room
-  action:
+  actions:
   - action: switch.turn_on
     metadata: {}
     data: {}
