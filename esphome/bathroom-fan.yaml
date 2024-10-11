@@ -5,9 +5,12 @@ substitutions:
   fqdn: fan-bathroom.sf.aberrant.org
 
 packages:
-  device_base: !include common/feather_esp32s2.yaml
+  device_base: !include 
+    file: common/feather_esp32s2.yaml
+    vars:
+      board_type: $board_type
   fonts: !include common/fonts.yaml
-  temperature: !include common/sht3xd.yaml
+  temperature: !include common/sht4x.yaml
 
 
 logger:
@@ -466,7 +469,7 @@ external_components:
       - ssd1306_base
       - ssd1306_i2c
       - ssd1306_spi
-      - sht3xd
+
 
 
 color:
