@@ -1401,37 +1401,37 @@
 - id: '1712364725887'
   alias: Thao Leaves
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - device_tracker.thao_watch_2
+  triggers:
+  - entity_id:
+    - device_tracker.thao_watch
     from: home
     to:
-  - platform: state
-    entity_id:
-    - device_tracker.thao_phone_2
+    trigger: state
+  - entity_id:
+    - device_tracker.thao_phone
     from: home
     to:
-  condition:
+    trigger: state
+  conditions:
   - condition: and
     conditions:
     - condition: or
       conditions:
       - condition: state
-        entity_id: device_tracker.thao_phone_2
+        entity_id: device_tracker.thao_phone
         state: not_home
       - condition: state
-        entity_id: device_tracker.thao_phone_2
+        entity_id: device_tracker.thao_phone
         state: unavailable
     - condition: or
       conditions:
       - condition: state
-        entity_id: device_tracker.thao_watch_2
+        entity_id: device_tracker.thao_watch
         state: not_home
       - condition: state
-        entity_id: device_tracker.thao_watch_2
+        entity_id: device_tracker.thao_watch
         state: unavailable
-  action:
+  actions:
   - action: input_boolean.turn_off
     target:
       entity_id:
