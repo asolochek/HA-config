@@ -1,0 +1,3 @@
+sonic_down: bash /config/shell_commands/sonic_down.sh
+sonic_up: bash /config/shell_commands/sonic_up.sh
+env: env

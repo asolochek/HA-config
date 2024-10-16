@@ -69,9 +69,6 @@ lovelace:
   #     json_attributes_topic: zigbee2mqtt/bridge/response/networkmap
   #     json_attributes_template: "{{ value_json.data.value | tojson }}"
 
-shell_command:
-  sonic_down: /config/shell_commands/sonic_down.sh
-  sonic_up: /config/shell_commands/sonic_up.sh
 
 
 automation: !include automations.yaml
@@ -84,7 +81,7 @@ sensor: !include_dir_merge_list sensors/
 switch: !include_dir_merge_list switches/
 template: !include_dir_merge_list template_devices/
 cover: !include_dir_merge_list windows/
-
+shell_command: !include shell_commands.yaml
 
 
 
