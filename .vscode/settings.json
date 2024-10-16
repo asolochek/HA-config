@@ -1,5 +1,7 @@
 {
     "files.associations": {
         "*.yaml": "home-assistant"
-    }
+    },
+    "mobi.enabled": false,
+    "esphome.enabled": true,
 }

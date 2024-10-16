@@ -32,6 +32,21 @@
         "kind": "build",
         "isDefault": true
       }
+    },
+    {
+      "label": "esphome clean",
+      "type": "shell",
+      "command": "esphome clean ${file}",
+      "problemMatcher": {
+        "base": "$gcc",
+        "fileLocation": [
+          "absolute"
+        ]
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
     }
   ]
 }
