@@ -1,5 +1,14 @@
+defaults:
+  board_type: huzzah
+  log_level: INFO
+
 packages:
-  device_base: !include common.yaml
+  device_base: !include 
+    file: common.yaml
+    vars:
+      log_level: ${log_level}
 
 esp8266:
-  board: huzzah
+  board: ${board_type}
+  restore_from_flash: true
+  early_pin_init: true

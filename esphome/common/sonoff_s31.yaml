@@ -1,0 +1,19 @@
+substitutions:
+  device_description: "Sonoff S31 Smart Plug"
+  project_name: "Sonoff.S31 Smart Plug"
+  project_version: "v1.0.0"
+
+
+packages:
+  device_base: !include 
+    file: esp8266.yaml
+    vars:
+      board_type: esp12e
+  plug: !include 
+    file: smart_plug_common.yaml
+    vars:
+      button_gpio: GPIO0
+      relay_gpio: GPIO12
+  cse7766: !include cse7766.yaml
+  wifi: !include wifi.yaml
+

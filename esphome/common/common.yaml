@@ -1,6 +1,15 @@
+defaults:
+  log_level: INFO
+
 esphome:
   name: ${device_name}
   friendly_name: ${friendly_name}
+  comment: ${device_description}
+  area: ${room}
+  project:
+    name: ${project_name}
+    version: ${project_version}
+
   includes:
     - common/aqi.h
     - common/humidity_correction.h
@@ -23,7 +32,7 @@ esphome:
 
 # Enable logging
 logger:
-  level: INFO
+  level: ${log_level}
   hardware_uart: UART0
   logs:
     component: ERROR
@@ -42,20 +51,74 @@ ota:
 
 button:
   - platform: restart
+    id: restart_button
     name: "Restart"
-    entity_category: "CONFIG"
+    entity_category: config
 
+
+mdns:
+  disabled: false
+
+
+binary_sensor:
+  - platform: status
+    name: "Status"
+    entity_category: diagnostic
+
+
+sensor:
+  - platform: uptime
+    name: "Uptime Sensor"
+    id: uptime_sensor
+    internal: true
+
+
+text_sensor:
+  - platform: template
+    name: 'Last Restart'
+    id: device_last_restart
+    icon: mdi:clock
+    entity_category: diagnostic
+
+  - platform: template
+    name: "Uptime"
+    icon: mdi:clock-start
+    entity_category: diagnostic
+    lambda: |-
+      int seconds = (id(uptime_sensor).state);
+      int days = seconds / (24 * 3600);
+      seconds = seconds % (24 * 3600);
+      int hours = seconds / 3600;
+      seconds = seconds % 3600;
+      int minutes = seconds /  60;
+      seconds = seconds % 60;
+      if ( days > 3650 ) {
+        return { "Starting up" };
+      } else if ( days ) {
+        return { (String(days) +"d " + String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
+      } else if ( hours ) {
+        return { (String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
+      } else if ( minutes ) {
+        return { (String(minutes) +"m "+ String(seconds) +"s").c_str() };
+      } else {
+        return { (String(seconds) +"s").c_str() };
+      }
 
 time:
   - platform: sntp
     id: sntp_time
     timezone: America/Los_Angeles
+    update_interval: 60min
+    on_time_sync:
+      then:
+        # Update last restart time, but only once.
+        - if:
+            condition:
+              lambda: 'return id(device_last_restart).state == "";'
+            then:
+              - text_sensor.template.publish:
+                  id: device_last_restart
+                  state: !lambda 'return id(sntp_time).now().strftime("%a %d %b %Y - %I:%M:%S %p");'
 
   - platform: homeassistant
     id: ha_time
-
-
-sensor:
-  - platform: uptime
-    name: Uptime
-    id: uptime_sensor

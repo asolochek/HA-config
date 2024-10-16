@@ -1,0 +1,84 @@
+# defaults:
+#   current_name: "Current"
+#   voltage_name: "Voltage"
+#   power_name: "Power"
+#   apparent_power_name: "Apparent Power"
+#   power_factor_name: "Power Factor"
+#   total_daily_energy_name: "Total Energy"
+#   current_limit: "15.0"
+
+
+uart:
+  rx_pin: RX
+  tx_pin: TX
+  parity: EVEN
+  baud_rate: 4800
+
+sensor:
+  - platform: cse7766
+    current:
+      name: ${current_name}
+      accuracy_decimals: 1
+      filters:
+        - lambda: if (x < 0.060) return 0.0; else return x;   #For the chip will report less than 3w power when no load is connected
+#        - throttle_average: 60s
+      on_value_range:
+        - above: ${current_limit}
+          then:
+            - switch.turn_off: relay
+
+    voltage:
+      name: ${voltage_name}
+      accuracy_decimals: 1
+#      filters:
+#        - throttle_average: 60s
+
+    power:
+      name: ${power_name}
+      accuracy_decimals: 1
+      id: my_power
+      filters:
+        - lambda: if (x < 3) return 0.0; else return x;   #For the chip will report less than 3w power when no load is connected
+#        - throttle_average: 60s
+
+
+    # energy:
+    #   name: "Energy"
+    #   id: energy
+    #   accuracy_decimals: 3
+    #   unit_of_measurement: kWh
+    #   internal: ${hide_energy_sensor}
+    #   filters:
+    #     - throttle: ${sensor_update_interval}
+    #     # Multiplication factor from W to kW is 0.001
+    #     - multiply: 0.001
+    #   on_value:
+    #     then:
+    #       - lambda: |-
+    #           static float previous_energy_value = 0.0;
+    #           float current_energy_value = id(energy).state;
+    #           id(total_energy) += current_energy_value - previous_energy_value;
+    #           previous_energy_value = current_energy_value;
+    #           id(total_energy_sensor).update();
+
+
+    apparent_power: #(only available with version 2024.3.0 or greater)
+      name: ${apparent_power_name}
+#      filters:
+#        - throttle_average: 60s
+
+    reactive_power:
+      name: "Reactive Power"
+#      filters:
+#        - throttle_average: ${sensor_update_interval
+
+    power_factor: #(only available with version 2024.3.0 or greater)
+      name: ${power_factor_name}
+      accuracy_decimals: 1
+#      filters:
+#        - throttle_average: 60s
+
+  - platform: total_daily_energy #(Optional, not specific to cse7766)
+    name: ${total_daily_energy_name}
+    power_id: my_power
+    accuracy_decimals: 1

@@ -3,9 +3,13 @@ defaults:
   scl: SCL
   i2c_frequency: 800kHz
   board_type: esp32dev
+  log_level: INFO
 
 packages:
-  device_base: !include common.yaml
+  device_base: !include 
+    file: common.yaml
+    vars:
+      log_level: ${log_level}
 
 esp32:
   board: ${board_type}

@@ -1,4 +1,40 @@
+defaults:
+  dns_domain: sf.aberrant.org
+  fqdn: ${hostname}.${dns_domain}
+
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
   use_address: ${fqdn}
+  domain: .${dns_domain}
+  fast_connect: true
+
+
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    id: wifi_signal_db
+    update_interval: 60s
+    entity_category: diagnostic
+
+  - platform: copy
+    source_id: wifi_signal_db
+    name: "WiFi Signal Percent"
+    filters:
+      - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
+    unit_of_measurement: "%"
+    entity_category: diagnostic
+    device_class: ""
+
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
+      entity_category: diagnostic
+    ssid:
+      name: "Connected SSID"
+      entity_category: diagnostic
+    mac_address:
+      name: "Mac Address"
+      entity_category: diagnostic

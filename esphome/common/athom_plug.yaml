@@ -1,0 +1,26 @@
+substitutions:
+  device_description: "Athom Smart Plug V2"
+  project_name: "Athom Technology.Smart Plug V2"
+  project_version: "v2.0.6"
+
+
+packages:
+  device_base: !include 
+    file: esp8266.yaml
+    vars:
+      board_type: esp8285
+  plug: !include 
+    file: smart_plug_common.yaml
+    vars:
+      button_gpio: 5
+      relay_gpio: GPIO12
+  cse7766: !include cse7766.yaml
+  wifi: !include wifi.yaml
+
+
+dashboard_import:
+  package_import_url: github://athom-tech/athom-configs/athom-smart-plug-v2.yaml
+
+
+
+
