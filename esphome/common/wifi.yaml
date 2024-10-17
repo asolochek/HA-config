@@ -1,6 +1,10 @@
-defaults:
+substitutions:
   dns_domain: sf.aberrant.org
+
+
+defaults:
   fqdn: ${hostname}.${dns_domain}
+
 
 wifi:
   ssid: !secret wifi_ssid

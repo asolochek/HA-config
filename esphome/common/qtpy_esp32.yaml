@@ -1,8 +1,8 @@
-defaults:
-  i2c_frequency: 800kHz
-
 substitutions:
   board_type: adafruit_qtpy_esp32
+  i2c_frequency: 800kHz
+  neopixel_pin: GPIO39
+  neopixel_power_pin: GPIO38
 
 packages:
   device_base: !include 
@@ -10,11 +10,27 @@ packages:
     vars:
       sda: GPIO22
       scl: GPIO19
-      i2c_frequency: $i2c_frequency
   wifi: !include wifi.yaml
+#  neo: !include neopixel.yaml
 
 
-spi: 
-  clk_pin: GPIO14
-  mosi_pin: GPIO13
-  miso_pin: GPIO12
+# light:
+#   - id: !extend neopixel_led
+#     pin:
+#       ignore_pin_validation_error: true
+#      ignore_strapping_warning: true
+
+# # switch:
+#   - id: !extend neopixel_power
+#     pin:
+#       ignore_pin_validation_error: true
+
+
+spi:
+  clk_pin: 
+    number: GPIO14
+  mosi_pin: 
+    number: GPIO13
+  miso_pin: 
+    number: GPIO12
+    ignore_strapping_warning: true

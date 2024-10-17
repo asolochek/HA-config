@@ -2,18 +2,13 @@ substitutions:
   device_description: "Athom Smart Plug V2"
   project_name: "Athom Technology.Smart Plug V2"
   project_version: "v2.0.6"
-
+  board_type: esp8285
+  button_gpio: GPIO5
+  relay_gpio: GPIO12
 
 packages:
-  device_base: !include 
-    file: esp8266.yaml
-    vars:
-      board_type: esp8285
-  plug: !include 
-    file: smart_plug_common.yaml
-    vars:
-      button_gpio: 5
-      relay_gpio: GPIO12
+  device_base: !include esp8266.yaml
+  plug: !include smart_plug_common.yaml
   cse7766: !include cse7766.yaml
   wifi: !include wifi.yaml
 

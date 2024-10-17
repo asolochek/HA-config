@@ -2,6 +2,7 @@ sensor:
   # Raw sensor values updated at 1s, but kept internal to be used for
   # template sensor values exposed to HA
   - platform: pmsa003i
+    id: pmsa003i_sensor
     i2c_id: bus_a
     address: 0x12
     pm_1_0:

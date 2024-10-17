@@ -1,5 +1,6 @@
 sensor:
   - platform: sht4x
+    id: sht4x_sensor
     i2c_id: bus_a
     address: 0x44
     update_interval: 2s

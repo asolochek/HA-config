@@ -6,9 +6,6 @@ substitutions:
   power_factor_name: "Power Factor"
   total_daily_energy_name: "Total Energy"
   current_limit: "15.0"
-
-
-defaults:
   button_gpio: GPIO0
   button_inverted: "true"
   relay_gpio: GPIO12
@@ -16,6 +13,16 @@ defaults:
   relay_restore_mode: RESTORE_DEFAULT_OFF
   status_led_gpio: GPIO13
   status_led_inverted: "true"
+
+
+# defaults:
+#   button_gpio: GPIO0
+#   button_inverted: "true"
+#   relay_gpio: GPIO12
+#   relay_inverted: "false"
+#   relay_restore_mode: RESTORE_DEFAULT_OFF
+#   status_led_gpio: GPIO13
+#   status_led_inverted: "true"
 
 
 globals:

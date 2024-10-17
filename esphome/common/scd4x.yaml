@@ -1,11 +1,12 @@
 sensor:
   - platform: scd4x
+    id: scd4x_sensor
     i2c_id: bus_a
     address: 0x62
     update_interval: 1s
     co2:
-      name: "CO2"
       id: co2
+      name: "CO2"
       filters:
         - sliding_window_moving_average:
             window_size: 15

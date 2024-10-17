@@ -1,4 +1,4 @@
-defaults:
+substitutions:
   i2c_frequency: 800kHz
   board_type: adafruit_feather_esp32s2
 
@@ -8,8 +8,6 @@ packages:
     vars:
       sda: GPIO3
       scl: GPIO4
-      i2c_frequency: $i2c_frequency
-      board_type: $board_type
   wifi: !include wifi.yaml
   neo: !include
     file: neopixel.yaml

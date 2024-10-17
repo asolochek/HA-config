@@ -1,3 +1,9 @@
+substitutions:
+  room: "Default Room"
+  project_name: "ESPHome.Project"
+  project_version: "1.0.0"
+  log_level: "INFO"
+
 defaults:
   log_level: INFO
 

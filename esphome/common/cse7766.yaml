@@ -9,8 +9,10 @@
 
 
 uart:
-  rx_pin: RX
-  tx_pin: TX
+  rx_pin: 
+    number: RX
+  tx_pin: 
+    number: TX
   parity: EVEN
   baud_rate: 4800
 

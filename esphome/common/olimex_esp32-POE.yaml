@@ -1,0 +1,10 @@
+substitutions:
+  board_type: esp32-poe-iso
+  i2c_frequency: 800kHz
+
+  packages:
+    device_base: !include 
+      file: esp32.yaml
+      vars:
+        sda: GPIO21
+        scl: GPIO22

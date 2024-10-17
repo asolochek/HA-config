@@ -1,29 +1,32 @@
 substitutions:
   device_name: office-air-quality
   friendly_name: Office Air Quality
-  fqdn: air-quality-office.sf.aberrant.org
+  room: Office
+  hostname: air-quality-office
+  device_description: "Office Air Quality Monitor"
+  i2c_frequency: 50kHz
+  display_name: office_display
+  st7789_backlight_pin: GPIO26
+  st7789_dc_pin: GPIO27
+  st7789_cs_pin: GPIO7
+  st7789_reset_pin: GPIO15
 
 packages:
-  device_base: !include 
-    file: common/qtpy_esp32.yaml
-    vars:
-      i2c_frequency: 50kHz
+  device_base: !include common/qtpy_esp32.yaml
   fonts: !include common/fonts.yaml
   scd: !include common/scd4x.yaml
   pmsa: !include common/pmsa003i.yaml
   dp: !include common/dew_point.yaml
-  display: !include
-    file: common/st7789v.yaml
-    vars:
-      name: office_display
-      backlight: GPIO26
-      dcpin: GPIO27
-      cspin: GPIO7
-      resetpin: GPIO15
+  display: !include common/st7789v.yaml
+
 
 
 display:
-  - id: !extend office_display
+  - id: !extend ${display_name}
+    reset_pin:
+      ignore_strapping_warning: true
+    cs_pin:
+      ignore_pin_validation_error: true
     lambda: |-
       unsigned int co2_val = round(id(co2).state);
       unsigned int aqi_val = round(id(aqi).state);

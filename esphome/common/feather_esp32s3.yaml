@@ -1,6 +1,6 @@
-defaults:
-  i2c_frequency: 800kHz
+substitutions:
   board_type: adafruit_feather_esp32s3
+  i2c_frequency: 800kHz
 
 packages:
   device_base: !include 
@@ -17,6 +17,12 @@ packages:
       power_pin: GPIO21
       neopixel_pin: GPIO33
 
+i2c:
+  - id: !extend bus_a
+    sda:
+      ignore_strapping_warning: true
+
+
 
 spi: 
   clk_pin: GPIO14
@@ -29,3 +35,4 @@ switch:
     id: i2c_power
     restore_mode: ALWAYS_ON
     pin: GPIO7
+

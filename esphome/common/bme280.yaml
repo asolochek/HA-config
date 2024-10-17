@@ -1,5 +1,6 @@
 sensor:
   - platform: bme280_i2c
+    id: bme280_sensor
     i2c_id: bus_a
     address: 0x77
     temperature:

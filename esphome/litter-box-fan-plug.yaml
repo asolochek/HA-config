@@ -3,6 +3,7 @@ substitutions:
   friendly_name: Litter Box Fan
   room: "Laundry Room"
   hostname: plug-litter-box-fan
+  device_description: "Litter Box Exhaust Fan"
 
 packages: 
   device_base: !include common/athom_plug.yaml

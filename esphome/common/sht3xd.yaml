@@ -1,5 +1,6 @@
 sensor:
   - platform: sht3xd
+    id: sht3xd_sensor
     i2c_id: bus_a
     address: 0x44
     update_interval: 2s

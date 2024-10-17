@@ -1,4 +1,4 @@
-defaults:
+substitutions:
   board_type: huzzah
   log_level: INFO
 

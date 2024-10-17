@@ -1,18 +1,18 @@
-defaults:
-  power_pin: GPIO8
+substitutions:
+  neopixel_power_pin: GPIO8
   neopixel_pin: GPIO5
 
 switch:
-  - platform: gpio
-    id: neopix_power
+  - id: neopixel_power
+    platform: gpio
     restore_mode: ALWAYS_ON
     pin: 
-      number: ${power_pin}
+      number: ${neopixel_power_pin}
 
 
 light:
- - platform: neopixelbus
-   id: neopixel_led
+ - id: neopixel_led
+   platform: neopixelbus
    type: GRB
    variant: WS2812
    pin: 
