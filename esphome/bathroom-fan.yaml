@@ -1,14 +1,14 @@
 substitutions:
-  device_name: bathroom_fan
+  device_name: bathroom-fan
   friendly_name: Bathroom Fan
   board_type: adafruit_feather_esp32s2_tft
-  fqdn: fan-bathroom.sf.aberrant.org
+  hostname: fan-bathroom
+  room: "Bathroom"
+  device_description: "Bathroom Exhaust Fan"
+
 
 packages:
-  device_base: !include 
-    file: common/feather_esp32s2.yaml
-    vars:
-      board_type: $board_type
+  device_base: !include common/feather_esp32s2.yaml
   fonts: !include common/fonts.yaml
   temperature: !include common/sht4x.yaml
 
@@ -32,6 +32,7 @@ binary_sensor:
     pin: 
       number: GPIO0
       mode: INPUT_PULLUP
+      ignore_strapping_warning: true
     filters:
       - invert:
     on_press: 
@@ -511,7 +512,9 @@ display:
   - platform: st7789v
     id: bathroom_fan_display
     model: TTGO TDisplay 135x240
-    backlight_pin: GPIO45
+    backlight_pin: 
+      number: GPIO45
+      ignore_strapping_warning: true
     cs_pin: GPIO42
     dc_pin: GPIO40
     reset_pin: GPIO41
