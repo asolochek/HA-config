@@ -1,12 +1,16 @@
 substitutions:
   device_name: crawl-space-sensor
   friendly_name: Crawl Space
-  fqdn: sensor-crawl-space.sf.aberrant.org
+  hostname: sensor-crawl-space
+  room: "Crawl Space"
+  device_description: "Crawl Space Temperature Sensor"
+  board_type: adafruit_feather_esp32s3_nopsram
+
 
 packages:
-  device_base: !include 
-    file: common/feather_esp32s3.yaml
+  device_base: !include common/feather_esp32s3.yaml
   temperature: !include common/bme280.yaml
+
 
 
 # bluetooth_proxy:
