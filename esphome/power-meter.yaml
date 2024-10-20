@@ -1,11 +1,17 @@
 substitutions:
   device_name: power-meter
   friendly_name: Power Meter
-  fqdn: power-meter.sf.aberrant.org
+  hostname: power-meter
+  room: "Office"
+  device_description: "Power Meter"
 
 packages:
   device_base: !include common/qtpy_esp32.yaml
-  wifi: !include common/wifi.yaml
+
+light:
+  - id: !extend neopixel_led
+    pin:
+      ignore_strapping_warning: true
 
 
 esphome:
@@ -18,6 +24,7 @@ ota:
   id: my_ota
 
 spi: !remove
+
 
 
 sensor:
@@ -49,14 +56,6 @@ sensor:
             float pct = x / 5000;
             id(meter_output).set_level(pct);
 
-light:
-  - platform: neopixelbus
-    id: neopixel_led
-    type: GRB
-    variant: WS2812
-    pin: GPIO5
-    num_leds: 1
-    name: "NeoPixel"
 
 output:
   - platform: ledc
@@ -64,7 +63,7 @@ output:
     id: meter_output
     frequency: 25000Hz
 
-switch:
+switch: !remove
   - platform: gpio
     id: meter_ground
     restore_mode: ALWAYS_OFF

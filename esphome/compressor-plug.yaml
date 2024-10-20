@@ -3,6 +3,7 @@ substitutions:
   friendly_name: Compressor Plug
   room: Office
   hostname: plug-compressor
+  device_description: "Office Air Compressor"
 
 packages:
   device_base: !include common/sonoff_s31.yaml
