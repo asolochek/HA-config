@@ -1484,13 +1484,17 @@
 - id: '1725390709722'
   alias: Office High Temperature
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id:
+  triggers:
+  - entity_id:
     - sensor.office_air_quality_temperature
-    above: 81
-  condition: []
-  action:
+    above: 82
+    trigger: numeric_state
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  conditions: []
+  actions:
   - device_id: 4d342d88be4e71bf65993a020f1fc6b9
     domain: climate
     entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
@@ -1500,19 +1504,23 @@
 - id: '1725394841935'
   alias: Office Low Temperature
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id:
+  triggers:
+  - entity_id:
     - sensor.office_air_quality_temperature
     below: 71
-  condition:
+    trigger: numeric_state
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  conditions:
   - condition: device
     device_id: 4d342d88be4e71bf65993a020f1fc6b9
     domain: climate
     entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
     type: is_hvac_mode
     hvac_mode: cool
-  action:
+  actions:
   - device_id: 4d342d88be4e71bf65993a020f1fc6b9
     domain: climate
     entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
