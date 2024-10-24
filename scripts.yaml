@@ -58,6 +58,11 @@ all_lights_off:
     device_id: 5b2e8bcb341adc089e8b63e701f00ff8
     entity_id: 1b31fce08e9669051b72fb6aef5d6cb1
     domain: light
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.silver_lamp
   mode: single
   icon: mdi:lightbulb-group-off
 goodnight:
