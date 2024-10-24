@@ -20,7 +20,6 @@ packages:
   display: !include common/st7789v.yaml
 
 
-
 display:
   - id: !extend ${display_name}
     reset_pin:

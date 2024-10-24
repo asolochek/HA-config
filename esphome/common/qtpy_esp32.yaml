@@ -1,8 +1,8 @@
 substitutions:
   board_type: adafruit_qtpy_esp32
   i2c_frequency: 800kHz
-  neopixel_pin: GPIO39
-  neopixel_power_pin: GPIO38
+  neopixel_pin: GPIO5
+  neopixel_power_pin: GPIO8
   sda_pin: GPIO22
   scl_pin: GPIO19
 
@@ -12,6 +12,16 @@ packages:
   neo: !include neopixel.yaml
 
 
+light:
+  - id: !extend neopixel_led
+    pin:
+      ignore_strapping_warning: true
+
+
+switch: 
+  - id: !extend neopixel_power
+    pin:
+      ignore_pin_validation_error: true
 
 
 spi:

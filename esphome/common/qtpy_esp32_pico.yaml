@@ -6,18 +6,19 @@ substitutions:
   sda_pin: GPIO22
   scl_pin: GPIO19
 
+
 packages:
   device_base: !include esp32.yaml 
   wifi: !include wifi.yaml
   # unsupported in esphome until esp32-pico gets explicit support
   neo: !include neopixel.yaml
 
-# esp32:
-#   variant: esp32
 
-switch: !extend neopixel_power
-  pin:
-    ignore_pin_validation_error: true
+switch: 
+  - id: !extend neopixel_power
+    pin:
+      ignore_pin_validation_error: true
+
 
 spi:
   clk_pin: 

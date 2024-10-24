@@ -4,21 +4,22 @@ substitutions:
   sda_pin: SDA1
   scl_pin: SCL1
 
+
 packages:
   device_base: !include common.yaml
 
 
 esp32:
-  board: ${board_type}
+  board: $board_type
   framework:
     type: arduino
 
 i2c:
   - id: bus_a
     sda: 
-      number: ${sda_pin}
+      number: $sda_pin
     scl: 
-      number: ${scl_pin}
+      number: $scl_pin
     frequency: $i2c_frequency
     scan: true
     setup_priority: 700
