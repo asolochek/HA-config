@@ -1,0 +1,11 @@
+color:
+  - id: red
+    hex: FF0000
+  - id: green
+    hex: 0000FF
+  - id: blue
+    hex: 00FF00
+  - id: white
+    hex: FFFFFF
+  - id: gray
+    hex: 888888

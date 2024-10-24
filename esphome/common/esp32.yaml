@@ -1,18 +1,12 @@
-defaults:
-  sda: SDA
-  scl: SCL
-  log_level: INFO
-
 substitutions:
-  board_type: esp32dev
+#  board_type: esp32dev
   i2c_frequency: 800kHz
-
+  sda_pin: SDA1
+  scl_pin: SCL1
 
 packages:
-  device_base: !include 
-    file: common.yaml
-    vars:
-      log_level: ${log_level}
+  device_base: !include common.yaml
+
 
 esp32:
   board: ${board_type}
@@ -22,9 +16,9 @@ esp32:
 i2c:
   - id: bus_a
     sda: 
-      number: $sda
+      number: ${sda_pin}
     scl: 
-      number: $scl
+      number: ${scl_pin}
     frequency: $i2c_frequency
     scan: true
     setup_priority: 700

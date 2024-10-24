@@ -1,0 +1,22 @@
+substitutions:
+  name: sonoff-plug-21
+  friendly_name: Sonoff Plug 21
+  hostname: plug-sonoff-21
+  device_description: "Sonoff Smart Plug #21"
+  room: General
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+
+# # Include this block when migrating a config to using the shared config
+# esphome:
+#   on_boot:
+#     - lambda: |-
+#         id(my_ota).set_auth_password("rtzNxXXpqbD6YxZi");
+
+# ota:
+#   platform: esphome
+#   id: my_ota
+#   password: "b79143505519d0f5d61bf799841b8fa6"
+

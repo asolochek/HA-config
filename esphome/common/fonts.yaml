@@ -1,10 +1,19 @@
 font:
   - file: "fonts/Futura-Medium-01.ttf"
+    id: futura12
+    size: 12
+  - file: "fonts/Futura-Medium-01.ttf"
     id: futura14
     size: 14
   - file: "fonts/Futura-Medium-01.ttf"
     id: futura16
     size: 16
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura18
+    size: 18
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura20
+    size: 20
   - file: "fonts/Futura-Medium-01.ttf"
     id: futura24
     size: 24
@@ -36,7 +45,7 @@ font:
     id: futura84
     size: 84
   - file: "gfonts://Roboto"
-    id: roboto
+    id: roboto20
     size: 20
   - file: "gfonts://Roboto+Mono"
     id: roboto_mono22
@@ -45,16 +54,28 @@ font:
     id: roboto_mono42
     size: 42
   - file: "fonts/JetBrainsMono-Regular.ttf"
-    id: jetbrains_mono
+    id: jetbrains_mono22
     size: 22
   - file: "fonts/Gomme10x20n.bdf"
-    id: gomme
+    id: gomme20
     size: 20
+  - file: "fonts/ter-u12n.bdf" # Looks good
+    id: terminus12n
+    size: 12
+  - file: "fonts/ter-u12b.bdf"
+    id: terminus12b
+    size: 12    
   - file: "fonts/ter-u14n.bdf"
     id: terminus14n
     size: 14
+  - file: "fonts/ter-u14b.bdf"
+    id: terminus14b
+    size: 14
   - file: "fonts/ter-u16n.bdf"
     id: terminus16n
+    size: 16
+  - file: "fonts/ter-u16b.bdf"
+    id: terminus16b
     size: 16
   - file: "fonts/ter-u18n.bdf"
     id: terminus18n
@@ -78,12 +99,169 @@ font:
       family: "Chakra Petch"
       weight: 500
       italic: false
-    id: chakra_petch
+    id: chakra_petch42
     size: 42 
   - file: 
       type: gfonts
       family: Orbitron
       weight: 800
       italic: false
-    id: orbitron
+    id: orbitron42
     size: 42
+
+  - file: "fonts/JetBrainsMono-Regular.ttf"
+    id: jetbrains_mono
+    size: 12
+#    bpp: 2
+  - file: "fonts/Gomme10x20n.bdf" # Looks good
+    id: gomme12
+    size: 12
+
+  - file: "fonts/Tamzen5x9b.bdf"
+    id: tamzen5x9b
+    size: 10
+  - file: "fonts/small_dot_digital-7.ttf" # No good on matrix
+    id: small_dot
+    size: 12
+    bpp: 2
+  - file: "fonts/square_dot_digital-7.ttf" # No good on matrix
+    id: square_dot
+    size: 12
+    bpp: 2
+  - file: "fonts/MobileFont.ttf"
+    id: mobile
+    size: 2
+    bpp: 2
+  - file: "fonts/gas.ttf"
+    id: gas
+    size: 12
+    bpp: 2
+  - file: "fonts/dot_digital-7.ttf"
+    id: dot7
+    size: 11
+    bpp: 8
+  - file: "fonts/dot_digital-7.ttf"
+    id: dot8
+    size: 12
+    bpp: 8
+  - file: "fonts/dot_digital-7.ttf"
+    id: dot9
+    size: 13
+    bpp: 8
+  - file: "fonts/dot_digital-7.ttf"
+    id: dot10
+    size: 14
+    bpp: 8
+  - file: "fonts/triple_dot_digital-7.ttf"
+    id: triple_dot
+    size: 7
+  - file: "fonts/eight-bit-dragon.otf" # excellent matrix font
+    id: eight_bit_dragon10
+    size: 10
+    bpp: 8
+  - file: "fonts/eight-bit-dragon.otf" # excellent matrix font
+    id: eight_bit_dragon1
+    size: 10
+    bpp: 1
+  - file: "fonts/eight-bit-dragon.otf" # excellent matrix font
+    id: eight_bit_dragon12
+    size: 12
+  - file: "fonts/eight-bit-dragon.otf" # excellent matrix font
+    id: eight_bit_dragon16
+    size: 16
+  # - file: "fonts/pixelmix.ttf" # no good on matrix
+  #   id: pixelmix
+  #   size: 10
+  #   bpp: 1
+  # - file: "fonts/pixelmix_bold.ttf"
+  #   id: pixelmix_bold
+  #   size: 10
+  #   bpp: 1
+  # - file: "fonts/pixelmix_micro.ttf"
+  #   id: pixelmix_micro
+  #   size: 10
+  #   bpp: 1
+  - file: "fonts/MxPlus_HP_100LX_8x8.ttf"
+    id: hp100_lx
+    size: 10
+#    bpp: 1
+  - file: "fonts/MatrixChunky8X.bdf"
+    id: matrix_chunky8
+    size: 10
+  - file: "fonts/WebPlus_HP_100LX_8x8.woff"
+    id: hp100lx_8x8
+    size: 10
+  - file: "fonts/Ac437_Phoenix_BIOS.ttf"
+    id: phoenix_bios
+    size: 10
+  - file: "fonts/WebPlus_HP_100LX_8x8-2x.woff"
+    id: hp100lx_8x8_2x
+    size: 10
+  - file: "fonts/gallant12x22.ttf"
+    id: gallant
+    size: 10
+    bpp: 1
+
+  - file: #"gfonts://Roboto"
+      type: gfonts
+      family: Roboto
+      weight: 300
+    id: roboto10
+    size: 10 
+  - file: "gfonts://Roboto+Mono"
+    id: roboto_mono10
+    size: 10
+  - file: 
+      type: gfonts
+      family: "Chakra Petch"
+      weight: 500
+      italic: false
+    id: chakra_petch10
+    size: 10 
+  - file: 
+      type: gfonts
+      family: Orbitron
+      weight: 800
+      italic: false
+    id: orbitron10
+    size: 10
+#    bpp: 1
+  - file: # OK
+      type: gfonts
+      family: Silkscreen
+      weight: 400
+      italic: false
+    id: silkscreen
+    size: 10
+#    bpp: 1  
+  - file: 
+      type: gfonts
+      family: "Press Start 2P"
+      weight: 400
+      italic: false
+    id: press_start
+    size: 10
+    bpp: 1
+  - file: # no good
+      type: gfonts
+      family: "Jersey 10"
+      weight: 400
+      italic: false
+    id: jersey_10
+    size: 14
+    bpp: 1
+  - file: 
+      type: gfonts
+      family: "DotGothic16"
+      weight: 400
+      italic: false
+    id: dotgothic
+    size: 10
+    bpp: 1
+  - file: 
+      type: gfonts
+      family: "Codystar"
+      weight: 400
+      italic: false
+    id: codystar
+    size: 14

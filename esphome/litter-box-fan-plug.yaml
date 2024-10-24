@@ -1,5 +1,5 @@
 substitutions:
-  device_name: litter-box-fan-plug
+  name: litter-box-fan-plug
   friendly_name: Litter Box Fan
   room: "Laundry Room"
   hostname: plug-litter-box-fan

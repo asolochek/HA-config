@@ -1,11 +1,13 @@
 substitutions:
-  device_name: office-window
+  name: office-window
   friendly_name: Office Window
-  fqdn: office-window.sf.aberrant.org
+  hostname: office-window
+  room: Office
+  device_description: "Office Window"
 
 packages:
-  device_base: !include common/common.yaml
-  ethernet: !include common/wesp32.yaml
+  device_base: !include common/wesp32.yaml
+  
 
 
 switch:

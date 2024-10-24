@@ -1,6 +1,6 @@
 substitutions:
-  neopixel_power_pin: GPIO8
-  neopixel_pin: GPIO5
+  neopixel_power_pin: NEOPIXEL_POWER
+  neopixel_pin: NEOPIXEL
 
 switch:
   - id: neopixel_power

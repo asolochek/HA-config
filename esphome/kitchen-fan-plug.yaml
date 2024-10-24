@@ -1,8 +1,9 @@
 substitutions:
-  device_name: kitchen-fan-plug
+  name: kitchen-fan-plug
   friendly_name: Kitchen Fan Plug
   room: Kitchen
   hostname: plug-kitchen-fan
+  device_description: "Kitchen Fan Power Monitor"
 
 packages:
   device_base: !include common/sonoff_s31.yaml

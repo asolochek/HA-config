@@ -1,35 +1,22 @@
 substitutions:
-  device_name: bedroom-air-quality
+  name: bedroom-air-quality
   friendly_name: Bedroom Air Quality
-  board_type: adafruit_feather_esp32s3
-  fqdn: air-quality-bedroom.sf.aberrant.org
+  room: Bedroom
+  hostname: air-quality-bedroom
+  device_description: "Bedroom Air Quality Monitor"
+
 
 packages:
-  device_base: !include 
-    file: common/esp32.yaml
-    vars:
-      sda: GPIO41
-      scl: GPIO40
-      i2c_frequency: 50kHz
-      board_type: $board_type
-  wifi: !include common/wifi.yaml
+  device_base: !include common/qtpy_esp32s3.yaml
+  scd: !include common/scd4x.yaml
   pmsa: !include common/pmsa003i.yaml
   dp: !include common/dew_point.yaml
-  neo: !include 
-    file: common/neopixel.yaml
-    vars:
-      power_pin: GPIO38
-      neopixel_pin: GPIO39
+
 
 
 sensor:
-  - platform: scd4x
-    i2c_id: bus_a
-    address: 0x62
-    update_interval: 5s
+  - id: !extend scd4x_sensor
     co2:
-      name: "CO2"
-      id: co2
       on_value:
         - then:
             - lambda: |-
@@ -50,12 +37,5 @@ sensor:
                 blue: !lambda |- 
                   Color co2RGB = co2Color(round(x));
                   return (float)co2RGB.b / 255.0;
-    temperature:
-      name: "Temperature"
-      id: temperature
-      accuracy_decimals: 1
-    humidity:
-      name: "Humidity"
-      id: humidity
-      accuracy_decimals: 1
-  
+
+

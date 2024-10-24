@@ -1,0 +1,54 @@
+substitutions:
+  board_type: esp32-s3-devkitc-1
+#  board_type: adafruit_matrixportal_esp32s3
+  i2c_frequency: 800kHz
+  sda_pin: GPIO16
+  scl_pin: GPIO17
+  neopixel_pin: GPIO4
+  neopixel_power_pin: GPIO21
+
+packages:
+  device_base: !include esp32.yaml
+  wifi: !include wifi.yaml
+  fonts: !include fonts.yaml
+  neopixel: !include neopixel.yaml
+
+switch: !remove neopixel_power
+
+external_components:
+  - source: github://TillFleisch/ESPHome-HUB75-MatrixDisplayWrapper@main
+
+
+light:
+  - platform: status_led
+    id: red_led
+    name: "Status LED"
+    pin: GPIO13
+
+
+sensor:
+  - platform: adc
+    id: light_sensor
+    name: "Light Sensor"
+    pin: 
+      number: GPIO5
+    update_interval: 10s
+
+
+binary_sensor:
+  - platform: gpio
+    name: "Up Button"
+    id: up_button
+    pin: 
+      number: GPIO6
+      mode: INPUT_PULLUP
+      inverted: true
+  - platform: gpio
+    name: "Down Button"
+    id: down_button
+    pin: 
+      number: GPIO7
+      mode: INPUT_PULLUP
+      inverted: true
+
+

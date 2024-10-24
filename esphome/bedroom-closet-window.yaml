@@ -1,7 +1,10 @@
 substitutions:
-  device_name: bedroom-closet-window
+  name: bedroom-closet-window
   friendly_name: Bedroom Closet Window
-  fqdn: fan-bedroom-closet.sf.aberrant.org
+  room: "Bedroom Closet"
+  hostname: fan-bedroom-closet
+  device_description: "Bedroom Closet Window and Fan"
+  log_level: "VERBOSE"
 
 packages:
   device_base: !include common/esp8266.yaml

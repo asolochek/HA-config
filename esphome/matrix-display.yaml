@@ -1,0 +1,31 @@
+substitutions:
+  name: matrix-display
+  friendly_name: Matrix Display
+  hostname: matrix-display
+  room: Office
+  device_description: "Matrix Display"
+  
+
+packages:
+  device_base: !include common/matrixportal_esp32s3.yaml
+  display: !include common/adafruit_64x32_2pt5mm_led_matrix.yaml
+  color: !include common/color.yaml
+
+esphome:
+  includes: !remove common/color_utils.h
+
+
+display: 
+  - id: !extend matrix
+    lambda: |-
+      it.strftime(8, 10, id(eight_bit_dragon10), green, "%H:%M:%S", id(ha_time).now());
+
+# it.print(1, 0, id(eight_bit_dragon1), red, "12345678");
+# it.printf(1, 10, id(jetbrains_mono), green, "12345678");
+# it.printf(1, 20, id(terminus12n), blue, "12345678");
+
+#      it.strftime(0, 0, id(small_dot), "%Y-%m-%d", id(ha_time).now());
+#      it.strftime(0, 10, id(square_dot), "%H:%M", id(ha_time).now());
+
+
+#      it.printf(0, 0, id(gomme), "HELLO");

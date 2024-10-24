@@ -1,0 +1,11 @@
+substitutions:
+  name: sonoff-plug-22
+  friendly_name: Sonoff Plug 22
+  hostname: plug-sonoff-22
+  device_description: "Sonoff Smart Plug #22"
+  room: General
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+

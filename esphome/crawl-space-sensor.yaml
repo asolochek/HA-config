@@ -1,10 +1,10 @@
 substitutions:
-  device_name: crawl-space-sensor
+  name: crawl-space-sensor
   friendly_name: Crawl Space
   hostname: sensor-crawl-space
   room: "Crawl Space"
   device_description: "Crawl Space Temperature Sensor"
-  board_type: adafruit_feather_esp32s3_nopsram
+
 
 
 packages:

@@ -31,3 +31,7 @@ sensor:
             window_size: 15
             send_every: 15
             send_first_at: 5
+
+logger:
+  logs:
+    scd4x: INFO

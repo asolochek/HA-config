@@ -1,5 +1,5 @@
 substitutions:
-  device_name: bathroom-fan
+  name: bathroom-fan
   friendly_name: Bathroom Fan
   board_type: adafruit_feather_esp32s2_tft
   hostname: fan-bathroom

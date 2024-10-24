@@ -3,18 +3,18 @@ substitutions:
   project_name: "ESPHome.Project"
   project_version: "1.0.0"
   log_level: "INFO"
+  flash_write_interval: 5min
 
-defaults:
-  log_level: INFO
 
 esphome:
-  name: ${device_name}
+  name: ${name}
   friendly_name: ${friendly_name}
   comment: ${device_description}
   area: ${room}
   project:
     name: ${project_name}
     version: ${project_version}
+
 
   includes:
     - common/aqi.h
@@ -34,7 +34,8 @@ esphome:
 #   id: my_ota
 #   password: <copied from old config>
 
-
+preferences:
+  flash_write_interval: ${flash_write_interval}
 
 # Enable logging
 logger:
@@ -42,7 +43,6 @@ logger:
   hardware_uart: UART0
   logs:
     component: ERROR
-    scd4x: INFO
 
 
 # Enable Home Assistant API

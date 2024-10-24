@@ -1,7 +1,9 @@
 substitutions:
-  device_name: power-meter-15kw
+  name: power-meter-15kw
   friendly_name: Power Meter 15kW
-  fqdn: power-meter-15kw.sf.aberrant.org
+  hostname: power-meter-15kw
+  room: Living Room
+  description: "Power Meter 15kW"
 
 
 packages:

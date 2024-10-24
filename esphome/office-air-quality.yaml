@@ -1,5 +1,5 @@
 substitutions:
-  device_name: office-air-quality
+  name: office-air-quality
   friendly_name: Office Air Quality
   room: Office
   hostname: air-quality-office

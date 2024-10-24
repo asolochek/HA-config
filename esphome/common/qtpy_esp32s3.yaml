@@ -3,17 +3,17 @@ substitutions:
   board_type: adafruit_qtpy_esp32s3_nopsram
   neopixel_pin: GPIO39
   neopixel_power_pin: GPIO38
+  sda_pin: GPIO41
+  scl_pin: GPIO40
 
 packages:
-  device_base: !include 
-    file: esp32.yaml 
-    vars:
-      sda: GPIO41
-      scl: GPIO40
-      i2c_frequency: $i2c_frequency
+  device_base: !include esp32.yaml
   wifi: !include wifi.yaml
   neo: !include neopixel.yaml
   
+# esphome: 
+#   platformio_options:
+#     board: adafruit_qtpy_esp32s3_nopsram
 
 spi: 
   clk_pin: 
