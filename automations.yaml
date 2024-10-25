@@ -1229,12 +1229,12 @@
   - entity_id:
     - sensor.thaos_phone
     to:
-    from: unavailable
+    from: not_home
     trigger: state
   - entity_id:
     - sensor.thaos_watch
-    from: unavailable
     to:
+    from: not_home
     trigger: state
   conditions:
   - condition: not
@@ -1407,11 +1407,19 @@
     from: home
     to:
     trigger: state
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
   - entity_id:
     - device_tracker.thao_phone
     from: home
     to:
     trigger: state
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
   conditions:
   - condition: and
     conditions:
@@ -1533,7 +1541,7 @@
   triggers:
   - entity_id:
     - device_tracker.thaos_work_laptop
-    from:
+    from: not_home
     to: home
     trigger: state
   - entity_id:
@@ -1554,9 +1562,14 @@
       - thu
       - fri
       - sat
-    - condition: state
-      entity_id: sensor.thaos_phone
-      state: living_room
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: sensor.thaos_phone
+        state: living_room
+      - condition: state
+        entity_id: sensor.thaos_phone
+        state: hallway
   actions:
   - action: switch.turn_on
     metadata: {}
@@ -1629,4 +1642,117 @@
       entity_id: automation.thao_wfh_stop
     data:
       skip_condition: true
+  mode: single
+- id: '1729886597169'
+  alias: Thao Leaves 2
+  description: Detect leaving based on espresense
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.thaos_phone
+    from:
+    to: not_home
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  - trigger: state
+    entity_id:
+    - sensor.thaos_watch
+    from:
+    to: not_home
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  conditions:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: sensor.thaos_phone
+      state: not_home
+    - condition: state
+      entity_id: sensor.thaos_watch
+      state: not_home
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id:
+      - input_boolean.thao_s_home
+    data: {}
+  mode: single
+- id: '1729887658095'
+  alias: Aaron's Home
+  description: ''
+  triggers:
+  - entity_id:
+    - device_tracker.aarons_watch
+    from:
+    to: home
+    trigger: state
+  - entity_id:
+    - device_tracker.ham
+    from:
+    to: home
+    trigger: state
+  - entity_id:
+    - sensor.ham
+    to:
+    from: not_home
+    trigger: state
+  - entity_id:
+    - sensor.aarons_watch
+    to:
+    from: not_home
+    trigger: state
+  conditions:
+  - condition: state
+    entity_id: input_boolean.aaron_s_home
+    state: 'off'
+  actions:
+  - action: notify.mobile_app_ham
+    data:
+      message: Thao's Home
+    enabled: false
+  - action: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.aaron_s_home
+  mode: single
+- id: '1729887755553'
+  alias: Aaron Leaves
+  description: Detect leaving based on espresense
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.ham
+    from:
+    to: not_home
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  - trigger: state
+    entity_id:
+    - sensor.aarons_watch
+    from:
+    to: not_home
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  conditions:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: sensor.ham
+      state: not_home
+    - condition: state
+      entity_id: sensor.aarons_watch
+      state: not_home
+  actions:
+  - action: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.aaron_s_home
   mode: single
