@@ -24,3 +24,5 @@ themes
 tts
 .HA_VERSION
 *~
+esphome/testing
+esphome/archive
