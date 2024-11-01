@@ -1,10 +1,14 @@
 substitutions:
   board_type: adafruit_qtpy_esp32
   i2c_frequency: 800kHz
+  i2c_sda_pin: GPIO22
+  i2c_scl_pin: GPIO19
+  spi_mosi_pin: GPIO13
+  spi_miso_pin: GPIO12
+  spi_sck_pin: GPIO14
   neopixel_pin: GPIO5
   neopixel_power_pin: GPIO8
-  sda_pin: GPIO22
-  scl_pin: GPIO19
+
 
 
 packages:
@@ -26,9 +30,9 @@ light:
 
 spi:
   clk_pin: 
-    number: GPIO14
+    number: ${spi_sck_pin}
   mosi_pin: 
-    number: GPIO13
+    number: ${spi_mosi_pin}
   miso_pin: 
-    number: GPIO12
+    number: ${spi_miso_pin}
     ignore_strapping_warning: true

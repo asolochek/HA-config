@@ -1,8 +1,8 @@
 substitutions:
 #  board_type: esp32dev
   i2c_frequency: 800kHz
-  sda_pin: SDA1
-  scl_pin: SCL1
+  i2c_sda_pin: SDA1
+  i2c_scl_pin: SCL1
 
 
 packages:
@@ -10,16 +10,17 @@ packages:
 
 
 esp32:
-  board: $board_type
+  board: ${board_type}
   framework:
     type: arduino
+
 
 i2c:
   - id: bus_a
     sda: 
-      number: $sda_pin
+      number: ${i2c_sda_pin}
     scl: 
-      number: $scl_pin
-    frequency: $i2c_frequency
+      number: ${i2c_scl_pin}
+    frequency: ${i2c_frequency}
     scan: true
     setup_priority: 700

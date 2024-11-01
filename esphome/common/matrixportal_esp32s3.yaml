@@ -2,8 +2,8 @@ substitutions:
   board_type: esp32-s3-devkitc-1
 #  board_type: adafruit_matrixportal_esp32s3
   i2c_frequency: 800kHz
-  sda_pin: GPIO16
-  scl_pin: GPIO17
+  i2c_sda_pin: GPIO16
+  i2c_scl_pin: GPIO17
   neopixel_pin: GPIO4
   neopixel_power_pin: GPIO21
 

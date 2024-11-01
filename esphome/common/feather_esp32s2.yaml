@@ -1,8 +1,12 @@
 substitutions:
-  i2c_frequency: 800kHz
   board_type: adafruit_feather_esp32s2
-  sda_pin: GPIO3
-  scl_pin: GPIO4
+  i2c_frequency: 800kHz
+  i2c_sda_pin: GPIO3
+  i2c_scl_pin: GPIO4
+  i2c_power_pin: GPIO7
+  spi_mosi_pin: GPIO35
+  spi_miso_pin: GPIO37
+  spi_sck_pin: GPIO36
   neopixel_pin: GPIO33
   neopixel_power_pin: GPIO21
 
@@ -20,11 +24,11 @@ esphome:
 
 spi: 
   clk_pin: 
-    number: GPIO36
+    number: ${spi_sck_pin}
   mosi_pin: 
-    number: GPIO35
+    number: ${spi_mosi_pin}
   miso_pin: 
-    number: GPIO37
+    number: ${spi_miso_pin}
 
 
 switch:
@@ -32,7 +36,7 @@ switch:
     id: i2c_power
     restore_mode: ALWAYS_ON
     pin: 
-      number: GPIO7
+      number: ${i2c_power_pin}
 
 
 status_led:

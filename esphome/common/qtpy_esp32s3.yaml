@@ -1,10 +1,14 @@
 substitutions:
-  i2c_frequency: 800kHz
   board_type: adafruit_qtpy_esp32s3_nopsram
+  i2c_frequency: 800kHz
+  i2c_sda_pin: GPIO41
+  i2c_scl_pin: GPIO40
+  spi_mosi_pin: GPIO35
+  spi_miso_pin: GPIO37
+  spi_sck_pin: GPIO36
   neopixel_pin: GPIO39
   neopixel_power_pin: GPIO38
-  sda_pin: GPIO41
-  scl_pin: GPIO40
+  
 
 packages:
   device_base: !include esp32.yaml
@@ -15,12 +19,14 @@ packages:
 #   platformio_options:
 #     board: adafruit_qtpy_esp32s3_nopsram
 
-spi: 
+
+spi:
   clk_pin: 
-    number: GPIO36
+    number: ${spi_sck_pin}
   mosi_pin: 
-    number: GPIO35
+    number: ${spi_mosi_pin}
   miso_pin: 
-    number: GPIO37
+    number: ${spi_miso_pin}
+
 
 
