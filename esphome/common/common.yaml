@@ -16,12 +16,6 @@ esphome:
     version: ${project_version}
 
 
-  includes:
-    - common/aqi.h
-    - common/humidity_correction.h
-    - common/color_utils.h
-
-
 
 #Include this block when migrating a config to using the shared config
 # esphome:
@@ -39,6 +33,7 @@ preferences:
 
 # Enable logging
 logger:
+  id: base_logger
   level: ${log_level}
   hardware_uart: UART0
   logs:

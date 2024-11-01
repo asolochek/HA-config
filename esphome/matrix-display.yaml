@@ -9,16 +9,14 @@ substitutions:
 packages:
   device_base: !include common/matrixportal_esp32s3.yaml
   display: !include common/adafruit_64x32_2pt5mm_led_matrix.yaml
-  color: !include common/color.yaml
-
-esphome:
-  includes: !remove common/color_utils.h
+  fonts: !include common/fonts.yaml
+  colors: !include common/colors.yaml
 
 
 display: 
   - id: !extend matrix
     lambda: |-
-      it.strftime(8, 10, id(eight_bit_dragon10), green, "%H:%M:%S", id(ha_time).now());
+      it.strftime(8, 8, id(eight_bit_dragon16), matrix_light_green, "%H:%M", id(ha_time).now());
 
 # it.print(1, 0, id(eight_bit_dragon1), red, "12345678");
 # it.printf(1, 10, id(jetbrains_mono), green, "12345678");

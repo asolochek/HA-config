@@ -1,0 +1,19 @@
+
+esphome:
+  includes:
+    - common/color_utils.h
+    - common/aqi.h
+
+color:
+  - id: matrix_red
+    hex: FF0000
+  - id: matrix_green
+    hex: 0000FF
+  - id: matrix_blue
+    hex: 00FF00
+  - id: matrix_white
+    hex: FFFFFF
+  - id: matrix_gray
+    hex: 888888
+  - id: matrix_light_green
+    hex: 5d39d9

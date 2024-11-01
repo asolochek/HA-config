@@ -1,6 +1,10 @@
 substitutions:
   i2c_frequency: 50Hz
 
+esphome:
+  includes:
+    - common/aqi.h
+
 sensor:
   # Raw sensor values updated at 1s, but kept internal to be used for
   # template sensor values exposed to HA

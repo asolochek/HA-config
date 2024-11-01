@@ -1,16 +1,18 @@
 substitutions:
   name: bathroom-fan
   friendly_name: Bathroom Fan
-  board_type: adafruit_feather_esp32s2_tft
   hostname: fan-bathroom
   room: "Bathroom"
   device_description: "Bathroom Exhaust Fan"
+  display_id: bathroom_fan_display
 
 
 packages:
-  device_base: !include common/feather_esp32s2.yaml
-  fonts: !include common/fonts.yaml
+  device_base: !include common/feather_esp32s2_rev_tft.yaml
   temperature: !include common/sht4x.yaml
+  tvoc: !include common/sgp30.yaml
+  fonts: !include common/fonts.yaml
+  colors: !include common/colors.yaml
 
 
 logger:
@@ -19,6 +21,8 @@ logger:
 
 
 esphome:
+  includes:
+    - common/humidity_correction.h
   on_boot:
     priority: 900
     then:
@@ -462,28 +466,16 @@ fan:
         controller2_call.perform();
 
 
-
-
-external_components:
-  - source: my_components
-    components:
-      - ssd1306_base
-      - ssd1306_i2c
-      - ssd1306_spi
-
-
-
 color:
-  - id: color_red
-    hex: 'e82e18'
-  - id: color_blue
-    hex: '0080ff'
-  - id: color_green
-    hex: '5dd939'
-  - id: color_yellow
+  - id: color_humidity
     hex: 'fffb46'
-  - id: color_orange
+  - id: color_clear_threshold
+    hex: '0080ff'
+  - id: color_stage1_threshold
     hex: 'ee7826'
+  - id: color_stage2_threshold
+    hex: 'e82e18'
+
 
 graph:
   - id: humidity_graph
@@ -493,33 +485,23 @@ graph:
     border: false
     traces:
       - sensor: humidity
-        color: color_yellow
+        color: color_humidity
         continuous: true
       - sensor: clear_threshold_pct
         line_type: DASHED
-        color: color_blue
+        color: color_clear_threshold
         continuous: true
       - sensor: stage1_threshold_pct
         line_type: DASHED
-        color: color_orange
+        color: color_stage1_threshold
         continuous: true
       - sensor: stage2_threshold_pct
         line_type: DASHED
-        color: color_red
+        color: color_stage2_threshold
         continuous: true
 
 display:
-  - platform: st7789v
-    id: bathroom_fan_display
-    model: TTGO TDisplay 135x240
-    backlight_pin: 
-      number: GPIO45
-      ignore_strapping_warning: true
-    cs_pin: GPIO42
-    dc_pin: GPIO40
-    reset_pin: GPIO41
-    rotation: 90
-    update_interval: 0.5s
+  - id: !extend ${display_id}
     lambda: |-
       auto fan_speed = id(bathroom_fan).state ? float(id(bathroom_fan).speed) / 1024.0 * 100 : 0;
 

@@ -4,24 +4,32 @@ substitutions:
   room: Office
   hostname: air-quality-office
   device_description: "Office Air Quality Monitor"
-  i2c_frequency: 50kHz
-  display_name: office_display
+  display_id: office_display
   st7789_backlight_pin: GPIO26
   st7789_dc_pin: GPIO27
   st7789_cs_pin: GPIO7
   st7789_reset_pin: GPIO15
+  st7789_width: "172"
+  st7789_height: "320"
+  st7789_offset_height: "34"
+  st7789_offset_width: "0"
+  st7789_rotation: "90"
+
 
 packages:
   device_base: !include common/qtpy_esp32.yaml
   fonts: !include common/fonts.yaml
+  color: !include common/colors.yaml
   scd: !include common/scd4x.yaml
   pmsa: !include common/pmsa003i.yaml
   dp: !include common/dew_point.yaml
   display: !include common/st7789v.yaml
+  tvoc: !include common/sgp30.yaml
+
 
 
 display:
-  - id: !extend ${display_name}
+  - id: !extend ${display_id}
     reset_pin:
       ignore_strapping_warning: true
     cs_pin:

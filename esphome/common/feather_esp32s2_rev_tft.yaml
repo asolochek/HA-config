@@ -1,0 +1,33 @@
+substitutions:
+  board_type: adafruit_feather_esp32s2_tft
+  display_id: display_id
+  display_model: TTGO TDisplay 135x240
+  st7789_cs_pin: GPIO42
+  st7789_dc_pin: GPIO40
+  st7789_reset_pin: GPIO41
+  st7789_backlight_pin: GPIO45
+  # st7789_width: "135"
+  # st7789_height: "240"
+  # st7789_offset_height: "52"
+  # st7789_offset_width: "40"
+  st7789_rotation: "90"
+
+
+packages:
+  device_base: !include feather_esp32s2.yaml
+  display: !include st7789v.yaml
+
+
+output:
+  - id: !extend backlight_output
+    pin:
+      ignore_strapping_warning: true
+
+display:
+  - id: !extend ${display_id}
+    backlight_pin:
+      ignore_strapping_warning: true
+    height: !remove
+    width: !remove
+    offset_height: !remove
+    offset_width: !remove

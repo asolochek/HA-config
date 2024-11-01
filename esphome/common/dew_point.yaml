@@ -2,6 +2,11 @@ defaults:
   temperature_name: temperature
   humidity_name: humidity
 
+esphome:
+  includes:
+    - common/humidity_correction.h
+
+
 sensor:
   - platform: template
     name: Dew Point

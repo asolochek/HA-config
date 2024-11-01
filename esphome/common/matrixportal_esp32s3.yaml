@@ -10,7 +10,6 @@ substitutions:
 packages:
   device_base: !include esp32.yaml
   wifi: !include wifi.yaml
-  fonts: !include fonts.yaml
   neopixel: !include neopixel.yaml
 
 switch: !remove neopixel_power
