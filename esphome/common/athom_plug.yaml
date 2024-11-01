@@ -5,6 +5,7 @@ substitutions:
   board_type: esp8285
   button_gpio: GPIO5
   relay_gpio: GPIO12
+  sensor_update_interval: 1s
 
 packages:
   device_base: !include esp8266.yaml

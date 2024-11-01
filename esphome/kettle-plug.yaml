@@ -1,9 +1,9 @@
 substitutions:
-  name: sonoff-plug-21
-  friendly_name: Sonoff Plug 21
-  hostname: plug-sonoff-21
-  device_description: "Sonoff Smart Plug #21"
-  room: General
+  name: kettle-plug
+  friendly_name: Kettle Plug
+  hostname: plug-kettle
+  device_description: "Kettle"
+  room: Kitchen
 
 packages:
   device_base: !include common/sonoff_s31.yaml
