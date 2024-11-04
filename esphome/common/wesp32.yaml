@@ -1,8 +1,8 @@
 substitutions:
   dns_domain: sf.aberrant.org
   board_type: wesp32
-  sda_pin: GPIO15
-  scl_pin: GPIO4
+  i2c_scl_pin: GPIO5
+  i2c_sda_pin: GPIO33
 
 
 defaults:
@@ -11,11 +11,14 @@ defaults:
 packages:
   device_base: !include esp32.yaml
 
+
 i2c:
   - id: !extend bus_a
-    sda: 
+    # sda: 
+    #   ignore_strapping_warning: true
+    scl:
       ignore_strapping_warning: true
-
+      
 
 ethernet:
   type: RTL8201
