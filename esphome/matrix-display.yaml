@@ -13,10 +13,66 @@ packages:
   colors: !include common/colors.yaml
 
 
+light:
+  - platform: rgb
+    name: Color
+    id: display_color
+    icon: mdi:palette
+    restore_mode: RESTORE_AND_ON
+    red: red_output
+    green: green_output
+    blue: blue_output
+
+
+number:
+  - platform: template
+    id: red_value
+    max_value: 255
+    min_value: 0
+    step: 1
+    optimistic: true
+  - platform: template
+    id: green_value
+    max_value: 255
+    min_value: 0
+    step: 1
+    optimistic: true
+  - platform: template
+    id: blue_value
+    max_value: 255
+    min_value: 0
+    step: 1
+    optimistic: true
+
+output:
+  - platform: template
+    id: red_output
+    type: float
+    write_action:
+      - lambda: |-
+          id(red_value).publish_state(state * 255);
+
+  - platform: template
+    id: green_output
+    type: float
+    write_action:
+      - lambda: |-
+          id(green_value).publish_state(state * 255);
+
+  - platform: template
+    id: blue_output
+    type: float
+    write_action:
+      - lambda: |-
+          id(blue_value).publish_state(state * 255);
+
+
 display: 
   - id: !extend matrix
     lambda: |-
-      it.strftime(8, 8, id(eight_bit_dragon16), matrix_light_green, "%H:%M", id(ha_time).now());
+      Color c = Color((red_value)->state, id(blue_value)->state, id(green_value)->state);
+
+      it.strftime(8, 8, id(eight_bit_dragon16), c, "%H:%M", id(ha_time).now());
 
 # it.print(1, 0, id(eight_bit_dragon1), red, "12345678");
 # it.printf(1, 10, id(jetbrains_mono), green, "12345678");
