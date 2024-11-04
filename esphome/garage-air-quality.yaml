@@ -1,0 +1,26 @@
+substitutions:
+  name: garage-air-quality
+  friendly_name: Garage Air Quality
+  room: Garage
+  hostname: air-monitor-garage
+  device_description: "Garage Air Quality Monitor"
+  log_level: DEBUG
+
+
+packages:
+  device_base: !include common/wesp32.yaml
+  scd: !include common/scd4x.yaml
+  pmsa: !include common/pmsa003i.yaml
+  dp: !include common/dew_point.yaml
+  tvoc: !include common/sgp30.yaml
+
+sensor:
+  - id: !extend sgp30_sensor
+    baseline:
+      eco2_baseline: 0x01E0
+      tvoc_baseline: 0x0044
+
+
+logger:
+  logs:
+    sgp30: DEBUG
