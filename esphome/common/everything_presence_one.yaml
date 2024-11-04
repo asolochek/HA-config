@@ -36,3 +36,4 @@ binary_sensor:
 
 esphome:
   name_add_mac_suffix: false
+  comment: ${device_description}
