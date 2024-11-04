@@ -3,6 +3,7 @@ serial:
   port: tcp://10.3.1.58:6638
   baudrate: 115200
   disable_led: false
+  adapter: zstack
 frontend:
   port: 8099
 permit_join: false
@@ -146,6 +147,8 @@ devices:
     friendly_name: Kitchen Ceiling 2-1
   '0xf0d1b80000077a77':
     friendly_name: Living Room North Grow Light
+  '0x7cb03eaa00a2651e':
+    friendly_name: Cat Bed
 device_options:
   legacy: false
 groups:
