@@ -103,7 +103,23 @@ binary_sensor:
     filters:
       - invert:
 
+  - platform: gpio
+    id: bathroom_motion
+    name: Bathroom Motion
+    pin:
+      number: GPIO9
+      mode:
+        input: true
+        pullup: false
+      inverted: false
+    internal: false
 
+
+switch:
+  - platform: gpio
+    id: pir_ground
+    restore_mode: ALWAYS_OFF
+    pin: GPIO6
 
 #
 # Controller
