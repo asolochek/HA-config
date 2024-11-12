@@ -1718,6 +1718,34 @@
     data: {}
     target:
       entity_id: input_boolean.aaron_s_home
+  - wait_for_trigger:
+    - trigger: state
+      entity_id:
+      - binary_sensor.front_door
+      from: 'off'
+      to: 'on'
+    timeout:
+      hours: 0
+      minutes: 4
+      seconds: 0
+      milliseconds: 0
+    continue_on_timeout: false
+  - if:
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: input_boolean.auto_lights_disabled
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.thao_s_home
+        state: 'off'
+        for:
+          hours: 0
+          minutes: 5
+          seconds: 0
+    then:
+    - action: script.welcome_lights
+      data: {}
   mode: single
 - id: '1729887755553'
   alias: Aaron Leaves
