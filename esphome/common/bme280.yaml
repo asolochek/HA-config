@@ -1,11 +1,24 @@
+substitutions:
+  bme280_update_interval: 10s
+  bme280_temperature_id: temperature
+  bme280_temperature_name: Temperature
+  bme280_humidity_id: humidity
+  bme280_humidity_name: Humidity
+  bme280_pressure_id: pressure
+  bme280_pressure_name: Pressure
+
 sensor:
   - platform: bme280_i2c
     id: bme280_sensor
     i2c_id: bus_a
     address: 0x77
+    update_interval: ${bme280_update_interval}
     temperature:
-      id: temperature
-      name: "Temperature"
+      id: ${bme280_temperature_id}
+      name: ${bme280_temperature_name}
     humidity:
-      id: humidity
-      name: "Humidity"
+      id: ${bme280_humidity_id}
+      name: ${bme280_humidity_name}
+    pressure:
+      id: ${bme280_pressure_id}
+      name: ${bme280_pressure_name}
