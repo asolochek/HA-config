@@ -26,7 +26,9 @@ packages:
   display: !include common/st7789v.yaml
   tvoc: !include common/sgp30.yaml
 
-
+logger:
+  logs:
+    sgp30: INFO
 
 display:
   - id: !extend ${display_id}

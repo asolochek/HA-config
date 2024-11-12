@@ -4,7 +4,7 @@ substitutions:
   room: Garage
   hostname: air-monitor-garage
   device_description: "Garage Air Quality Monitor"
-  log_level: DEBUG
+  log_level: INFO
 
 
 packages:
@@ -23,4 +23,4 @@ sensor:
 
 logger:
   logs:
-    sgp30: DEBUG
+    sgp30: INFO
