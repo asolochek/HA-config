@@ -111,61 +111,76 @@
   #   state: >
   #     {{ states('sensor.opower')}}
 
+  # - name: "Bathroom Outlet Baseline Power"
+  #   unique_id: sensor.bathroom_outlet_baseline_power
+  #   unit_of_measurement: "W"
+  #   icon: mdi:lightning-bolt
+  #   availability: >
+  #     {{ is_number(states('sensor.main_panel_bathroom_outlet_circuit_power')) and 
+  #         is_number(states('sensor.toilet_plug_power')) }}
+  #   state: >
+  #     {% set raw = states('sensor.main_panel_bathroom_outlet_circuit_power') | float(0) %}
+  #     {% set toilet = states('sensor.toilet_plug_power') | float(0) %}
+  #     {% if toilet == 0 %}
+  #       {{ raw | round(3, default=0) }}
+  #     {% else %}
+  #       {{ this.state }}
+  #     {% endif %}
 
-  - name: "Bathroom Outlet Power"
-    unique_id: sensor.bathroom_outlet_power
-    unit_of_measurement: "W"
-    icon: mdi:lightning-bolt
-    availability: >
-      {{ is_number(states('sensor.main_panel_bathroom_outlet_circuit_power')) and 
-          is_number(states('sensor.toilet_plug_power')) }}
-    state: >
-      {% set raw = states('sensor.main_panel_bathroom_outlet_circuit_power') | float(0) %}
-      {% set toilet = states('sensor.toilet_plug_power') | float(0) %}
-      {% if (raw - toilet) > 0 %}
-        {{ (raw - toilet) | round(3, default=0) }}
-      {% else %}
-        0
-      {% endif %}
-
-
-  - name: "Bathroom Outlet Current"
-    unique_id: sensor.bathroom_outlet_current
-    unit_of_measurement: "A"
-    icon: mdi:current-ac
-    availability: >
-      {{ is_number(states('sensor.main_panel_bathroom_outlet_circuit_current')) and 
-          is_number(states('sensor.toilet_plug_current')) }}
-    state: >
-      {% set raw = states('sensor.main_panel_bathroom_outlet_circuit_current') | float(0) %}
-      {% set toilet = states('sensor.toilet_plug_current') | float(0) %}
-      {{ (raw - toilet) | round(3, default=0) }}
-
-
-  - name: "Bathroom Outlet Total Energy"
-    unique_id: sensor.bathroom_outlet_total_energy
-    unit_of_measurement: "kWh"
-    device_class: energy
-    state_class: total_increasing
-    icon: mdi:lightning-bolt
-    availability: >
-      {{ is_number(states('sensor.main_panel_bathroom_outlet_circuit_total_energy')) and 
-          is_number(states('sensor.toilet_plug_total_energy')) }}
-    state: >
-      {% set raw = states('sensor.main_panel_bathroom_outlet_circuit_total_energy') | float(0) %}
-      {% set toilet = states('sensor.toilet_plug_total_energy') | float(0) %}
-      {% if (raw - toilet) > 0 %}
-        {{ (raw - toilet) | round(3, default=0) }}
-      {% else %}
-        0
-      {% endif %}
+  # - name: "Bathroom Outlet Power"
+  #   unique_id: sensor.bathroom_outlet_power
+  #   unit_of_measurement: "W"
+  #   icon: mdi:lightning-bolt
+  #   availability: >
+  #     {{ is_number(states('sensor.main_panel_bathroom_outlet_circuit_power')) and 
+  #         is_number(states('sensor.toilet_plug_power')) }}
+  #   state: >
+  #     {% set raw = states('sensor.main_panel_bathroom_outlet_circuit_power') | float(0) %}
+  #     {% set toilet = states('sensor.toilet_plug_power') | float(0) %}
+  #     {% if (toilet > 0) and (raw > toilet) %}
+  #       {{ (raw - toilet) | round(3, default=0) }}
+  #     {% else %}
+  #       {{ this.state }}
+  #     {% endif %}
 
 
-  - name: "Bathroom Outlet Voltage"
-    unique_id: sensor.bathroom_outlet_voltage
-    unit_of_measurement: "V"
-    icon: mdi:sine-wave
-    availability: "{{ is_number(states('sensor.main_panel_bathroom_outlet_circuit_voltage')) }}"
-    state: >
-      {% set raw = states('sensor.main_panel_bathroom_outlet_circuit_voltage') | float(0) %}
-      {{ raw }}
+  # - name: "Bathroom Outlet Current"
+  #   unique_id: sensor.bathroom_outlet_current
+  #   unit_of_measurement: "A"
+  #   icon: mdi:current-ac
+  #   availability: >
+  #     {{ is_number(states('sensor.main_panel_bathroom_outlet_circuit_current')) and 
+  #         is_number(states('sensor.toilet_plug_current')) }}
+  #   state: >
+  #     {% set raw = states('sensor.main_panel_bathroom_outlet_circuit_current') | float(0) %}
+  #     {% set toilet = states('sensor.toilet_plug_current') | float(0) %}
+  #     {{ (raw - toilet) | round(3, default=0) }}
+
+
+  # - name: "Bathroom Outlet Total Energy"
+  #   unique_id: sensor.bathroom_outlet_total_energy
+  #   unit_of_measurement: "kWh"
+  #   device_class: energy
+  #   state_class: total_increasing
+  #   icon: mdi:lightning-bolt
+  #   availability: >
+  #     {{ is_number(states('sensor.main_panel_bathroom_outlet_circuit_total_energy')) and 
+  #         is_number(states('sensor.toilet_plug_total_energy')) }}
+  #   state: >
+  #     {% set raw = states('sensor.main_panel_bathroom_outlet_circuit_total_energy') | float(0) %}
+  #     {% set toilet = states('sensor.toilet_plug_total_energy') | float(0) %}
+  #     {% if (raw - toilet) > 0 %}
+  #       {{ (raw - toilet) | round(3, default=0) }}
+  #     {% else %}
+  #       {{ this.state }}
+  #     {% endif %}
+
+
+  # - name: "Bathroom Outlet Voltage"
+  #   unique_id: sensor.bathroom_outlet_voltage
+  #   unit_of_measurement: "V"
+  #   icon: mdi:sine-wave
+  #   availability: "{{ is_number(states('sensor.main_panel_bathroom_outlet_circuit_voltage')) }}"
+  #   state: >
+  #     {% set raw = states('sensor.main_panel_bathroom_outlet_circuit_voltage') | float(0) %}
+  #     {{ raw }}

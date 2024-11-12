@@ -1,9 +1,9 @@
 substitutions:
-  name: toilet-plug
-  friendly_name: Toilet
-  hostname: plug-toilet
+  name: bathroom-plug
+  friendly_name: Bathroom Shelf
+  hostname: plug-bathroom
   room: Bathroom
-  device_description: "Bidet Smart Plug"
+  device_description: "Bathroom Shelf Smart Plug"
 
 packages: 
   device_base: !include common/athom_plug.yaml
