@@ -11,6 +11,7 @@ packages:
   scd: !include common/scd4x.yaml
   pmsa: !include common/pmsa003i.yaml
   dp: !include common/dew_point.yaml
+  colors: !include common/colors.yaml
 
 
 
