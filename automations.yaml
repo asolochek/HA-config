@@ -1275,23 +1275,18 @@
   alias: Someone Comes Home
   description: ''
   triggers:
-  - entity_id:
-    - device_tracker.aarons_watch
-    - device_tracker.thao_watch
-    - device_tracker.ham_ble
-    from: not_home
-    to: home
-    trigger: state
-  - entity_id:
-    - sensor.thao_s_phone
-    from: not_home
-    trigger: state
-  - device_id: 22777d2f3d0cd0034f66e7efd6c85664
-    domain: device_tracker
-    entity_id: fc0f8236c2c84530a7812e15ec94b0bd
-    type: enters
-    trigger: device
-    zone: zone.home
+  - trigger: state
+    entity_id:
+    - input_boolean.thao_s_home
+    from: 'off'
+    to: 'on'
+    id: thao_arrived_home
+  - trigger: state
+    entity_id:
+    - input_boolean.aaron_s_home
+    from: 'off'
+    to: 'on'
+    id: aaron_arrived_home
   conditions:
   - condition: or
     conditions:
@@ -1303,6 +1298,22 @@
     - condition: numeric_state
       entity_id: sensor.kitchen_presence_light_sensor
       below: 10
+  - condition: and
+    conditions:
+    - condition: trigger
+      id:
+      - thao_arrived_home
+    - condition: state
+      entity_id: input_boolean.aaron_s_home
+      state: 'off'
+  - condition: and
+    conditions:
+    - condition: trigger
+      id:
+      - aaron_arrived_home
+    - condition: state
+      entity_id: input_boolean.thao_s_home
+      state: 'off'
   actions:
   - wait_for_trigger:
     - type: opened
