@@ -312,6 +312,11 @@ apple_tv:
       sound_mode: DOLBY DIGITAL
     target:
       device_id: 0f884b9e46116da8295560f82bba789f
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 250
   - action: media_player.volume_set
     data:
       volume_level: 0.5
