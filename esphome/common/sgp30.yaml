@@ -3,7 +3,6 @@ substitutions:
   sqp30_ec02_name: "eCO2"
   sgp30_tvoc_id: tvoc
   sgp30_tvoc_name: "TVOC"
-  sgp30_update_interval: 1s
   sgp30_temperature_source: temperature
   sgp30_humidity_source: humidity
 
