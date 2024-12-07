@@ -28,7 +28,7 @@ frontend:
 
   extra_module_url:
     - /config/www/community/bar-card/bar-card.js
-
+    - /config/www/community/custom-sidebar
 
 # Text-to-speech
 tts:
