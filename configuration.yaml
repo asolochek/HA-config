@@ -22,6 +22,97 @@ logger:
     custom_components.pyscript: info
     custom_components.pyscript.file.relative_humidity_correction: info
 
+recorder:
+  db_url: !secret db_url
+  exclude:
+    domains:
+      - device_tracker
+      - media_player
+      - uptime
+      - time_date
+      - worldclock
+      - alexa
+      - zigbee2mqtt_networkmap
+      - camera
+      - update
+    entity_globs:
+      - sensor.clock*
+      - sensor.date*
+      - sensor.glances*
+      - sensor.load_*m
+      - sensor.time*
+      - sensor.uptime*
+      - sensor.router*
+      - sensor.sun*
+      - binary_sensor.230i*
+      - sensor.ap_*
+      - sensor.*_voltage
+      - sensor.*_power_factor
+      - sensor.*_apparent_power
+      - sensor.*_reactive_power
+      - sensor.door*
+      - sensor.home_assistant*
+      - sensor.*_write_rate
+      - sensor.*_storage_used
+      - sensor.*_link_speed
+      - sensor.*_current_total
+      - sensor.*_power_total
+      - sensor.nvr*
+      - sensor.*_lqi
+      - sensor.*_uptime*
+      - sensor.*_free_mem
+      - sensor.*_signal
+      - sensor.*_rssi
+      - sensor.*link_quality
+      - sensor.*_last_seen
+      - sensor.*cpu*
+      - sensor.*memory*
+      - sensor.toothbrush*
+      - sensor.*_clients
+      - sensor.*_connect_count
+      - sensor.g5_ptz_*
+      - sensor.garage_exterior*
+    entities:
+      - camera.front_door
+      - sensor.home_assistant_v2_db
+      - sensor.memory_free
+      - sensor.memory_use
+      - sensor.memory_use_percent
+      - sensor.processor_use
+      - weather.openweathermap
+      - sensor.paio
+      - sensor.ham
+      - sensor.bacon
+      - sensor.carpaccio
+      - sensor.thao_s_phone
+      - sensor.thao_s_watch
+      - sensor.aaron_s_watch
+      - sensor.kitchen_fan_plug_total_energy
+      - sensor.kitchen_fan_plug_current
+      - sensor.kitchen_fan_plug_voltage
+
+logbook:
+  include:
+    domains:
+      - automation
+      - light
+      - lock
+      - scene
+      - script
+      - sensor
+      - switch
+      - template
+      - cover
+      - fan
+      - alexa
+  exclude:
+    entity_globs:
+      - sensor.uptime*
+      - sensor.*_uptime*
+      - sensor.g5_ptz*
+      - sensor.garage_exterior*
+
+
 # Load frontend themes from the themes folder
 frontend:
   themes: !include_dir_merge_named themes
