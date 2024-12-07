@@ -94,15 +94,19 @@ goodnight:
       minutes: 0
       seconds: 0
       milliseconds: 200
+    enabled: false
   - action: script.all_lights_off
     data: {}
+    enabled: false
   - delay:
       hours: 0
       minutes: 0
       seconds: 1
       milliseconds: 0
+    enabled: false
   - action: script.all_lights_off
     data: {}
+    enabled: false
   mode: single
   icon: mdi:weather-night
 air_conditioners_on:
