@@ -36,7 +36,7 @@
 
 
   - name: "PurpleAir Temperature"
-    unique_id: purpleair_temp
+    unique_id: purpleair_temperature
     state: "{{ state_attr('sensor.purpleair', 'current_temp_f') }}"
     availability: "{{ is_number( state_attr('sensor.purpleair', 'current_temp_f') ) }}"
     unit_of_measurement: "°F"

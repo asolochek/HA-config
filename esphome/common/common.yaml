@@ -15,7 +15,10 @@ esphome:
     name: ${project_name}
     version: ${project_version}
 
-
+external_components:
+  - source:
+      type: local
+      path: components
 
 #Include this block when migrating a config to using the shared config
 # esphome:
