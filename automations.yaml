@@ -1089,12 +1089,12 @@
 - id: '1694549588237'
   alias: Dawn Tasks
   description: ''
-  trigger:
-  - platform: sun
-    event: sunrise
+  triggers:
+  - event: sunrise
     offset: '3600'
-  condition: []
-  action:
+    trigger: sun
+  conditions: []
+  actions:
   - action: light.turn_off
     data: {}
     target:
@@ -1109,6 +1109,7 @@
       - switch.adaptive_lighting_sleep_mode_kitchen
       - switch.adaptive_lighting_sleep_mode_living_room
       - switch.adaptive_lighting_sleep_mode_office
+    enabled: false
   mode: single
 - id: '1694549692218'
   alias: Dusk Tasks
