@@ -1,0 +1,15 @@
+substitutions:
+  name: living-room-soil-sensor-1
+  friendly_name: Living Room South East Soil Sensor
+  room: "Living Room"
+  hostname: soil-sensor-1
+  device_description: South East Soil Sensor
+  log_level: INFO
+  i2c_frequency: 100kHz
+
+
+packages:
+  device_base: !include common/qtpy_esp32.yaml
+  soil: !include common/adafruit_soil_sensor.yaml
+
+

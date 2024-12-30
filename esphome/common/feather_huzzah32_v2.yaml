@@ -1,0 +1,54 @@
+substitutions:
+  board_type: adafruit_qtpy_esp32
+  i2c_frequency: 800kHz
+  i2c_sda_pin: GPIO22
+  i2c_scl_pin: GPIO20
+  i2c_power_pin: GPIO2
+  spi_mosi_pin: GPIO19
+  spi_miso_pin: GPIO21
+  spi_sck_pin: GPIO5
+  neopixel_pin: GPIO0
+
+
+
+packages:
+  device_base: !include esp32.yaml
+  wifi: !include wifi.yaml
+  neo: !include neopixel.yaml
+
+
+esphome:
+  platformio_options:
+    board_build.flash_mode: dio
+
+
+spi: 
+  clk_pin: 
+    number: ${spi_sck_pin}
+  mosi_pin: 
+    number: ${spi_mosi_pin}
+  miso_pin: 
+    number: ${spi_miso_pin}
+
+
+switch:
+  - platform: gpio
+    id: i2c_power
+    restore_mode: ALWAYS_ON
+    pin: 
+      number: ${i2c_power_pin}
+      ignore_strapping_warning: true
+  - id: !remove neopixel_power
+
+
+light:
+ - id: !extend neopixel_led
+   pin:
+     ignore_strapping_warning: true
+
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: false
+

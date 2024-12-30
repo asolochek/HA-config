@@ -1,0 +1,38 @@
+substitutions:
+  dns_domain: sf.aberrant.org
+  board_type: esp32-s3-devkitc-1
+  i2c_sda_pin: GPIO21
+  i2c_scl_pin: GPIO17
+  neopixel_pin: GPIO26
+  neopixel_power_pin: GPIO8
+
+
+defaults:
+  fqdn: ${hostname}.${dns_domain}
+
+packages:
+  device_base: !include esp32.yaml
+  neopixel: !include neopixel.yaml
+
+light:
+  - id: !extend neopixel_led
+    pin: 
+      allow_other_uses: true
+     
+
+ethernet:
+  type: W5500
+  clk_pin: 
+    number: GPIO13
+  mosi_pin: 
+    number: GPIO11
+  miso_pin: 
+    number: GPIO12
+  cs_pin: GPIO14
+  interrupt_pin: 
+    number: GPIO10
+  reset_pin: 
+    number: GPIO9
+
+
+  use_address: ${fqdn}

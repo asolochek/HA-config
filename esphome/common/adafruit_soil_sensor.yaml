@@ -1,0 +1,77 @@
+
+substitutions:
+  temperature_1_name: "Temperature 1"
+  temperature_1_offset: "0.0"
+  temperature_1_gain: "1.0"
+  moisture_1_name: "Moisture 1"
+  moisture_1_min_value: "350"
+  moisture_1_max_value: "1015"
+  temperature_2_name: "Temperature 2"
+  temperature_2_offset: "0.0"
+  temperature_2_gain: "1.0"
+  moisture_2_name: "Moisture 2"
+  moisture_2_min_value: "350"
+  moisture_2_max_value: "1015"
+  temperature_3_name: "Temperature 3"
+  temperature_3_offset: "0.0"
+  temperature_3_gain: "1.0"
+  moisture_3_name: "Moisture 3"
+  moisture_3_min_value: "350"
+  moisture_3_max_value: "1015"
+  temperature_4_name: "Temperature 4"
+  temperature_4_offset: "0.0"
+  temperature_4_gain: "1.0"
+  moisture_4_name: "Moisture 4"
+  moisture_4_min_value: "350"
+  moisture_4_max_value: "1015"
+  update_interval: 10s
+
+
+
+sensor:
+  - platform: adafruit_soil_sensor
+    address: 0x36
+    temperature:
+      name: ${temperature_1_name}
+      offset: ${temperature_1_offset}
+      gain: ${temperature_1_gain}
+    moisture:
+      name: ${moisture_1_name}
+      min_value: ${moisture_1_min_value}
+      max_value: ${moisture_1_max_value}
+    update_interval: ${update_interval}
+  - platform: adafruit_soil_sensor
+    address: 0x37
+    temperature:
+      name: ${temperature_2_name}
+      offset: ${temperature_2_offset}
+      gain: ${temperature_2_gain}
+    moisture:
+      name: ${moisture_2_name}
+      min_value: ${moisture_2_min_value}
+      max_value: ${moisture_2_max_value}
+    update_interval: ${update_interval}
+  - platform: adafruit_soil_sensor
+    address: 0x38
+    temperature:
+      name: ${temperature_3_name}
+      offset: ${temperature_3_offset}
+      gain: ${temperature_3_gain}
+    moisture:
+      name: ${moisture_3_name}
+      min_value: ${moisture_3_min_value}
+      max_value: ${moisture_3_max_value}
+    update_interval: ${update_interval}
+  - platform: adafruit_soil_sensor
+    address: 0x39
+    temperature:
+      name: ${temperature_4_name}
+      offset: ${temperature_4_offset}
+      gain: ${temperature_4_gain}
+    moisture:
+      name: ${moisture_4_name}
+      min_value: ${moisture_4_min_value}
+      max_value: ${moisture_4_max_value}
+    update_interval: ${update_interval}
+
+

@@ -44,8 +44,13 @@ void AdafruitSoilSensorComponent::update()
 
 float AdafruitSoilSensorComponent::get_temperature_() 
 {
-  uint8_t buf[4];
-  this->read_register16(SEESAW_STATUS_BASE << 8 | SEESAW_STATUS_TEMP, buf, 4);
+  uint8_t buf[4] = { SEESAW_STATUS_BASE, SEESAW_STATUS_TEMP, 0, 0};
+
+  this->write(buf, 2);
+  delayMicroseconds(5000);
+  this->read(buf, 4);
+
+  // this->read_register16(SEESAW_STATUS_BASE << 8 | SEESAW_STATUS_TEMP, buf, 4);
 
   int32_t ret = ((uint32_t)buf[0] << 24) | ((uint32_t)buf[1] << 16) |
       ((uint32_t)buf[2] << 8) | (uint32_t)buf[3];
