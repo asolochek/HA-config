@@ -1,0 +1,22 @@
+sensor:
+- platform: as7341
+  f1:
+    name: "415nm"
+  f2:
+    name: "445nm"
+  f3:
+    name: "480nm"
+  f4:
+    name: "515nm"
+  f5:
+    name: "555nm"
+  f6:
+    name: "590nm"
+  f7:
+    name: "630nm"
+  f8:
+    name: "680nm"
+  clear:
+    name: "Clear"
+  nir:
+    name: "NIR"

@@ -1,0 +1,44 @@
+substitutions:
+  tsl2591_name: "Light Sensor"
+  tsl2591_id: tsl2591_sensor
+  tsl2591_visible_light_name: "Visible Light"
+  tsl2591_visible_light_id: visible_light
+  tsl2591_infrared_light_name: "Infrared Light"
+  tsl2591_infrared_light_id: infrared_light
+  tsl2591_full_spectrum_light_name: "Full Spectrum Light"
+  tsl2591_full_spectrum_light_id: full_spectrum_light
+  tsl2591_actual_gain_name: "Actual Gain"
+  tsl2591_actual_gain_id: actual_gain
+  tsl2591_lux_name: "Lux"
+  tsl2591_lux_id: lux
+  tsl2591_i2c_address: "0x29"
+  tsl2591_gain: "auto"
+  tsl2591_update_interval: 60s
+  tsl2591_device_factor: "53"
+  tsl2591_glass_attenuation_factor: "14.4"
+
+
+sensor:
+  - platform: tsl2591
+    name: ${tsl2591_name}
+    id: ${tsl2591_id}
+    address: ${tsl2591_i2c_address}
+    update_interval: ${tsl2591_update_interval}
+    gain: ${tsl2591_gain}
+    device_factor: ${tsl2591_device_factor}
+    glass_attenuation_factor: ${tsl2591_glass_attenuation_factor}
+    visible:
+      id: ${tsl2591_visible_light_id}
+      name: ${tsl2591_visible_light_name}
+    infrared:
+      id: ${tsl2591_infrared_light_id}
+      name: ${tsl2591_infrared_light_name}
+    full_spectrum:
+      id: ${tsl2591_full_spectrum_light_id}
+      name: ${tsl2591_full_spectrum_light_name}
+    calculated_lux:
+      id: ${tsl2591_lux_id}
+      name: ${tsl2591_lux_name}
+    actual_gain:
+      id: ${tsl2591_actual_gain_id}
+      name: ${tsl2591_actual_gain_name}
