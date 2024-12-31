@@ -1,5 +1,5 @@
 substitutions:
-  board_type: adafruit_feather_esp32s2
+  board_type: adafruit_feather_esp32s2_tft
   i2c_frequency: 800kHz
   i2c_sda_pin: GPIO3
   i2c_scl_pin: GPIO4
