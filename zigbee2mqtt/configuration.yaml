@@ -133,8 +133,6 @@ devices:
     friendly_name: Bedroom North Window
   '0x001788010d67b5d0':
     friendly_name: Laundry Room Light
-  '0x001788010d65d634':
-    friendly_name: Front Porch
   '0x00158d0009ee038b':
     friendly_name: Bedroom Closet Window Sensor
   '0xf0d1b80000077af5':
