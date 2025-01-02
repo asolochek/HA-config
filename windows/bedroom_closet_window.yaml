@@ -6,7 +6,7 @@
       value_template: > 
         {% from 'utils.jinja' import invert_cover_state %}
         {{ invert_cover_state(states('cover.bedroom_closet_window')) }} 
-      position_template: "{{ state_attr('cover.bedroom_closet_window', 'current_position') | int }}"
+      position_template: "{{ state_attr('cover.bedroom_closet_window', 'current_position') | int(0) }}"
       device_class: window
       open_cover:
         action: cover.open_cover
