@@ -383,22 +383,25 @@
 - id: '1687231424056'
   alias: Kitchen fan temperature auto off
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id:
+  triggers:
+  - entity_id:
     - sensor.thermostat_temperature
     for:
       hours: 0
       minutes: 1
       seconds: 0
     below: 72
-  - platform: numeric_state
-    entity_id:
+    trigger: numeric_state
+  - entity_id:
     - sensor.bedroom_temperature
     below: 69
     enabled: false
-  condition: []
-  action:
+    trigger: numeric_state
+  conditions:
+  - condition: state
+    entity_id: fan.kitchen_fan
+    state: 'on'
+  actions:
   - action: fan.turn_off
     data: {}
     target:
