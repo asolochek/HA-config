@@ -54,10 +54,6 @@ all_lights_off:
       - light.office_string_lights
       - light.bathroom_light
       - light.living_room_ceiling
-  - type: turn_off
-    device_id: 5b2e8bcb341adc089e8b63e701f00ff8
-    entity_id: 1b31fce08e9669051b72fb6aef5d6cb1
-    domain: light
   - action: light.turn_off
     metadata: {}
     data: {}
