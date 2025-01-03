@@ -24,9 +24,24 @@ esphome:
   includes:
     - common/humidity_correction.h
   on_boot:
-    priority: 900
+  - priority: 900
     then:
       - lambda: "pinMode(7, OUTPUT); digitalWrite(7, HIGH);"
+  - priority: 100
+    then:
+      - lambda: |-
+          auto controller1_call = id(humidity_controller_stage1).make_call();
+          auto controller2_call = id(humidity_controller_stage2).make_call();
+          float dpc = compute_dew_point(id(temperature).state, id(clear_threshold_pct).state);
+          float dp1 = compute_dew_point(id(temperature).state, id(humidity_stage1_threshold).state);
+          float dp2 = compute_dew_point(id(temperature).state, id(humidity_stage2_threshold).state);
+          ESP_LOGI("on_boot", "Setting thresholds. Clear: %.1f°F  Stage1: %.1f°F  Stage2: %.1f°F", dpc, dp1, dp2);
+          controller1_call.set_target_temperature_low(dpc);
+          controller1_call.set_target_temperature_high(dp1);
+          controller2_call.set_target_temperature_low(dp1-2);
+          controller2_call.set_target_temperature_high(dp2);
+          controller1_call.perform();
+          controller2_call.perform();
 
 
 binary_sensor:
@@ -303,7 +318,8 @@ sensor:
     unit_of_measurement: "%"
     internal: false
     filters:
-      - filter_out: NaN
+      - lambda: |-
+          return isnan(x) ? 60.0 : x;
 
   - platform: homeassistant
     name: Baseline Temperature
@@ -312,7 +328,8 @@ sensor:
     unit_of_measurement: "°F"
     internal: false
     filters:
-      - filter_out: NaN
+      - lambda: |-
+          return isnan(x) ? 70.0 : x;
 
   - platform: template
     name: Baseline Dew Point
@@ -324,7 +341,9 @@ sensor:
     accuracy_decimals: 1
     lambda: |-
       float temp = id(baseline_temperature).state;
+      temp = isnan(temp) ? 70.0 : temp;
       float hum = id(baseline_humidity).state;
+      hum = isnan(hum) ? 60.0 : hum;      
       float dew = compute_dew_point(f_to_c(temp), hum);
       float dp = c_to_f(dew);
       ESP_LOGI("dew", "baseline: temperature: %.1f humidity: %.1f, dewpoint: %.1f", temp, hum, dp);
@@ -341,10 +360,13 @@ sensor:
           min_value: 60
           max_value: 100
     lambda: |-
-      float temp1 = f_to_c(id(baseline_temperature).state);
+      float temp = id(baseline_temperature).state;
+      temp = isnan(temp) ? 70.0 : temp;
+      float tempC = f_to_c(temp);
       float hum = id(baseline_humidity).state;
+      hum = isnan(hum) ? 60.0 : hum;
       float temp2 = id(temperature).state;
-      float corrected = correct_humidity(temp1, hum, temp2); 
+      float corrected = correct_humidity(tempC, hum, temp2); 
       ESP_LOGI("baseline", "humidity corrected to %.1f%%", corrected);
       return corrected;
 
