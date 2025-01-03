@@ -32,8 +32,12 @@ substitutions:
   moisture_4_name: "Moisture 4"
   moisture_4_min_value: "350"
   moisture_4_max_value: "1015"
-  update_interval: 10s
-
+  update_interval: 2s
+  moisture_window_size: "5"
+  moisture_window_send_every: "5"
+  moisture_window_send_first_at: "5"
+  moisture_exp_alpha: "0.03"
+  moisture_exp_send_every: "6"
 
 
 sensor:
@@ -49,11 +53,15 @@ sensor:
       name: ${moisture_1_name}
       min_value: ${moisture_1_min_value}
       max_value: ${moisture_1_max_value}
+      accuracy_decimals: 2
       filters:
         - sliding_window_moving_average:
-            window_size: 10
-            send_every: 10
-            send_first_at: 10
+            window_size: ${moisture_window_size}
+            send_every: ${moisture_window_send_every}
+            send_first_at: ${moisture_window_send_first_at}
+        - exponential_moving_average:
+            alpha: ${moisture_exp_alpha}
+            send_every: ${moisture_exp_send_every}
     update_interval: ${update_interval}
   - platform: adafruit_soil_sensor
     address: 0x37
@@ -67,11 +75,15 @@ sensor:
       name: ${moisture_2_name}
       min_value: ${moisture_2_min_value}
       max_value: ${moisture_2_max_value}
+      accuracy_decimals: 2
       filters:
         - sliding_window_moving_average:
-            window_size: 10
-            send_every: 10
-            send_first_at: 10
+            window_size: ${moisture_window_size}
+            send_every: ${moisture_window_send_every}
+            send_first_at: ${moisture_window_send_first_at}
+        - exponential_moving_average:
+            alpha: ${moisture_exp_alpha}
+            send_every: ${moisture_exp_send_every}
     update_interval: ${update_interval}
   - platform: adafruit_soil_sensor
     address: 0x38
@@ -85,11 +97,15 @@ sensor:
       name: ${moisture_3_name}
       min_value: ${moisture_3_min_value}
       max_value: ${moisture_3_max_value}
+      accuracy_decimals: 2
       filters:
         - sliding_window_moving_average:
-            window_size: 10
-            send_every: 10
-            send_first_at: 10
+            window_size: ${moisture_window_size}
+            send_every: ${moisture_window_send_every}
+            send_first_at: ${moisture_window_send_first_at}
+        - exponential_moving_average:
+            alpha: ${moisture_exp_alpha}
+            send_every: ${moisture_exp_send_every}
     update_interval: ${update_interval}
   - platform: adafruit_soil_sensor
     address: 0x39
@@ -103,11 +119,15 @@ sensor:
       name: ${moisture_4_name}
       min_value: ${moisture_4_min_value}
       max_value: ${moisture_4_max_value}
+      accuracy_decimals: 2
       filters:
         - sliding_window_moving_average:
-            window_size: 10
-            send_every: 10
-            send_first_at: 10
+            window_size: ${moisture_window_size}
+            send_every: ${moisture_window_send_every}
+            send_first_at: ${moisture_window_send_first_at}
+        - exponential_moving_average:
+            alpha: ${moisture_exp_alpha}
+            send_every: ${moisture_exp_send_every}
     update_interval: ${update_interval}
 
 
