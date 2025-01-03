@@ -233,7 +233,6 @@ day_lights:
     data: {}
     target:
       entity_id:
-      - light.living_room_ceiling
       - light.bathroom_light
       - light.hallway_lights
       - light.bedroom_lights
@@ -241,6 +240,7 @@ day_lights:
       - light.kitchen_lights
       - light.bedroom_closet_light
       - light.laundry_room_lights
+      - light.living_room_ceiling
   mode: single
   icon: mdi:coffin
 bedtime:
