@@ -22,21 +22,29 @@ sensor:
       name: ${sqp30_ec02_name}
       accuracy_decimals: 1
       filters:
-        - sliding_window_moving_average:
-            window_size: 15
+        - filter_out: 65535.0
+        - exponential_moving_average:
+            alpha: 0.05
             send_every: 15
-            send_first_at: 5
-        - filter_out: 65535
+        # - sliding_window_moving_average:
+        #     window_size: 15
+        #     send_every: 15
+        #     send_first_at: 5
+
     tvoc:
       id: ${sgp30_tvoc_id}
       name: ${sgp30_tvoc_name}
       accuracy_decimals: 1
       filters:
-        - sliding_window_moving_average:
-            window_size: 15
+        - filter_out: 65535.0
+        - exponential_moving_average:
+            alpha: 0.05
             send_every: 15
-            send_first_at: 5
-        - filter_out: 65535
+        # - sliding_window_moving_average:
+        #     window_size: 15
+        #     send_every: 15
+        #     send_first_at: 5
+
 
 logger:
   logs:
