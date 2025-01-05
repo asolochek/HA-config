@@ -14,7 +14,7 @@ substitutions:
   st7789_offset_height: "34"
   st7789_offset_width: "0"
   st7789_rotation: "90"
-
+#  log_level: DEBUG
 
 packages:
   device_base: !include common/qtpy_esp32.yaml
@@ -28,7 +28,15 @@ packages:
 
 logger:
   logs:
-    sgp30: INFO
+ #   sgp30: DEBUG
+    display: INFO
+
+# sensor:
+#   - id: !extend sgp30_sensor
+#     baseline: 
+#       eco2_baseline: 0x94cb
+#       tvoc_baseline: 0x9d31
+
 
 display:
   - id: !extend ${display_id}
