@@ -38,7 +38,7 @@ esphome:
           ESP_LOGI("on_boot", "Setting thresholds. Clear: %.1f°F  Stage1: %.1f°F  Stage2: %.1f°F", dpc, dp1, dp2);
           controller1_call.set_target_temperature_low(dpc);
           controller1_call.set_target_temperature_high(dp1);
-          controller2_call.set_target_temperature_low(dp1-2);
+          controller2_call.set_target_temperature_low(dp1);
           controller2_call.set_target_temperature_high(dp2);
           controller1_call.perform();
           controller2_call.perform();
@@ -209,7 +209,7 @@ number:
         float dp = compute_dew_point(id(temperature).state, x);
         ESP_LOGI("number", "stage2 threshold set from %.1f°F to %.1f°F (%.0f%%)", id(humidity_stage1_threshold).state, dp, x);
         controller1_call.set_target_temperature_high(dp);
-        controller2_call.set_target_temperature_low(dp-2);
+        controller2_call.set_target_temperature_low(dp);
         controller1_call.perform();
         controller2_call.perform();
 
