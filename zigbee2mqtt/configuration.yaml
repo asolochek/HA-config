@@ -1,12 +1,13 @@
-homeassistant: true
+homeassistant:
+  enabled: true
 serial:
   port: tcp://10.3.1.58:6638
   baudrate: 115200
   disable_led: false
   adapter: zstack
 frontend:
+  enabled: true
   port: 8099
-permit_join: false
 mqtt:
   server: '!/config/secrets.yaml mqtt_server'
   user: '!/config/secrets.yaml mqtt_user'
@@ -16,6 +17,10 @@ mqtt:
   keepalive: 60
   version: 5
 advanced:
+  homeassistant_legacy_entity_attributes: false
+  homeassistant_legacy_triggers: false
+  legacy_api: false
+  legacy_availability_payload: false 
   channel: 25
   transmit_power: 20
   cache_state: true
@@ -23,8 +28,6 @@ advanced:
   cache_state_send_on_startup: true
   last_seen: disable
   elapsed: false
-  report: true
-  legacy_api: false
   output: json
   log_level: info
   network_key:
@@ -54,9 +57,8 @@ advanced:
     - 97
     - 110
     - 116
-  homeassistant_legacy_entity_attributes: false
-  legacy_availability_payload: false
 availability:
+  enabled: true
   active:
     timeout: 10
   passive:
@@ -152,98 +154,26 @@ device_options:
 groups:
   '1':
     friendly_name: Office Ceiling Zigbee Group
-    devices:
-      - 0x0017880108e2a549/11
-      - 0x0017880108e2d3ba/11
-      - 0x00178801063878cb/11
   '2':
     friendly_name: Office Lights Zigbee Group
-    devices:
-      - 0x00178801091086eb/11
-      - 0x0017880108e2a549/11
-      - 0x0017880108e2d3ba/11
-      - 0x0017880109107ed2/11
-      - 0x00178801063878cb/11
   '3':
     friendly_name: Hallway Ceiling Zigbee Group
-    devices:
-      - 0x001788010b6dd5fe/11
-      - 0x001788010b6dd864/11
-      - 0x0017880106ab4ab8/11
   '4':
     friendly_name: Bedroom Ceiling Zigbee Group
-    devices:
-      - 0x0017880103eeb09e/11
-      - 0x00178801039d730e/11
   '5':
     friendly_name: Bedroom Lights Zigbee Group
-    devices:
-      - 0x0017880103eeb09e/11
-      - 0x00178801039d730e/11
-      - 0x00178801042a79be/11
   '6':
     friendly_name: Hallway Lights Zigbee Group
-    devices:
-      - 0x001788010b6dd5fe/11
-      - 0x001788010b6dd864/11
-      - 0x0017880106ab4ab8/11
-      - 0x001788010dab64c2/11
   '7':
     friendly_name: All Lights Zigbee Group
-    devices:
-      - 0x0017880103eeb09e/11
-      - 0x00178801039d730e/11
-      - 0x00178801063878cb/11
-      - 0x00178801042a79be/11
-      - 0x001788010b6dd5fe/11
-      - 0x001788010b6dd864/11
-      - 0x0017880106ab4ab8/11
-      - 0x001788010b39e879/11
-      - 0x00178801091086eb/11
-      - 0x0017880108e2a549/11
-      - 0x0017880108e2d3ba/11
-      - 0x0017880109107ed2/11
-      - 0x0017880108e2d93f/11
-      - 0x001788010b6dd9a9/11
-      - 0x0017880106d9db2d/11
-      - 0x0017880106aba11b/11
-      - 0x0017880106ab6404/11
-      - 0x001788010944a507/11
-      - 0x0017880109449a57/11
-      - 0x001788010d67b5d0/11
-      - 0x001788010dab64c2/11
-      - 0x001788010dab6473/11
-      - 0x001788010dab6a45/11
   '8':
     friendly_name: Kitchen Ceiling Zigbee Group
-    devices:
-      - 0x001788010b6dd9a9/11
-      - 0x0017880106d9db2d/11
-      - 0x0017880106aba11b/11
-      - 0x0017880106ab6404/11
-      - 0x001788010dab6473/11
-      - 0x001788010dab6a45/11
   '9':
     friendly_name: Kitchen Counters Zigbee Group
-    devices:
-      - 0x0017880109449a57/11
-      - 0x001788010944a507/11
   '10':
     friendly_name: Kitchen Lights Zigbee Group
-    devices:
-      - 0x001788010b6dd9a9/11
-      - 0x0017880106d9db2d/11
-      - 0x0017880106aba11b/11
-      - 0x0017880106ab6404/11
-      - 0x001788010944a507/11
-      - 0x0017880109449a57/11
-      - 0x001788010dab6473/11
-      - 0x001788010dab6a45/11
   '11':
     friendly_name: Grow Lights
-    devices:
-      - 0xf0d1b80000077a77/1
-      - 0xf0d1b80000077af5/1
 ota:
-  ikea_ota_use_test_url: false
   disable_automatic_update_check: true
+version: 4
