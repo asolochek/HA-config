@@ -24,6 +24,9 @@ logger:
 
 recorder:
   db_url: !secret db_url
+  auto_purge: true
+  purge_keep_days: 365
+  auto_repack: true
   exclude:
     domains:
       - device_tracker
@@ -72,6 +75,10 @@ recorder:
       - sensor.*_connect_count
       - sensor.g5_ptz_*
       - sensor.garage_exterior*
+      - sensor.*soil_sensor*temperature*
+      - sensor.*_last_update_trigger
+      - sensor.purpleair*
+
     entities:
       - camera.front_door
       - sensor.home_assistant_v2_db
@@ -84,12 +91,13 @@ recorder:
       - sensor.ham
       - sensor.bacon
       - sensor.carpaccio
-      - sensor.thao_s_phone
-      - sensor.thao_s_watch
-      - sensor.aaron_s_watch
+      - sensor.thaos_phone
+      - sensor.thaos_watch
+      - sensor.aarons_watch
       - sensor.kitchen_fan_plug_total_energy
       - sensor.kitchen_fan_plug_current
       - sensor.kitchen_fan_plug_voltage
+
 
 logbook:
   include:
@@ -111,6 +119,10 @@ logbook:
       - sensor.*_uptime*
       - sensor.g5_ptz*
       - sensor.garage_exterior*
+      - sensor.*_last_update_trigger
+      - sensor.purpleair*
+    entities:
+      - sensor.purpleair_adc
 
 
 # Load frontend themes from the themes folder
@@ -120,6 +132,7 @@ frontend:
   extra_module_url:
     - /config/www/community/bar-card/bar-card.js
     - /config/www/community/custom-sidebar
+#    - /config/wwww/lovelace-card-mod/card-mod.js
 
 # Text-to-speech
 tts:
@@ -150,15 +163,32 @@ lovelace:
 
 
 # mqtt:
-  # sensor:
-  #   - name: Zigbee2mqtt Networkmap
-  #     # if you change base_topic of Zigbee2mqtt, change state_topic accordingly
-  #     state_topic: zigbee2mqtt/bridge/response/networkmap
-  #     value_template: >-
-  #       {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
-  #     # again, if you change base_topic of Zigbee2mqtt, change json_attributes_topic accordingly
-  #     json_attributes_topic: zigbee2mqtt/bridge/response/networkmap
-  #     json_attributes_template: "{{ value_json.data.value | tojson }}"
+#   sensor:
+#     - name: Zigbee2mqtt Networkmap
+#       # if you change base_topic of Zigbee2mqtt, change state_topic accordingly
+#       state_topic: zigbee2mqtt/bridge/response/networkmap
+#       value_template: >-
+#         {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+#       # again, if you change base_topic of Zigbee2mqtt, change json_attributes_topic accordingly
+#       json_attributes_topic: zigbee2mqtt/bridge/response/networkmap
+#       json_attributes_template: "{{ value_json.data.value | tojson }}"
+
+# sensor:
+#   - platform: filter
+#     id: sensor.purpleair_temperature_filtered
+#     name: "PurpleAir Temperature Filtered"
+#     entity_id: sensor.purpleair_temperature
+#     filters:
+#       - filter: time_simple_moving_average
+#         window_size: 00:00:60
+#         precision: 2
+#       - filter: range
+#         upper_bound: 100
+#         lower_bound: 70
+#      - filter: lowpass
+#        time_constant: 300s
+#        window_size: 20
+#        precision: 4
 
 
 
