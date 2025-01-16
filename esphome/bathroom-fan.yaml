@@ -75,16 +75,19 @@ exhaust_fan:
     lambda: |-
       auto fan_call = id(bathroom_fan).make_call();
       fan_call.set_speed(id(fan_idle_speed).state * 10.24);
+      fan_call.set_preset_mode("idle");
       fan_call.perform();
   stage1_action:
     lambda: |-
       auto fan_call = id(bathroom_fan).make_call();
       fan_call.set_speed(id(fan_low_speed).state * 10.24);
+      fan_call.set_preset_mode("low");
       fan_call.perform();
   stage2_action:
     lambda: |-
       auto fan_call = id(bathroom_fan).make_call();
       fan_call.set_speed(id(fan_high_speed).state * 10.24);
+      fan_call.set_preset_mode("high");
       fan_call.perform();
 
 
@@ -134,13 +137,11 @@ binary_sensor:
     id: b_button
     pin: 
       number: GPIO1
-      mode: INPUT_PULLUP
-    filters:
-      - invert:
+      mode: INPUT_PULLDOWN
     on_press:
       - lambda: |-
           auto fan_call = id(bathroom_fan).make_call();
-          fan_call.set_speed(id(bathroom_fan).speed + 5);
+          fan_call.set_speed(id(bathroom_fan).speed + 5*10.24);
           fan_call.perform();
 
   - platform: gpio
@@ -148,13 +149,11 @@ binary_sensor:
     id: c_button
     pin: 
       number: GPIO2
-      mode: INPUT_PULLUP
-    filters:
-      - invert:
+      mode: INPUT_PULLDOWN
     on_press:
       - lambda: |-
           auto fan_call = id(bathroom_fan).make_call();
-          fan_call.set_speed(id(bathroom_fan).speed - 5);
+          fan_call.set_speed(id(bathroom_fan).speed - 5*10.24);
           fan_call.perform();
 
 
@@ -365,6 +364,10 @@ fan:
     decay_mode: slow
     restore_mode: RESTORE_DEFAULT_ON
     speed_count: 1024
+    preset_modes:
+      - idle
+      - low
+      - high
     on_turn_on:
       lambda: |-
         id(fan_controller).enable_controller();
