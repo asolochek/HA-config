@@ -151,4 +151,4 @@ cover:
       - switch.turn_off: window_close_switch
       - switch.turn_off: window_open_switch
       - light.turn_off: button_light
-    max_duration: 50s
+    max_duration: 55s
