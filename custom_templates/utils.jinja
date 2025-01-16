@@ -85,10 +85,8 @@
         'Opening'
     {% elif state == 'Closed' %}
         'Open'
-    {% elif state == 'Unavailable' %}
-        'Unavailable'
     {% else %}
-        'Unknown'
+        {{ state }}
     {% endif %}              
 {% endmacro %}
 
