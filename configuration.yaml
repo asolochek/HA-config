@@ -77,7 +77,6 @@ recorder:
       - sensor.garage_exterior*
       - sensor.*soil_sensor*temperature*
       - sensor.*_last_update_trigger
-      - sensor.purpleair*
 
     entities:
       - camera.front_door
@@ -97,6 +96,7 @@ recorder:
       - sensor.kitchen_fan_plug_total_energy
       - sensor.kitchen_fan_plug_current
       - sensor.kitchen_fan_plug_voltage
+      - sensor.purpleair_adc
 
 
 logbook:
@@ -120,7 +120,6 @@ logbook:
       - sensor.g5_ptz*
       - sensor.garage_exterior*
       - sensor.*_last_update_trigger
-      - sensor.purpleair*
     entities:
       - sensor.purpleair_adc
 

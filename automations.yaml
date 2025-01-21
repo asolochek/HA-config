@@ -647,13 +647,13 @@
 - id: '1688587556389'
   alias: Bedroom Airconditioner Auto Off
   description: Turn off bedroom AC when a window is opened
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.bedroom_windows
     from: 'off'
     to: 'on'
-  condition:
+    trigger: state
+  conditions:
   - condition: or
     conditions:
     - condition: device
@@ -674,7 +674,7 @@
       entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
       type: is_hvac_mode
       hvac_mode: fan_only
-  action:
+  actions:
   - device_id: 6833b84bb9fbdfd52286d43e14fa7596
     domain: climate
     entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
@@ -706,7 +706,7 @@
     input:
       rgbw_2_ct_requested_input: input_number.living_room_ceiling_color_temp
       target_light:
-        entity_id: light.living_room_ceiling
+        entity_id: light.living_room_ceiling_new
       rgbw_2_ct_target_ct:
       - 2000
       - 2500
@@ -715,39 +715,39 @@
       - 6535
       rgbw_2_red_calibration:
       - 100
+      - 100
+      - 100
       - 90
-      - 0
-      - 0
-      - 0
+      - 100
       rgbw_2_green_calibration:
-      - 65
-      - 60
-      - 0
-      - 45
-      - 60
+      - 64
+      - 78
+      - 92
+      - 94
+      - 100
       rgbw_2_blue_calibration:
       - 0
-      - 0
-      - 0
-      - 50
-      - 65
+      - 40
+      - 64
+      - 81
+      - 93
       rgbw_2_white_calibration:
-      - 0
+      - 69
       - 85
       - 100
-      - 80
-      - 80
+      - 89
+      - 100
 - id: '1689099025587'
   alias: RGBW Calibration
   description: ''
   use_blueprint:
     path: swifty99/RGBWCalibration.yaml
     input:
-      light_cal_r: input_number.red_cal
-      light_cal_g: input_number.green_cal
-      light_cal_b: input_number.blue_cal
-      light_cal_w: input_number.white_cal
-      light_cal_brightness: input_number.bright_cal
+      light_cal_r: input_number.red_cal_2
+      light_cal_g: input_number.green_cal_2
+      light_cal_b: input_number.blue_cal_2
+      light_cal_w: input_number.white_cal_2
+      light_cal_brightness: input_number.brightness_cal
       target_light:
         entity_id: light.living_room_ceiling
 - id: '1689142844176'
@@ -833,21 +833,21 @@
 - id: '1689458270429'
   alias: Bathroom fan return to idle
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: fan.bathroom_fan
+  triggers:
+  - entity_id: fan.bathroom_fan
     for:
       hours: 0
       minutes: 10
       seconds: 0
     attribute: percentage
     above: number.bathroom_fan_idle_speed
-  condition:
+    trigger: numeric_state
+  conditions:
   - condition: state
+    entity_id: fan.bathroom_fan
+    attribute: preset_mode
     state: idle
-    entity_id: climate.bathroom_fan_humidity_controller_stage_1
-    attribute: hvac_action
-  action:
+  actions:
   - action: fan.set_percentage
     data:
       percentage: '{{ states(''number.bathroom_fan_idle_speed'') }}'
@@ -977,18 +977,18 @@
 - id: '1691879070103'
   alias: Bedroom Air Conditioner Turned on
   description: ''
-  trigger:
-  - platform: device
-    device_id: 6833b84bb9fbdfd52286d43e14fa7596
+  triggers:
+  - device_id: 6833b84bb9fbdfd52286d43e14fa7596
     domain: climate
     entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
     type: hvac_mode_changed
     to: cool
-  condition:
+    trigger: device
+  conditions:
   - condition: state
     entity_id: cover.bedroom_closet_window
     state: open
-  action:
+  actions:
   - data: {}
     target:
       entity_id: cover.bedroom_closet_window
@@ -997,20 +997,20 @@
 - id: '1691882214924'
   alias: 'Bedroom Closet fans on '
   description: 'Turn off AC if fans are turned on '
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - fan.bedroom_closet_fans
     from: 'off'
     to: 'on'
-  condition:
+    trigger: state
+  conditions:
   - condition: device
     device_id: 6833b84bb9fbdfd52286d43e14fa7596
     domain: climate
     entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
     type: is_hvac_mode
     hvac_mode: cool
-  action:
+  actions:
   - action: climate.set_hvac_mode
     data:
       hvac_mode: 'off'
@@ -1464,18 +1464,18 @@
 - id: '1725390359299'
   alias: Office Air Conditioner Turns On
   description: ''
-  trigger:
-  - platform: device
-    device_id: 4d342d88be4e71bf65993a020f1fc6b9
+  triggers:
+  - device_id: 4d342d88be4e71bf65993a020f1fc6b9
     domain: climate
     entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
     type: hvac_mode_changed
     to: cool
-  condition:
+    trigger: device
+  conditions:
   - condition: state
     state: open
     entity_id: cover.office_window
-  action:
+  actions:
   - data: {}
     action: cover.close_cover
     target:
@@ -1484,20 +1484,20 @@
 - id: '1725390531625'
   alias: Office Window Opens
   description: ''
-  trigger:
-  - platform: device
-    device_id: 16d8400cc7d608972a9bd92665f9be76
+  triggers:
+  - device_id: 16d8400cc7d608972a9bd92665f9be76
     domain: cover
     entity_id: 8213b9ba02ce5d0ddf7f2eb05e7f82dd
     type: opening
-  condition:
+    trigger: device
+  conditions:
   - condition: device
     device_id: 4d342d88be4e71bf65993a020f1fc6b9
     domain: climate
     entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
     type: is_hvac_mode
     hvac_mode: cool
-  action:
+  actions:
   - device_id: 4d342d88be4e71bf65993a020f1fc6b9
     domain: climate
     entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
@@ -1820,4 +1820,37 @@
     data: {}
     target:
       entity_id: switch.cat_bed
+  mode: single
+- id: '1737060759730'
+  alias: Database Maintenance
+  description: ''
+  triggers:
+  - trigger: time
+    at: 04:00:00
+  conditions: []
+  actions:
+  - action: recorder.purge_entities
+    data:
+      entity_globs:
+      - sensor.*_watch
+      keep_days: 30
+  mode: single
+- id: '1737355222486'
+  alias: Laundry notification
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.laundry_machine_plug_current
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    below: 1
+  conditions: []
+  actions:
+  - action: notify.notify
+    metadata: {}
+    data:
+      message: Laundry machine finished
   mode: single
