@@ -1,9 +1,9 @@
 substitutions:
-  name: sonoff-plug-22
-  friendly_name: Sonoff Plug 22
-  hostname: plug-sonoff-22
-  device_description: "Sonoff Smart Plug #22"
-  room: General
+  name: living-room-humidifier-plug
+  friendly_name: Living Room Humidifier Plug
+  hostname: plug-living-room-humidifier
+  device_description: "Plug for living room humidifier"
+  room: Living Room
 
 packages:
   device_base: !include common/sonoff_s31.yaml
