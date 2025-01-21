@@ -1845,7 +1845,7 @@
     for:
       hours: 0
       minutes: 0
-      seconds: 5
+      seconds: 30
     below: 1
   conditions: []
   actions:
@@ -1853,4 +1853,8 @@
     metadata: {}
     data:
       message: Laundry machine finished
+  - action: notify.tv
+    metadata: {}
+    data:
+      message: Laundry is finished
   mode: single
