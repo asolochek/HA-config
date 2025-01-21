@@ -5,6 +5,10 @@ substitutions:
   room: "Bathroom"
   device_description: "Bathroom Exhaust Fan"
   display_id: bathroom_fan_display
+  log_level: INFO
+  i2c_frequency: 100kHz
+  soil_sensor_1_id: soil_moisture
+  dry_threshold: "40"
 
 
 packages:
@@ -13,13 +17,25 @@ packages:
   tvoc: !include common/sgp30.yaml
   fonts: !include common/fonts.yaml
   colors: !include common/colors.yaml
+  soil: !include 
+    file: common/adafruit_soil_sensor.yaml
+    vars:
+      i2c_address: "0x36"
+  dry: !include common/soil_dry_indicator.yaml
+
+# wifi:
+#   use_address: !remove
+#   manual_ip:
+#     static_ip: 10.3.1.72
+#     gateway: 10.3.1.2
+#     subnet: 255.255.0.0
 
 
 logger:
   logs:
     graph: ERROR
     climate: ERROR
-    sensor: INFO
+#    sensor: DEBUG
     sgp30: ERROR
     sht4x: ERROR
     uptime: ERROR

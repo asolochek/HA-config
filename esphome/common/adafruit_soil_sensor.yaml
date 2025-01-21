@@ -1,133 +1,61 @@
-
 substitutions:
-  temperature_1_id: temperature_1
-  temperature_1_name: "Temperature 1"
-  temperature_1_offset: "0.0"
-  temperature_1_gain: "1.0"
-  moisture_1_id: moisture_1
-  moisture_1_name: "Moisture 1"
-  moisture_1_min_value: "350"
-  moisture_1_max_value: "1015"
-  temperature_2_id: temperature_2
-  temperature_2_name: "Temperature 2"
-  temperature_2_offset: "0.0"
-  temperature_2_gain: "1.0"
-  moisture_2_id: moisture_2
-  moisture_2_name: "Moisture 2"
-  moisture_2_min_value: "350"
-  moisture_2_max_value: "1015"
-  temperature_3_id: temperature_3
-  temperature_3_name: "Temperature 3"
-  temperature_3_offset: "0.0"
-  temperature_3_gain: "1.0"
-  moisture_3_id: moisture_3
-  moisture_3_name: "Moisture 3"
-  moisture_3_min_value: "350"
-  moisture_3_max_value: "1015"
-  temperature_4_id: temperature_4
-  temperature_4_name: "Temperature 4"
-  temperature_4_offset: "0.0"
-  temperature_4_gain: "1.0"
-  moisture_4_id: moisture_4
-  moisture_4_name: "Moisture 4"
-  moisture_4_min_value: "350"
-  moisture_4_max_value: "1015"
+  postfix: ""
+  temperature_id: soil_temperature_${postfix}
+  temperature_name: "Soil Temperature ${postfix}"
+  temperature_offset: "0.0"
+  temperature_gain: "1.0"
+  temperature_window_size: "5"
+  temperature_window_send_every: "5"
+  temperature_window_send_first_at: "5"
+  moisture_id: soil_moisture_${postfix}
+  moisture_name: "Soil Moisture ${postfix}"
+  moisture_min_value: "350"
+  moisture_max_value: "1015"
   update_interval: 2s
-  moisture_window_size: "5"
-  moisture_window_send_every: "5"
-  moisture_window_send_first_at: "5"
+  moisture_window_size: "3"
+  moisture_window_send_every: "3"
+  moisture_window_send_first_at: "3"
   moisture_exp_alpha: "0.03"
-  moisture_exp_send_every: "6"
+  moisture_exp_send_every: "2"
+  i2c_address: "0x36"
 
 
 sensor:
   - platform: adafruit_soil_sensor
-    address: 0x36
+    address: ${i2c_address}
     temperature:
-      id: ${temperature_1_id}
-      name: ${temperature_1_name}
-      offset: ${temperature_1_offset}
-      gain: ${temperature_1_gain}
-    moisture:
-      id: ${moisture_1_id}
-      name: ${moisture_1_name}
-      min_value: ${moisture_1_min_value}
-      max_value: ${moisture_1_max_value}
-      accuracy_decimals: 2
+      id: ${temperature_id}
+      name: ${temperature_name}
+      offset: ${temperature_offset}
+      gain: ${temperature_gain}
       filters:
         - sliding_window_moving_average:
-            window_size: ${moisture_window_size}
-            send_every: ${moisture_window_send_every}
-            send_first_at: ${moisture_window_send_first_at}
+            window_size: ${temperature_window_size}
+            send_every: ${temperature_window_send_every}
+            send_first_at: ${temperature_window_send_first_at}      
+    moisture:
+      id: ${moisture_id}
+      name: ${moisture_name}
+      min_value: ${moisture_min_value}
+      max_value: ${moisture_max_value}
+      accuracy_decimals: 2
+      on_raw_value:
+        - logger.log:
+            format: "Moisture raw value: %.0f"
+            args: ["id(${moisture_id}).state"]
+      filters:
+        - clamp:
+            min_value: 0
+            max_value: 100
+            ignore_out_of_range: true
+        - round: 0
+        # - sliding_window_moving_average:
+        #     window_size: ${moisture_window_size}
+        #     send_every: ${moisture_window_send_every}
+        #     send_first_at: ${moisture_window_send_first_at}
         - exponential_moving_average:
             alpha: ${moisture_exp_alpha}
             send_every: ${moisture_exp_send_every}
+        - round: 0
     update_interval: ${update_interval}
-  - platform: adafruit_soil_sensor
-    address: 0x37
-    temperature:
-      id: ${temperature_2_id}
-      name: ${temperature_2_name}
-      offset: ${temperature_2_offset}
-      gain: ${temperature_2_gain}
-    moisture:
-      id: ${moisture_2_id}
-      name: ${moisture_2_name}
-      min_value: ${moisture_2_min_value}
-      max_value: ${moisture_2_max_value}
-      accuracy_decimals: 2
-      filters:
-        - sliding_window_moving_average:
-            window_size: ${moisture_window_size}
-            send_every: ${moisture_window_send_every}
-            send_first_at: ${moisture_window_send_first_at}
-        - exponential_moving_average:
-            alpha: ${moisture_exp_alpha}
-            send_every: ${moisture_exp_send_every}
-    update_interval: ${update_interval}
-  - platform: adafruit_soil_sensor
-    address: 0x38
-    temperature:
-      id: ${temperature_3_id}
-      name: ${temperature_3_name}
-      offset: ${temperature_3_offset}
-      gain: ${temperature_3_gain}
-    moisture:
-      id: ${moisture_3_id}
-      name: ${moisture_3_name}
-      min_value: ${moisture_3_min_value}
-      max_value: ${moisture_3_max_value}
-      accuracy_decimals: 2
-      filters:
-        - sliding_window_moving_average:
-            window_size: ${moisture_window_size}
-            send_every: ${moisture_window_send_every}
-            send_first_at: ${moisture_window_send_first_at}
-        - exponential_moving_average:
-            alpha: ${moisture_exp_alpha}
-            send_every: ${moisture_exp_send_every}
-    update_interval: ${update_interval}
-  - platform: adafruit_soil_sensor
-    address: 0x39
-    temperature:
-      id: ${temperature_4_id}
-      name: ${temperature_4_name}
-      offset: ${temperature_4_offset}
-      gain: ${temperature_4_gain}
-    moisture:
-      id: ${moisture_4_id}
-      name: ${moisture_4_name}
-      min_value: ${moisture_4_min_value}
-      max_value: ${moisture_4_max_value}
-      accuracy_decimals: 2
-      filters:
-        - sliding_window_moving_average:
-            window_size: ${moisture_window_size}
-            send_every: ${moisture_window_send_every}
-            send_first_at: ${moisture_window_send_first_at}
-        - exponential_moving_average:
-            alpha: ${moisture_exp_alpha}
-            send_every: ${moisture_exp_send_every}
-    update_interval: ${update_interval}
-
 

@@ -1,6 +1,7 @@
 #include "esphome.h"
 #include "adafruit_soil_sensor.h"
 #include "esphome/core/log.h"
+#include "esphome/components/climate_utils/climate_utils.h"
 
 namespace esphome {
 namespace adafruit_soil_sensor {
@@ -29,17 +30,29 @@ void AdafruitSoilSensorComponent::setup()
 
 void AdafruitSoilSensorComponent::update() 
 {
+  static float previous_temp = 0;
+  static uint16_t previous_moisture = 0;
   float temp_c = this->get_temperature_();
   uint16_t moisture = this->get_moisture_();
 
-  float temp_f = (temp_c * 1.8) + 32.0;
+  float temp_f = c_to_f(temp_c);
 
   temp_f = temp_f * this->temperature_calibration.slope + this->temperature_calibration.offset;
 
+  float temp = roundf(temp_f * 10.0);
+  temp_f = temp / 10.0;
+
   moisture = map(moisture, this->moisture_calibration.dry, this->moisture_calibration.wet, 0, 100);
 
-  this->temperature_sensor_->publish_state(temp_f);
-  this->moisture_sensor_->publish_state(moisture);
+  if (temp_f != previous_temp) {
+    previous_temp = temp_f;
+    this->temperature_sensor_->publish_state(temp_f);
+  }
+
+  if (moisture != previous_moisture) {
+    previous_moisture = moisture;
+    this->moisture_sensor_->publish_state(moisture);
+  }
 }
 
 float AdafruitSoilSensorComponent::get_temperature_() 
@@ -54,6 +67,7 @@ float AdafruitSoilSensorComponent::get_temperature_()
 
   int32_t ret = ((uint32_t)buf[0] << 24) | ((uint32_t)buf[1] << 16) |
       ((uint32_t)buf[2] << 8) | (uint32_t)buf[3];
+
 
   return (1.0 / (1UL << 16)) * ret;
 }
@@ -75,6 +89,7 @@ uint16_t AdafruitSoilSensorComponent::get_moisture_()
 
     ret = ((uint16_t)buf[0] << 8) | buf[1];
   } while (ret == 65535);
+  //ESP_LOGD(TAG, "Moisture Raw: %d", ret);
   return ret;
 }
 

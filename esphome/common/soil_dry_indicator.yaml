@@ -1,0 +1,54 @@
+substitutions:
+  dry_threshold: "40"
+  led_id: neopixel_led
+  soil_sensor_1_id: dummy_value
+  soil_sensor_2_id: dummy_value
+  soil_sensor_3_id: dummy_value
+  soil_sensor_4_id: dummy_value
+  soil_sensor_5_id: dummy_value
+  soil_sensor_6_id: dummy_value
+
+number:
+  - platform: template
+    id: dry_threshold
+    optimistic: true
+    internal: true
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: ${dry_threshold}
+
+  - platform: template
+    id: dummy_value
+    optimistic: true
+    internal: true
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: 100
+
+    
+
+binary_sensor:
+  - platform: template
+    id: soil_dry
+    name: "Soil Dry"
+    lambda: |-
+      bool is_dry = false;
+      is_dry |= id(${soil_sensor_1_id}).state < id(dry_threshold).state;
+      is_dry |= id(${soil_sensor_2_id}).state < id(dry_threshold).state;
+      is_dry |= id(${soil_sensor_3_id}).state < id(dry_threshold).state;
+      is_dry |= id(${soil_sensor_4_id}).state < id(dry_threshold).state;
+      is_dry |= id(${soil_sensor_5_id}).state < id(dry_threshold).state;
+      is_dry |= id(${soil_sensor_6_id}).state < id(dry_threshold).state;
+      return is_dry;
+    on_state:
+      if:
+        condition:
+          binary_sensor.is_on: soil_dry
+        then:
+          - light.turn_on:
+              id: neopixel_led
+              effect: "blink red"
+        else:
+          - light.turn_off: neopixel_led

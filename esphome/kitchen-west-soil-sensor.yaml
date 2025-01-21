@@ -1,0 +1,20 @@
+substitutions:
+  name: kitchen-west-soil-sensor
+  friendly_name: Kitchen West Soil Sensor
+  room: "Kitchen"
+  hostname: soil-sensor-kitchen-west
+  device_description: Kitchen West Soil Sensor
+  log_level: DEBUG
+  i2c_frequency: 100kHz
+  dry_threshold: "40"
+  soil_sensor_1_id: soil_moisture
+
+
+packages:
+  device_base: !include common/qtpy_esp32.yaml
+  dry: !include common/soil_dry_indicator.yaml
+  soil: !include 
+    file: common/adafruit_soil_sensor.yaml
+    vars:
+      i2c_address: "0x36"
+      

@@ -1,0 +1,55 @@
+substitutions:
+  name: living-room-west-soil-sensor
+  friendly_name: Living Room South West Soil Sensor
+  room: "Living Room"
+  hostname: soil-sensor-livingroom-west
+  device_description: South West Soil Sensor
+  log_level: INFO
+  i2c_frequency: 100kHz
+  dry_threshold: "40"
+  soil_moisture_1_id: soil_moisture_1
+  soil_temperature_1_id: soil_temperature_1
+  soil_moisture_2_id: soil_moisture_2
+  soil_temperature_2_id: soil_temperature_2
+  soil_moisture_3_id: soil_moisture_3
+  soil_temperature_3_id: soil_temperature_3
+  soil_moisture_4_id: soil_moisture_4
+  soil_temperature_4_id: soil_temperature_4
+
+packages:
+  device_base: !include common/qtpy_esp32.yaml
+  soil1: !include 
+    file: common/adafruit_soil_sensor.yaml
+    vars:
+      i2c_address: "0x36"
+      moisture_id: ${soil_moisture_1_id}
+      moisture_name: "Soil Moisture 1"
+      temperature_id: ${soil_temperature_1_id}
+      temperature_name: "Soil Temperature 1"
+  soil2: !include 
+    file: common/adafruit_soil_sensor.yaml
+    vars:
+      i2c_address: "0x37"
+      moisture_id: ${soil_moisture_2_id}
+      moisture_name: "Soil Moisture 2"
+      temperature_id: ${soil_temperature_2_id}
+      temperature_name: "Soil Temperature 2"
+  soil3: !include 
+    file: common/adafruit_soil_sensor.yaml
+    vars:
+      i2c_address: "0x38"
+      moisture_id: ${soil_moisture_3_id}
+      moisture_name: "Soil Moisture 3"
+      temperature_id: ${soil_temperature_3_id}
+      temperature_name: "Soil Temperature 3"
+  soil4: !include
+    file: common/adafruit_soil_sensor.yaml
+    vars:
+      i2c_address: "0x39"
+      moisture_id: ${soil_moisture_4_id}
+      moisture_name: "Soil Moisture 4"
+      temperature_id: ${soil_temperature_4_id}
+      temperature_name: "Soil Temperature 4"
+
+  dry: !include common/soil_dry_indicator.yaml
+

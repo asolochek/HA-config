@@ -22,6 +22,7 @@ from esphome.const import (
 )
 
 DEPENDENCIES = ['i2c']
+AUTO_LOAD = ['climate_utils']
 
 adafruit_soil_sensor_ns = cg.esphome_ns.namespace('adafruit_soil_sensor')
 
@@ -55,7 +56,7 @@ CONFIG_SCHEMA = (
         cv.Optional(CONF_MOISTURE): sensor.sensor_schema(
           unit_of_measurement=UNIT_PERCENT,
           icon=ICON_WATER_PERCENT,
-          accuracy_decimals=1,
+          accuracy_decimals=0,
           device_class=DEVICE_CLASS_MOISTURE, 
           state_class=STATE_CLASS_MEASUREMENT,
         ).extend(MOISTURE_SENSOR),
