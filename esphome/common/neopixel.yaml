@@ -19,3 +19,20 @@ light:
      number: ${neopixel_pin}
    num_leds: 1
    name: "NeoPixel"
+   restore_mode: RESTORE_DEFAULT_OFF
+   effects:
+    - strobe:
+        name: "blink red"
+        colors:
+          - state: true
+            red: 100%
+            green: 0
+            blue: 0
+            brightness: 100%
+            duration: 250ms
+          - state: true
+            red: 0
+            green: 0
+            blue: 0
+            brightness: 0
+            duration: 250ms
