@@ -9,6 +9,9 @@ substitutions:
   i2c_frequency: 100kHz
   soil_sensor_1_id: soil_moisture
   dry_threshold: "40"
+  moisture_window_size: "3"
+  moisture_window_send_every: "3"
+  moisture_window_send_first_at: "3"
 
 
 packages:

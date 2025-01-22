@@ -1,0 +1,11 @@
+substitutions:
+  name: back-porch
+  friendly_name: Back Porch Bench Plug
+  hostname: plug-back-porch-bench
+  device_description: "Back porch bench"
+  room: Back Porch
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+

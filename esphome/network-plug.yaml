@@ -1,0 +1,11 @@
+substitutions:
+  name: network-plug
+  friendly_name: Network Plug
+  hostname: plug-network
+  device_description: "Plug for laundry room network equipment"
+  room: Laundry Room
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+

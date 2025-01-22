@@ -1,0 +1,11 @@
+substitutions:
+  name: kitchen-humidifier-plug
+  friendly_name: Kitchen Humidifier Plug
+  hostname: plug-kitchen-humidifier
+  device_description: "Plug for kitchen humidifier"
+  room: Kitchen
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+

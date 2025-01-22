@@ -1,0 +1,11 @@
+substitutions:
+  name: laundry-machine-plug
+  friendly_name: Laundry Machine Plug
+  hostname: plug-laundry-machine
+  device_description: "Plug for laundry machine"
+  room: Laundry Room
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+
