@@ -93,9 +93,6 @@ recorder:
       - sensor.thaos_phone
       - sensor.thaos_watch
       - sensor.aarons_watch
-      - sensor.kitchen_fan_plug_total_energy
-      - sensor.kitchen_fan_plug_current
-      - sensor.kitchen_fan_plug_voltage
       - sensor.purpleair_adc
 
 
