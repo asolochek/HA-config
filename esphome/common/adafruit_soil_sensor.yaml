@@ -18,11 +18,14 @@ substitutions:
   moisture_exp_alpha: "0.03"
   moisture_exp_send_every: "2"
   i2c_address: "0x36"
+  i2c_id: bus_a
+
 
 
 sensor:
   - platform: adafruit_soil_sensor
     address: ${i2c_address}
+    i2c_id: ${i2c_id}
     temperature:
       id: ${temperature_id}
       name: ${temperature_name}
@@ -49,10 +52,10 @@ sensor:
             max_value: 100
             ignore_out_of_range: true
         - round: 0
-        # - sliding_window_moving_average:
-        #     window_size: ${moisture_window_size}
-        #     send_every: ${moisture_window_send_every}
-        #     send_first_at: ${moisture_window_send_first_at}
+        - sliding_window_moving_average:
+            window_size: ${moisture_window_size}
+            send_every: ${moisture_window_send_every}
+            send_first_at: ${moisture_window_send_first_at}
         - exponential_moving_average:
             alpha: ${moisture_exp_alpha}
             send_every: ${moisture_exp_send_every}

@@ -7,6 +7,9 @@ substitutions:
   log_level: INFO
   i2c_frequency: 100kHz
   dry_threshold: "40"
+  moisture_window_size: "3"
+  moisture_window_send_every: "3"
+  moisture_window_send_first_at: "3"
   soil_moisture_1_id: soil_moisture_1
   soil_temperature_1_id: soil_temperature_1
   soil_moisture_2_id: soil_moisture_2

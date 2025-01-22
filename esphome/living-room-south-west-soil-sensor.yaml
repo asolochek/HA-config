@@ -7,6 +7,9 @@ substitutions:
   log_level: INFO
   i2c_frequency: 100kHz
   dry_threshold: "40"
+  moisture_window_size: "3"
+  moisture_window_send_every: "3"
+  moisture_window_send_first_at: "3"
   soil_moisture_1_id: soil_moisture_1
   soil_temperature_1_id: soil_temperature_1
   soil_moisture_2_id: soil_moisture_2
@@ -15,9 +18,12 @@ substitutions:
   soil_temperature_3_id: soil_temperature_3
   soil_moisture_4_id: soil_moisture_4
   soil_temperature_4_id: soil_temperature_4
+  soil_moisture_5_id: soil_moisture_5
+  soil_temperature_5_id: soil_temperature_5
+
 
 packages:
-  device_base: !include common/qtpy_esp32.yaml
+  device_base: !include common/qtpy_esp32s3.yaml
   soil1: !include 
     file: common/adafruit_soil_sensor.yaml
     vars:
@@ -50,6 +56,31 @@ packages:
       moisture_name: "Soil Moisture 4"
       temperature_id: ${soil_temperature_4_id}
       temperature_name: "Soil Temperature 4"
-
+  soil5: !include
+    file: common/adafruit_soil_sensor.yaml
+    vars:
+      i2c_address: "0x36"
+      i2c_id: bus_b
+      moisture_id: ${soil_moisture_5_id}
+      moisture_name: "Soil Moisture 5"
+      temperature_id: ${soil_temperature_5_id}
+      temperature_name: "Soil Temperature 5"
   dry: !include common/soil_dry_indicator.yaml
 
+# wifi:
+#   use_address: !remove
+#   manual_ip:
+#     static_ip: 10.3.3.71
+#     gateway: 10.3.1.2
+#     subnet: 255.255.0.0
+
+
+i2c:
+  - id: bus_b
+    sda: 
+      number: GPIO7
+    scl: 
+      number: GPIO6
+    frequency: ${i2c_frequency}
+    scan: true
+    setup_priority: 700

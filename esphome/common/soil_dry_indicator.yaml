@@ -1,12 +1,12 @@
 substitutions:
   dry_threshold: "40"
   led_id: neopixel_led
-  soil_sensor_1_id: dummy_value
-  soil_sensor_2_id: dummy_value
-  soil_sensor_3_id: dummy_value
-  soil_sensor_4_id: dummy_value
-  soil_sensor_5_id: dummy_value
-  soil_sensor_6_id: dummy_value
+  soil_moisture_1_id: dummy_value
+  soil_moisture_2_id: dummy_value
+  soil_moisture_3_id: dummy_value
+  soil_moisture_4_id: dummy_value
+  soil_moisture_5_id: dummy_value
+  soil_moisture_6_id: dummy_value
 
 number:
   - platform: template
@@ -35,12 +35,12 @@ binary_sensor:
     name: "Soil Dry"
     lambda: |-
       bool is_dry = false;
-      is_dry |= id(${soil_sensor_1_id}).state < id(dry_threshold).state;
-      is_dry |= id(${soil_sensor_2_id}).state < id(dry_threshold).state;
-      is_dry |= id(${soil_sensor_3_id}).state < id(dry_threshold).state;
-      is_dry |= id(${soil_sensor_4_id}).state < id(dry_threshold).state;
-      is_dry |= id(${soil_sensor_5_id}).state < id(dry_threshold).state;
-      is_dry |= id(${soil_sensor_6_id}).state < id(dry_threshold).state;
+      is_dry |= (id(${soil_moisture_1_id}).state < id(dry_threshold).state);
+      is_dry |= (id(${soil_moisture_2_id}).state < id(dry_threshold).state);
+      is_dry |= (id(${soil_moisture_3_id}).state < id(dry_threshold).state);
+      is_dry |= (id(${soil_moisture_4_id}).state < id(dry_threshold).state);
+      is_dry |= (id(${soil_moisture_5_id}).state < id(dry_threshold).state);
+      is_dry |= (id(${soil_moisture_6_id}).state < id(dry_threshold).state);
       return is_dry;
     on_state:
       if:
