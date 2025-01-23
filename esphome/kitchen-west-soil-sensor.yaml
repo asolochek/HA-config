@@ -20,4 +20,7 @@ packages:
     file: common/adafruit_soil_sensor.yaml
     vars:
       i2c_address: "0x36"
+  pmsa: !include common/pmsa003i.yaml
+  temp: !include common/sht4x.yaml
+  dp: !include common/dew_point.yaml
       
