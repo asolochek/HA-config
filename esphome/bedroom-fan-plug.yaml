@@ -1,0 +1,11 @@
+substitutions:
+  name: bedroom-fan-plug
+  friendly_name: Bedroom Fan Plug
+  hostname: plug-bedroom-fan
+  device_description: "Plug for Bedroom Fan"
+  room: Bedroom
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+

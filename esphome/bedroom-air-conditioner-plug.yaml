@@ -1,0 +1,11 @@
+substitutions:
+  name: bedroom-air-conditioner-plug
+  friendly_name: Bedroom Air Conditioner Plug
+  hostname: plug-bedroom-air-conditioner
+  device_description: "Plug for Bedroom Air Conditioner"
+  room: Bedroom
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+

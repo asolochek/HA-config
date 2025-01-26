@@ -10,7 +10,7 @@ substitutions:
   button_inverted: "true"
   relay_gpio: GPIO12
   relay_inverted: "false"
-  relay_restore_mode: RESTORE_DEFAULT_OFF
+  relay_restore_mode: RESTORE_DEFAULT_ON
   status_led_gpio: GPIO13
   status_led_inverted: "true"
   flash_write_interval: 5min
