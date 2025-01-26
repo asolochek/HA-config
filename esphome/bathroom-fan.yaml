@@ -91,25 +91,29 @@ exhaust_fan:
   external_humidity_sensor: baseline_humidity
   min_humidity: 60
   idle_action:
-    lambda: |-
-      auto fan_call = id(bathroom_fan).make_call();
-      fan_call.set_speed(id(fan_idle_speed).state * 10.24);
-      fan_call.set_preset_mode("idle");
-      fan_call.perform();
+    - number.set: 
+        id: controller_zone_value
+        value: 1
+    - lambda: |-
+        auto fan_call = id(bathroom_fan).make_call();
+        fan_call.set_speed(id(fan_idle_speed).state * 10.24);
+        fan_call.perform();
   stage1_action:
-    lambda: |-
-      auto fan_call = id(bathroom_fan).make_call();
-      fan_call.set_speed(id(fan_low_speed).state * 10.24);
-      fan_call.set_preset_mode("low");
-      fan_call.perform();
+    - number.set: 
+        id: controller_zone_value
+        value: 2
+    - lambda: |-
+        auto fan_call = id(bathroom_fan).make_call();
+        fan_call.set_speed(id(fan_low_speed).state * 10.24);
+        fan_call.perform();
   stage2_action:
-    lambda: |-
-      auto fan_call = id(bathroom_fan).make_call();
-      fan_call.set_speed(id(fan_high_speed).state * 10.24);
-      fan_call.set_preset_mode("high");
-      fan_call.perform();
-
-
+    - number.set: 
+        id: controller_zone_value
+        value: 3
+    - lambda: |-
+        auto fan_call = id(bathroom_fan).make_call();
+        fan_call.set_speed(id(fan_high_speed).state * 10.24);
+        fan_call.perform();
 
 
 binary_sensor:
@@ -141,15 +145,18 @@ binary_sensor:
       then:
         - lambda: |-
             auto fan_call = id(bathroom_fan).make_call();
+            auto zone_call = id(controller_zone_value).make_call();
             if(id(fan_controller).get_controller_enabled()) {
               id(fan_controller).disable_controller();
               fan_call.set_state(false);
+              zone_call.set_value(0);
             }
             else {
               id(fan_controller).enable_controller();
-              fan_call.set_state(true);
+              fan_call.set_state(true);              
             }
             fan_call.perform();
+            zone_call.perform();
 
   - platform: gpio
     name: "Speed Up"
@@ -192,7 +199,18 @@ binary_sensor:
 # Input Values
 #
 
-number: 
+number:
+  - platform: template
+    id: controller_zone_value
+    min_value: 0
+    max_value: 3
+    step: 1
+    internal: true
+    set_action:
+      - sensor.template.publish:
+          id: controller_zone
+          state: !lambda return x;
+
   - platform: template
     name: Stage 1 Trip
     id: humidity_stage1_threshold
@@ -232,6 +250,7 @@ number:
   - platform: template
     name: Clear Baseline Offset
     id: baseline_offset
+    icon: mdi:cloud-percent-outline
     optimistic: True
     restore_value: True
     initial_value: 5
@@ -247,6 +266,7 @@ number:
   - platform: template
     name: Hysterisis
     id: hysteresis
+    icon: mdi:hysteresis
     optimistic: True
     restore_value: True
     initial_value: 4
@@ -307,9 +327,16 @@ number:
 
 
 sensor:
+  - platform: template
+    name: Controller Zone
+    id: controller_zone
+    icon: mdi:state-machine
+    accuracy_decimals: 0
+
   - platform: homeassistant
     name: Baseline Humidity
     id: baseline_humidity
+    icon: mdi:cloud-percent
     entity_id: sensor.living_room_humidity
     unit_of_measurement: "%"
     internal: false
@@ -320,6 +347,7 @@ sensor:
   - platform: homeassistant
     name: Baseline Temperature
     id: baseline_temperature
+    icon: mdi:thermometer
     entity_id: sensor.living_room_temperature
     unit_of_measurement: "°F"
     internal: false
@@ -330,6 +358,7 @@ sensor:
   - platform: template
     name: Clear Threshold Pct
     id: clear_threshold_pct
+    icon: mdi:cloud-percent
     unit_of_measurement: "%"
     internal: false
     update_interval: 4s
@@ -341,6 +370,7 @@ sensor:
     name: Stage 1 Threshold Pct
     id: stage1_threshold_pct
     unit_of_measurement: "%"
+    icon: mdi:cloud-percent
     internal: false
     update_interval: 4s
     accuracy_decimals: 1
@@ -351,6 +381,7 @@ sensor:
     name: Stage 2 Threshold Pct
     id: stage2_threshold_pct
     unit_of_measurement: "%"
+    icon: mdi:cloud-percent
     internal: false
     update_interval: 4s
     accuracy_decimals: 1
@@ -383,16 +414,18 @@ fan:
     decay_mode: slow
     restore_mode: RESTORE_DEFAULT_ON
     speed_count: 1024
-    preset_modes:
-      - idle
-      - low
-      - high
     on_turn_on:
-      lambda: |-
-        id(fan_controller).enable_controller();
+      - number.set: 
+          id: controller_zone_value
+          value: 1
+      - lambda: |-
+          id(fan_controller).enable_controller();
     on_turn_off:
-      lambda: |-
-        id(fan_controller).disable_controller();
+      - number.set: 
+          id: controller_zone_value
+          value: 0
+      - lambda: |-
+          id(fan_controller).disable_controller();
 
 
 color:

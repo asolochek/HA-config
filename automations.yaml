@@ -843,10 +843,10 @@
     above: number.bathroom_fan_idle_speed
     trigger: numeric_state
   conditions:
-  - condition: state
-    entity_id: fan.bathroom_fan
-    attribute: preset_mode
-    state: idle
+  - condition: numeric_state
+    entity_id: sensor.bathroom_fan_controller_zone
+    above: 0
+    below: 2
   actions:
   - action: fan.set_percentage
     data:
