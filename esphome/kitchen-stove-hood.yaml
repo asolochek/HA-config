@@ -1,0 +1,205 @@
+substitutions:
+  name: kitchen-stove-hood
+  friendly_name: Kitchen Stove Hood
+  hostname: kitchen-stove-hood
+  room: "Kitchen"
+  device_description: "Kitchen Stove Hood"
+  light_power_out: GPIO12
+  light_level_out: GPIO27
+  fan_power_out: GPIO33
+  fan_level_out: GPIO15
+  light_low_in: GPIO26
+  light_high_in: GPIO25
+  fan_low_in: GPIO4
+  fan_high_in: GPIO5 
+
+
+packages:
+  device_base: !include common/feather_huzzah32_v2.yaml
+
+
+spi: !remove
+
+# wifi:
+#   use_address: !remove
+#   manual_ip:
+#     static_ip: 10.3.1.72
+#     gateway: 10.3.1.2
+#     subnet: 255.255.0.0
+
+
+logger:
+  logs:
+    graph: ERROR
+    climate: ERROR
+#    sensor: DEBUG
+    sgp30: ERROR
+    sht4x: ERROR
+    uptime: ERROR
+    number: WARN
+    text_sensor: WARN
+
+
+esphome:
+  on_boot:
+  - priority: 900
+    then:
+      - lambda: "pinMode(12, OUTPUT); digitalWrite(12, LOW);"
+      - lambda: "pinMode(27, OUTPUT); digitalWrite(27, LOW);"
+      - lambda: "pinMode(33, OUTPUT); digitalWrite(33, LOW);"
+      - lambda: "pinMode(15, OUTPUT); digitalWrite(15, LOW);"
+      - lambda: "pinMode(26, INPUT_PULLDOWN);"
+      - lambda: "pinMode(25, INPUT_PULLDOWN);"
+      - lambda: "pinMode(4, INPUT_PULLDOWN);"
+      - lambda: "pinMode(5, INPUT_PULLDOWN);"
+
+
+switch:
+  - platform: gpio
+    id: light_power
+    restore_mode: ALWAYS_OFF
+    pin: 
+      number: ${light_power_out}
+      ignore_strapping_warning: true
+    name: "Light Enable"
+
+  - platform: gpio
+    id: light_level
+    restore_mode: ALWAYS_OFF
+    pin: 
+      number: ${light_level_out}
+    name: "Light Level"
+
+  - platform: gpio
+    id: fan_power
+    restore_mode: ALWAYS_OFF
+    pin: 
+      number: ${fan_power_out}
+    name: "Fan Enable"
+
+  - platform: gpio
+    id: fan_level
+    restore_mode: ALWAYS_OFF
+    pin: 
+      number: ${fan_level_out}
+      ignore_strapping_warning: true
+    name: "Fan Level"
+
+
+
+binary_sensor:
+  - platform: gpio
+    id: light_low
+    pin:
+      number: ${light_low_in}
+      mode: INPUT_PULLDOWN
+    name: "Light Low"
+    on_press:
+      then:
+        - switch.turn_on: light_power
+        - switch.turn_on: light_level
+    on_release:
+      then:
+        - switch.turn_off: light_power
+        - switch.turn_off: light_level
+
+  - platform: gpio
+    id: light_high
+    pin:
+      number: ${light_high_in}
+      mode: INPUT_PULLDOWN
+    name: "Light High"
+    on_press:
+      then:
+        - switch.turn_on: light_power
+        - switch.turn_off: light_level
+    on_release:
+      then:
+        - switch.turn_off: light_power
+        - switch.turn_off: light_level
+
+  - platform: gpio
+    id: fan_low
+    pin:
+      number: ${fan_low_in}
+      mode: INPUT_PULLDOWN
+    name: "Fan Low"
+    on_press:
+      then:
+        - switch.turn_on: fan_power
+        - switch.turn_on: fan_level
+    on_release:
+      then:
+        - switch.turn_off: fan_power
+        - switch.turn_off: fan_level
+
+
+  - platform: gpio
+    id: fan_high
+    pin:
+      number: ${fan_high_in}
+      mode: INPUT_PULLDOWN
+      ignore_strapping_warning: true
+    name: "Fan High"
+    on_press:
+      then:
+        - switch.turn_on: fan_power
+        - switch.turn_off: fan_level
+    on_release:
+      then:
+        - switch.turn_off: fan_power
+        - switch.turn_off: fan_level
+
+
+# output:
+#   - platform: template
+#     id: fan_output
+#     type: float
+#     write_action:
+#       - if:
+#           condition:
+#             lambda: return (state < .5);
+#           then:
+#             - switch.turn_on: fan_power
+#             - switch.turn_on: fan_level
+#       - if:
+#           condition:
+#             lambda: return (state >= .5);
+#           then:
+#             - switch.turn_on: fan_power
+#             - switch.turn_off: fan_level
+
+#   - platform: template
+#     id: light_output
+#     type: float
+#     write_action:
+#       - if:
+#           condition:
+#             lambda: return (state < .5);
+#           then:
+#             - switch.turn_on: light_power
+#             - switch.turn_on: light_level
+#       - if:
+#           condition:
+#             lambda: return (state >= .5);
+#           then:
+#             - switch.turn_on: light_power
+#             - switch.turn_off: light_level 
+
+
+
+# fan:
+#   - platform: speed
+#     id: stove_fan
+#     name: "Stove Fan"
+#     output: fan_output
+#     speed_count: 2
+#     restore_mode: ALWAYS_OFF
+
+# light:
+#   - platform: monochromatic
+#     id: stove_light
+#     name: "Stove Light"
+#     output: light_output
+#     restore_mode: ALWAYS_OFF
+

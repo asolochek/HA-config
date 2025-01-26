@@ -54,6 +54,8 @@ all_lights_off:
       - light.office_string_lights
       - light.bathroom_light
       - light.living_room_ceiling
+      - light.living_room_ceiling_new
+      - light.kitchen_stove_hood_light_enable
   - action: light.turn_off
     metadata: {}
     data: {}
@@ -99,10 +101,10 @@ goodnight:
       minutes: 0
       seconds: 1
       milliseconds: 0
-    enabled: false
+    enabled: true
   - action: script.all_lights_off
     data: {}
-    enabled: false
+    enabled: true
   mode: single
   icon: mdi:weather-night
 air_conditioners_on:
@@ -323,6 +325,16 @@ apple_tv:
     target:
       entity_id: media_player.living_room
     enabled: true
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 250
+  - action: media_player.volume_up
+    metadata: {}
+    data: {}
+    target:
+      entity_id: media_player.living_room
   mode: restart
   icon: mdi:apple
 tivo:
