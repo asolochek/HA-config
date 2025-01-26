@@ -1,14 +1,13 @@
 substitutions:
-  postfix: ""
-  temperature_id: soil_temperature_${postfix}
-  temperature_name: "Soil Temperature ${postfix}"
+  temperature_id: soil_temperature
+  temperature_name: "Soil Temperature"
   temperature_offset: "0.0"
   temperature_gain: "1.0"
   temperature_window_size: "5"
   temperature_window_send_every: "5"
   temperature_window_send_first_at: "5"
-  moisture_id: soil_moisture_${postfix}
-  moisture_name: "Soil Moisture ${postfix}"
+  moisture_id: soil_moisture
+  moisture_name: "Soil Moisture"
   moisture_min_value: "350"
   moisture_max_value: "1015"
   update_interval: 2s

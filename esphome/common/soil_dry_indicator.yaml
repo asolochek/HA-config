@@ -7,16 +7,90 @@ substitutions:
   soil_moisture_4_id: dummy_value
   soil_moisture_5_id: dummy_value
   soil_moisture_6_id: dummy_value
+  soil_moisture_7_id: dummy_value
+  soil_moisture_8_id: dummy_value
+  dry_threshold_1: "40"
+  dry_threshold_2: "40"
+  dry_threshold_3: "40"
+  dry_threshold_4: "40"
+  dry_threshold_5: "40"
+  dry_threshold_6: "40"
+  dry_threshold_7: "40"
+  dry_threshold_8: "40"
 
 number:
   - platform: template
-    id: dry_threshold
+    id: dry_threshold_1
     optimistic: true
     internal: true
     min_value: 0
     max_value: 100
     step: 1
-    initial_value: ${dry_threshold}
+    initial_value: ${dry_threshold_1}
+
+  - platform: template
+    id: dry_threshold_2
+    optimistic: true
+    internal: true
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: ${dry_threshold_2}
+
+  - platform: template
+    id: dry_threshold_3
+    optimistic: true
+    internal: true
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: ${dry_threshold_3}
+
+  - platform: template
+    id: dry_threshold_4
+    optimistic: true
+    internal: true
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: ${dry_threshold_4}
+
+  - platform: template
+    id: dry_threshold_5
+    optimistic: true
+    internal: true
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: ${dry_threshold_5}
+
+  - platform: template
+    id: dry_threshold_6
+    optimistic: true
+    internal: true
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: ${dry_threshold_6}
+
+  - platform: template
+    id: dry_threshold_7
+    optimistic: true
+    internal: true
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: ${dry_threshold_7}
+
+  - platform: template
+    id: dry_threshold_8
+    optimistic: true
+    internal: true
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: ${dry_threshold_8}
+
 
   - platform: template
     id: dummy_value
@@ -35,12 +109,14 @@ binary_sensor:
     name: "Soil Dry"
     lambda: |-
       bool is_dry = false;
-      is_dry |= (id(${soil_moisture_1_id}).state < id(dry_threshold).state);
-      is_dry |= (id(${soil_moisture_2_id}).state < id(dry_threshold).state);
-      is_dry |= (id(${soil_moisture_3_id}).state < id(dry_threshold).state);
-      is_dry |= (id(${soil_moisture_4_id}).state < id(dry_threshold).state);
-      is_dry |= (id(${soil_moisture_5_id}).state < id(dry_threshold).state);
-      is_dry |= (id(${soil_moisture_6_id}).state < id(dry_threshold).state);
+      is_dry |= (id(${soil_moisture_1_id}).state < id(dry_threshold_1).state);
+      is_dry |= (id(${soil_moisture_2_id}).state < id(dry_threshold_2).state);
+      is_dry |= (id(${soil_moisture_3_id}).state < id(dry_threshold_3).state);
+      is_dry |= (id(${soil_moisture_4_id}).state < id(dry_threshold_4).state);
+      is_dry |= (id(${soil_moisture_5_id}).state < id(dry_threshold_5).state);
+      is_dry |= (id(${soil_moisture_6_id}).state < id(dry_threshold_6).state);
+      is_dry |= (id(${soil_moisture_7_id}).state < id(dry_threshold_7).state);
+      is_dry |= (id(${soil_moisture_8_id}).state < id(dry_threshold_8).state);
       return is_dry;
     on_state:
       if:

@@ -20,7 +20,9 @@ substitutions:
   soil_temperature_4_id: soil_temperature_4
   soil_moisture_5_id: soil_moisture_5
   soil_temperature_5_id: soil_temperature_5
-
+  soil_moisture_6_id: soil_moisture_6
+  soil_temperature_6_id: soil_temperature_6
+  dry_threshold_6: "10"
 
 packages:
   device_base: !include common/qtpy_esp32s3.yaml
@@ -65,6 +67,15 @@ packages:
       moisture_name: "Soil Moisture 5"
       temperature_id: ${soil_temperature_5_id}
       temperature_name: "Soil Temperature 5"
+  soil6: !include
+    file: common/adafruit_soil_sensor.yaml
+    vars:
+      i2c_address: "0x37"
+      i2c_id: bus_b
+      moisture_id: ${soil_moisture_6_id}
+      moisture_name: "Soil Moisture 6"
+      temperature_id: ${soil_temperature_6_id}
+      temperature_name: "Soil Temperature 6"
   dry: !include common/soil_dry_indicator.yaml
 
 # wifi:
