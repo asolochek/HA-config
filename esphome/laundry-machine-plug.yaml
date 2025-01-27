@@ -4,8 +4,8 @@ substitutions:
   hostname: plug-laundry-machine
   device_description: "Plug for laundry machine"
   room: Laundry Room
+  current_limit: "100.0"
 
 packages:
   device_base: !include common/sonoff_s31.yaml
-
 
