@@ -79,6 +79,17 @@ switch:
       lambda: |-
         id(fan_controller).set_debug(false);
 
+  - platform: template
+    id: controller_enable
+    name: Controller Enable
+    lambda: |-
+      return id(fan_controller).get_controller_enabled();
+    turn_on_action: 
+      lambda: |-
+        id(fan_controller).enable_controller();
+    turn_off_action: 
+      lambda: |-
+        id(fan_controller).disable_controller();
 
 #
 # Controller
