@@ -706,7 +706,7 @@
     input:
       rgbw_2_ct_requested_input: input_number.living_room_ceiling_color_temp
       target_light:
-        entity_id: light.living_room_ceiling_new
+        entity_id: light.living_room_ceiling
       rgbw_2_ct_target_ct:
       - 2000
       - 2500

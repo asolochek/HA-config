@@ -53,9 +53,9 @@ all_lights_off:
       - light.crawl_space_lights
       - light.office_string_lights
       - light.bathroom_light
-      - light.living_room_ceiling
-      - light.living_room_ceiling_new
+      - light.living_room_lights
       - light.kitchen_stove_hood_light_enable
+      - light.office_closet_lights
   - action: light.turn_off
     metadata: {}
     data: {}
@@ -242,7 +242,8 @@ day_lights:
       - light.kitchen_lights
       - light.bedroom_closet_light
       - light.laundry_room_lights
-      - light.living_room_ceiling
+      - light.living_room_lights
+      - light.office_closet_lights
   mode: single
   icon: mdi:coffin
 bedtime:
