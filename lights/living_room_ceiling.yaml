@@ -10,7 +10,7 @@
 #      effect_template: "{{ state_attr('light.living_room_ceiling', 'effect') }}"
       rgbw_template: "{{ state_attr('light.living_room_ceiling', 'rgbw_color') }}"
       level_template: "{{ state_attr('light.living_room_ceiling', 'brightness') }}"
-      temperature_template: "{{ 1000000 / states('input_number.living_room_ceiling_color_temp') | float }}"
+      temperature_template: "{{ 1000000 / states('input_number.living_room_ceiling_color_temp') | float(300) }}"
       turn_on:
         action: light.turn_on
         data:
