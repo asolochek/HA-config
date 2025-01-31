@@ -6,11 +6,11 @@ substitutions:
   device_description: Kitchen West Soil Sensor
   log_level: INFO
   i2c_frequency: 100kHz
-  dry_threshold: "40"
+  dry_threshold_1: "40"
   moisture_window_size: "3"
   moisture_window_send_every: "3"
   moisture_window_send_first_at: "3"
-  soil_sensor_1_id: soil_moisture
+  soil_moisture_1_id: soil_moisture
 
 
 packages:
