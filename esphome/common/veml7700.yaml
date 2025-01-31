@@ -1,0 +1,7 @@
+sensor:
+- platform: veml7700
+  address: 0x10
+  update_interval: 5s
+  ambient_light: "Ambient light"
+  actual_gain:
+    name: "Actual Gain"

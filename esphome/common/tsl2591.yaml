@@ -13,7 +13,7 @@ substitutions:
   tsl2591_lux_id: lux
   tsl2591_i2c_address: "0x29"
   tsl2591_gain: "auto"
-  tsl2591_update_interval: 60s
+  tsl2591_update_interval: 5s
   tsl2591_device_factor: "53"
   tsl2591_glass_attenuation_factor: "14.4"
 

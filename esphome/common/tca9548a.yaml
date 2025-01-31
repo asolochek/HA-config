@@ -1,0 +1,61 @@
+substitutions:
+  tca_i2c_address: "0x70"
+  tca_i2c_id: bus_a
+  tca_id: "mplex0"
+  channel_0_id: "mplex0_0"
+  channel_1_id: "mplex0_1"
+  channel_2_id: "mplex0_2"
+  channel_3_id: "mplex0_3"
+  channel_4_id: "mplex0_4"
+  channel_5_id: "mplex0_5"
+  channel_6_id: "mplex0_6"
+  channel_7_id: "mplex0_7"
+
+
+tca9548a:
+  - address: 0x70
+    id: multiplex0
+    i2c_id: bus_a
+    channels:
+      - bus_id: ${channel_0_id}
+        channel: 0
+      - bus_id: ${channel_1_id}
+        channel: 1
+      - bus_id: ${channel_2_id}
+        channel: 2
+      - bus_id: ${channel_3_id}
+        channel: 3
+      - bus_id: ${channel_4_id}
+        channel: 4
+      - bus_id: ${channel_5_id}
+        channel: 5
+      - bus_id: ${channel_6_id}
+        channel: 6
+      - bus_id: ${channel_7_id}
+        channel: 7
+
+
+
+
+
+  # tca9548a:
+  #   - address: 0x70
+  #     id: mplex0
+  #     i2c_id: bus_a
+  #     channels:
+  #       - bus_id: ${channel_0_id}
+  #         channel: 0
+  #       - bus_id: ${channel_1_id}
+  #         channel: 1
+  #       - bus_id: ${channel_2_id}
+  #         channel: 2
+  #       - bus_id: ${channel_3_id}
+  #         channel: 3
+  #       - bus_id: ${channel_4_id}
+  #         channel: 4
+  #       - bus_id: ${channel_5_id}
+  #         channel: 5
+  #       - bus_id: ${channel_6_id}
+  #         channel: 6
+  #       - bus_id: ${channel_7_id}
+  #         channel: 7

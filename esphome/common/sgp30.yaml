@@ -12,7 +12,7 @@ sensor:
     i2c_id: bus_a
     address: 0x58
     update_interval: 1s
-    store_baseline: true
+    store_baseline: false
     compensation:
       temperature_source: ${sgp30_temperature_source}
       humidity_source: ${sgp30_humidity_source}

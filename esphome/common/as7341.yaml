@@ -20,3 +20,4 @@ sensor:
     name: "Clear"
   nir:
     name: "NIR"
+  update_interval: 5s

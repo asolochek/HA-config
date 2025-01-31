@@ -1,0 +1,5 @@
+sensor:
+- platform: bh1750
+  address: 0x23
+  name: "BH1750 Illuminance"
+  update_interval: 5s
