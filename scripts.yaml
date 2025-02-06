@@ -232,7 +232,8 @@ day_lights:
       - switch.adaptive_lighting_sleep_mode_living_room
       - switch.adaptive_lighting_sleep_mode_office
   - action: light.turn_on
-    data: {}
+    data:
+      brightness_pct: 100
     target:
       entity_id:
       - light.bathroom_light
@@ -244,6 +245,11 @@ day_lights:
       - light.laundry_room_lights
       - light.living_room_lights
       - light.office_closet_lights
+  - action: light.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.living_room_lights
   mode: single
   icon: mdi:coffin
 bedtime:
@@ -574,3 +580,31 @@ naptime:
   mode: single
   icon: mdi:bed
   description: ''
+good_morning:
+  sequence:
+  - action: switch.turn_off
+    data: {}
+    target:
+      entity_id:
+      - switch.adaptive_lighting_sleep_mode_bedroom
+      - switch.adaptive_lighting_sleep_mode_bedroom_lamp
+      - switch.adaptive_lighting_sleep_mode_hallway
+      - switch.adaptive_lighting_sleep_mode_kitchen
+      - switch.adaptive_lighting_sleep_mode_living_room
+      - switch.adaptive_lighting_sleep_mode_office
+  - action: light.turn_on
+    data:
+      brightness_pct: 100
+      transition: 10
+    target:
+      entity_id:
+      - light.bathroom_light
+      - light.hallway_lights
+      - light.bedroom_lights
+      - light.kitchen_lights
+      - light.bedroom_closet_light
+      - light.laundry_room_lights
+  alias: Good Morning
+  mode: single
+  icon: mdi:bed-clock
+  description: Gently turn on lights
