@@ -1886,3 +1886,27 @@
     target:
       entity_id: input_boolean.laundry_running
   mode: single
+- id: '1738562985812'
+  alias: Turn off stove light
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.kitchen_presence_occupancy
+    from: 'on'
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+  conditions:
+  - condition: state
+    entity_id: light.kitchen_stove_hood_light_enable
+    state: 'on'
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.kitchen_stove_hood_light_enable
+  mode: single
