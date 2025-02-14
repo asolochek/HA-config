@@ -1,7 +1,7 @@
 substitutions:
   hdc302x_i2c_bus_id: bus_a
   hdc302x_i2c_address: "0x44"
-  hdc302x_update_interval: 2s
+  hdc302x_update_interval: 5s
   hdc302x_heater_enable: "True"
   hdc302x_temperature_id: temperature
   hdc302x_temperature_name: Temperature
