@@ -25,6 +25,8 @@ packages:
     vars:
       i2c_address: "0x36"
   dry: !include common/soil_dry_indicator.yaml
+  dp: !include common/dew_point.yaml
+
 
 # wifi:
 #   use_address: !remove
@@ -338,6 +340,14 @@ number:
 
 
 sensor:
+  - id: !extend sht4x_sensor
+    temperature:
+      filters:
+        - offset: -3.0
+    humidity:
+      filters:
+        - offset: +3.0
+
   - platform: template
     name: Controller Zone
     id: controller_zone
