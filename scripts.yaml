@@ -250,6 +250,16 @@ day_lights:
     data: {}
     target:
       entity_id: light.living_room_lights
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.adaptive_lighting
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.adaptive_lighting
   mode: single
   icon: mdi:coffin
 bedtime:
@@ -262,7 +272,7 @@ bedtime:
   - action: light.turn_on
     data: {}
     target:
-      entity_id: light.bedroom_lamp
+      entity_id: light.bedside_lamp_right
   - action: light.turn_off
     data: {}
     target:
