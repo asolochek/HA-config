@@ -108,7 +108,8 @@ devices:
   '0x00158d0009df4175':
     friendly_name: Front Door
   '0x00178801042a79be':
-    friendly_name: Bedroom Lamp
+    friendly_name: Bedside Lamp Right
+    description: Poodle lamp
   '0x0017880103eeb09e':
     friendly_name: Bedroom Ceiling 1
   '0x00178801039d730e':
@@ -149,6 +150,9 @@ devices:
     friendly_name: Cat Bed
   '0x001788010dbfbed2':
     friendly_name: Kitchen Ceiling 2-3
+  '0x001788010dbfeaed':
+    friendly_name: Bedside Lamp Left
+    description: Cat lamp
 device_options:
   legacy: false
 groups:
@@ -174,6 +178,8 @@ groups:
     friendly_name: Kitchen Lights Zigbee Group
   '11':
     friendly_name: Grow Lights
+  '12':
+    friendly_name: Bedroom Lamps
 ota:
   disable_automatic_update_check: true
 version: 4
