@@ -1,0 +1,37 @@
+- sensor:
+  - name: "Living Room Temperature"
+    unique_id: sensor.living_room_temperature
+    unit_of_measurement: "°F"
+    icon: mdi:thermometer
+    availability: >
+      {{ is_number(states('sensor.living_room_temperature_raw')) }}
+    state: >
+      {% set raw = states('sensor.living_room_temperature_raw') | float(0) %}
+      {{ raw + 1.0 }}
+  - name: "Living Room Humidity"
+    unique_id: sensor.living_room_humidity
+    unit_of_measurement: "%"
+    icon: mdi:water-percent
+    availability: >
+      {{ is_number(states('sensor.living_room_humidity_raw')) }}
+    state: >
+      {% set raw = states('sensor.living_room_humidity_raw') | float(0) %}
+      {{ raw }}
+  - name: "Hallway Temperature"
+    unique_id: sensor.hallway_temperature
+    unit_of_measurement: "°F"
+    icon: mdi:thermometer
+    availability: >
+      {{ is_number(states('sensor.thermostat_temperature')) }}
+    state: >
+      {% set raw = states('sensor.thermostat_temperature') | float(0) %}
+      {{ raw + 0.0 }}
+  - name: "Hallway Humidity"
+    unique_id: sensor.hallway_humidity
+    unit_of_measurement: "%"
+    icon: mdi:water-percent
+    availability: >
+      {{ is_number(states('sensor.thermostat_humidity')) }}
+    state: >
+      {% set raw = states('sensor.thermostat_humidity') | float(0) %}
+      {{ raw + 3.0 }}

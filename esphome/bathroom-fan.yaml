@@ -343,7 +343,7 @@ sensor:
   - id: !extend sht4x_sensor
     temperature:
       filters:
-        - offset: -3.0
+        - offset: -2.0
     humidity:
       filters:
         - offset: +3.0

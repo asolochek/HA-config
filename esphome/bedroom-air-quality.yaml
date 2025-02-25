@@ -17,6 +17,12 @@ packages:
 
 sensor:
   - id: !extend scd4x_sensor
+    temperature:
+      filters:
+        - offset: +2.0
+    # humidity:
+    #   filters:
+    #     - offset: +3.0
     co2:
       on_value:
         - then:

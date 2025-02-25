@@ -31,11 +31,23 @@ logger:
  #   sgp30: DEBUG
     display: INFO
 
-# sensor:
-#   - id: !extend sgp30_sensor
-#     baseline: 
-#       eco2_baseline: 0x94cb
-#       tvoc_baseline: 0x9d31
+sensor:
+  - id: !extend sgp30_sensor
+    baseline: 
+      eco2_baseline: 0x05A5
+      tvoc_baseline: 0x2805
+      # eco2_baseline: 0x01b6
+      # tvoc_baseline: 0x00a6
+      # eco2_baseline: 0x94cb 
+      # tvoc_baseline: 0x9d31
+
+  - id: !extend scd4x_sensor
+    temperature:
+      filters:
+        - offset: +1.5
+    # humidity:
+    #   filters:
+    #     - offset: +3.0
 
 
 display:
