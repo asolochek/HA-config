@@ -1,0 +1,11 @@
+substitutions:
+  name: bedroom-av-plug
+  friendly_name: Bedroom AV Plug
+  hostname: plug-bedroom-av
+  device_description: "Plug for Bedroom AV"
+  room: Bedroom
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+

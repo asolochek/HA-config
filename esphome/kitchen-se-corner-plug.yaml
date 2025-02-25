@@ -1,0 +1,12 @@
+substitutions:
+  name: kitchen-se-corner-plug
+  friendly_name: Kitchen South-East Corner Plug
+  room: Kitchen
+  hostname: plug-kitchen-se-corner
+  device_description: "Microwave and Toaster Oven"
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+
+

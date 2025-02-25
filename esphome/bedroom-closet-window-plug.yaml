@@ -1,0 +1,11 @@
+substitutions:
+  name: bedroom-closet-window-plug
+  friendly_name: Bedroom Closet Window Plug
+  hostname: plug-bedroom-closet-window
+  device_description: "Plug for Bedroom Closet Window"
+  room: Bedroom Closet
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+

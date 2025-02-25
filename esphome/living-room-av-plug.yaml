@@ -1,0 +1,12 @@
+substitutions:
+  name: living-room-av-plug
+  friendly_name: Living Room AV Plug
+  room: Living Room
+  hostname: plug-livingroom-av
+  device_description: "Living Room AV"
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+
+

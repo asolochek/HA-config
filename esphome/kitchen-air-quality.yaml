@@ -1,9 +1,9 @@
 substitutions:
-  name: kitchen-west-soil-sensor
-  friendly_name: Kitchen West Soil Sensor
+  name: kitchen-air-quality
+  friendly_name: Kitchen Air Quality
   room: "Kitchen"
-  hostname: soil-sensor-kitchen-west
-  device_description: Kitchen West Soil Sensor
+  hostname: air-monitor-kitchen
+  device_description: Kitchen Air Monitor and Soil Sensor
   log_level: INFO
   i2c_frequency: 100kHz
   dry_threshold_1: "40"

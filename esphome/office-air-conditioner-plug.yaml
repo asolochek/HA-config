@@ -1,0 +1,12 @@
+substitutions:
+  name: office-ac-plug
+  friendly_name: Office Air Conditioner Plug
+  room: Office
+  hostname: plug-office-ac
+  device_description: "Office Air Conditioner"
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+
+

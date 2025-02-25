@@ -1,0 +1,11 @@
+substitutions:
+  name: living-room-ac-plug
+  friendly_name: Living Room Air Conditioner Plug
+  hostname: plug-living-room-air-conditioner
+  device_description: "Plug for Living Room Air Conditioner"
+  room: Living Room
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+

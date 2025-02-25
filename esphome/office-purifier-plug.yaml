@@ -1,0 +1,12 @@
+substitutions:
+  name: office-purifier-plug
+  friendly_name: Office Purifier Plug
+  room: Office
+  hostname: plug-office-purifier
+  device_description: "Office Purifier"
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+
+

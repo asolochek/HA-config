@@ -1,0 +1,12 @@
+substitutions:
+  name: guitar-amp-plug
+  friendly_name: Guitar Amp Plug
+  room: Living Room
+  hostname: plug-guitar-amp
+  device_description: "Plug for Guitar Amp"
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+
+

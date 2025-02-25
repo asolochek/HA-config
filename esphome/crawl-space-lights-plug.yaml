@@ -1,0 +1,10 @@
+substitutions:
+  name: crawl-space-lights-plug
+  friendly_name: Crawl Space Lights Plug
+  hostname: plug-crawl-space-lights
+  room: Crawl Space
+  device_description: "Crawl Space Lights"
+
+packages: 
+  device_base: !include common/athom_plug.yaml
+

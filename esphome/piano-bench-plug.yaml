@@ -1,0 +1,12 @@
+substitutions:
+  name: piano-bench-plug
+  friendly_name: Piano Bench Plug
+  room: Office
+  hostname: plug-piano-bench
+  device_description: "Piano Bench"
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+
+
