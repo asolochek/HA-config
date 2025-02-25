@@ -9,7 +9,8 @@
     state: >
       {% set total = states('sensor.crawl_space_and_living_room_leds_power') | float(0) %}
       {% set crawl_space = states('sensor.crawl_space_lights_power') | float(0) %}
-      {{ (total - crawl_space) | round(3, default=0) }}
+      {% set led_power = (total - crawl_space) | round(3, default=0) %}
+      {{ ([0, led_power, 1000]|sort) [1] }}
 
 
   - name: "Living Room LEDs Current"
@@ -22,7 +23,8 @@
     state: >
       {% set total = states('sensor.crawl_space_and_living_room_leds_current') | float(0) %}
       {% set crawl_space = states('sensor.crawl_space_lights_current') | float(0) %}
-      {{ (total - crawl_space) }}
+      {% set led_current = (total - crawl_space) | round(3, default=0) %}
+      {{ ([0, led_current, 10]|sort) [1] }}
 
 
   - name: "Living Room LEDs Apparent Power"
@@ -35,7 +37,8 @@
     state: >
       {% set total = states('sensor.crawl_space_and_living_room_leds_apparent_power') | float(0) %}
       {% set crawl_space = states('sensor.crawl_space_lights_apparent_power') | float(0) %}
-      {{ (total - crawl_space) }}    
+      {% set led_apparent_power = (total - crawl_space) | round(3, default=0) %}
+      {{ ([0, led_apparent_power, 1000]|sort) [1] }}
 
 
   - name: "Living Room LEDs Total Energy"
@@ -50,7 +53,8 @@
     state: >
       {% set total = states('sensor.crawl_space_and_living_room_leds_total_energy') | float(0) %}
       {% set crawl_space = states('sensor.crawl_space_lights_total_energy') | float(0) %}
-      {{ (total - crawl_space) }}
+      {% set led_energy = (total - crawl_space) | round(3, default=0) %}
+      {{ ([0, led_energy, 100000]|sort) [1] }}
 
 
   - name: "Meter Test Sensor"
