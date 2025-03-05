@@ -1,0 +1,10 @@
+substitutions:
+  name: sparkfun_air_quality_combo
+  friendly_name: SparkFun Air Quality Combo
+  hostname: sparkfun-air-quality-combo
+  device_description: "SparkFun Air Quality Combo"
+  log_level: INFO
+
+packages:
+  co2: !include scd4x.yaml
+  aqi: !include sen5x.yaml

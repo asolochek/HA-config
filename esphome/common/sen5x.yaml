@@ -1,0 +1,80 @@
+substitutions:
+  sen5x_i2c_address: "0x69"
+  sen5x_update_interval: 1s
+
+esphome:
+  includes:
+     - common/aqi.h
+
+sensor:
+  - platform: sen5x
+    id: sen55
+    pm_1_0:
+      name: "PM1.0"
+      id: pm_1_0
+      accuracy_decimals: 1
+    pm_2_5:
+      name: "PM2.5"
+      id: pm_2_5
+      accuracy_decimals: 1
+    pm_4_0:
+      name: "PM4.0"
+      id: pm_4_0
+      accuracy_decimals: 1
+    pm_10_0:
+      name: "PM10.0"
+      id: pm_10
+      accuracy_decimals: 1
+    temperature:
+      name: "Temperature"
+      accuracy_decimals: 1
+    humidity:
+      name: "Humidity"
+      accuracy_decimals: 0
+    voc:
+      name: "VOC"
+      algorithm_tuning:
+        index_offset: 100
+        learning_time_offset_hours: 12
+        learning_time_gain_hours: 12
+        gating_max_duration_minutes: 180
+        std_initial: 50
+        gain_factor: 230
+    nox:
+      name: "NOX"
+    temperature_compensation:
+      offset: 0
+      normalized_offset_slope: 0
+      time_constant: 0
+    acceleration_mode: low
+    store_baseline: true
+    address: ${sen5x_i2c_address}
+    update_interval: ${sen5x_update_interval}
+
+  - platform: template
+    name: "AQI"
+    id: aqi
+    device_class: AQI
+    state_class: measurement
+    icon: mdi:weather-hazy
+    accuracy_decimals: 0
+    filters:
+      - clamp:
+          min_value: 0.0
+          max_value: 500
+      - sliding_window_moving_average:
+          window_size: 15
+          send_every: 15
+          send_first_at: 15
+    lambda: |-
+      float pm2_5 = id(pm_2_5).state;
+      float pm10 = id(pm_10).state;
+      if (pm2_5 != pm2_5) pm2_5 = 0.0;
+      if (pm10 != pm10) pm10 = 0.0;
+      float aqi2_5 = get_pm2_5_aqi(pm2_5);
+      float aqi10 = get_pm10_aqi(pm10);
+      float aqi = aqi2_5 > aqi10 ? aqi2_5 : aqi10;
+      ESP_LOGV("AQI", "Computed AQI: %.0f from %.2f PM2.5 and %.2f PM10", aqi, pm2_5, pm10);
+      return(aqi);
+    update_interval: 1s
+

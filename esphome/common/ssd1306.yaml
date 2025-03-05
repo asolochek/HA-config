@@ -1,0 +1,25 @@
+substitutions:
+  ssd1306_id: ssd1306_id
+  ssd1306_i2c_address: "0x3D"
+  ssd1306_rotation: "0"
+  ssd1306_contrast: "100%"
+  ssd1306_flip_x: "false"
+  ssd1306_flip_y: "false"
+  ssd1306_offset_x: "0"
+  ssd1306_offset_y: "0"
+  ssd1306_invert: "false"
+  ssd1306_update_interval: 1s
+
+display:
+  - platform: ssd1306_i2c
+    id: ${ssd1306_id}
+    model: ${ssd1306_model}
+    address: ${ssd1306_i2c_address}
+    rotation: ${ssd1306_rotation}
+    contrast: ${ssd1306_contrast}
+    flip_x: ${ssd1306_flip_x}
+    flip_y: ${ssd1306_flip_y}
+    offset_x: ${ssd1306_offset_x}
+    offset_y: ${ssd1306_offset_y}
+    invert: ${ssd1306_invert}
+    update_interval: ${ssd1306_update_interval}
