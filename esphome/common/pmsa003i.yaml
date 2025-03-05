@@ -105,6 +105,6 @@ sensor:
       float aqi2_5 = get_pm2_5_aqi(pm2_5);
       float aqi10 = get_pm10_aqi(pm10);
       float aqi = aqi2_5 > aqi10 ? aqi2_5 : aqi10;
-      ESP_LOGI("AQI", "Computed AQI: %.0f from %.2f PM2.5 and %.2f PM10", aqi, pm2_5, pm10);
+      ESP_LOGV("AQI", "Computed AQI: %.0f from %.2f PM2.5 and %.2f PM10", aqi, pm2_5, pm10);
       return(aqi);
     update_interval: 1s
