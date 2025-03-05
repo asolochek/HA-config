@@ -4,6 +4,7 @@ substitutions:
   room: Kitchen
   hostname: plug-kitchen-se-corner
   device_description: "Microwave and Toaster Oven"
+  current_limit: "100.0"
 
 packages:
   device_base: !include common/sonoff_s31.yaml
