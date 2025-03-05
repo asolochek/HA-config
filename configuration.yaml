@@ -77,6 +77,7 @@ recorder:
       - sensor.garage_exterior*
       - sensor.*soil_sensor*temperature*
       - sensor.*_last_update_trigger
+      - binary_sensor.g5_ptz*
 
     entities:
       - camera.front_door
