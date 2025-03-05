@@ -4,6 +4,7 @@ substitutions:
   hostname: plug-kettle
   device_description: "Kettle"
   room: Kitchen
+  current_limit: "100.0"
 
 packages:
   device_base: !include common/sonoff_s31.yaml
