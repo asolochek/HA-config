@@ -138,6 +138,7 @@ void HDC302XComponent::setup() {
     return;
   }
 
+  send_command(HDC302X_CMD_CLEAR_STATUS);
 
   // If we are in auto-mode, we need to exit it first
   if (send_command(HDC302X_CMD_EXIT_AUTO_MODE) != i2c::ERROR_OK) {
@@ -190,16 +191,24 @@ void HDC302XComponent::update() {
   uint8_t buf[6];
   uint16_t raw_temp;
   uint16_t raw_humidity;
+  uint8_t ret;
 
-  if (send_command(HDC302X_CMD_READ_MEASUREMENTS) != i2c::ERROR_OK) {
-    ESP_LOGW(TAG, "HDC302X read measurements instruction error");
+  // if (ret = send_command(HDC302X_CMD_READ_MEASUREMENTS) != i2c::ERROR_OK) {
+  //   ESP_LOGW(TAG, "HDC302X read measurements instruction error: %.2X", ret);
+  //   this->status_set_warning();
+  //   return;
+  // }
+
+  if (ret = send_command(HDC302X_CMD_ON_DEMAND_LPM0) != i2c::ERROR_OK) {
+    ESP_LOGW(TAG, "HDC302X read measurements instruction error: %.2X", ret);
     this->status_set_warning();
     return;
   }
 
   delay(20);
-  if (this->read(buf, 6) != i2c::ERROR_OK) {
-    ESP_LOGW(TAG, "HDC302X read measurements error");
+
+  if (ret = this->read(buf, 6) != i2c::ERROR_OK) {
+    ESP_LOGW(TAG, "HDC302X read measurements error: %.2X", ret);
     this->status_set_warning();
     return;
   }
@@ -216,10 +225,10 @@ void HDC302XComponent::update() {
     return;
   }
 
-  float temp = (raw_temp * 175.0f / 65535.0f) - 45.0f;
+  float temp = ((raw_temp / 65535.0f) * 175.0) - 45.0f;
   this->temperature_->publish_state(temp);
 
-  float humidity = (raw_humidity * 100.0f / 65535.0f);
+  float humidity = (raw_humidity / 65535.0f) * 100.0;
   this->humidity_->publish_state(humidity);
 
   ESP_LOGVV(TAG, "Got temperature=%.1f°C humidity=%.1f%%", temp, humidity);
