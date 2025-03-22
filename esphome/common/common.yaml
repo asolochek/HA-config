@@ -41,6 +41,17 @@ logger:
   hardware_uart: UART0
   logs:
     component: ERROR
+    i2c.arduino: INFO
+    api.service: INFO
+    api.connection: INFO
+    esp32.preferences: INFO
+    sensor.filter: INFO
+    scheduler: INFO
+    sensor: INFO
+    light.addressable: INFO
+    text.sensor: INFO
+    esp32_rmt_led_strip: INFO
+    neopixel: INFO
 
 
 # Enable Home Assistant API
