@@ -3,7 +3,7 @@ substitutions:
   friendly_name: Power Meter 15kW
   hostname: power-meter-15kw
   room: Living Room
-  description: "Power Meter 15kW"
+  device_description: "Power Meter 15kW"
 
 
 packages:
