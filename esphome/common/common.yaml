@@ -120,8 +120,23 @@ text_sensor:
       }
 
 time:
-  - platform: sntp
-    id: sntp_time
+  # - platform: sntp
+  #   id: sntp_time
+  #   timezone: America/Los_Angeles
+  #   update_interval: 60min
+  #   on_time_sync:
+  #     then:
+  #       # Update last restart time, but only once.
+  #       - if:
+  #           condition:
+  #             lambda: 'return id(device_last_restart).state == "";'
+  #           then:
+  #             - text_sensor.template.publish:
+  #                 id: device_last_restart
+  #                 state: !lambda 'return id(sntp_time).now().strftime("%a %d %b %Y - %I:%M:%S %p");'
+
+  - platform: homeassistant
+    id: ha_time
     timezone: America/Los_Angeles
     update_interval: 60min
     on_time_sync:
@@ -133,7 +148,4 @@ time:
             then:
               - text_sensor.template.publish:
                   id: device_last_restart
-                  state: !lambda 'return id(sntp_time).now().strftime("%a %d %b %Y - %I:%M:%S %p");'
-
-  - platform: homeassistant
-    id: ha_time
+                  state: !lambda 'return id(ha_time).now().strftime("%a %d %b %Y - %I:%M:%S %p");'
