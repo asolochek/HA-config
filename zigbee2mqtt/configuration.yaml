@@ -120,8 +120,6 @@ devices:
     friendly_name: Kitchen Ceiling 1-1
   '0x0017880106d9db2d':
     friendly_name: Kitchen Ceiling 1-2
-  '0x0017880106aba11b':
-    friendly_name: Kitchen Ceiling 2-2
   '0x001788010944a507':
     friendly_name: Kitchen Counter East
   '0x0017880109449a57':
@@ -153,6 +151,8 @@ devices:
   '0x001788010dbfeaed':
     friendly_name: Bedside Lamp Left
     description: Cat lamp
+  '0x001788010dbfa658':
+    friendly_name: Kitchen Ceiling 2-2
 device_options:
   legacy: false
 groups:
