@@ -19,7 +19,14 @@ substitutions:
 
 packages:
   device_base: !include feather_esp32s2.yaml
-  display: !include st7789v.yaml
+  display: !include 
+    file: st7789v.yaml
+    vars:
+      st7789_cs_pin: ${st7789_cs_pin}
+      st7789_dc_pin: ${st7789_dc_pin}
+      st7789_reset_pin: ${st7789_reset_pin}
+      st7789_backlight_pin: ${st7789_backlight_pin}
+      st7789_rotation: ${st7789_rotation}
 
 
 output:

@@ -12,6 +12,7 @@ substitutions:
   # st7789_rotation: "90"
   st7789_update_interval: 0.5s
 
+
 output:
   - platform: ledc
     id: backlight_output
@@ -19,12 +20,14 @@ output:
       number: ${st7789_backlight_pin}
       allow_other_uses: true
 
+
 light:
   - platform: monochromatic
     output: backlight_output
     name: "Backlight"
     restore_mode: ALWAYS_ON
     default_transition_length: 0.1s
+
 
 display:
   - platform: st7789v
