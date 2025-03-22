@@ -346,30 +346,27 @@
 - id: '1687231247879'
   alias: 'Kitchen fan temperature auto on '
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id:
+  triggers:
+  - entity_id:
     - sensor.thermostat_temperature
     for:
       hours: 0
       minutes: 0
       seconds: 30
     above: 76
+    trigger: numeric_state
   - type: running
-    platform: device
     device_id: e4ea4923eab39ca70ae3805e7cc9a285
     entity_id: binary_sensor.aaron_on_peloton_workout
     domain: binary_sensor
     enabled: false
-  - platform: state
-    entity_id:
+    trigger: device
+  - entity_id:
     - binary_sensor.aaron_on_peloton_workout
     to: 'on'
-  condition:
-  - condition: numeric_state
-    entity_id: climate.thermostat
-    below: 70
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - action: input_boolean.turn_on
     data: {}
     target:
