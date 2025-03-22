@@ -103,7 +103,7 @@ font:
     size: 28
   - file: "fonts/ter-u32b.bdf"
     id: terminus32b
-    size: 36
+    size: 32
   - file: 
       type: gfonts
       family: "Chakra Petch"
@@ -126,15 +126,15 @@ font:
     id: orbitron42
     size: 42
 
-  - file: "fonts/Gomme10x20n.bdf" # Looks good
-    id: gomme12
-    size: 12
+  # - file: "fonts/Gomme10x20n.bdf" # Looks good
+  #   id: gomme12
+  #   size: 12
   - file: "fonts/Gomme10x20n.bdf"
     id: gomme20
     size: 20
-  - file: "fonts/Tamzen5x9b.bdf"
-    id: tamzen5x9b
-    size: 10
+  # - file: "fonts/Tamzen5x9b.bdf"
+  #   id: tamzen5x9b
+  #   size: 7
   - file: "fonts/small_dot_digital-7.ttf" # No good on matrix
     id: small_dot
     size: 12
@@ -187,37 +187,37 @@ font:
   - file: "fonts/eight-bit-dragon.otf" # excellent matrix font
     id: eight_bit_dragon16
     size: 16
-  # - file: "fonts/pixelmix.ttf" # no good on matrix
-  #   id: pixelmix
-  #   size: 10
-  #   bpp: 1
-  # - file: "fonts/pixelmix_bold.ttf"
-  #   id: pixelmix_bold
-  #   size: 10
-  #   bpp: 1
-  # - file: "fonts/pixelmix_micro.ttf"
-  #   id: pixelmix_micro
-  #   size: 10
-  #   bpp: 1
+  - file: "fonts/pixelmix.ttf" # no good on matrix
+    id: pixelmix
+    size: 10
+    bpp: 1
+  - file: "fonts/pixelmix_bold.ttf"
+    id: pixelmix_bold
+    size: 10
+    bpp: 1
+  - file: "fonts/pixelmix_micro.ttf"
+    id: pixelmix_micro
+    size: 10
+    bpp: 1
   - file: "fonts/MxPlus_HP_100LX_8x8.ttf"
     id: hp100_lx
-    size: 10
+    size: 8
 #    bpp: 1
   - file: "fonts/MatrixChunky8X.bdf"
     id: matrix_chunky8
-    size: 10
+    size: 8
   - file: "fonts/WebPlus_HP_100LX_8x8.woff"
     id: hp100lx_8x8
-    size: 10
+    size: 8
   - file: "fonts/Ac437_Phoenix_BIOS.ttf"
     id: phoenix_bios
     size: 10
   - file: "fonts/WebPlus_HP_100LX_8x8-2x.woff"
     id: hp100lx_8x8_2x
-    size: 10
+    size: 8
   - file: "fonts/gallant12x22.ttf"
     id: gallant
-    size: 10
+    size: 12
     bpp: 1
 
   - file: 
