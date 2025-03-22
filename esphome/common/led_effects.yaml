@@ -1,0 +1,28 @@
+defaults:
+  light_id: neopixel_led
+
+light:
+  - id: !extend ${light_id}
+    effects:
+      - strobe:
+          name: "blink red"
+          colors:
+            - state: true
+              red: 100%
+              green: 0
+              blue: 0
+              brightness: 100%
+              duration: 250ms
+            - state: true
+              red: 0
+              green: 0
+              blue: 0
+              brightness: 0
+              duration: 250ms
+      - pulse:
+      - pulse:
+          name: "Fast Pulse"
+          transition_length: 0.5s
+          update_interval: 0.1s
+          min_brightness: 0%
+          max_brightness: 100%

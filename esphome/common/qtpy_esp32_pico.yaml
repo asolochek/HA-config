@@ -15,18 +15,18 @@ packages:
   device_base: !include esp32.yaml 
   wifi: !include wifi.yaml
   # unsupported in esphome until esp32-pico gets explicit support
-  neo: !include neopixel.yaml
+  neo_pwr: !include 
+    file: neopixel_power.yaml
+    vars:
+      neopixel_power_pin: ${neopixel_power_pin}
+      ignore_pin_validation_error: "true"
+  neo: !include 
+    file: neopixel.yaml
+    vars:
+      neopixel_pin: ${neopixel_pin}
+      ignore_strapping_warning: "true"
 
 
-switch: 
-  - id: !extend neopixel_power
-    pin:
-      ignore_pin_validation_error: true
-
-light:
-  - id: !extend neopixel_led
-    pin:
-      ignore_strapping_warning: true
 
 spi:
   clk_pin: 

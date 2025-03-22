@@ -18,11 +18,13 @@ from esphome.const import (
     UNIT_CELSIUS,
     ICON_THERMOMETER,
     ICON_WATER_PERCENT,
-    ICON_WATER
+    ICON_WATER,
+    CONF_THRESHOLD,
+    CONF_HYSTERESIS,
 )
 
 DEPENDENCIES = ['i2c']
-AUTO_LOAD = ['climate_utils']
+AUTO_LOAD = ['climate_utils', 'binary_sensor']
 
 adafruit_soil_sensor_ns = cg.esphome_ns.namespace('adafruit_soil_sensor')
 
@@ -39,6 +41,8 @@ MOISTURE_SENSOR = cv.Schema(
   {
     cv.Optional(CONF_MIN_VALUE, default=200): cv.int_range(0, 65535),
     cv.Optional(CONF_MAX_VALUE, default=1015): cv.int_range(0, 65535),
+    cv.Optional(CONF_THRESHOLD, default=40): cv.int_range(0, 100),
+    cv.Optional(CONF_HYSTERESIS, default=10): cv.int_range(0, 100),
   }
 )
 

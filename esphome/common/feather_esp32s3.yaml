@@ -14,8 +14,15 @@ substitutions:
 packages:
   device_base: !include esp32.yaml
   wifi: !include wifi.yaml
-  neo: !include neopixel.yaml
-
+  neo_pwr: !include 
+    file: neopixel_power.yaml
+    vars:
+      neopixel_power_pin: ${neopixel_power_pin}
+  neo: !include 
+    file: neopixel.yaml
+    vars:
+      neopixel_pin: ${neopixel_pin}
+      method: esp32_rmt
 
 i2c:
   - id: !extend bus_a

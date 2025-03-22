@@ -12,12 +12,16 @@ defaults:
 
 packages:
   device_base: !include esp32.yaml
-  neopixel: !include neopixel.yaml
-
-light:
-  - id: !extend neopixel_led
-    pin: 
-      allow_other_uses: true
+  neo_power: !include 
+    file: neopixel_power.yaml
+    vars:
+      neopixel_power_pin: ${neopixel_power_pin}
+  neo: !include 
+    file: neopixel.yaml
+    vars:
+      neopixel_pin: ${neopixel_pin}
+      allow_other_uses: "true"
+      method: esp32_rmt
      
 
 ethernet:

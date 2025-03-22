@@ -8,13 +8,17 @@ substitutions:
   spi_miso_pin: GPIO21
   spi_sck_pin: GPIO5
   neopixel_pin: GPIO0
+  neopixel_power_pin: GPIO2
 
 
 
 packages:
   device_base: !include esp32.yaml
   wifi: !include wifi.yaml
-  neo: !include neopixel.yaml
+  neo: !include 
+    file: neopixel.yaml
+    vars:
+      neopixel_pin: ${neopixel_pin}
 
 
 esphome:
@@ -38,7 +42,6 @@ switch:
     pin: 
       number: ${i2c_power_pin}
       ignore_strapping_warning: true
-  - id: !remove neopixel_power
 
 
 light:

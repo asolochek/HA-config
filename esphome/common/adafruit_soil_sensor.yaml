@@ -1,13 +1,21 @@
-substitutions:
-  temperature_id: soil_temperature
-  temperature_name: "Soil Temperature"
+
+defaults:
+  name_prefix: "Soil"
+  id_prefix: "soil"
+  i2c_bus: bus_a
+  i2c_address: "0x36"
+  dry_threshold: "40"
+  temperature_id: ${id_prefix}_temperature
+  temperature_name: "${name_prefix} Temperature"
+  moisture_id: ${id_prefix}_moisture
+  moisture_name: "${name_prefix} Moisture"
+  dry_id: ${id_prefix}_dry
+  dry_name: "${name_prefix} Dry"
   temperature_offset: "0.0"
   temperature_gain: "1.0"
   temperature_window_size: "5"
   temperature_window_send_every: "5"
   temperature_window_send_first_at: "5"
-  moisture_id: soil_moisture
-  moisture_name: "Soil Moisture"
   moisture_min_value: "350"
   moisture_max_value: "1015"
   update_interval: 2s
@@ -16,18 +24,14 @@ substitutions:
   moisture_window_send_first_at: "3"
   moisture_exp_alpha: "0.03"
   moisture_exp_send_every: "2"
-  i2c_address: "0x36"
-  i2c_id: bus_a
-
-
 
 sensor:
   - platform: adafruit_soil_sensor
     address: ${i2c_address}
-    i2c_id: ${i2c_id}
+    i2c_id: ${i2c_bus}
     temperature:
       id: ${temperature_id}
-      name: ${temperature_name}
+      name: "${temperature_name}"
       offset: ${temperature_offset}
       gain: ${temperature_gain}
       filters:
@@ -37,20 +41,11 @@ sensor:
             send_first_at: ${temperature_window_send_first_at}      
     moisture:
       id: ${moisture_id}
-      name: ${moisture_name}
+      name: "${moisture_name}"
       min_value: ${moisture_min_value}
       max_value: ${moisture_max_value}
-      accuracy_decimals: 2
-      on_raw_value:
-        - logger.log:
-            format: "Moisture raw value: %.0f"
-            args: ["id(${moisture_id}).state"]
+      accuracy_decimals: 1
       filters:
-        - clamp:
-            min_value: 0
-            max_value: 100
-            ignore_out_of_range: true
-        - round: 0
         - sliding_window_moving_average:
             window_size: ${moisture_window_size}
             send_every: ${moisture_window_send_every}
@@ -58,6 +53,15 @@ sensor:
         - exponential_moving_average:
             alpha: ${moisture_exp_alpha}
             send_every: ${moisture_exp_send_every}
-        - round: 0
     update_interval: ${update_interval}
+
+
+binary_sensor:
+  - platform: adafruit_soil_sensor
+    id: ${dry_id}
+    name: "${dry_name}"
+    sensor_id: ${id_prefix}_moisture
+    threshold: ${dry_threshold}
+    internal: false
+    icon: mdi:water-percent-alert
 

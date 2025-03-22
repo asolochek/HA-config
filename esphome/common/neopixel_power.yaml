@@ -1,0 +1,18 @@
+
+defaults:
+  neopixel_power_pin: NEOPIXEL_POWER
+  neopixel_power_id: neopixel_power
+  ignore_pin_validation_error: "false"
+  ignore_strapping_warning: "false"
+  allow_other_uses: "false"
+
+
+switch:
+  - id: ${neopixel_power_id}
+    platform: gpio
+    restore_mode: ALWAYS_ON
+    pin: 
+      number: ${neopixel_power_pin}
+      ignore_pin_validation_error: ${ignore_pin_validation_error}
+      ignore_strapping_warning: ${ignore_strapping_warning}
+      allow_other_uses: ${allow_other_uses}

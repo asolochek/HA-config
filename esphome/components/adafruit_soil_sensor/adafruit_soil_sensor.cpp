@@ -34,6 +34,10 @@ void AdafruitSoilSensorComponent::update()
   static uint16_t previous_moisture = 0;
   float temp_c = this->get_temperature_();
   uint16_t moisture = this->get_moisture_();
+  float moisture_pct = 0;
+
+//  ESP_LOGD(TAG, "%s: %f", this->temperature_sensor_->get_name(), temp_c);
+//  ESP_LOGD(TAG, "%s: %d", this->moisture_sensor_->get_name(), moisture);
 
   float temp_f = c_to_f(temp_c);
 
@@ -42,17 +46,21 @@ void AdafruitSoilSensorComponent::update()
   float temp = roundf(temp_f * 10.0);
   temp_f = temp / 10.0;
 
-  moisture = map(moisture, this->moisture_calibration.dry, this->moisture_calibration.wet, 0, 100);
+//  moisture_pct = map(moisture, this->moisture_calibration.dry, this->moisture_calibration.wet, 0, 100);
+
+  moisture_pct = ((float)moisture - (float)this->moisture_calibration.dry) / ((float)this->moisture_calibration.wet - (float)this->moisture_calibration.dry) * 100.0;
+  ESP_LOGVV(TAG, "Moisture Raw: %d (pct: %.2f)", moisture, moisture_pct);
 
   if (temp_f != previous_temp) {
     previous_temp = temp_f;
     this->temperature_sensor_->publish_state(temp_f);
   }
 
-  if (moisture != previous_moisture) {
-    previous_moisture = moisture;
-    this->moisture_sensor_->publish_state(moisture);
-  }
+  // ESP_LOGVV(TAG, "Moisture Raw: %d (%d)", moisture, previous_moisture);
+  // if (moisture != previous_moisture) {
+  //   previous_moisture = moisture;
+    this->moisture_sensor_->publish_state(moisture_pct);
+  // }
 }
 
 float AdafruitSoilSensorComponent::get_temperature_() 
@@ -86,10 +94,11 @@ uint16_t AdafruitSoilSensorComponent::get_moisture_()
     this->write(reg, 2);
     delayMicroseconds(5000);
     this->read(buf, 2);
-
+    ESP_LOGVV(TAG, "Moisture Raw: 0x%.2X 0x%.2X", buf[0], buf[1]);
     ret = ((uint16_t)buf[0] << 8) | buf[1];
   } while (ret == 65535);
-  //ESP_LOGD(TAG, "Moisture Raw: %d", ret);
+
+//  ESP_LOGVV(TAG, "Moisture Raw: %d", ret);
   return ret;
 }
 

@@ -5,14 +5,16 @@ substitutions:
   i2c_sda_pin: GPIO16
   i2c_scl_pin: GPIO17
   neopixel_pin: GPIO4
-  neopixel_power_pin: GPIO21
+
 
 packages:
   device_base: !include esp32.yaml
   wifi: !include wifi.yaml
-  neopixel: !include neopixel.yaml
+  neo: !include 
+    file: neopixel.yaml
+    vars:
+      neopixel_pin: ${neopixel_pin}
 
-switch: !remove neopixel_power
 
 external_components:
   - source: github://TillFleisch/ESPHome-HUB75-MatrixDisplayWrapper@main

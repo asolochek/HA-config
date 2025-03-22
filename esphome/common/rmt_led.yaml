@@ -3,13 +3,11 @@ defaults:
   neopixel_pin: NEOPIXEL
   neopixel_id: neopixel_led
   num_leds: "1"
-  method: esp32_rmt
   order: GRB
   channel: "0"
-  chipset: WS2812
+  chipset: SK6812
   ignore_pin_validation_error: "false"
   ignore_strapping_warning: "false"
-  allow_other_uses: "false"
 
 packages:
   effects: !include 
@@ -19,31 +17,14 @@ packages:
 
 light:
   - id: ${neopixel_id}
-    platform: neopixelbus
-    method: ${method}
-    type: ${order}
-    variant: ${chipset}
+    platform: esp32_rmt_led_strip
+    rgb_order: ${order}
+    chipset: ${chipset}
+    rmt_channel: ${channel}
     pin: 
       number: ${neopixel_pin}
       ignore_pin_validation_error: ${ignore_pin_validation_error}
       ignore_strapping_warning: ${ignore_strapping_warning}
-      allow_other_uses: ${allow_other_uses}
     num_leds: ${num_leds}
     name: ${neopixel_name}
     restore_mode: RESTORE_DEFAULT_OFF
-    # effects:
-    # - strobe:
-    #     name: "blink red"
-    #     colors:
-    #       - state: true
-    #         red: 100%
-    #         green: 0
-    #         blue: 0
-    #         brightness: 100%
-    #         duration: 250ms
-    #       - state: true
-    #         red: 0
-    #         green: 0
-    #         blue: 0
-    #         brightness: 0
-    #         duration: 250ms

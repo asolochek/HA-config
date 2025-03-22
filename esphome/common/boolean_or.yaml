@@ -1,0 +1,34 @@
+defaults:
+  sensor_id: logical_or
+  sensor_name: "Logical OR"
+  sensor_id_1: always_false
+  sensor_id_2: always_false
+  sensor_id_3: always_false
+  sensor_id_4: always_false
+  sensor_id_5: always_false
+  sensor_id_6: always_false
+  sensor_id_7: always_false
+  sensor_id_8: always_false
+    
+
+binary_sensor:
+  - platform: template
+    id: always_false
+    internal: true
+    lambda: |-
+      return false;
+
+  - platform: template
+    id: ${sensor_id}
+    name: ${sensor_name}
+    lambda: |-
+      bool ret = false;
+      ret |= (id(${sensor_id_1}).state);
+      ret |= (id(${sensor_id_2}).state);
+      ret |= (id(${sensor_id_3}).state);
+      ret |= (id(${sensor_id_4}).state);
+      ret |= (id(${sensor_id_5}).state);
+      ret |= (id(${sensor_id_6}).state);
+      ret |= (id(${sensor_id_7}).state);
+      ret |= (id(${sensor_id_8}).state);
+      return ret;

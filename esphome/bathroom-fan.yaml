@@ -7,11 +7,6 @@ substitutions:
   display_id: bathroom_fan_display
   log_level: INFO
   i2c_frequency: 100kHz
-  dry_threshold_1: "40"
-  soil_moisture_1_id: soil_moisture
-  moisture_window_size: "3"
-  moisture_window_send_every: "3"
-  moisture_window_send_first_at: "3"
 
 
 packages:
@@ -24,6 +19,8 @@ packages:
     file: common/adafruit_soil_sensor.yaml
     vars:
       i2c_address: "0x36"
+      dry_threshold: "40"
+      moisture_min_value: "300"
   dry: !include common/soil_dry_indicator.yaml
   dp: !include common/dew_point.yaml
 
