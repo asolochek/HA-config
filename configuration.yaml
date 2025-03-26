@@ -68,6 +68,7 @@ recorder:
       - sensor.*_free_mem
       - sensor.*_signal
       - sensor.*_rssi
+      - sensor.*ble_power
       - sensor.*link_quality
       - sensor.*_last_seen
       - sensor.*cpu*
@@ -80,6 +81,11 @@ recorder:
       - sensor.*soil_sensor*temperature*
       - sensor.*_last_update_trigger
       - binary_sensor.g5_ptz*
+      - sensor.fireboard*
+      - sensor.*connectivity
+      - sensor.*light_sensor
+      - sensor.*illuminance
+      - sensor.*soil_temperature
 
     entities:
       - camera.front_door
@@ -97,7 +103,12 @@ recorder:
       - sensor.thaos_watch
       - sensor.aarons_watch
       - sensor.purpleair_adc
-
+  include:
+    entities:
+      - sensor.main_panel_black_leg_voltage
+      - sensor.main_panel_black_leg_power
+      - sensor.main_panel_red_leg_voltage
+      - sensor.main_panel_red_leg_power
 
 logbook:
   include:
