@@ -54,7 +54,7 @@ recorder:
       - sensor.*_apparent_power
       - sensor.*_reactive_power
       - sensor.*_current
-      - sensor.*_power
+#      - sensor.*_power
       - sensor.door*
       - sensor.home_assistant*
       - sensor.*_write_rate
