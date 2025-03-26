@@ -4,6 +4,7 @@ substitutions:
   hostname: plug-bedroom-closet-window
   device_description: "Plug for Bedroom Closet Window"
   room: Bedroom Closet
+  throttle_average: 5s
 
 packages:
   device_base: !include common/sonoff_s31.yaml

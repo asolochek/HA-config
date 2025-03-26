@@ -1,6 +1,4 @@
 substitutions:
-  tca_i2c_address: "0x70"
-  tca_i2c_id: bus_a
   tca_id: "mplex0"
   channel_0_id: "mplex0_0"
   channel_1_id: "mplex0_1"
@@ -11,11 +9,14 @@ substitutions:
   channel_6_id: "mplex0_6"
   channel_7_id: "mplex0_7"
 
+defaults:
+  i2c_address: "0x70"
+  i2c_bus_id: bus_a
 
 tca9548a:
-  - address: 0x70
+  - address: ${i2c_address}
     id: multiplex0
-    i2c_id: bus_a
+    i2c_id: ${i2c_bus_id}
     channels:
       - bus_id: ${channel_0_id}
         channel: 0

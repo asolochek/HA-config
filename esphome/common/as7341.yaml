@@ -1,3 +1,6 @@
+defaults:
+  update_interval: 5s
+
 sensor:
 - platform: as7341
   f1:
@@ -20,4 +23,4 @@ sensor:
     name: "Clear"
   nir:
     name: "NIR"
-  update_interval: 5s
+  update_interval: ${update_interval}

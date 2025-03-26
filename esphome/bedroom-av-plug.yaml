@@ -4,6 +4,7 @@ substitutions:
   hostname: plug-bedroom-av
   device_description: "Plug for Bedroom AV"
   room: Bedroom
+  throttle_average: 60s
 
 packages:
   device_base: !include common/sonoff_s31.yaml

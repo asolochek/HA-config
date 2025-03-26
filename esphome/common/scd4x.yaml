@@ -1,39 +1,39 @@
 substitutions:
-  i2c_id: bus_a
+  climate_throttle_average: 10s
+
+defaults:
+  update_interval: 1s
+  i2c_address: "0x62"
+  i2c_bus_id: bus_a
 
 sensor:
   - platform: scd4x
     id: scd4x_sensor
-    i2c_id: ${i2c_id}
-    address: 0x62
-    update_interval: 1s
+    i2c_id: ${i2c_bus_id}
+    address: ${i2c_address}
+    update_interval: ${update_interval}
     co2:
       id: co2
       name: "CO2"
       filters:
-        - sliding_window_moving_average:
-            window_size: 15
-            send_every: 15
-            send_first_at: 5
+        - throttle_average: ${climate_throttle_average}
+        - filter_out: nan
     temperature:
       name: "Temperature"
       id: temperature
       accuracy_decimals: 1
       filters:
-        - sliding_window_moving_average:
-            window_size: 15
-            send_every: 15
-            send_first_at: 5
+        - throttle_average: ${climate_throttle_average}
+        - filter_out: nan
 
     humidity:
       name: "Humidity"
       id: humidity
       accuracy_decimals: 1
       filters:
-        - sliding_window_moving_average:
-            window_size: 15
-            send_every: 15
-            send_first_at: 5
+        - throttle_average: ${climate_throttle_average}
+        - filter_out: nan
+
 
 logger:
   logs:

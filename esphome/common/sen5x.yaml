@@ -1,10 +1,13 @@
-substitutions:
-  sen5x_i2c_address: "0x69"
-  sen5x_update_interval: 1s
 
 esphome:
   includes:
      - common/aqi.h
+
+defaults:
+  update_interval: 1s
+  i2c_address: "0x69"
+  i2c_bus_id: bus_a
+  throttle_average: 15s
 
 sensor:
   - platform: sen5x
@@ -48,8 +51,8 @@ sensor:
       time_constant: 0
     acceleration_mode: low
     store_baseline: true
-    address: ${sen5x_i2c_address}
-    update_interval: ${sen5x_update_interval}
+    address: ${i2c_address}
+    update_interval: ${update_interval}
 
   - platform: template
     name: "AQI"
@@ -62,10 +65,8 @@ sensor:
       - clamp:
           min_value: 0.0
           max_value: 500
-      - sliding_window_moving_average:
-          window_size: 15
-          send_every: 15
-          send_first_at: 15
+      - throttle_average: ${throttle_average}
+      - filter_out: nan
     lambda: |-
       float pm2_5 = id(pm_2_5).state;
       float pm10 = id(pm_10).state;
@@ -76,5 +77,5 @@ sensor:
       float aqi = aqi2_5 > aqi10 ? aqi2_5 : aqi10;
       ESP_LOGV("AQI", "Computed AQI: %.0f from %.2f PM2.5 and %.2f PM10", aqi, pm2_5, pm10);
       return(aqi);
-    update_interval: 1s
+    update_interval: ${update_interval}
 

@@ -1,5 +1,9 @@
+defaults:
+  update_interval: 5s
+  i2c_address: "0x23"
+
 sensor:
 - platform: bh1750
-  address: 0x23
+  address: ${i2c_address}
   name: "BH1750 Illuminance"
-  update_interval: 5s
+  update_interval: ${update_interval}

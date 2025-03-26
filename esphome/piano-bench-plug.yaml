@@ -4,6 +4,7 @@ substitutions:
   room: Office
   hostname: plug-piano-bench
   device_description: "Piano Bench"
+  throttle_average: 10s
 
 packages:
   device_base: !include common/sonoff_s31.yaml

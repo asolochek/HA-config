@@ -4,6 +4,7 @@ substitutions:
   room: Kitchen
   hostname: plug-kitchen-fan
   device_description: "Kitchen Fan Power Monitor"
+  throttle_average: 1s
 
 packages:
   device_base: !include common/sonoff_s31.yaml

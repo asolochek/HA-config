@@ -10,7 +10,9 @@ substitutions:
   # st7789_offset_height: "34"
   # st7789_offset_width: "0"
   # st7789_rotation: "90"
-  st7789_update_interval: 0.5s
+
+defaults:
+  update_interval: 0.5s
 
 
 output:
@@ -47,4 +49,4 @@ display:
     offset_height: ${st7789_offset_height}
     offset_width: ${st7789_offset_width}
     rotation: ${st7789_rotation}
-    update_interval: ${st7789_update_interval}
+    update_interval: ${update_interval}

@@ -5,13 +5,19 @@ esphome:
   includes:
     - common/aqi.h
 
+defaults:
+  update_interval: 1s
+  i2c_address: "0x12"
+  i2c_bus_id: bus_a
+  throttle_average: 15s
+
 sensor:
   # Raw sensor values updated at 1s, but kept internal to be used for
   # template sensor values exposed to HA
   - platform: pmsa003i
     id: pmsa003i_sensor
-    i2c_id: bus_a
-    address: 0x12
+    i2c_id: ${i2c_bus_id}
+    address: ${i2c_address}
     pm_1_0:
       id: pm_1_0_raw
     pm_2_5:
@@ -36,7 +42,7 @@ sensor:
 #     pmc_10_0:
 #       id: pmc_10_0_raw
 # #      name: "PMC <10µm"
-    update_interval: 1s
+    update_interval: ${update_interval}
 
 
   - platform: template
@@ -47,12 +53,14 @@ sensor:
     state_class: measurement
     icon: mdi:grain
 
-    update_interval: 1s
+    update_interval: ${update_interval}
     filters:
-      - sliding_window_moving_average:
-          window_size: 15
-          send_every: 15
-          send_first_at: 15
+      - throttle_average: ${throttle_average}
+      - filter_out: nan
+      # - sliding_window_moving_average:
+      #     window_size: 15
+      #     send_every: 15
+      #     send_first_at: 15
     lambda: "return(id(pm_1_0_raw).state);"
   - platform: template
     name: "PM2.5"
@@ -61,12 +69,14 @@ sensor:
     icon: mdi:smoke
     unit_of_measurement: µg/m³
     state_class: measurement
-    update_interval: 1s
+    update_interval: ${update_interval}
     filters:
-      - sliding_window_moving_average:
-          window_size: 15
-          send_every: 15
-          send_first_at: 15
+      - throttle_average: ${throttle_average}
+      - filter_out: nan
+      # - sliding_window_moving_average:
+      #     window_size: 15
+      #     send_every: 15
+      #     send_first_at: 15
     lambda: "return(id(pm_2_5_raw).state);"
   - platform: template
     name: "PM10.0"
@@ -75,12 +85,14 @@ sensor:
     icon: mdi:flower-pollen
     unit_of_measurement: µg/m³
     state_class: measurement
-    update_interval: 1s
+    update_interval: ${update_interval}
     filters:
-      - sliding_window_moving_average:
-          window_size: 15
-          send_every: 15
-          send_first_at: 15
+      - throttle_average: ${throttle_average}
+      - filter_out: nan
+      # - sliding_window_moving_average:
+      #     window_size: 15
+      #     send_every: 15
+      #     send_first_at: 15
     lambda: "return(id(pm_10_raw).state);"
   - platform: template
     name: "AQI"
@@ -93,10 +105,12 @@ sensor:
       - clamp:
           min_value: 0.0
           max_value: 500
-      - sliding_window_moving_average:
-          window_size: 15
-          send_every: 15
-          send_first_at: 15
+      - throttle_average: ${throttle_average}
+      - filter_out: nan
+      # - sliding_window_moving_average:
+      #     window_size: 15
+      #     send_every: 15
+      #     send_first_at: 15
     lambda: |-
       float pm2_5 = id(pm_2_5_raw).state;
       float pm10 = id(pm_10_raw).state;
@@ -107,4 +121,4 @@ sensor:
       float aqi = aqi2_5 > aqi10 ? aqi2_5 : aqi10;
       ESP_LOGV("AQI", "Computed AQI: %.0f from %.2f PM2.5 and %.2f PM10", aqi, pm2_5, pm10);
       return(aqi);
-    update_interval: 1s
+    update_interval: ${update_interval}

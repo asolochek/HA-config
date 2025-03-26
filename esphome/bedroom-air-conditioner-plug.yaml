@@ -4,6 +4,7 @@ substitutions:
   hostname: plug-bedroom-air-conditioner
   device_description: "Plug for Bedroom Air Conditioner"
   room: Bedroom
+  throttle_average: 1s
 
 packages:
   device_base: !include common/sonoff_s31.yaml

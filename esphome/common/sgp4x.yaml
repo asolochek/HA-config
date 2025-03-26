@@ -5,13 +5,19 @@ substitutions:
   sgp4x_voc_name: "VOC"
   sgp4x_temperature_source: temperature
   sgp4x_humidity_source: humidity
+  climate_throttle_average: 10s
+
+defaults:
+  update_interval: 1s
+  i2c_address: "0x59"
+  i2c_bus_id: bus_a
 
 sensor:
   - platform: sgp4x
     id: sgp4x_sensor
-    i2c_id: bus_a
-    address: 0x59
-    update_interval: 1s
+    i2c_id: ${i2c_bus_id}
+    address: ${i2c_address}
+    update_interval: ${update_interval}
     store_baseline: true
     compensation:
       temperature_source: ${sgp4x_temperature_source}
@@ -20,22 +26,20 @@ sensor:
       id: ${sgp4x_nox_id}
       name: ${sgp4x_nox_name}
       accuracy_decimals: 1
-      # filters:
-      #   - sliding_window_moving_average:
-      #       window_size: 15
-      #       send_every: 15
-      #       send_first_at: 5
-      #   - filter_out: 65535
+      filters:
+        - throttle_average: ${climate_throttle_average}
+        - filter_out: nan
+        - filter_out: 65535
+
     voc:
       id: ${sgp4x_voc_id}
       name: ${sgp4x_voc_name}
       accuracy_decimals: 1
-      # filters:
-      #   - sliding_window_moving_average:
-      #       window_size: 15
-      #       send_every: 15
-      #       send_first_at: 5
-      #   - filter_out: 65535
+      filters:
+        - throttle_average: ${climate_throttle_average}
+        - filter_out: nan
+        - filter_out: 65535
+
 
 logger:
   logs:

@@ -1,20 +1,36 @@
+substitutions:
+  climate_throttle_average: 10s
+
+defaults:
+  update_interval: 1s
+  temperature_id: temperature
+  temperature_name: "Temperature"
+  humidity_id: humidity
+  humidity_name: "Humidity"
+  i2c_address: "0x44"
+  i2c_bus_id: bus_a
+
 sensor:
   - platform: sht3xd
     id: sht3xd_sensor
-    i2c_id: bus_a
-    address: 0x44
-    update_interval: 2s
+    i2c_id: ${i2c_bus_id}
+    address: ${i2c_address}
+    update_interval: ${update_interval}
     temperature:
-      name: "Temperature"
-      id: temperature
+      name: ${temperature_name}
+      id: ${temperature_id}
       filters:
-        - exponential_moving_average:
-            alpha: 0.1
-            send_every: 1
+        - throttle_average: ${climate_throttle_average}
+        - filter_out: nan
+        # - exponential_moving_average:
+        #     alpha: 0.1
+        #     send_every: 1
     humidity:
-      name: "Humidity"
-      id: humidity
+      name: ${humidity_name}
+      id: ${humidity_id}
       filters:
-        - exponential_moving_average:
-            alpha: 0.1
-            send_every: 1
+        - throttle_average: ${climate_throttle_average}
+        - filter_out: nan
+        # - exponential_moving_average:
+        #     alpha: 0.1
+        #     send_every: 1

@@ -8,24 +8,34 @@ substitutions:
   hdc302x_humidity_id: humidity
   hdc302x_humidity_name: Humidity
 
+defaults:
+  update_interval: 5s
+  i2c_address: "0x44"
+  i2c_bus_id: bus_a
+  throttle_average: 10s
+
 sensor:
   - platform: hdc302x
     id: hdc302x_sensor
-    i2c_id: ${hdc302x_i2c_bus_id}
-    address: ${hdc302x_i2c_address}
-    update_interval: ${hdc302x_update_interval}
+    i2c_id: ${i2c_bus_id}
+    address: ${i2c_address}
+    update_interval: ${update_interval}
     heater_enable: ${hdc302x_heater_enable}
     temperature:
       name: ${hdc302x_temperature_name}
       id: ${hdc302x_temperature_id}
       filters:
-        - exponential_moving_average:
-            alpha: 0.1
-            send_every: 1
+        - throttle_average: ${throttle_average}
+        - filter_out: nan
+        # - exponential_moving_average:
+        #     alpha: 0.1
+        #     send_every: 1
     humidity:
       name: ${hdc302x_humidity_name}
       id: ${hdc302x_humidity_id}
       filters:
-        - exponential_moving_average:
-            alpha: 0.1
-            send_every: 1
+        - throttle_average: ${throttle_average}
+        - filter_out: nan
+        # - exponential_moving_average:
+        #     alpha: 0.1
+        #     send_every: 1

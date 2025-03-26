@@ -2,6 +2,6 @@ packages:
   display: !include
     file: ssd1306.yaml
     vars:
-      ssd1306_i2c_address: "0x3D"
+      i2c_address: "0x3D"
       ssd1306_model: "SSD1306 128x64"
       ssd1306_id: ${display_id}

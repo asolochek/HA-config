@@ -5,6 +5,7 @@ substitutions:
   apparent_power_name: "Apparent Power"
   power_factor_name: "Power Factor"
   total_daily_energy_name: "Total Energy"
+  reactive_power_name: "Reactive Power"
   current_limit: "15.0"
   button_gpio: GPIO0
   button_inverted: "true"

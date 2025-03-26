@@ -4,6 +4,7 @@ substitutions:
   room: Living Room
   hostname: plug-livingroom-av
   device_description: "Living Room AV"
+  throttle_average: 60s
 
 packages:
   device_base: !include common/sonoff_s31.yaml

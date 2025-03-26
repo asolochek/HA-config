@@ -5,13 +5,19 @@ substitutions:
   sgp30_tvoc_name: "TVOC"
   sgp30_temperature_source: temperature
   sgp30_humidity_source: humidity
+  climate_throttle_average: 10s
+
+defaults:
+  update_interval: 1s
+  i2c_address: "0x58"
+  i2c_bus_id: bus_a
 
 sensor:
   - platform: sgp30
     id: sgp30_sensor
-    i2c_id: bus_a
-    address: 0x58
-    update_interval: 1s
+    i2c_id: ${i2c_bus_id}
+    address: ${i2c_address}
+    update_interval: ${update_interval}
     store_baseline: false
     compensation:
       temperature_source: ${sgp30_temperature_source}
@@ -22,10 +28,12 @@ sensor:
       name: ${sqp30_ec02_name}
       accuracy_decimals: 1
       filters:
+        - throttle_average: ${climate_throttle_average}
+        - filter_out: nan
         - filter_out: 65535.0
-        - exponential_moving_average:
-            alpha: 0.05
-            send_every: 15
+        # - exponential_moving_average:
+        #     alpha: 0.05
+        #     send_every: 15
         # - sliding_window_moving_average:
         #     window_size: 15
         #     send_every: 15
@@ -36,10 +44,12 @@ sensor:
       name: ${sgp30_tvoc_name}
       accuracy_decimals: 1
       filters:
+        - throttle_average: ${climate_throttle_average}
+        - filter_out: nan
         - filter_out: 65535.0
-        - exponential_moving_average:
-            alpha: 0.05
-            send_every: 15
+        # - exponential_moving_average:
+        #     alpha: 0.05
+        #     send_every: 15
         # - sliding_window_moving_average:
         #     window_size: 15
         #     send_every: 15
