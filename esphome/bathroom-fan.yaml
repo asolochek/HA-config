@@ -21,7 +21,7 @@ packages:
       i2c_address: "0x36"
       dry_threshold: "40"
       moisture_min_value: "300"
-  dry: !include common/soil_dry_indicator.yaml
+#  dry: !include common/soil_dry_indicator.yaml
   dp: !include common/dew_point.yaml
 
 
@@ -50,6 +50,7 @@ esphome:
   - priority: 900
     then:
       - lambda: "pinMode(7, OUTPUT); digitalWrite(7, HIGH);"
+      - lambda: "App.set_loop_interval(0);"
   - priority: 100
     then:
       - lambda: |-
@@ -480,17 +481,37 @@ graph:
         color: color_stage2_threshold
         continuous: true
 
+globals:
+  - id: blink_state
+    type: bool
+    initial_value: "false"
+
+interval:
+  - interval: 250ms
+    then:
+      - lambda: |-
+          if (id(soil_dry).state) {
+            id(blink_state) = !id(blink_state);
+          }
+          else {
+            id(blink_state) = false;
+          }
+
 display:
   - id: !extend ${display_id}
     lambda: |-
       auto fan_speed = id(bathroom_fan).state ? float(id(bathroom_fan).speed) / 1024.0 * 100 : 0;
 
-      it.printf(4, 3, id(futura50), "%.0f%%", fan_speed);
+      if (id(blink_state)) {
+        it.filled_circle(140, 30, 15, Color(red));
+      }
+
+      it.printf(4, 0, id(futura50), "%.0f%%", fan_speed);
       it.printf(178, 0, id(futura28), "%.0f", c_to_f(float(id(temperature).state)));
       it.circle(219, 12, 4);
       it.circle(219, 12, 3);
       it.printf(224, 0, id(futura28), "F");
-      it.printf(178, 36, id(futura28), Color(yellow), "%.0f%%", id(humidity).state);
+      it.printf(178, 30, id(futura28), Color(yellow), "%.0f%%", id(humidity).state);
       if (id(fan_controller).get_controller_enabled() == false) {
         it.printf(0, 110, id(futura24), "Controller Off");
       }
