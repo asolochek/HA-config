@@ -1,8 +1,8 @@
 substitutions:
-  name: living-room-west-soil-sensor
+  name: living-room-sw-soil-sensor
   friendly_name: Living Room South West Soil Sensor
   room: "Living Room"
-  hostname: soil-sensor-livingroom-west
+  hostname: soil-sensor-livingroom-sw
   device_description: South West Soil Sensor
   log_level: INFO
   i2c_frequency: 100kHz
