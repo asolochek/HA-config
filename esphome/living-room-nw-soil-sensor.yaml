@@ -1,0 +1,35 @@
+substitutions:
+  name: living-room-nw-soil-sensor
+  friendly_name: Living Room North West Soil Sensor
+  room: "Living Room"
+  hostname: soil-sensor-livingroom-nw
+  device_description: North West Soil Sensor
+  log_level: INFO
+  i2c_frequency: 100kHz
+
+
+packages:
+  device_base: !include common/qtpy_esp32.yaml
+  soil1: !include 
+    file: common/adafruit_soil_sensor.yaml
+    vars:
+      i2c_address: "0x36"
+      id_prefix: "plant_1"
+      name_prefix: "Plant 1"
+      dry_id: soil_dry
+
+  dry: !include
+    file: common/soil_dry_indicator.yaml
+    var:
+      sensor_id: soil_dry
+      led_id: neopixel_led
+
+
+# wifi:
+#   use_address: !remove
+#   manual_ip:
+#     static_ip: 10.3.3.71
+#     gateway: 10.3.1.2
+#     subnet: 255.255.0.0
+
+
