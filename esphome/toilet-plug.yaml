@@ -4,6 +4,7 @@ substitutions:
   hostname: plug-toilet
   room: Bathroom
   device_description: "Bidet Smart Plug"
+  throttle_average: 10s
 
 packages: 
   device_base: !include common/athom_plug.yaml

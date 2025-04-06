@@ -4,6 +4,7 @@ substitutions:
   hostname: plug-crawl-space-lights
   room: Crawl Space
   device_description: "Crawl Space Lights"
+  throttle_average: 10s
 
 packages: 
   device_base: !include common/athom_plug.yaml

@@ -4,6 +4,7 @@ substitutions:
   room: Living Room
   hostname: plug-guitar-amp
   device_description: "Plug for Guitar Amp"
+  throttle_average: 10s
 
 packages:
   device_base: !include common/sonoff_s31.yaml

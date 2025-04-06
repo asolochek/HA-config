@@ -4,14 +4,15 @@ substitutions:
   hostname: plug-bathroom
   room: Bathroom
   device_description: "Bathroom Shelf Smart Plug"
+  throttle_average: 10s
 
 packages: 
   device_base: !include common/athom_plug.yaml
 
-sensor:
-  - id: !extend cse7766_sensor
-    power:
-      filters:
-        - sliding_window_moving_average:
-            window_size: 2
-            send_every: 2
+# sensor:
+#   - id: !extend cse7766_sensor
+#     power:
+#       filters:
+#         - sliding_window_moving_average:
+#             window_size: 2
+#             send_every: 2

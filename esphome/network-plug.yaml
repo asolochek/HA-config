@@ -4,6 +4,7 @@ substitutions:
   hostname: plug-network
   device_description: "Plug for laundry room network equipment"
   room: Laundry Room
+  throttle_average: 30s
 
 packages:
   device_base: !include common/sonoff_s31.yaml

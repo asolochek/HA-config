@@ -4,6 +4,7 @@ substitutions:
   hostname: plug-living-room-air-conditioner
   device_description: "Plug for Living Room Air Conditioner"
   room: Living Room
+  throttle_average: 10s
 
 packages:
   device_base: !include common/sonoff_s31.yaml
