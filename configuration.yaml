@@ -201,8 +201,79 @@ lovelace:
 #        precision: 4
 
 
+# mqtt:
+#   sensor:
+#     - name: "MQTT Main Panel Black Leg Power"
+#       state_topic: "shellies/pro3em-1/status/em1:0"
+#       unit_of_measurement: "W"
+#       device_class: power
+#       unique_id: "main_panel_black_leg_power"
+#       state_class: measurement
+#       value_template: "{{ value_json.act_power }}"
+#       availability:
+#         - topic: "shellies/pro3em-1/online"
+#           payload_available: "true"
+#           payload_not_available: "false"  
+#     - name: "MQTT Main Panel Black Leg Energy"
+#       state_topic: "shellies/pro3em-1/status/em1data:0"
+#       unit_of_measurement: "kWh"
+#       device_class: energy
+#       unique_id: "main_panel_black_leg_total_energy"
+#       state_class: total_increasing
+#       value_template: "{{ value_json.total_act_energy / 1000 }}"
+#       availability:
+#         - topic: "shellies/pro3em-1/online"
+#           payload_available: "true"
+#           payload_not_available: "false"
+#     - name: "MQTT Main Panel Red Leg Power"
+#       state_topic: "shellies/pro3em-1/status/em1:1"
+#       unit_of_measurement: "W"
+#       device_class: power
+#       unique_id: "main_panel_red_leg_power"
+#       state_class: measurement
+#       value_template: "{{ value_json.act_power }}"
+#       availability:
+#         - topic: "shellies/pro3em-1/online"
+#           payload_available: "true"
+#           payload_not_available: "false"  
+#     - name: "MQTT Main Panel Red Leg Energy"
+#       state_topic: "shellies/pro3em-1/status/em1data:1"
+#       unit_of_measurement: "kWh"
+#       device_class: energy
+#       unique_id: "main_panel_red_leg_total_energy"
+#       state_class: total_increasing
+#       value_template: "{{ value_json.total_act_energy / 1000 }}"
+#       availability:
+#         - topic: "shellies/pro3em-1/online"
+#           payload_available: "true"
+#           payload_not_available: "false"     
+#     - name: "MQTT Garbage Disposal Power"
+#       state_topic: "shellies/pro3em-1/status/em1:2"
+#       unit_of_measurement: "W"
+#       device_class: power
+#       unique_id: "garbage_disposal_power"
+#       state_class: measurement
+#       value_template: "{{ value_json.act_power }}"
+#       availability:
+#         - topic: "shellies/pro3em-1/online"
+#           payload_available: "true"
+#           payload_not_available: "false"  
+#     - name: "MQTT Garbage Disposal Energy"
+#       state_topic: "shellies/pro3em-1/status/em1data:2"
+#       unit_of_measurement: "kWh"
+#       device_class: energy
+#       unique_id: "garbage_disposal_total_energy"
+#       state_class: total_increasing
+#       value_template: "{{ value_json.total_act_energy / 1000 }}"
+#       availability:
+#         - topic: "shellies/pro3em-1/online"
+#           payload_available: "true"
+#           payload_not_available: "false"  
 
-automation: !include automations.yaml
+
+
+automation ui: !include automations.yaml
+automation manual: !include_dir_merge_list automations/
 fan: !include_dir_merge_list fans/
 light: !include_dir_merge_list lights/
 lock: !include_dir_merge_list locks/
@@ -213,6 +284,9 @@ switch: !include_dir_merge_list switches/
 template: !include_dir_merge_list template_devices/
 cover: !include_dir_merge_list windows/
 shell_command: !include shell_commands.yaml
-
+mqtt: 
+  sensor: !include_dir_merge_list mqtt/
+#mqtt: !include mqtt/shellies.yaml
+#mqtt: !include_dir_merge_named mqtt/
 
 
