@@ -48,7 +48,7 @@ packages:
       i2c_id: bus_b
       id_prefix: "plant_6"
       name_prefix: "Plant 6"
-      dry_threshold: 20
+      dry_threshold: 30
   bin: !include
     file: common/boolean_or.yaml
     vars:
