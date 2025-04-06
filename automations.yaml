@@ -1582,6 +1582,11 @@
       - condition: state
         entity_id: sensor.thaos_phone
         state: hallway
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: sensor.ham
+        state: ''
   actions:
   - action: switch.turn_on
     metadata: {}
@@ -1906,4 +1911,77 @@
     data: {}
     target:
       entity_id: light.kitchen_stove_hood_light_enable
+  mode: single
+- id: '1743625350097'
+  alias: Fingerprint Identified Automation
+  description: Automation that triggers when a fingerprint is successfully identified
+    on the G4 Doorbell Pro
+  triggers:
+  - event_type: state_changed
+    event_data:
+      entity_id: event.door_fingerprint
+    trigger: event
+  conditions:
+  - condition: template
+    value_template: "{{\n   trigger.event.data.new_state is not none and\n   trigger.event.data.new_state.attributes.event_type
+      == 'identified' and\n   (trigger.event.data.new_state.attributes.ulp_id|default(''))
+      != ''\n }}\n"
+  actions:
+  - action: unifiprotect.get_user_keyring_info
+    data:
+      device_id: 60040da037cd882a1a9db147d57940b5
+    response_variable: keyring
+  - variables:
+      name: "{{ \n  keyring.users | selectattr(\"ulp_id\", \"equalto\", trigger.event.data.new_state.attributes.ulp_id)
+        | first\n}}\n"
+  - data:
+      message: Front Door Unlocked by {{ name.full_name }}
+      title: Fingerprint Scan Notification
+    action: notify.notify
+  - action: lock.unlock
+    metadata: {}
+    data: {}
+    target:
+      entity_id: lock.front_door
+- id: '1743741722757'
+  alias: NFC Scan
+  description: Automation that triggers when an NFC card is successfully identified
+    on the G4 Doorbell Pro
+  triggers:
+  - event_type: state_changed
+    event_data:
+      entity_id: event.door_nfc
+    trigger: event
+  conditions:
+  - condition: template
+    value_template: "{{\n   not trigger.event.data.old_state.attributes.get('restored',
+      false) and\n   not trigger.event.data.old_state.state == 'unavailable' and\n
+      \  trigger.event.data.new_state is not none and\n   trigger.event.data.new_state.attributes.event_type
+      == 'scanned'\n}}\n"
+  actions:
+  - action: unifiprotect.get_user_keyring_info
+    data:
+      device_id: 60040da037cd882a1a9db147d57940b5
+    response_variable: keyring
+  - variables:
+      name: None
+  - if:
+    - condition: template
+      value_template: "{% set ns = namespace(is_valid = false) %}\n  {% for user in
+        keyring.users %}\n      {% if user.user_status == \"ACTIVE\" %}\n        {%
+        for key in user['keys'] %}\n            {% if key.key_type == \"nfc\" and
+        key.nfc_id == trigger.event.data.new_state.attributes.nfc_id %}\n                {%
+        set ns.is_valid = true %}\n                {% set name = user.full_name %}\n
+        \           {% endif %}\n        {% endfor %}\n    {% endif %}\n{% endfor
+        %}\n\n{{ ns.is_valid }}"
+    then:
+    - data:
+        message: Front Door unlocked by {{ name }} via NFC
+        title: NFC Scan Notification
+      action: notify.notify
+    - action: lock.unlock
+      metadata: {}
+      data: {}
+      target:
+        entity_id: lock.front_door
   mode: single
