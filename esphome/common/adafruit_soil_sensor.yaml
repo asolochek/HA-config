@@ -1,16 +1,16 @@
-
 defaults:
   name_prefix: "Soil"
   id_prefix: "soil"
   i2c_bus: bus_a
   i2c_address: "0x36"
-  dry_threshold: "40"
   temperature_id: ${id_prefix}_temperature
   temperature_name: "${name_prefix} Temperature"
   moisture_id: ${id_prefix}_moisture
   moisture_name: "${name_prefix} Moisture"
   dry_id: ${id_prefix}_dry
   dry_name: "${name_prefix} Dry"
+  dry_threshold: "40"
+  dry_hysteresis: "10"
   temperature_offset: "0.0"
   temperature_gain: "1.0"
   temperature_window_size: "5"
@@ -24,6 +24,7 @@ defaults:
   moisture_window_send_first_at: "3"
   moisture_exp_alpha: "0.03"
   moisture_exp_send_every: "2"
+
 
 sensor:
   - platform: adafruit_soil_sensor
@@ -62,6 +63,7 @@ binary_sensor:
     name: "${dry_name}"
     sensor_id: ${id_prefix}_moisture
     threshold: ${dry_threshold}
+    hysteresis: ${dry_hysteresis}
     internal: false
     icon: mdi:water-percent-alert
 
