@@ -9,7 +9,7 @@
 
 substitutions:
   throttle_average: 1s
-  total_energy_throttle_average: 60s
+  total_energy_throttle: 60s
 
 uart:
   rx_pin: 
@@ -23,32 +23,66 @@ sensor:
   - platform: cse7766
     id: cse7766_sensor
     current:
-      name: ${current_name}
-      accuracy_decimals: 1
-      filters:
-        - lambda: if (x < 0.060) return 0.0; else return x;   #For the chip will report less than 3w power when no load is connected
-        - throttle_average: ${throttle_average}
-        - filter_out: nan
-      on_value_range:
-        - above: ${current_limit}
-          then:
-            - switch.turn_off: relay
-
+      name: ${current_name} Raw
+      id: current_raw
+      accuracy_decimals: 3
+      internal: true
     voltage:
-      name: ${voltage_name}
-      accuracy_decimals: 1
-      filters:
-        - throttle_average: ${throttle_average}
-        - filter_out: nan
-
+      name: ${voltage_name} Raw
+      id: voltage_raw
+      accuracy_decimals: 2
+      internal: true
     power:
-      name: ${power_name}
-      accuracy_decimals: 1
-      id: my_power
-      filters:
-        - lambda: if (x < 3) return 0.0; else return x;   #For the chip will report less than 3w power when no load is connected
-        - throttle_average: ${throttle_average}
-        - filter_out: nan
+      name: ${power_name} Raw
+      id: power_raw
+      accuracy_decimals: 3
+      internal: true
+    apparent_power:
+      name: ${apparent_power_name} Raw
+      id: apparent_power_raw
+      accuracy_decimals: 3
+      internal: true
+    reactive_power:
+      name: ${reactive_power_name} Raw
+      id: reactive_power_raw
+      accuracy_decimals: 3
+      internal: true
+    power_factor: 
+      name: ${power_factor_name} Raw
+      id: power_factor_raw
+      accuracy_decimals: 3
+      internal: true
+
+  - platform: copy
+    source_id: power_raw
+    name: ${power_name}
+    id: my_power
+    filters:
+      - lambda: if (x < 3) return 0.0; else return x;   #For the chip will report less than 3w power when no load is connected
+      - throttle_average: ${throttle_average}
+      - filter_out: nan
+
+  - platform: copy
+    source_id: current_raw
+    name: ${current_name}
+    accuracy_decimals: 3
+    filters:
+      - lambda: if (x < 0.060) return 0.0; else return x;   #For the chip will report less than 3w power when no load is connected
+      - throttle_average: ${throttle_average}
+      - filter_out: nan
+    on_value_range:
+      - above: ${current_limit}
+        then:
+          - switch.turn_off: relay
+
+  - platform: copy
+    source_id: voltage_raw
+    name: ${voltage_name}
+    accuracy_decimals: 2
+    filters:
+      - throttle_average: ${throttle_average}
+      - filter_out: nan
+
 
 
     # energy:
@@ -70,31 +104,33 @@ sensor:
     #           previous_energy_value = current_energy_value;
     #           id(total_energy_sensor).update();
 
+  - platform: copy
+    source_id: apparent_power_raw
+    name: ${apparent_power_name}
+    filters:
+      - throttle_average: ${throttle_average}
+      - filter_out: nan
 
-    apparent_power: #(only available with version 2024.3.0 or greater)
-      name: ${apparent_power_name}
-      filters:
-        - throttle_average: ${throttle_average}
-        - filter_out: nan
+  - platform: copy
+    source_id: reactive_power_raw
+    name: ${reactive_power_name} 
+    filters:
+      - throttle_average: ${throttle_average}
+      - filter_out: nan
 
-    reactive_power:
-      name: ${reactive_power_name} 
-      filters:
-        - throttle_average: ${throttle_average}
-        - filter_out: nan
-
-    power_factor: #(only available with version 2024.3.0 or greater)
-      name: ${power_factor_name}
-      accuracy_decimals: 1
-      filters:
-        - throttle_average: ${throttle_average}
-        - filter_out: nan
+  - platform: copy
+    source_id: power_factor_raw
+    name: ${power_factor_name}
+    accuracy_decimals: 1
+    filters:
+      - throttle_average: ${throttle_average}
+      - filter_out: nan
 
   - platform: total_daily_energy #(Optional, not specific to cse7766)
     name: ${total_daily_energy_name}
     power_id: my_power
-    accuracy_decimals: 1
-    unit_of_measurement: kWh
+    accuracy_decimals: 3
+    state_class: total_increasing
+    device_class: energy
     filters:
-      - throttle_average: ${total_energy_throttle_average}
-      - filter_out: nan
+      - throttle: ${total_energy_throttle}
