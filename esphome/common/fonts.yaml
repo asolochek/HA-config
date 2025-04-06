@@ -132,9 +132,9 @@ font:
   - file: "fonts/Gomme10x20n.bdf"
     id: gomme20
     size: 20
-  # - file: "fonts/Tamzen5x9b.bdf"
-  #   id: tamzen5x9b
-  #   size: 7
+  - file: "fonts/Tamzen5x9b.bdf"
+    id: tamzen5x9b
+    size: 7
   - file: "fonts/small_dot_digital-7.ttf" # No good on matrix
     id: small_dot
     size: 12
