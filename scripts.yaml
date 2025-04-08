@@ -559,7 +559,7 @@ front_door_unlock:
     - condition: and
       conditions:
       - condition: state
-        entity_id: device_tracker.aarons_watch_3
+        entity_id: device_tracker.aarons_watch
         state: home
       - condition: state
         entity_id: device_tracker.ham
