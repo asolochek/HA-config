@@ -8,27 +8,52 @@
       entity_id: event.door_fingerprint
     trigger: event
   conditions:
+  # Check that the event is an identified fingerprint scan
+  # The check for the 'restored' state is because this event is triggered by a
+  # reboot of the doorbell for some reason
   - condition: template
-    value_template: "{{\n   trigger.event.data.new_state is not none and\n   trigger.event.data.new_state.attributes.event_type
-      == 'identified' and\n   (trigger.event.data.new_state.attributes.ulp_id|default(''))
-      != ''\n }}\n"
+    value_template: >
+      {{
+        not trigger.event.data.old_state.attributes.get('restored', false) and
+        not trigger.event.data.old_state.state == 'unavailable' and
+        trigger.event.data.new_state is not none and
+        trigger.event.data.new_state.attributes.event_type == 'identified' and
+        (trigger.event.data.new_state.attributes.ulp_id|default('')) != '' 
+      }}
   actions:
+  # Get the user keyring information from the Unifi Protect API
   - action: unifiprotect.get_user_keyring_info
     data:
       device_id: 60040da037cd882a1a9db147d57940b5
     response_variable: keyring
+  # Set the user_data variable to the user with the identified fingerprint
   - variables:
-      name: "{{ \n  keyring.users | selectattr(\"ulp_id\", \"equalto\", trigger.event.data.new_state.attributes.ulp_id)
-        | first\n}}\n"
-  - data:
-      message: Front Door Unlocked by {{ name.full_name }}
-      title: Fingerprint Scan Notification
-    action: notify.notify
-  - action: lock.unlock
-    metadata: {}
-    data: {}
-    target:
-      entity_id: lock.front_door
+      user_data: > 
+        {{ 
+          keyring.users | selectattr("ulp_id", "equalto", trigger.event.data.new_state.attributes.ulp_id)| first
+        }}
+  - if:
+    # Check that the fingerprint scanned is for an active user
+    - condition: template
+      value_template: >
+        {{ user_data.user_status == "ACTIVE" }}
+    then:
+      - action: notify.notify
+        data:
+          title: Fingerprint Scan Notification
+          message: Front Door Unlocked by {{ user_data.full_name }}
+      - action: lock.unlock
+        metadata: {}
+        data: {}
+        target:
+          entity_id: lock.front_door
+    else:
+      # If the fingerprint scanned is for an inactive user, send a notification
+      - action: notify.notify
+        data:
+          title: Fingerprint Scan Notification
+          message: User {{ user_data.full_name }} is marked INACTIVE
+
 - id: '1743741722757'
   alias: Doorbell NFC Scan
   description: Automation that triggers when an NFC card is successfully identified
@@ -39,35 +64,70 @@
       entity_id: event.door_nfc
     trigger: event
   conditions:
+  # Check for a valid NFC scan event
   - condition: template
-    value_template: "{{\n   not trigger.event.data.old_state.attributes.get('restored',
-      false) and\n   not trigger.event.data.old_state.state == 'unavailable' and\n
-      \  trigger.event.data.new_state is not none and\n   trigger.event.data.new_state.attributes.event_type
-      == 'scanned'\n}}\n"
+    value_template: >
+      {{
+        not trigger.event.data.old_state.attributes.get('restored', false) and
+        not trigger.event.data.old_state.state == 'unavailable' and
+        trigger.event.data.new_state is not none and
+        trigger.event.data.new_state.attributes.event_type == 'scanned'
+      }}
   actions:
+  # Get the user keyring information from the Unifi Protect API
   - action: unifiprotect.get_user_keyring_info
     data:
       device_id: 60040da037cd882a1a9db147d57940b5
     response_variable: keyring
   - variables:
-      name: None
+      # Extract the name associated with the NFC ID from the keyring
+      name: >
+        {% set ns = namespace(name_ = "Unknown") %}
+        {% for user in keyring.users %}
+          {% for key in user['keys'] %}
+            {% 
+              if key.key_type == "nfc" and 
+              key.nfc_id == trigger.event.data.new_state.attributes.nfc_id
+            %}
+              {% set ns.name_ = user.full_name %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+        {{ ns.name_ }}
+      # Check if the NFC ID is associated with an active user      
+      is_valid: >
+        {% set ns = namespace(is_valid_ = "false") %}
+        {% for user in keyring.users %}
+          {% if user.user_status == "ACTIVE" %}
+            {% for key in user['keys'] %}
+              {% 
+                if key.key_type == "nfc" and 
+                key.nfc_id == trigger.event.data.new_state.attributes.nfc_id
+              %}
+                {% set ns.is_valid_ = "true" %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+        {{ ns.is_valid_ }}
   - if:
+    # Only unlock for ACTIVE users
     - condition: template
-      value_template: "{% set ns = namespace(is_valid = false) %}\n  {% for user in
-        keyring.users %}\n      {% if user.user_status == \"ACTIVE\" %}\n        {%
-        for key in user['keys'] %}\n            {% if key.key_type == \"nfc\" and
-        key.nfc_id == trigger.event.data.new_state.attributes.nfc_id %}\n                {%
-        set ns.is_valid = true %}\n                {% set name = user.full_name %}\n
-        \           {% endif %}\n        {% endfor %}\n    {% endif %}\n{% endfor
-        %}\n\n{{ ns.is_valid }}"
+      value_template: > 
+        {{ is_valid == "true" }}
     then:
-    - data:
-        message: Front Door unlocked by {{ name }} via NFC
-        title: NFC Scan Notification
-      action: notify.notify
-    - action: lock.unlock
-      metadata: {}
-      data: {}
-      target:
-        entity_id: lock.front_door
+      - action: notify.notify
+        data:
+          title: NFC Scan Notification
+          message: Front Door unlocked by {{ name }}
+      - action: lock.unlock
+        metadata: {}
+        data: {}
+        target:
+          entity_id: lock.front_door
+    else:
+      - action: notify.notify
+        data:
+          title: NFC Scan Notification
+          message: User {{ name }} is marked INACTIVE
   mode: single
