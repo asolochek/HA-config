@@ -80,9 +80,8 @@
 - id: '1686711777584'
   alias: Workout fan auto off
   description: ''
-  trigger:
+  triggers:
   - type: not_running
-    platform: device
     device_id: e4ea4923eab39ca70ae3805e7cc9a285
     entity_id: binary_sensor.aaron_on_peloton_workout
     domain: binary_sensor
@@ -91,8 +90,8 @@
       minutes: 1
       seconds: 0
     id: workout_stopped
+    trigger: device
   - type: not_running
-    platform: device
     device_id: 1deeadfbd47d7c685f34e5cde1231e47
     entity_id: 5d26af4dd72c295b10062e9e83ba6efa
     domain: binary_sensor
@@ -100,11 +99,26 @@
       hours: 0
       minutes: 1
       seconds: 0
-  condition:
+    trigger: device
+  conditions:
   - condition: state
     entity_id: input_select.standing_fan_mode
     state: auto
-  action:
+  - condition: not
+    conditions:
+    - condition: or
+      conditions:
+      - type: is_running
+        condition: device
+        device_id: e4ea4923eab39ca70ae3805e7cc9a285
+        entity_id: 66d2f572455c2a7d225a314d54e4df46
+        domain: binary_sensor
+      - type: is_running
+        condition: device
+        device_id: 1deeadfbd47d7c685f34e5cde1231e47
+        entity_id: 5d26af4dd72c295b10062e9e83ba6efa
+        domain: binary_sensor
+  actions:
   - action: fan.turn_off
     data: {}
     target:
