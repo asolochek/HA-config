@@ -18,6 +18,9 @@ packages:
   device_base: !include common/feather_huzzah32_v2.yaml
 
 
+bluetooth_proxy:
+  active: true
+
 spi: !remove
 
 # wifi:
