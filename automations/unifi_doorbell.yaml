@@ -22,6 +22,7 @@
       }}
   actions:
   # Get the user keyring information from the Unifi Protect API
+  # Note that keyring info takes a while to refresh in the integration
   - action: unifiprotect.get_user_keyring_info
     data:
       device_id: 60040da037cd882a1a9db147d57940b5
@@ -82,34 +83,62 @@
   - variables:
       # Extract the name associated with the NFC ID from the keyring
       name: >
-        {% set ns = namespace(name_ = "Unknown") %}
-        {% for user in keyring.users %}
-          {% for key in user['keys'] %}
-            {% 
-              if key.key_type == "nfc" and 
-              key.nfc_id == trigger.event.data.new_state.attributes.nfc_id
-            %}
-              {% set ns.name_ = user.full_name %}
-            {% endif %}
-          {% endfor %}
+        {% set ns = namespace(name="Unknown") %}
+        {% for user in keyring.users if user['keys'] | 
+          selectattr('key_type', 'eq', 'nfc') | 
+          selectattr('nfc_id', 'eq', trigger.event.data.new_state.attributes.nfc_id) | 
+          list | first | default %}
+          {% set ns.name = user.full_name %}
         {% endfor %}
-        {{ ns.name_ }}
+        {{ ns.name }}
+
+
+      # {% set ns = namespace(name = "false") %}
+      # {% for user in keyring.users %}
+      #   {% if user.user_status == "ACTIVE" %}
+      #     {% for key in user['keys'] %}
+      #       {% 
+      #         if key.key_type == "nfc" and 
+      #         key.nfc_id == trigger.event.data.new_state.attributes.nfc_id
+      #       %}
+      #         {% set ns.name = user.full_name %}
+      #       {% endif %}
+      #     {% endfor %}
+      #   {% endif %}
+      # {% endfor %}
+      # {{ ns.name }}
+
       # Check if the NFC ID is associated with an active user      
       is_valid: >
-        {% set ns = namespace(is_valid_ = "false") %}
-        {% for user in keyring.users %}
-          {% if user.user_status == "ACTIVE" %}
-            {% for key in user['keys'] %}
-              {% 
-                if key.key_type == "nfc" and 
-                key.nfc_id == trigger.event.data.new_state.attributes.nfc_id
-              %}
-                {% set ns.is_valid_ = "true" %}
-              {% endif %}
-            {% endfor %}
-          {% endif %}
+        {% set ns = namespace(is_valid="false") %}
+        {% for user in keyring.users | selectattr('user_status', 'eq', 'ACTIVE') 
+          if user['keys'] | 
+            selectattr('key_type', 'eq', 'nfc') | 
+            selectattr('nfc_id', 'eq', trigger.event.data.new_state.attributes.nfc_id) | 
+            list | first | default %}
+          {% set ns.is_valid = "true" %}
         {% endfor %}
-        {{ ns.is_valid_ }}
+        {{ ns.is_valid }}
+
+
+      # {% set ns = namespace(is_valid = "false") %}
+      # {% for user in keyring.users %}
+      #   {% if user.user_status == "ACTIVE" %}
+      #     {% for key in user['keys'] %}
+      #       {% 
+      #         if key.key_type == "nfc" and 
+      #         key.nfc_id == trigger.event.data.new_state.attributes.nfc_id
+      #       %}
+      #         {% set ns.is_valid = "true" %}
+      #       {% endif %}
+      #     {% endfor %}
+      #   {% endif %}
+      # {% endfor %}
+      # {{ ns.is_valid }}
+
+
+
+
   - if:
     # Only unlock for ACTIVE users
     - condition: template
