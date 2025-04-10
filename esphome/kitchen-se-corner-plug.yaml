@@ -5,6 +5,8 @@ substitutions:
   hostname: plug-kitchen-se-corner
   device_description: "Microwave and Toaster Oven"
   current_limit: "100.0"
+  power_decimals: "1"
+  throttle_average: 1s
 
 packages:
   device_base: !include common/sonoff_s31.yaml
