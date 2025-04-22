@@ -172,9 +172,8 @@
 - id: '1686910516025'
   alias: Office unoccupied
   description: ''
-  trigger:
+  triggers:
   - type: not_occupied
-    platform: device
     device_id: ee3ec0a57e41420932d477d269cd70eb
     entity_id: 37f8ec4222f4b6fe5daceb71de99f532
     domain: binary_sensor
@@ -182,12 +181,15 @@
       hours: 1
       minutes: 0
       seconds: 0
-  condition: []
-  action:
+    trigger: device
+  conditions: []
+  actions:
   - action: light.turn_off
     data: {}
     target:
-      entity_id: light.office_lights
+      entity_id:
+      - light.office_lights
+      - light.office_closet_lights
   mode: single
 - id: '1686936873918'
   alias: Bedroom receiver off with tv
@@ -1847,8 +1849,6 @@
   actions:
   - action: recorder.purge_entities
     data:
-      entity_globs:
-      - sensor.*_watch
       keep_days: 30
   mode: single
 - id: '1737355222486'
@@ -1868,19 +1868,21 @@
     entity_id: input_boolean.laundry_running
     state: 'on'
   actions:
-  - action: notify.notify
-    metadata: {}
-    data:
-      message: Laundry machine finished
-  - action: notify.tv
-    metadata: {}
-    data:
-      message: Laundry is finished
   - action: input_boolean.turn_off
     metadata: {}
     data: {}
     target:
       entity_id: input_boolean.laundry_running
+  - action: notify.notify
+    continue_on_error: true
+    metadata: {}
+    data:
+      message: Laundry machine finished
+  - action: notify.tv
+    continue_on_error: true
+    metadata: {}
+    data:
+      message: Laundry is finished
   mode: single
 - id: '1738096219384'
   alias: Laundry Machine Trigger On
