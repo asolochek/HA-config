@@ -9,6 +9,9 @@ packages:
   device_base: !include common/wesp32.yaml
   
 
+bluetooth_proxy:
+  active: true
+
 
 switch:
   - platform: gpio
