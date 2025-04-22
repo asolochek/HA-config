@@ -1,0 +1,127 @@
+defaults:
+  name: "Qwiic LED Stick"
+  id: led_stick
+  i2c_bus_id: bus_a
+  i2c_address: "0x23"
+  num_leds: "10"
+
+# packages:
+#   effects: !include 
+#     file: led_effects.yaml
+#     vars:
+#       light_id: ${id}
+
+number:
+  - platform: template
+    id: quality_level
+    name: "Quality Level"
+    optimistic: true
+    min_value: 0
+    max_value: 100
+    step: 1
+    mode: slider
+    internal: false
+    icon: "mdi:check-circle"
+    unit_of_measurement: "level"
+
+light:
+  - platform: qwiic_led_stick
+    name: ${name}
+    id: ${id}
+    i2c_id: ${i2c_bus_id}
+    address: ${i2c_address}
+    num_leds: ${num_leds}
+    restore_mode: RESTORE_DEFAULT_OFF
+    effects:
+      - addressable_lambda:
+          name: "Quality Level"
+          update_interval: 0.5s
+          lambda: |-
+            // it.size() - Number of LEDs
+            // it[num] - Access the LED at index num.
+            // Set the LED at num to the given r, g, b values
+            // it[num] = Color(r, g, b);
+            // Get the color at index num (Color instance)
+            // it[num].get(); 
+            int led_count = it.size();
+            int level = id(quality_level).state;
+            int cutoff = level / led_count;
+            int idx = 0;
+            static Color init_state[10];
+            static bool initialized = false;
+
+            // Set all LEDs to the initial state
+            if (!initialized) {
+              for (idx=0; idx < led_count; idx++){
+                init_state[idx] = Color(it[idx].get_red(), it[idx].get_green(), it[idx].get_blue());
+                //init_state[idx] = it[idx].get();
+              }
+              initialized = true;
+            }
+            for (idx=0; idx < cutoff; idx++){
+              it[idx] = init_state[idx];
+            }
+            for(; idx < led_count; idx++){
+              it[idx] = Color(0, 0, 0);
+            }
+
+  - platform: partition
+    name: "LED 0"
+    segments:
+      - id: ${id}
+        from: 0
+        to: 0
+  - platform: partition
+    name: "LED 1"
+    segments:
+      - id: ${id}
+        from: 1
+        to: 1
+  - platform: partition
+    name: "LED 2"
+    segments:
+      - id: ${id}
+        from: 2
+        to: 2
+  - platform: partition
+    name: "LED 3"
+    segments:
+      - id: ${id}
+        from: 3
+        to: 3
+  - platform: partition
+    name: "LED 4"
+    segments:
+      - id: ${id}
+        from: 4
+        to: 4
+  - platform: partition
+    name: "LED 5"
+    segments:
+      - id: ${id}
+        from: 5
+        to: 5
+  - platform: partition
+    name: "LED 6"
+    segments:
+      - id: ${id}
+        from: 6
+        to: 6
+  - platform: partition
+    name: "LED 7"
+    segments:
+      - id: ${id}
+        from: 7
+        to: 7
+  - platform: partition
+    name: "LED 8"
+    segments:
+      - id: ${id}
+        from: 8
+        to: 8
+  - platform: partition
+    name: "LED 9"
+    segments:
+      - id: ${id}
+        from: 9
+        to: 9 
