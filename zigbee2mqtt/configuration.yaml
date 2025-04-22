@@ -2,7 +2,7 @@ homeassistant:
   enabled: true
 serial:
   port: tcp://10.3.1.58:6638
-  baudrate: 115200
+  baudrate: 460800
   disable_led: false
   adapter: zstack
 frontend:
