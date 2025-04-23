@@ -22,6 +22,9 @@
       }}
   actions:
   # Get the user keyring information from the Unifi Protect API
+  # Best way I've found to get the device ID is to use UI mode of the developers tools
+  # action tab, put get_user_keyring_info in the actio field, clicking on the match that comes up
+  # then selecting the device from the drop down and switching to yaml mode to read the ID
   # Note that keyring info takes a while to refresh in the integration
   - action: unifiprotect.get_user_keyring_info
     data:
@@ -92,22 +95,6 @@
         {% endfor %}
         {{ ns.name }}
 
-
-      # {% set ns = namespace(name = "false") %}
-      # {% for user in keyring.users %}
-      #   {% if user.user_status == "ACTIVE" %}
-      #     {% for key in user['keys'] %}
-      #       {% 
-      #         if key.key_type == "nfc" and 
-      #         key.nfc_id == trigger.event.data.new_state.attributes.nfc_id
-      #       %}
-      #         {% set ns.name = user.full_name %}
-      #       {% endif %}
-      #     {% endfor %}
-      #   {% endif %}
-      # {% endfor %}
-      # {{ ns.name }}
-
       # Check if the NFC ID is associated with an active user      
       is_valid: >
         {% set ns = namespace(is_valid="false") %}
@@ -119,25 +106,6 @@
           {% set ns.is_valid = "true" %}
         {% endfor %}
         {{ ns.is_valid }}
-
-
-      # {% set ns = namespace(is_valid = "false") %}
-      # {% for user in keyring.users %}
-      #   {% if user.user_status == "ACTIVE" %}
-      #     {% for key in user['keys'] %}
-      #       {% 
-      #         if key.key_type == "nfc" and 
-      #         key.nfc_id == trigger.event.data.new_state.attributes.nfc_id
-      #       %}
-      #         {% set ns.is_valid = "true" %}
-      #       {% endif %}
-      #     {% endfor %}
-      #   {% endif %}
-      # {% endfor %}
-      # {{ ns.is_valid }}
-
-
-
 
   - if:
     # Only unlock for ACTIVE users
