@@ -1928,3 +1928,56 @@
     target:
       entity_id: light.kitchen_stove_hood_light_enable
   mode: single
+- id: '1745369287814'
+  alias: Dishwasher Trigger On
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.dishwasher_power
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+    above: 1
+  conditions: []
+  actions:
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.dishwasher_running
+  mode: single
+- id: '1745369433075'
+  alias: Dishwasher Trigger Off
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.dishwasher_power
+    for:
+      hours: 0
+      minutes: 7
+      seconds: 0
+    below: 1
+  conditions:
+  - condition: state
+    entity_id: input_boolean.dishwasher_running
+    state: 'on'
+  actions:
+  - action: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.dishwasher_running
+  - action: notify.notify
+    continue_on_error: true
+    metadata: {}
+    data:
+      message: Dishwasher finished
+  - action: notify.tv
+    continue_on_error: true
+    metadata: {}
+    data:
+      message: Dishwasher is finished
+  mode: single
