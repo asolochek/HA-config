@@ -1939,7 +1939,7 @@
       hours: 0
       minutes: 2
       seconds: 0
-    above: 1
+    above: 5
   conditions: []
   actions:
   - action: input_boolean.turn_on
@@ -1959,7 +1959,7 @@
       hours: 0
       minutes: 7
       seconds: 0
-    below: 1
+    below: 5
   conditions:
   - condition: state
     entity_id: input_boolean.dishwasher_running
