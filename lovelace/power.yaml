@@ -62,6 +62,7 @@ cards:
       - entity_id: "*_and_*"
       - entity_id: "*circuit*"
       - entity_id: "*_ble_*"
+      - entity_id: "*main_panel_total*"
       - integration: group
 
 

@@ -1,0 +1,61 @@
+substitutions:
+  name: emporia-vue
+  friendly_name: Main Panel
+  hostname: vue
+  device_description: "Breaker Power Monitor"
+  room: Laundry Room
+  dns_domain: sf.aberrant.org
+  fqdn: ${hostname}.${dns_domain}
+  log_level: INFO
+
+
+  phase_a_id: "black_leg"
+  phase_a_name: "Black Leg"
+  phase_b_id: "red_leg"
+  phase_b_name: "Red Leg"
+  cir1_name: "01: Lights: Kitchen, Hall, Bedroom, Bathroom, Porch"
+  cir1_phase: "black_leg"
+  cir2_name: "02: Lights: Laundry, Dining Room, Bedroom Closet"
+  cir2_phase: "black_leg"
+  cir3_name: "03: Lights: Hall Closet, Living Room Closet"
+  cir3_phase: "red_leg"
+  cir4_name: "04: Outlets: Bedroom, Hallway"
+  cir4_phase: "red_leg"
+  cir5_name: "06: Outlets: Living Room, Living Room Closet"
+  cir5_phase: "black_leg"
+  cir6_name: "07: Outlets: Office"
+  cir6_phase: "red_leg"
+  cir7_name: "08: Office 20A"
+  cir7_phase: "red_leg"
+  cir8_name: "13: Outlets: Kitchen South Wall, Office North Wall"
+  cir8_phase: "black_leg"
+  cir9_name: "14: Lights: Living Room, Outlets: Crawl Space"
+  cir9_phase: "black_leg"
+  cir10_name: "15: Outlets: Bathroom"
+  cir10_phase: "red_leg"
+  cir11_name: "16: Outlets: Bedroom"
+  cir11_phase: "red_leg"
+  cir12_name: "17: Outlets: Kitchen A"
+  cir12_phase: "black_leg" 
+  cir13_name: "18: Garbage Disposal"
+  cir13_phase: "black_leg"
+  cir14_name: "19: Outlets: Kitchen B"
+  cir14_phase: "red_leg"
+  cir15_name: "20: Dishwasher"
+  cir15_phase: "red_leg"
+  cir16_name: "21: Stove Hood"
+  cir16_phase: "black_leg"
+
+packages:
+  device_base: !include common/emporia_vue.yaml
+  
+logger:
+  logs:
+    esphome: INFO
+    emporia_vue: ${log_level}
+    component: INFO
+    emporia_vue.sensor: ${log_level}
+    emporia_vue.api: ${log_level}
+    emporia_vue.emeter: ${log_level}
+    sensor: INFO
+    

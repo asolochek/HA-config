@@ -1,0 +1,418 @@
+substitutions:
+  name: emporia-vue
+  friendly_name: Emporia Vue
+  device_description: "Emporia Vue"
+  room: Default Room
+  framework: "esp-idf"
+  board_type: esp32dev
+  i2c_frequency: 400kHz
+  i2c_sda_pin: GPIO5
+  i2c_scl_pin: GPIO18
+  i2c_timeout: 100ms
+  current_throttle: 5s
+  power_throttle: 1s
+  voltage_throttle: 5s
+  frequency_throttle: 5s
+  total_energy_throttle: 60s
+  main_power_throttle: 1s
+  current_decimals: "3"
+  voltage_decimals: "2"
+  power_decimals: "2"
+  apparent_power_decimals: "2"
+  power_factor_decimals: "2"
+  total_energy_decimals: "3"
+  flash_write_interval: "48h"
+
+  phase_a_id: phase_a
+  phase_a_name: "Black Leg"
+  phase_b_id: phase_b
+  phase_b_name: "Red Leg"
+  phase_c_id: phase_c
+  phase_c_name: "Blue Leg"
+
+  cir1_id: cir1
+  cir1_name: "Circuit 01"
+  cir2_id: cir2
+  cir2_name: "Circuit 02"
+  cir3_id: cir3
+  cir3_name: "Circuit 03"
+  cir4_id: cir4
+  cir4_name: "Circuit 04"
+  cir5_id: cir5
+  cir5_name: "Circuit 05"
+  cir6_id: cir6
+  cir6_name: "Circuit 06"
+  cir7_id: cir7
+  cir7_name: "Circuit 07"
+  cir8_id: cir8
+  cir8_name: "Circuit 08"
+  cir9_id: cir9
+  cir9_name: "Circuit 09"
+  cir10_id: cir10
+  cir10_name: "Circuit 10"
+  cir11_id: cir11
+  cir11_name: "Circuit 11"
+  cir12_id: cir12
+  cir12_name: "Circuit 12"
+  cir13_id: cir13
+  cir13_name: "Circuit 13"
+  cir14_id: cir14
+  cir14_name: "Circuit 14"
+  cir15_id: cir15
+  cir15_name: "Circuit 15"
+  cir16_id: cir16
+  cir16_name: "Circuit 16"
+
+  cir1_phase: "${phase_a_id}"
+  cir2_phase: "${phase_b_id}"
+  cir3_phase: "${phase_a_id}"
+  cir4_phase: "${phase_b_id}"
+  cir5_phase: "${phase_a_id}"
+  cir6_phase: "${phase_b_id}"
+  cir7_phase: "${phase_a_id}"
+  cir8_phase: "${phase_b_id}"
+  cir9_phase: "${phase_a_id}"
+  cir10_phase: "${phase_b_id}"
+  cir11_phase: "${phase_a_id}"
+  cir12_phase: "${phase_b_id}"
+  cir13_phase: "${phase_a_id}"
+  cir14_phase: "${phase_b_id}"
+  cir15_phase: "${phase_a_id}"
+  cir16_phase: "${phase_b_id}"
+
+
+packages:
+  device_base: !include common.yaml
+#  wifi: !include wifi.yaml
+
+
+esp32:
+  board: ${board_type}
+  framework:
+    type: ${framework}
+
+
+external_components:
+  # - source: github://digiblur/esphome-vue3@dev
+  #   components:
+  #     - emporia_vue
+  - source:
+      type: local
+      path: components
+    components: [emporia_vue]
+
+ethernet:
+  type: RTL8201
+  mdc_pin: GPIO32
+  mdio_pin: GPIO33
+  clk_mode: GPIO0_IN
+  phy_addr: 0
+  phy_registers:
+    - address: 0x10
+      value: 0x1FFA
+      page_id: 0x07
+  use_address: ${fqdn}
+
+
+output:
+  - platform: gpio
+    id: network_led_output
+    pin: GPIO4
+    inverted: false
+
+
+light:
+  - platform: status_led
+    name: "${friendly_name} Status LED"
+    id: wifi_led
+    pin: 
+      number: GPIO2
+      ignore_strapping_warning: true
+    restore_mode: RESTORE_DEFAULT_OFF
+
+  - platform: binary
+    name: "${friendly_name} Network LED"
+    id: network_led
+    output: network_led_output
+    restore_mode: RESTORE_DEFAULT_OFF
+
+preferences:
+  # the default of 1min is far too short--flash chip is rated
+  # for approx 100k writes.
+  flash_write_interval: ${flash_write_interval}
+
+
+i2c:
+  sda: 
+    number: 5
+    ignore_strapping_warning: true
+  scl: 18
+  scan: false
+  frequency: ${i2c_frequency} # recommended range is 50-200kHz, but 400kHz removes errors I see at 200 or less
+  timeout: ${i2c_timeout}
+  id: bus_a
+
+
+.defaultfilters:
+  - &nan
+    filter_out: nan
+  - &pos
+    lambda: 'return max(x, 0.0f);'
+  - &current_zero
+    lambda: 'return ((x < 0.18) ? 0.0f : x);'
+  - &power_zero
+    lambda: 'return ((x < 5.0) ? 0.0f : x);'
+  - &missing
+    lambda: 'return ((x > 90.0) ? 0.0f : x);'
+#    filter_out: 93.07209 # this is the value that the Vue 3 reports when it has no data for a sensor, so filter it out
+  - &calibrate_50a
+    calibrate_polynomial:
+      degree: 4
+      datapoints:
+        - 0.169 -> 0.0
+        - 0.295 -> 0.250
+        - 0.514 -> 0.5
+        - 0.750 -> 0.75
+        - 0.988 -> 1.0
+        - 1.235 -> 1.25
+        - 1.472 -> 1.5
+        - 1.717 -> 1.75
+        - 1.963 -> 2.0
+  - &calibrate_200a
+    calibrate_polynomial:
+      degree: 4
+      datapoints:
+        - 0.144 -> 0.0
+        - 0.158 -> 0.250
+        - 0.195 -> 0.5
+        - 0.237 -> 0.75
+        - 0.286 -> 1.0
+        - 0.341 -> 1.25
+        - 0.400 -> 1.5
+        - 0.457 -> 1.75
+        - 0.516 -> 2.0
+.raw_filter_template: &raw_filter
+  internal: true
+  accuracy_decimals: 3
+  filters:
+    - *nan
+    - *pos
+
+.raw_current_50A_template: &raw_current_50a
+  internal: true
+  accuracy_decimals: 3
+  filters:
+    - *nan
+#    - *current_zero
+    - *missing
+#    - offset: -0.021
+#    - *calibrate_50a
+#    - *pos
+
+.raw_power_50A_template: &raw_power_50a
+  internal: true
+  accuracy_decimals: 3
+  filters:
+    - *nan
+    - *power_zero
+    - offset: -0.00
+    - *pos
+
+.raw_current_200A_template: &raw_current_200a
+  internal: true
+  accuracy_decimals: 3
+  filters:
+    - *nan
+#    - *current_zero
+    - *missing
+#    - offset: -0.0
+#    - *calibrate_200a
+    - *pos
+
+.raw_power_200A_template: &raw_power_200a
+  internal: true
+  accuracy_decimals: 3
+  filters:
+    - *nan
+#    - *power_zero
+    - offset: -0.0
+    - *pos
+
+.power_sensor_template: &power_sensor
+  accuracy_decimals: ${power_decimals}
+  device_class: power
+  filters:
+    - *nan
+    - *pos
+#    - *power_zero
+    - throttle_average: ${power_throttle}
+
+.current_sensor_template: &current_sensor
+  accuracy_decimals: ${current_decimals}
+  device_class: current
+  filters:
+    - *nan
+    - *pos
+ #   - *current_zero
+    - throttle_average: ${current_throttle}
+
+.main_power_sensor_template: &main_power_sensor
+  accuracy_decimals: ${power_decimals}
+  device_class: power
+  filters:
+    - *nan
+    - *pos
+    - throttle_average: ${main_power_throttle}
+
+.voltage_sensor_template: &voltage_sensor
+  accuracy_decimals: ${voltage_decimals}
+  device_class: voltage
+  filters:
+    - *nan
+    - *pos
+    - throttle_average: ${voltage_throttle}
+
+.frequency_sensor_template: &frequency_sensor
+  accuracy_decimals: 2
+  device_class: frequency
+  filters:
+    - *nan
+    - *pos
+    - throttle_average: ${frequency_throttle}
+
+.total_energy_template: &total_energy
+  accuracy_decimals: ${total_energy_decimals}
+  device_class: energy
+  state_class: total_increasing
+  unit_of_measurement: kWh
+  filters:
+    - *nan
+    - *pos
+    - throttle_average: ${total_energy_throttle}
+    - multiply: 0.001  # convert Wh to kWh
+
+
+sensor:
+  - platform: emporia_vue
+    i2c_id: bus_a
+    phases:
+      - { id: "${phase_a_id}", input: "BLACK", calibration: 0.019224, voltage: { id: "${phase_a_id}_voltage", name: "${phase_a_name} Voltage", <<: *voltage_sensor }, frequency: { id: "${phase_a_id}_frequency", name: "${phase_a_name} Frequency", <<: *frequency_sensor } }
+      - { id: "${phase_b_id}", input: "RED",   calibration: 0.019224, voltage: { id: "${phase_b_id}_voltage", name: "${phase_b_name} Voltage", <<: *voltage_sensor }, phase_angle: { id: "${phase_b_id}_phase_angle", name: "${phase_b_name} Phase Angle", <<: *frequency_sensor } }
+#      - { id: "${phase_c_id}", input: "BLUE",  calibration: 0.022, voltage: { id: "${phase_c_id}_voltage", name: "${phase_c_name} Voltage", <<: *voltage_sensor }, phase_angle: { id: "${phase_c_id}_phase_angle", name: "${phase_c_name} Phase Angle", <<: *frequency_sensor } }
+
+    ct_clamps:
+#      - { phase_id: "${phase_a_id}",  input: "A",  power: { id: "${phase_a_id}_power_raw", filters: [ *nan ], name: "Black Leg Power Raw Test", accuracy_decimals: 4 }, current: { id: "${phase_a_id}_current_raw", accuracy_decimals: 4, name: "Black Leg Current Raw Test", filters: [ *nan ] } }
+#      - { phase_id: "${phase_a_id}",  input: "A",  power: { id: "${phase_a_id}_power_raw", filters: [ *nan, offset: -0.7375, *pos ], name: "Black Leg Power Raw Test", accuracy_decimals: 4 }, current: { id: "${phase_a_id}_current_raw", accuracy_decimals: 4, name: "Black Leg Current Raw Test", filters: [ *nan, offset: -0.127, *pos ] } }
+#      - { phase_id: "${phase_a_id}",  input: "A",  power: { id: "${phase_a_id}_power_raw", <<: *raw_power_200a }, current: { id: "${phase_a_id}_current_raw", <<: *raw_current_200a } }
+      - { phase_id: "${phase_a_id}",  input: "A",  power: { id: "${phase_a_id}_power_raw", name: "Black Leg Power Raw Test", <<: *raw_power_200a }, current: { id: "${phase_a_id}_current_raw", name: "Black Leg Current Raw Test", <<: *raw_current_200a } }
+      - { phase_id: "${phase_b_id}",  input: "B",  power: { id: "${phase_b_id}_power_raw", <<: *raw_power_200a }, current: { id: "${phase_b_id}_current_raw", <<: *raw_current_200a } }
+#      - { phase_id: "${phase_c_id}",  input: "C",  power: { id: "${phase_c_id}_power_raw", <<: *raw_filter }, current: { id: "${phase_c_id}_current_raw", <<: *raw_filter } }
+#      - { phase_id: "${cir1_phase}",  input: "1",  power: { id: "${cir1_id}_power_raw", filters: [ *nan, *pos ], name: "01 Power Raw Test", accuracy_decimals: 4 }, current: { id: "${cir1_id}_current_raw", accuracy_decimals: 4, name: "01 Current Raw Test", filters: [*nan, *pos ] } }
+#      - { phase_id: "${cir1_phase}",  input: "1",  power: { id: "${cir1_id}_power_raw",    <<: *raw_power_50a }, current: { id: "${cir1_id}_current_raw",    <<: *raw_current_50a } }
+      - { phase_id: "${cir1_phase}",  input: "1",  power: { id: "${cir1_id}_power_raw", name: "01 Power Raw Test",   <<: *raw_power_50a }, current: { id: "${cir1_id}_current_raw", name: "01 Current Raw Test",   <<: *raw_current_50a } }
+      - { phase_id: "${cir2_phase}",  input: "2",  power: { id: "${cir2_id}_power_raw",    <<: *raw_power_50a }, current: { id: "${cir2_id}_current_raw",    <<: *raw_current_50a } }
+      - { phase_id: "${cir3_phase}",  input: "3",  power: { id: "${cir3_id}_power_raw",    <<: *raw_power_50a }, current: { id: "${cir3_id}_current_raw",    <<: *raw_current_50a } }
+      - { phase_id: "${cir4_phase}",  input: "4",  power: { id: "${cir4_id}_power_raw",    <<: *raw_power_50a }, current: { id: "${cir4_id}_current_raw",    <<: *raw_current_50a } }
+      - { phase_id: "${cir5_phase}",  input: "5",  power: { id: "${cir5_id}_power_raw",    <<: *raw_power_50a }, current: { id: "${cir5_id}_current_raw",    <<: *raw_current_50a } }
+      - { phase_id: "${cir6_phase}",  input: "6",  power: { id: "${cir6_id}_power_raw",    <<: *raw_power_50a }, current: { id: "${cir6_id}_current_raw",    <<: *raw_current_50a } }
+      - { phase_id: "${cir7_phase}",  input: "7",  power: { id: "${cir7_id}_power_raw",    <<: *raw_power_50a }, current: { id: "${cir7_id}_current_raw",    <<: *raw_current_50a } }
+      - { phase_id: "${cir8_phase}",  input: "8",  power: { id: "${cir8_id}_power_raw",    <<: *raw_power_50a }, current: { id: "${cir8_id}_current_raw",    <<: *raw_current_50a } }
+      - { phase_id: "${cir9_phase}",  input: "9",  power: { id: "${cir9_id}_power_raw",    <<: *raw_power_50a }, current: { id: "${cir9_id}_current_raw",    <<: *raw_current_50a } }
+      - { phase_id: "${cir10_phase}", input: "10", power: { id: "${cir10_id}_power_raw",   <<: *raw_power_50a }, current: { id: "${cir10_id}_current_raw",   <<: *raw_current_50a } }
+      - { phase_id: "${cir11_phase}", input: "11", power: { id: "${cir11_id}_power_raw",   <<: *raw_power_50a }, current: { id: "${cir11_id}_current_raw",   <<: *raw_current_50a } }
+      - { phase_id: "${cir12_phase}", input: "12", power: { id: "${cir12_id}_power_raw",   <<: *raw_power_50a }, current: { id: "${cir12_id}_current_raw",   <<: *raw_current_50a } }
+      - { phase_id: "${cir13_phase}", input: "13", power: { id: "${cir13_id}_power_raw",   <<: *raw_power_50a }, current: { id: "${cir13_id}_current_raw",   <<: *raw_current_50a } }
+      - { phase_id: "${cir14_phase}", input: "14", power: { id: "${cir14_id}_power_raw",   <<: *raw_power_50a }, current: { id: "${cir14_id}_current_raw",   <<: *raw_current_50a } }
+      - { phase_id: "${cir15_phase}", input: "15", power: { id: "${cir15_id}_power_raw",   <<: *raw_power_50a }, current: { id: "${cir15_id}_current_raw",   <<: *raw_current_50a } }
+      - { phase_id: "${cir16_phase}", input: "16", power: { id: "${cir16_id}_power_raw",   <<: *raw_power_50a }, current: { id: "${cir16_id}_current_raw",   <<: *raw_current_50a } }
+
+  - platform: template
+    name: "Total Power"
+    lambda: return id(${phase_a_id}_power_raw).state + id(${phase_b_id}_power_raw).state;
+    update_interval: 1s
+    id: total_power
+    unit_of_measurement: "W"
+    state_class: total_increasing
+    device_class: energy
+    filters:
+      - throttle_average: ${total_energy_throttle}
+
+  - platform: template
+    name: "Total Current"
+    lambda: return id(${phase_a_id}_current_raw).state + id(${phase_b_id}_current_raw).state;
+    update_interval: 1s
+    id: total_current
+    unit_of_measurement: "A"
+    device_class: current
+    filters:
+      - throttle_average: ${current_throttle}
+
+  - platform: template
+    name: "Total Energy"
+    id: total_energy
+    lambda: return (id(${phase_a_id}_total_energy).state + id(${phase_b_id}_total_energy).state);  
+    accuracy_decimals: ${total_energy_decimals}
+    device_class: energy
+    state_class: total_increasing
+    unit_of_measurement: kWh
+
+  - { platform: total_daily_energy, power_id: "${phase_a_id}_power_raw", id: "${phase_a_id}_total_energy", name: "${phase_a_name} Total Energy", <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${phase_b_id}_power_raw", id: "${phase_b_id}_total_energy", name: "${phase_b_name} Total Energy", <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir1_id}_power_raw",    name: "${cir1_name} Total Energy",    <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir2_id}_power_raw",    name: "${cir2_name} Total Energy",    <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir3_id}_power_raw",    name: "${cir3_name} Total Energy",    <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir4_id}_power_raw",    name: "${cir4_name} Total Energy",    <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir5_id}_power_raw",    name: "${cir5_name} Total Energy",    <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir6_id}_power_raw",    name: "${cir6_name} Total Energy",    <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir7_id}_power_raw",    name: "${cir7_name} Total Energy",    <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir8_id}_power_raw",    name: "${cir8_name} Total Energy",    <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir9_id}_power_raw",    name: "${cir9_name} Total Energy",    <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir10_id}_power_raw",   name: "${cir10_name} Total Energy",   <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir11_id}_power_raw",   name: "${cir11_name} Total Energy",   <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir12_id}_power_raw",   name: "${cir12_name} Total Energy",   <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir13_id}_power_raw",   name: "${cir13_name} Total Energy",   <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir14_id}_power_raw",   name: "${cir14_name} Total Energy",   <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir15_id}_power_raw",   name: "${cir15_name} Total Energy",   <<: *total_energy }
+  - { platform: total_daily_energy, power_id: "${cir16_id}_power_raw",   name: "${cir16_name} Total Energy",   <<: *total_energy }
+
+
+  - { platform: copy, name: "${phase_a_name} Power", source_id: "${phase_a_id}_power_raw", <<: *main_power_sensor, id: "${phase_a_id}_power" }
+  - { platform: copy, name: "${phase_b_name} Power", source_id: "${phase_b_id}_power_raw", <<: *main_power_sensor, id: "${phase_b_id}_power" }
+  - { platform: copy, name: "${cir1_name} Power",    source_id: "${cir1_id}_power_raw",    <<: *power_sensor, id: "${cir1_id}_power" }
+  - { platform: copy, name: "${cir2_name} Power",    source_id: "${cir2_id}_power_raw",    <<: *power_sensor, id: "${cir2_id}_power" }
+  - { platform: copy, name: "${cir3_name} Power",    source_id: "${cir3_id}_power_raw",    <<: *power_sensor, id: "${cir3_id}_power" }
+  - { platform: copy, name: "${cir4_name} Power",    source_id: "${cir4_id}_power_raw",    <<: *power_sensor, id: "${cir4_id}_power" }
+  - { platform: copy, name: "${cir5_name} Power",    source_id: "${cir5_id}_power_raw",    <<: *power_sensor, id: "${cir5_id}_power" }
+  - { platform: copy, name: "${cir6_name} Power",    source_id: "${cir6_id}_power_raw",    <<: *power_sensor, id: "${cir6_id}_power" }
+  - { platform: copy, name: "${cir7_name} Power",    source_id: "${cir7_id}_power_raw",    <<: *power_sensor, id: "${cir7_id}_power" }
+  - { platform: copy, name: "${cir8_name} Power",    source_id: "${cir8_id}_power_raw",    <<: *power_sensor, id: "${cir8_id}_power" }
+  - { platform: copy, name: "${cir9_name} Power",    source_id: "${cir9_id}_power_raw",    <<: *power_sensor, id: "${cir9_id}_power" }
+  - { platform: copy, name: "${cir10_name} Power",   source_id: "${cir10_id}_power_raw",   <<: *power_sensor, id: "${cir10_id}_power" }
+  - { platform: copy, name: "${cir11_name} Power",   source_id: "${cir11_id}_power_raw",   <<: *power_sensor, id: "${cir11_id}_power" }
+  - { platform: copy, name: "${cir12_name} Power",   source_id: "${cir12_id}_power_raw",   <<: *power_sensor, id: "${cir12_id}_power" }
+  - { platform: copy, name: "${cir13_name} Power",   source_id: "${cir13_id}_power_raw",   <<: *power_sensor, id: "${cir13_id}_power" }
+  - { platform: copy, name: "${cir14_name} Power",   source_id: "${cir14_id}_power_raw",   <<: *power_sensor, id: "${cir14_id}_power" }
+  - { platform: copy, name: "${cir15_name} Power",   source_id: "${cir15_id}_power_raw",   <<: *power_sensor, id: "${cir15_id}_power" }
+  - { platform: copy, name: "${cir16_name} Power",   source_id: "${cir16_id}_power_raw",   <<: *power_sensor, id: "${cir16_id}_power" }
+
+  - { platform: copy, name: "${phase_a_name} Current", source_id: "${phase_a_id}_current_raw", <<: *current_sensor, id: "${phase_a_id}_current" }
+  - { platform: copy, name: "${phase_b_name} Current", source_id: "${phase_b_id}_current_raw", <<: *current_sensor, id: "${phase_b_id}_current" }
+  - { platform: copy, name: "${cir1_name} Current",    source_id: "${cir1_id}_current_raw",    <<: *current_sensor, id: "${cir1_id}_current" }
+  - { platform: copy, name: "${cir2_name} Current",    source_id: "${cir2_id}_current_raw",    <<: *current_sensor, id: "${cir2_id}_current" }
+  - { platform: copy, name: "${cir3_name} Current",    source_id: "${cir3_id}_current_raw",    <<: *current_sensor, id: "${cir3_id}_current" }
+  - { platform: copy, name: "${cir4_name} Current",    source_id: "${cir4_id}_current_raw",    <<: *current_sensor, id: "${cir4_id}_current" }
+  - { platform: copy, name: "${cir5_name} Current",    source_id: "${cir5_id}_current_raw",    <<: *current_sensor, id: "${cir5_id}_current" }  
+  - { platform: copy, name: "${cir6_name} Current",    source_id: "${cir6_id}_current_raw",    <<: *current_sensor, id: "${cir6_id}_current" }
+  - { platform: copy, name: "${cir7_name} Current",    source_id: "${cir7_id}_current_raw",    <<: *current_sensor, id: "${cir7_id}_current" }
+  - { platform: copy, name: "${cir8_name} Current",    source_id: "${cir8_id}_current_raw",    <<: *current_sensor, id: "${cir8_id}_current" }
+  - { platform: copy, name: "${cir9_name} Current",    source_id: "${cir9_id}_current_raw",    <<: *current_sensor, id: "${cir9_id}_current" }
+  - { platform: copy, name: "${cir10_name} Current",   source_id: "${cir10_id}_current_raw",   <<: *current_sensor, id: "${cir10_id}_current" }
+  - { platform: copy, name: "${cir11_name} Current",   source_id: "${cir11_id}_current_raw",   <<: *current_sensor, id: "${cir11_id}_current" }
+  - { platform: copy, name: "${cir12_name} Current",   source_id: "${cir12_id}_current_raw",   <<: *current_sensor, id: "${cir12_id}_current" }
+  - { platform: copy, name: "${cir13_name} Current",   source_id: "${cir13_id}_current_raw",   <<: *current_sensor, id: "${cir13_id}_current" }
+  - { platform: copy, name: "${cir14_name} Current",   source_id: "${cir14_id}_current_raw",   <<: *current_sensor, id: "${cir14_id}_current" }
+  - { platform: copy, name: "${cir15_name} Current",   source_id: "${cir15_id}_current_raw",   <<: *current_sensor, id: "${cir15_id}_current" }
+  - { platform: copy, name: "${cir16_name} Current",   source_id: "${cir16_id}_current_raw",   <<: *current_sensor, id: "${cir16_id}_current" }
+  
+
+

@@ -4,10 +4,10 @@
     unit_of_measurement: "W"
     icon: mdi:lightning-bolt
     availability: >
-      {{ is_number(states('sensor.crawl_space_and_living_room_leds_power')) and 
+      {{ is_number(states('sensor.main_panel_14_lights_living_room_outlets_crawl_space_power')) and 
           is_number(states('sensor.crawl_space_lights_power')) }}
     state: >
-      {% set total = states('sensor.crawl_space_and_living_room_leds_power') | float(0) %}
+      {% set total = states('sensor.main_panel_14_lights_living_room_outlets_crawl_space_power') | float(0) %}
       {% set crawl_space = states('sensor.crawl_space_lights_power') | float(0) %}
       {% set led_power = (total - crawl_space) | round(3, default=0) %}
       {{ ([0, led_power, 1000]|sort) [1] }}
@@ -18,27 +18,27 @@
     unit_of_measurement: "A"
     icon: mdi:current-ac
     availability: >
-      {{ is_number(states('sensor.crawl_space_and_living_room_leds_current')) and 
+      {{ is_number(states('main_panel_14_lights_living_room_outlets_crawl_space_current')) and 
           is_number(states('sensor.crawl_space_lights_current')) }}
     state: >
-      {% set total = states('sensor.crawl_space_and_living_room_leds_current') | float(0) %}
+      {% set total = states('main_panel_14_lights_living_room_outlets_crawl_space_current') | float(0) %}
       {% set crawl_space = states('sensor.crawl_space_lights_current') | float(0) %}
       {% set led_current = (total - crawl_space) | round(3, default=0) %}
       {{ ([0, led_current, 10]|sort) [1] }}
 
 
-  - name: "Living Room LEDs Apparent Power"
-    unique_id: sensor.living_room_leds_apparent_power
-    unit_of_measurement: "VA"
-    icon: mdi:lightning-bolt
-    availability: >
-      {{ is_number(states('sensor.crawl_space_and_living_room_leds_apparent_power')) and 
-          is_number(states('sensor.crawl_space_lights_apparent_power')) }}
-    state: >
-      {% set total = states('sensor.crawl_space_and_living_room_leds_apparent_power') | float(0) %}
-      {% set crawl_space = states('sensor.crawl_space_lights_apparent_power') | float(0) %}
-      {% set led_apparent_power = (total - crawl_space) | round(3, default=0) %}
-      {{ ([0, led_apparent_power, 1000]|sort) [1] }}
+    # - name: "Living Room LEDs Apparent Power"
+    #   unique_id: sensor.living_room_leds_apparent_power
+    #   unit_of_measurement: "VA"
+    #   icon: mdi:lightning-bolt
+    #   availability: >
+    #     {{ is_number(states('sensor.crawl_space_and_living_room_leds_apparent_power')) and 
+    #         is_number(states('sensor.crawl_space_lights_apparent_power')) }}
+    #   state: >
+    #     {% set total = states('sensor.crawl_space_and_living_room_leds_apparent_power') | float(0) %}
+    #     {% set crawl_space = states('sensor.crawl_space_lights_apparent_power') | float(0) %}
+    #     {% set led_apparent_power = (total - crawl_space) | round(3, default=0) %}
+    #     {{ ([0, led_apparent_power, 1000]|sort) [1] }}
 
 
   - name: "Living Room LEDs Total Energy"
@@ -48,10 +48,10 @@
     state_class: total_increasing
     icon: mdi:lightning-bolt      
     availability: >
-      {{ is_number(states('sensor.crawl_space_and_living_room_leds_total_energy')) and 
+      {{ is_number(states('sensor.main_panel_14_lights_living_room_outlets_crawl_space_total_energy')) and 
           is_number(states('sensor.crawl_space_lights_total_energy')) }}
     state: >
-      {% set total = states('sensor.crawl_space_and_living_room_leds_total_energy') | float(0) %}
+      {% set total = states('sensor.main_panel_14_lights_living_room_outlets_crawl_space_total_energy') | float(0) %}
       {% set crawl_space = states('sensor.crawl_space_lights_total_energy') | float(0) %}
       {% set led_energy = (total - crawl_space) | round(3, default=0) %}
       {{ ([0, led_energy, 100000]|sort) [1] }}
