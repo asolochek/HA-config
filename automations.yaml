@@ -190,6 +190,11 @@
       entity_id:
       - light.office_lights
       - light.office_closet_lights
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.compressor_plug_relay
   mode: single
 - id: '1686936873918'
   alias: Bedroom receiver off with tv
@@ -450,32 +455,32 @@
 - id: '1687242459466'
   alias: Apple tv pause bridge
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - input_button.livingroom_apple_tv_pause
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - if:
     - condition: device
-      device_id: fd05d6b84c78d8accb583974bc1ba777
+      device_id: 7f6b46a822eed331ceb9d0f5e007b161
       domain: media_player
-      entity_id: 444939d9e9f40e01f9e157f96e723520
-      type: is_off
+      entity_id: fa2b61fbc334d0190bf011293365fb7d
+      type: is_on
     then:
-    - type: turn_on
-      device_id: fd05d6b84c78d8accb583974bc1ba777
-      entity_id: 85c54b36292326189fbfd20cf254d5dc
+    - type: turn_off
+      device_id: 7f6b46a822eed331ceb9d0f5e007b161
+      entity_id: b75f0ea555074d8f61a4349376a208b6
       domain: remote
-    - target:
-        device_id: fd05d6b84c78d8accb583974bc1ba777
-      data: {}
+    - data: {}
       action: media_player.turn_on
+      target:
+        device_id: 7f6b46a822eed331ceb9d0f5e007b161
   - data: {}
     target:
       entity_id:
-      - media_player.living_room_appletv
       - media_player.plex_plex_for_apple_tv_apple_tv
+      - media_player.living_room_appletv
     action: media_player.media_pause
   mode: single
 - id: '1687244305614'
@@ -899,17 +904,27 @@
 - id: '1689729841116'
   alias: Aaron leaves home
   description: ''
-  trigger:
-  - platform: zone
-    entity_id: person.aaron_solochek
+  triggers:
+  - entity_id: person.aaron_solochek
     zone: zone.home
     event: leave
-  condition: []
-  action:
-  - action: light.turn_off
+    trigger: zone
+  conditions: []
+  actions:
+  - action: input_boolean.turn_off
     data: {}
     target:
-      entity_id: light.all_lights_zigbee_group
+      entity_id: input_boolean.aaron_s_home
+  - if:
+    - condition: state
+      entity_id: input_boolean.thao_s_home
+      state: 'off'
+    then:
+    - action: light.turn_off
+      data: {}
+      target:
+        entity_id:
+        - light.all_lights
   mode: single
 - id: '1689914996388'
   alias: Kitchen Fan Off Trigger
@@ -1222,12 +1237,17 @@
 - id: '1695651659423'
   alias: Sunset Actions
   description: ''
-  trigger:
-  - platform: sun
-    event: sunset
+  triggers:
+  - event: sunset
     offset: '0'
-  condition: []
-  action: []
+    trigger: sun
+  conditions: []
+  actions:
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.compressor_plug_relay
   mode: single
 - id: '1697851358987'
   alias: Thao's Home
@@ -1802,6 +1822,29 @@
       hours: 0
       minutes: 10
       seconds: 0
+  - trigger: state
+    entity_id:
+    - sensor.ham_area
+    attribute: area_name
+    to: Unknown
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  - device_id: 605e8c94e02dcc3898d14db2036107f2
+    domain: device_tracker
+    entity_id: c3e540f98f2ab10eaf40b7576e43504a
+    type: leaves
+    trigger: device
+    zone: zone.home
+  - trigger: state
+    entity_id:
+    - sensor.aarons_watch_area
+    to: unknown
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
   conditions:
   - condition: and
     conditions:
@@ -1811,6 +1854,14 @@
     - condition: state
       entity_id: sensor.aarons_watch
       state: not_home
+    - condition: state
+      entity_id: sensor.ham_area
+      attribute: area_name
+      state: Unknown
+    - condition: state
+      entity_id: sensor.aarons_watch_area
+      attribute: area_name
+      state: Unknown
   actions:
   - action: input_boolean.turn_off
     data: {}
@@ -1934,7 +1985,7 @@
   triggers:
   - trigger: numeric_state
     entity_id:
-    - sensor.dishwasher_power
+    - sensor.main_panel_20_dishwasher_power
     for:
       hours: 0
       minutes: 2
@@ -1954,7 +2005,7 @@
   triggers:
   - trigger: numeric_state
     entity_id:
-    - sensor.dishwasher_power
+    - sensor.main_panel_20_dishwasher_power
     for:
       hours: 0
       minutes: 7
