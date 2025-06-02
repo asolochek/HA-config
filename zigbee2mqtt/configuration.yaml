@@ -93,8 +93,6 @@ devices:
     friendly_name: Hallway Ceiling 1
   '0x001788010b6dd864':
     friendly_name: Hallway Ceiling 2
-  '0x0017880106ab4ab8':
-    friendly_name: Hallway Ceiling 3
   '0x54ef441000617a38':
     friendly_name: Bathroom Light
   '0xb0ce1814036c54d6':
@@ -153,6 +151,8 @@ devices:
     description: Cat lamp
   '0x001788010dbfa658':
     friendly_name: Kitchen Ceiling 2-2
+  '0x001788010dbfebcb':
+    friendly_name: Hallway Ceiling 3
 device_options:
   legacy: false
 groups:
