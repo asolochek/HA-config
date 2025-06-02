@@ -9,9 +9,9 @@ frontend:
   enabled: true
   port: 8099
 mqtt:
-  server: '!/config/secrets.yaml mqtt_server'
-  user: '!/config/secrets.yaml mqtt_user'
-  password: '!/config/secrets.yaml mqtt_password'
+  server: '!secret.yaml mqtt_server'
+  user: '!secret.yaml mqtt_user'
+  password: '!secret.yaml mqtt_password'
   base_topic: zigbee2mqtt
   client_id: zigbee2mqtt
   keepalive: 60
