@@ -75,8 +75,6 @@ devices:
     friendly_name: Living Room Closet Light
   '0x00158d0008e1ba9f':
     friendly_name: Printer Plug
-  '0x0017880108e2a549':
-    friendly_name: Office Ceiling 1
   '0x0017880108e2d3ba':
     friendly_name: Office Ceiling 3
   '0x0017880109107ed2':
@@ -153,6 +151,8 @@ devices:
     friendly_name: Kitchen Ceiling 2-2
   '0x001788010dbfebcb':
     friendly_name: Hallway Ceiling 3
+  '0x001788010dbfec5c':
+    friendly_name: Office Ceiling 1
 device_options:
   legacy: false
 groups:
