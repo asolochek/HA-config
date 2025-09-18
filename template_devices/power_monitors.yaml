@@ -67,19 +67,19 @@
       {{ states('input_number.input_test') | float(0) }}
 
 
-  - name: "Mains Total Energy"
-    unique_id: sensor.mains_total_energy
-    unit_of_measurement: kWh
-    device_class: energy
-    state_class: total_increasing
-    icon: mdi:lightning-bolt
-    availability: >
-       {{ is_number( states('sensor.main_panel_black_leg_total_energy'))  and
-          is_number( states('sensor.main_panel_red_leg_total_energy')) }}
-    state: >
-      {% set black_leg = states('sensor.main_panel_black_leg_total_energy') | float(0) %}
-      {% set red_leg = states('sensor.main_panel_red_leg_total_energy') | float(0) %}
-      {{ (black_leg + red_leg) | round(4, default=0) }}
+  # - name: "Mains Total Energy"
+  #   unique_id: sensor.mains_total_energy
+  #   unit_of_measurement: kWh
+  #   device_class: energy
+  #   state_class: total_increasing
+  #   icon: mdi:lightning-bolt
+  #   availability: >
+  #      {{ is_number( states('sensor.main_panel_black_leg_total_energy'))  and
+  #         is_number( states('sensor.main_panel_red_leg_total_energy')) }}
+  #   state: >
+  #     {% set black_leg = states('sensor.main_panel_black_leg_total_energy') | float(0) %}
+  #     {% set red_leg = states('sensor.main_panel_red_leg_total_energy') | float(0) %}
+  #     {{ (black_leg + red_leg) | round(4, default=0) }}
 
 
     # state: >
