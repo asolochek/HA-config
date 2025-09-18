@@ -6,6 +6,7 @@ substitutions:
   device_description: North West Soil Sensor
   log_level: INFO
   i2c_frequency: 100kHz
+  framework: "esp-idf"
 
 
 packages:
@@ -17,12 +18,18 @@ packages:
       id_prefix: "plant_1"
       name_prefix: "Plant 1"
       dry_id: soil_dry
-
+      dry_hysteresis: "15"
+      moisture_window_size: "5"
+      moisture_window_send_every: "3"
+      moisture_window_send_first_at: "3"
+      moisture_exp_alpha: "0.05"
+      moisture_exp_send_every: "2"
   dry: !include
     file: common/soil_dry_indicator.yaml
     var:
       sensor_id: soil_dry
       led_id: neopixel_led
+  # ble: !include common/bluetooth_proxy.yaml
 
 
 # wifi:

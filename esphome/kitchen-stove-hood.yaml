@@ -12,14 +12,12 @@ substitutions:
   light_high_in: GPIO25
   fan_low_in: GPIO4
   fan_high_in: GPIO5 
-
+  framework: "esp-idf"
 
 packages:
   device_base: !include common/feather_huzzah32_v2.yaml
+  ble: !include common/bluetooth_proxy.yaml
 
-
-bluetooth_proxy:
-  active: true
 
 spi: !remove
 
@@ -47,14 +45,18 @@ esphome:
   on_boot:
   - priority: 900
     then:
-      - lambda: "pinMode(12, OUTPUT); digitalWrite(12, LOW);"
-      - lambda: "pinMode(27, OUTPUT); digitalWrite(27, LOW);"
-      - lambda: "pinMode(33, OUTPUT); digitalWrite(33, LOW);"
-      - lambda: "pinMode(15, OUTPUT); digitalWrite(15, LOW);"
-      - lambda: "pinMode(26, INPUT_PULLDOWN);"
-      - lambda: "pinMode(25, INPUT_PULLDOWN);"
-      - lambda: "pinMode(4, INPUT_PULLDOWN);"
-      - lambda: "pinMode(5, INPUT_PULLDOWN);"
+      - switch.turn_off: light_power
+      - switch.turn_off: light_level
+      - switch.turn_off: fan_power
+      - switch.turn_off: fan_level
+      # - lambda: "pinMode(12, OUTPUT); digitalWrite(12, LOW);"
+      # - lambda: "pinMode(27, OUTPUT); digitalWrite(27, LOW);"
+      # - lambda: "pinMode(33, OUTPUT); digitalWrite(33, LOW);"
+      # - lambda: "pinMode(15, OUTPUT); digitalWrite(15, LOW);"
+      # - lambda: "pinMode(26, INPUT_PULLDOWN);"
+      # - lambda: "pinMode(25, INPUT_PULLDOWN);"
+      # - lambda: "pinMode(4, INPUT_PULLDOWN);"
+      # - lambda: "pinMode(5, INPUT_PULLDOWN);"
 
 
 switch:

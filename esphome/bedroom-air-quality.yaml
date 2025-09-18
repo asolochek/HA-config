@@ -4,6 +4,9 @@ substitutions:
   room: Bedroom
   hostname: air-quality-bedroom
   device_description: "Bedroom Air Quality Monitor"
+  framework: "esp-idf"
+  i2c_frequency: 100kHz
+#  log_level: DEBUG
 
 
 packages:
@@ -12,6 +15,7 @@ packages:
   pmsa: !include common/pmsa003i.yaml
   dp: !include common/dew_point.yaml
   colors: !include common/colors.yaml
+  ble: !include common/bluetooth_proxy.yaml
 
 
 

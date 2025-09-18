@@ -3,7 +3,7 @@ substitutions:
   i2c_frequency: 800kHz
   i2c_sda_pin: SDA1
   i2c_scl_pin: SCL1
-
+  framework: "arduino"
 
 packages:
   device_base: !include common.yaml
@@ -12,8 +12,7 @@ packages:
 esp32:
   board: ${board_type}
   framework:
-#    type: esp-idf
-    type: arduino
+    type: ${framework}
 
 
 i2c:
@@ -24,4 +23,4 @@ i2c:
       number: ${i2c_scl_pin}
     frequency: ${i2c_frequency}
     scan: true
-    setup_priority: 700
+    setup_priority: 600

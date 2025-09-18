@@ -4,13 +4,12 @@ substitutions:
   hostname: office-window
   room: Office
   device_description: "Office Window"
+  framework: "esp-idf"
 
 packages:
   device_base: !include common/wesp32.yaml
+  ble: !include common/bluetooth_proxy.yaml
   
-
-bluetooth_proxy:
-  active: true
 
 
 switch:

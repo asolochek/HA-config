@@ -15,6 +15,9 @@ substitutions:
   st7789_offset_width: "0"
   st7789_rotation: "90"
 #  log_level: DEBUG
+  i2c_frequency: 100kHz
+  framework: "esp-idf"
+
 
 packages:
   device_base: !include common/qtpy_esp32.yaml
@@ -26,10 +29,17 @@ packages:
   display: !include common/st7789v.yaml
   tvoc: !include common/sgp30.yaml
 
-logger:
-  logs:
- #   sgp30: DEBUG
-    display: INFO
+
+# light: 
+#   - id: !extend neopixel_led
+#     rmt_channel: 0
+
+# logger:
+#   logs:    
+#     scd4x: DEBUG
+#     pmsa003i: DEBUG
+#     display: ERROR
+#     text_sensor: ERROR
 
 sensor:
   - id: !extend sgp30_sensor
@@ -52,6 +62,11 @@ sensor:
 
 display:
   - id: !extend ${display_id}
+    height: ${st7789_height}
+    width: ${st7789_width}
+    offset_height: ${st7789_offset_height}
+    offset_width: ${st7789_offset_width}
+    rotation: ${st7789_rotation}
     reset_pin:
       ignore_strapping_warning: true
     cs_pin:

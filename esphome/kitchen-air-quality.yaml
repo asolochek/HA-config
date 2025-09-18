@@ -4,9 +4,9 @@ substitutions:
   room: "Kitchen"
   hostname: air-monitor-kitchen
   device_description: Kitchen Air Monitor and Soil Sensor
-  log_level: INFO
+  log_level: WARN
   i2c_frequency: 100kHz
-
+  framework: "esp-idf"
 
 
 packages:
@@ -23,12 +23,21 @@ packages:
   pmsa: !include common/pmsa003i.yaml
   temp: !include common/sht4x.yaml
   dp: !include common/dew_point.yaml
-      
-logger:
-  logs:
-    sht4x: INFO
-    pmsa003i: INFO
-    AQI: INFO
-    sensor.filter: INFO
 
-#    adafruit_soil_sensor: INFO
+
+# logger: 
+#   logs:
+#     i2c.arduino: VERBOSE
+#     sensor: VERBOSE
+#     sht4x: INFO
+#     pmsa003i: INFO
+#     AQI: INFO
+#     sensor.filter: INFO
+#     esp32_ble_tracker: ERROR
+#     bluetooth_proxy: ERROR
+#     component: VERBOSE
+#     text_sensor: ERROR
+
+
+bluetooth_proxy:
+  active: true

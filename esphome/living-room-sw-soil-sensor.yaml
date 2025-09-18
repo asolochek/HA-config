@@ -4,8 +4,23 @@ substitutions:
   room: "Living Room"
   hostname: soil-sensor-livingroom-sw
   device_description: South West Soil Sensor
-  log_level: INFO
+  log_level: "WARN"
   i2c_frequency: 100kHz
+  framework: "esp-idf"
+
+
+bluetooth_proxy:
+  active: true
+
+# logger: 
+#   logs:
+#     i2c.arduino: DEBUG
+#     sensor: VERBOSE
+#     esp32_ble_tracker: ERROR
+#     bluetooth_proxy: ERROR
+#     component: VERBOSE
+#     text_sensor: ERROR
+
 
 
 packages:
@@ -28,6 +43,7 @@ packages:
       i2c_address: "0x38"
       id_prefix: "plant_3"
       name_prefix: "Plant 3"
+      dry_threshold: 35
   soil4: !include
     file: common/adafruit_soil_sensor.yaml
     vars:
