@@ -4,7 +4,7 @@ substitutions:
   room: "Living Room"
   hostname: soil-sensor-livingroom-sw
   device_description: South West Soil Sensor
-  log_level: "WARN"
+  log_level: INFO
   i2c_frequency: 100kHz
   framework: "esp-idf"
 

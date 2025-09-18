@@ -4,7 +4,7 @@ substitutions:
   room: "Kitchen"
   hostname: air-monitor-kitchen
   device_description: Kitchen Air Monitor and Soil Sensor
-  log_level: WARN
+  log_level: INFO
   i2c_frequency: 100kHz
   framework: "esp-idf"
 
