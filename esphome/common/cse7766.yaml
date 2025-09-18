@@ -8,8 +8,8 @@
 #   current_limit: "15.0"
 
 substitutions:
-  throttle_average: 1s
-  total_energy_throttle: 60s
+  throttle_average: 10s
+  total_energy_throttle: 300s
   current_decimals: "3"
   voltage_decimals: "2"
   power_decimals: "3"
@@ -25,6 +25,9 @@ uart:
     number: TX
   parity: EVEN
   baud_rate: 4800
+
+
+
 
 sensor:
   - platform: cse7766
@@ -70,6 +73,15 @@ sensor:
       - filter_out: nan
 
   - platform: copy
+    source_id: power_raw
+    name: ${power_name} RT
+    id: power_rt
+    filters:
+      - lambda: if (x < 3) return 0.0; else return x;   #For the chip will report less than 3w power when no load is connected
+      - throttle_average: 1s
+      - filter_out: nan
+
+  - platform: copy
     source_id: current_raw
     name: ${current_name}
     accuracy_decimals: ${current_decimals}
@@ -81,6 +93,19 @@ sensor:
       - above: ${current_limit}
         then:
           - switch.turn_off: relay
+
+  - platform: copy
+    source_id: current_raw
+    name: ${current_name} RT
+    accuracy_decimals: ${current_decimals}
+    filters:
+      - lambda: if (x < 0.060) return 0.0; else return x;   #For the chip will report less than 3w power when no load is connected
+      - throttle_average: 1s
+      - filter_out: nan
+    # on_value_range:
+    #   - above: ${current_limit}
+    #     then:
+    #       - switch.turn_off: relay
 
   - platform: copy
     source_id: voltage_raw
@@ -133,11 +158,26 @@ sensor:
       - throttle_average: ${throttle_average}
       - filter_out: nan
 
-  - platform: total_daily_energy #(Optional, not specific to cse7766)
+  - platform: integration
+    sensor: power_raw
     name: ${total_daily_energy_name}
-    power_id: my_power
+    id: total_energy
     accuracy_decimals: ${total_energy_decimals}
+    unit_of_measurement: kWh
+    time_unit: h
     state_class: total_increasing
     device_class: energy
+    restore: false
     filters:
+      - lambda: 'return max(x, 0.0f);' # Ensure no negative values
       - throttle: ${total_energy_throttle}
+      - filter_out: nan
+
+  # - platform: total_daily_energy #(Optional, not specific to cse7766)
+  #   name: ${total_daily_energy_name}
+  #   power_id: my_power
+  #   accuracy_decimals: ${total_energy_decimals}
+  #   state_class: total_increasing
+  #   device_class: energy
+  #   filters:
+  #     - throttle: ${total_energy_throttle}

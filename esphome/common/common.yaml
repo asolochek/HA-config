@@ -71,10 +71,6 @@ button:
     entity_category: config
 
 
-mdns:
-  disabled: false
-
-
 binary_sensor:
   - platform: status
     name: "Status"
@@ -107,6 +103,21 @@ text_sensor:
       seconds = seconds % 3600;
       int minutes = seconds /  60;
       seconds = seconds % 60;
+      #if defined(ESP_PLATFORM)
+
+      if ( days > 3650 ) {
+        return { "Starting up" };
+      } else if ( days ) {
+        return ( std::to_string(days) + "d " + std::to_string(hours) + "h " + std::to_string(minutes) + "m " + std::to_string(seconds) + "s" );
+      } else if ( hours ) {
+        return ( std::to_string(hours) + "h " + std::to_string(minutes) + "m " + std::to_string(seconds) + "s" );
+      } else if ( minutes ) {
+        return ( std::to_string(minutes) + "m " + std::to_string(seconds) + "s" );
+      } else {
+        return ( std::to_string(seconds) + "s" );
+      }
+
+      #else
       if ( days > 3650 ) {
         return { "Starting up" };
       } else if ( days ) {
@@ -118,6 +129,7 @@ text_sensor:
       } else {
         return { (String(seconds) +"s").c_str() };
       }
+      #endif
 
 time:
   # - platform: sntp

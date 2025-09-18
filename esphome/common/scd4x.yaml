@@ -2,7 +2,7 @@ substitutions:
   climate_throttle_average: 10s
 
 defaults:
-  update_interval: 1s
+  update_interval: 5s
   i2c_address: "0x62"
   i2c_bus_id: bus_a
 

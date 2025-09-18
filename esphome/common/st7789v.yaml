@@ -1,15 +1,7 @@
 substitutions:
   display_id: st7789v_id
   display_model: Custom
-  st7789_cs_pin: GPIO14
-  st7789_dc_pin: GPIO27
-  st7789_reset_pin: GPIO33
-  st7789_backlight_pin: GPIO26
-  # st7789_width: "172"
-  # st7789_height: "320"
-  # st7789_offset_height: "34"
-  # st7789_offset_width: "0"
-  # st7789_rotation: "90"
+
 
 defaults:
   update_interval: 0.5s
@@ -27,7 +19,7 @@ light:
   - platform: monochromatic
     output: backlight_output
     name: "Backlight"
-    restore_mode: ALWAYS_ON
+    restore_mode: RESTORE_DEFAULT_ON
     default_transition_length: 0.1s
 
 
@@ -35,6 +27,7 @@ display:
   - platform: st7789v
     id: ${display_id}
     model: ${display_model}
+    data_rate: 2MHz
     cs_pin: 
       number: ${st7789_cs_pin}
     dc_pin: 
@@ -44,9 +37,9 @@ display:
     backlight_pin: 
       number: ${st7789_backlight_pin}
       allow_other_uses: true
-    height: ${st7789_height}
-    width: ${st7789_width}
-    offset_height: ${st7789_offset_height}
-    offset_width: ${st7789_offset_width}
+#    height: ${st7789_height}
+#    width: ${st7789_width}
+#    offset_height: ${st7789_offset_height}
+#    offset_width: ${st7789_offset_width}
     rotation: ${st7789_rotation}
     update_interval: ${update_interval}

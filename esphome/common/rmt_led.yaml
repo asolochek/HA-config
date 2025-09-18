@@ -5,7 +5,7 @@ defaults:
   num_leds: "1"
   order: GRB
   channel: "0"
-  chipset: SK6812
+  chipset: WS2812
   ignore_pin_validation_error: "false"
   ignore_strapping_warning: "false"
 
@@ -20,7 +20,7 @@ light:
     platform: esp32_rmt_led_strip
     rgb_order: ${order}
     chipset: ${chipset}
-    rmt_channel: ${channel}
+#    rmt_channel: ${channel}
     pin: 
       number: ${neopixel_pin}
       ignore_pin_validation_error: ${ignore_pin_validation_error}

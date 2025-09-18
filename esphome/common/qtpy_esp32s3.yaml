@@ -20,11 +20,14 @@ packages:
 
 #  neo: !include rmt_led.yaml
   neo: !include 
-    file: neopixel.yaml
+    file: rmt_led.yaml
     vars:
       neopixel_pin: ${neopixel_pin}
       method: esp32_rmt
 
+# light: 
+#   - id: !extend neopixel_led
+#     rmt_channel: 0
 
 # esphome: 
 #   platformio_options:

@@ -20,11 +20,17 @@ packages:
     vars:
       neopixel_power_pin: ${neopixel_power_pin}
       ignore_pin_validation_error: "true"
+  # neo: !include 
+  #   file: neopixel.yaml
+  #   vars:
+  #     neopixel_pin: ${neopixel_pin}
+  #     ignore_strapping_warning: "true"
   neo: !include 
-    file: neopixel.yaml
+    file: rmt_led.yaml
     vars:
       neopixel_pin: ${neopixel_pin}
       ignore_strapping_warning: "true"
+      method: esp32_rmt
 
 
 

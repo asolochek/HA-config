@@ -16,7 +16,7 @@ packages:
   device_base: !include esp32.yaml
   wifi: !include wifi.yaml
   neo: !include 
-    file: neopixel.yaml
+    file: rmt_led.yaml
     vars:
       neopixel_pin: ${neopixel_pin}
 

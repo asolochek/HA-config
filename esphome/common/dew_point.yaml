@@ -16,6 +16,8 @@ sensor:
     update_interval: 5s
     device_class: temperature
     accuracy_decimals: 1
+    filters:
+      - throttle_average: 5s
     lambda: |-
       float temp = id(temperature).state;
       float hum = id(humidity).state;

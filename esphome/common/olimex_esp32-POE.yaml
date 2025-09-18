@@ -1,9 +1,30 @@
 substitutions:
   board_type: esp32-poe-iso
   i2c_frequency: 800kHz
-  i2c_sda_pin: SDA1 # GPIO21
-  i2c_scl_pin: SCL1 # GPIO22
+  i2c_sda_pin: GPIO13
+  i2c_scl_pin: GPIO16
+  dns_domain: sf.aberrant.org
 
-  packages:
-    device_base: !include esp32.yaml
 
+defaults:
+  fqdn: ${hostname}.${dns_domain}
+
+
+packages:
+  device_base: !include esp32.yaml
+
+
+ethernet:
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  power_pin: 
+    number: GPIO12
+    ignore_strapping_warning: true
+  clk:
+    pin: GPIO17
+    mode: CLK_OUT
+  phy_addr: 0
+
+  use_address: ${fqdn}
+  domain: .${dns_domain}

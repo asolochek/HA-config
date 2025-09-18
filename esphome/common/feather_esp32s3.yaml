@@ -4,9 +4,9 @@ substitutions:
   i2c_sda_pin: GPIO3
   i2c_scl_pin: GPIO4
   i2c_power_pin: GPIO7
-  spi_mosi_pin: GPIO13
-  spi_miso_pin: GPIO12
-  spi_sck_pin: GPIO14
+  spi_mosi_pin: GPIO35
+  spi_miso_pin: GPIO37
+  spi_sck_pin: GPIO36
   neopixel_pin: GPIO33
   neopixel_power_pin: GPIO21
 
@@ -19,15 +19,20 @@ packages:
     vars:
       neopixel_power_pin: ${neopixel_power_pin}
   neo: !include 
-    file: neopixel.yaml
+    file: rmt_led.yaml
     vars:
       neopixel_pin: ${neopixel_pin}
       method: esp32_rmt
+
 
 i2c:
   - id: !extend bus_a
     sda:
       ignore_strapping_warning: true
+
+
+esp32:
+  variant: esp32s3
 
 
 spi: 
@@ -37,6 +42,7 @@ spi:
     number: ${spi_mosi_pin}
   miso_pin: 
     number: ${spi_miso_pin}
+#  interface: software
 
 
 switch:

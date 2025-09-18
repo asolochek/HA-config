@@ -39,7 +39,7 @@ display:
   - id: !extend ${display_id}
     backlight_pin:
       ignore_strapping_warning: true
-    height: !remove
-    width: !remove
-    offset_height: !remove
-    offset_width: !remove
+    # height: !remove
+    # width: !remove
+    # offset_height: !remove
+    # offset_width: !remove

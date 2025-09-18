@@ -26,3 +26,7 @@ light:
           update_interval: 0.1s
           min_brightness: 0%
           max_brightness: 100%
+      - addressable_rainbow:
+          name: "Rainbow"
+          speed: 0
+          width: 20
