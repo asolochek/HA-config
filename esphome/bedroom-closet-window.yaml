@@ -88,23 +88,27 @@ binary_sensor:
 
   - platform: gpio
     id: window_closed_sensor
+    name: Window Closed Sensor
+    entity_category: "diagnostic"
     pin:
       number: GPIO12
       mode:
         input: true
         pullup: true
       inverted: true
-    internal: true
+    internal: false
     
   - platform: gpio
     id: window_open_sensor
+    name: Window Open Sensor
+    entity_category: "diagnostic"
     pin:
       number: GPIO13
       mode:
         input: true
         pullup: true
       inverted: true
-    internal: true
+    internal: false
     
   - platform: gpio
     id: closet_motion
