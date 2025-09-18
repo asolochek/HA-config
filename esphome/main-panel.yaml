@@ -1,5 +1,5 @@
 substitutions:
-  name: emporia-vue
+  name: main-panel
   friendly_name: Main Panel
   hostname: vue
   device_description: "Breaker Power Monitor"
