@@ -21,13 +21,13 @@ update:
     disabled_by_default: true
 
 dashboard_import:
-  package_import_url: github://everythingsmarthome/everything-presence-one/everything-presence-one-ble.yaml@main
+  package_import_url: github://everythingsmarthome/everything-presence-one/everything-presence-one.yaml@main
   import_full_config: false
 
 packages:
   remote_packages: 
     url: https://github.com/EverythingSmartHome/everything-presence-one/
-    files: [common/everything-presence-one-base.yaml, common/everything-presence-one-sen0395-stable.yaml, common/sen0395-common.yaml, common/bluetooth-base.yaml]
+    files: [common/everything-presence-one-base.yaml, common/everything-presence-one-sen0395-stable.yaml, common/sen0395-common.yaml] #, common/bluetooth-base.yaml]
 
 binary_sensor: 
   - id: !extend mmwave
