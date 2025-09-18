@@ -4,6 +4,7 @@ substitutions:
   hostname: power-meter
   room: Office
   device_description: "Power Meter"
+  framework: "esp-idf"
 
 packages:
   device_base: !include common/qtpy_esp32_pico.yaml
@@ -15,7 +16,8 @@ sensor:
   - platform: homeassistant
     name: Power
     id: power
-    entity_id: sensor.mains_power_total
+    entity_id: sensor.main_panel_total_power
+#    entity_id: sensor.mains_power_total
 #    entity_id: sensor.meter_test_sensor
     unit_of_measurement: 'W'
     internal: true
@@ -39,6 +41,18 @@ sensor:
         - lambda: |-
             float pct = x / 5000;
             id(meter_output).set_level(pct);
+
+
+  # - platform: template
+  #   name: "Power Value"
+  #   id: power_value
+  #   lambda: return id(power).state;
+  #   device_class: power
+  #   update_interval: 1s
+  #   unit_of_measurement: "W"
+  #   entity_category: diagnostic
+  #   internal: false
+
 
 
 output:

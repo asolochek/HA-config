@@ -4,6 +4,7 @@ substitutions:
   hostname: power-meter-15kw
   room: Living Room
   device_description: "Power Meter 15kW"
+  framework: "esp-idf"
 
 
 packages:
@@ -15,16 +16,12 @@ esphome:
     board_build.flash_mode: dio
 
 
-bluetooth_proxy:
-  active: true
-
-
 sensor:
   - platform: homeassistant
     name: Power
     id: power
 #    entity_id: sensor.meter_test_sensor
-    entity_id: sensor.mains_power_total
+    entity_id: sensor.main_panel_total_power
     unit_of_measurement: 'W'
     internal: true
     filters:
