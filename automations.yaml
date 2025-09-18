@@ -486,28 +486,12 @@
 - id: '1687244305614'
   alias: Livingroom apple tv play bridge
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - input_button.livingroom_apple_tv_play
-  condition: []
-  action:
-  - if:
-    - condition: device
-      device_id: fd05d6b84c78d8accb583974bc1ba777
-      domain: media_player
-      entity_id: 444939d9e9f40e01f9e157f96e723520
-      type: is_off
-    then:
-    - type: turn_on
-      device_id: fd05d6b84c78d8accb583974bc1ba777
-      entity_id: 85c54b36292326189fbfd20cf254d5dc
-      domain: remote
-    - action: media_player.turn_on
-      metadata: {}
-      data: {}
-      target:
-        device_id: fd05d6b84c78d8accb583974bc1ba777
+    trigger: state
+  conditions: []
+  actions:
   - data: {}
     target:
       entity_id:
