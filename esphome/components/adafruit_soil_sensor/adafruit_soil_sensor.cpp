@@ -11,12 +11,18 @@ static const char *const TAG = "adafruit_soil_sensor";
 void AdafruitSoilSensorComponent::setup() 
 {
   uint8_t buf[4] = {SEESAW_STATUS_BASE, SEESAW_STATUS_SWRST, 0xFF};
+//  i2c::I2CRegister16 reg_hw_id = this->reg16(SEESAW_STATUS_BASE | SEESAW_STATUS_HW_ID);
 
   this->write(buf, 3);
   delayMicroseconds(10000);
 
-  this->read_register16(SEESAW_STATUS_BASE << 8 | SEESAW_STATUS_HW_ID, buf, 1);
+//  this->read_register16(SEESAW_STATUS_BASE << 8 | SEESAW_STATUS_HW_ID, buf, 1);
 
+  buf[1] = SEESAW_STATUS_HW_ID;
+  this->write(buf, 2);
+  this->read_bytes_raw(buf, 1);
+
+  //  if (reg_hw_id.get() != SEESAW_HW_ID_CODE_SAMD09) {
   if (buf[0] != SEESAW_HW_ID_CODE_SAMD09) {
     ESP_LOGE("soil_sensor", "Failed to connect to soil sensor.");
     this->mark_failed();
