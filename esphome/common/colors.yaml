@@ -13,6 +13,8 @@ color:
     hex: 00FF00
   - id: matrix_white
     hex: FFFFFF
+  - id: matrix_yellow
+    hex: FFFF00
   - id: matrix_gray
     hex: 888888
   - id: matrix_light_green
