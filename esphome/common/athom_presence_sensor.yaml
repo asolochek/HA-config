@@ -56,9 +56,9 @@ uart:
   #     - lambda: UARTDebug::log_string(direction, bytes);
 
 binary_sensor:
-  - platform: status
-    name: "Status"
-    entity_category: diagnostic
+  # - platform: status
+  #   name: "Status"
+  #   entity_category: diagnostic
 
   - platform: gpio
     pin:
