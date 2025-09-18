@@ -1,0 +1,13 @@
+substitutions:
+  name: office-ble-proxy
+  friendly_name: "Office BLE Proxy"
+  hostname: ble-proxy-office
+  room: Office
+  device_description: "Office BLE Proxy for Bermuda"
+  log_level: INFO
+  framework: "esp-idf"
+
+
+packages:
+  device_base: !include common/olimex_esp32-POE.yaml
+  ble: !include common/bluetooth_proxy.yaml

@@ -1,0 +1,13 @@
+substitutions:
+  name: kitchen-ble-proxy
+  friendly_name: "Kitchen BLE Proxy"
+  hostname: ble-proxy-kitchen
+  room: "Kitchen"
+  device_description: "Kitchen BLE Proxy for Bermuda"
+  log_level: DEBUG
+  framework: "esp-idf"
+
+
+packages:
+  device_base: !include common/olimex_esp32-POE.yaml
+  ble: !include common/bluetooth_proxy.yaml
