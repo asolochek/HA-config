@@ -7,13 +7,15 @@ substitutions:
   display_id: bathroom_fan_display
   log_level: INFO
   i2c_frequency: 100kHz
+  framework: "esp-idf"
+#  framework: "arduino"
 
 
 packages:
-  device_base: !include common/feather_esp32s2_rev_tft.yaml
+  device_base: !include common/feather_esp32s3_rev_tft.yaml
   temperature: !include common/sht4x.yaml
   tvoc: !include common/sgp30.yaml
-  fonts: !include common/fonts.yaml
+#  fonts: !include common/fonts.yaml
   colors: !include common/colors.yaml
   soil: !include 
     file: common/adafruit_soil_sensor.yaml
@@ -23,6 +25,16 @@ packages:
       moisture_min_value: "300"
 #  dry: !include common/soil_dry_indicator.yaml
   dp: !include common/dew_point.yaml
+#  ble: !include common/bluetooth_proxy.yaml
+
+
+# light: 
+#   - id: !extend neopixel_led
+#     rmt_channel: 0
+
+bluetooth_proxy:
+ active: true
+
 
 
 # wifi:
@@ -41,16 +53,37 @@ logger:
     sgp30: ERROR
     sht4x: ERROR
     uptime: ERROR
-    number: WARN
-    text_sensor: WARN
+    number: ERROR
+    text_sensor: ERROR
+    component: ERROR
+    i2c.arduino: ERROR
+    api.service: ERROR
+    api.connection: ERROR
+    esp32.preferences: ERROR
+    sensor.filter: ERROR
+    scheduler: ERROR
+    sensor: ERROR
+    light.addressable: ERROR
+    text.sensor: ERROR
+    esp32_rmt_led_strip: ERROR
+    neopixel: ERROR
+    st7789v: INFO
 
 
 esphome:
   on_boot:
   - priority: 900
     then:
-      - lambda: "pinMode(7, OUTPUT); digitalWrite(7, HIGH);"
+#      - lambda: "pinMode(10, INPUT); pinMode(6, INPUT);"
+      # - lambda: |-
+      #     gpio_set_direction(GPIO_NUM_6, GPIO_MODE_INPUT);
+      #     gpio_set_direction(GPIO_NUM_10, GPIO_MODE_INPUT);
       - lambda: "App.set_loop_interval(0);"
+  - priority: 700
+    then:
+      - output.turn_off: fan_pwm_high
+      - output.turn_off: fan_pwm_low
+      - output.turn_off: fan_enable
   - priority: 100
     then:
       - lambda: |-
@@ -229,7 +262,7 @@ number:
     unit_of_measurement: "%"
     optimistic: True
     restore_value: True
-    initial_value: 80
+    initial_value: 75
     min_value: 30
     max_value: 100
     step: 1
@@ -247,7 +280,7 @@ number:
     unit_of_measurement: "%"
     optimistic: True
     restore_value: True
-    initial_value: 90
+    initial_value: 85
     min_value: 30
     max_value: 100
     step: 1
@@ -497,6 +530,18 @@ interval:
             id(blink_state) = false;
           }
 
+font:
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura50
+    size: 50
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura28
+    size: 28
+  - file: "fonts/Futura-Medium-01.ttf"
+    id: futura24
+    size: 24
+
+
 display:
   - id: !extend ${display_id}
     lambda: |-
@@ -521,3 +566,40 @@ display:
         it.printf(0, 85, id(futura24), Color(orange), "%.0f", id(fan_controller).get_stage1_trip());
         it.printf(0, 110, id(futura24), Color(blue), "%.0f", id(fan_controller).get_stage1_clear());
       }
+
+
+# font:
+#   - file: "gfonts://Roboto"
+#     id: font20
+#     size: 20
+#   - file: "gfonts://Roboto"
+#     id: large
+#     size: 55
+#   - file: "gfonts://Roboto"
+#     id: medium
+#     size: 35
+#   - file: "gfonts://Roboto"
+#     id: roboto
+#     size: 20
+
+
+# display:
+#   - id: !extend ${display_id}
+#     # platform: st7789v
+#     # model: TTGO TDisplay 135x240
+#     # backlight_pin: GPIO45
+#     # rotation: 90
+#     # cs_pin: GPIO42
+#     # dc_pin: GPIO40
+#     # reset_pin: GPIO41
+#     # update_interval: 1s
+#     lambda: |-
+#       it.rectangle(0,  0, it.get_width(), it.get_height(), id(matrix_blue));
+#       it.rectangle(0, 25, it.get_width(), it.get_height(), id(matrix_blue));
+
+#       it.print(5, 5, id(font20), id(matrix_yellow), TextAlign::TOP_LEFT, "HELLO");
+#       it.print(235, 5, id(font20), id(matrix_red), TextAlign::TOP_RIGHT, "Offline");
+
+#       it.printf((240 / 2), (140 / 6) * 1 + 5, id(large), id(matrix_green), TextAlign::TOP_CENTER, "%.1f °C", id(temperature).state);
+#       it.printf(5, (140 / 6) * 3 + 10, id(medium), id(matrix_green), TextAlign::TOP_LEFT, "%.1f °F", id(temperature).state*9/5+32);
+#       it.printf(235, (140 / 6) * 3 + 10, id(medium), id(matrix_blue), TextAlign::TOP_RIGHT, "%.1f%%",  id(humidity).state);  
