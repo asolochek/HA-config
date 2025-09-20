@@ -17,6 +17,22 @@ status_led:
     number: GPIO0
     inverted: False
 
+esphome:
+  on_boot:
+  - priority: 900
+    then:
+      - if: 
+          condition:
+            binary_sensor.is_on: window_closed_sensor
+          then:
+            - cover.close: bedroom_closet_window
+          else:
+            - if:
+                condition:
+                  binary_sensor.is_on: window_open_sensor
+                then:
+                  - cover.open: bedroom_closet_window
+
 
 switch:
   - platform: template
