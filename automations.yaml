@@ -1110,6 +1110,20 @@
     trigger: sun
   conditions: []
   actions:
+  - data:
+      scene_id: pre_dawn_light_state
+      snapshot_entities:
+      - light.kitchen_ceiling
+      - light.kitchen_ceiling_zigbee_group
+      - light.hallway_ceiling
+      - light.hallway_ceiling_zigbee_group
+    action: scene.create
+  - action: automation.turn_off
+    metadata: {}
+    target:
+      entity_id: automation.front_porch_motion_light
+    data:
+      stop_actions: true
   - action: light.turn_off
     data: {}
     target:
@@ -1124,7 +1138,11 @@
       - switch.adaptive_lighting_sleep_mode_kitchen
       - switch.adaptive_lighting_sleep_mode_living_room
       - switch.adaptive_lighting_sleep_mode_office
-    enabled: false
+    enabled: true
+  - data: {}
+    action: scene.turn_on
+    target:
+      entity_id: scene.pre_dawn_light_state
   mode: single
 - id: '1694549692218'
   alias: Dusk Tasks
@@ -1144,13 +1162,21 @@
 - id: '1694560280897'
   alias: Bedroom Closet Motion Light On
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.bedroom_closet_window_closet_motion
     to: 'on'
-  condition: []
-  action:
+    trigger: state
+    enabled: false
+  - trigger: state
+    entity_id:
+    - binary_sensor.bedroom_closet_window_closet_motion
+    from:
+    - 'off'
+    - 'on'
+    enabled: true
+  conditions: []
+  actions:
   - action: light.turn_on
     data: {}
     target:
@@ -1605,8 +1631,15 @@
     - condition: not
       conditions:
       - condition: state
-        entity_id: sensor.ham
-        state: ''
+        entity_id: sensor.ham_area
+        state:
+        - Living Room
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: media_player.living_room_tv
+        state:
+        - 'on'
   actions:
   - action: switch.turn_on
     metadata: {}
@@ -1815,9 +1848,9 @@
       hours: 0
       minutes: 10
       seconds: 0
-  - device_id: 605e8c94e02dcc3898d14db2036107f2
+  - device_id: 70d0f226440c2eb2750918e3fdf42772
     domain: device_tracker
-    entity_id: c3e540f98f2ab10eaf40b7576e43504a
+    entity_id: e8f52cea6d7b83ad757178d2600b2b61
     type: leaves
     trigger: device
     zone: zone.home
@@ -2015,4 +2048,32 @@
     metadata: {}
     data:
       message: Dishwasher is finished
+  mode: single
+- id: '1771390179209'
+  alias: Front Porch Motion Light
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.door_motion
+      light_target:
+        entity_id: light.front_porch
+- id: '1771390451529'
+  alias: Porch Light Motion Enable
+  description: ''
+  triggers:
+  - trigger: time
+    at: 00:30:00
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    target:
+      entity_id: light.front_porch
+    data: {}
+  - action: automation.turn_on
+    metadata: {}
+    target:
+      entity_id: automation.front_porch_motion_light
+    data: {}
   mode: single
