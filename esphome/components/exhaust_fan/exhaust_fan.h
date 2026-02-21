@@ -90,6 +90,8 @@ protected:
 
   float stage1_trip_;
   float stage2_trip_;
+
+  // These dewpoint setpoints will override the RH setpoints, and values based on external sensor offsets if set
   optional<float> stage1_clear_dp_;
   optional<float> stage1_trip_dp_;
   optional<float> stage2_clear_dp_;

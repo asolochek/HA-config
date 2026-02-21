@@ -5,6 +5,8 @@ substitutions:
   hostname: air-monitor-garage
   device_description: "Garage Air Quality Monitor"
   log_level: INFO
+  i2c_frequency: 100kHz
+  #framework: "esp-idf"
 
 
 packages:
@@ -13,12 +15,18 @@ packages:
   pmsa: !include common/pmsa003i.yaml
   dp: !include common/dew_point.yaml
   tvoc: !include common/sgp30.yaml
+#  ble: !include common/bluetooth_proxy.yaml
+
+
+
 
 sensor:
   - id: !extend sgp30_sensor
     baseline:
-      eco2_baseline: 0x01E0
-      tvoc_baseline: 0x0044
+      eco2_baseline: 0x0190
+      tvoc_baseline: 0x0065
+#      eco2_baseline: 0x915A
+#      tvoc_baseline: 0x9E96
 
 
 logger:

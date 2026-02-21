@@ -13,6 +13,7 @@ wifi:
   use_address: ${fqdn}
   domain: .${dns_domain}
   fast_connect: true
+  min_auth_mode: WPA2
 
 
 sensor:

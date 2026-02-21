@@ -171,6 +171,7 @@ sensor:
     filters:
       - lambda: 'return max(x, 0.0f);' # Ensure no negative values
       - throttle: ${total_energy_throttle}
+      - multiply: 0.001  # Convert Wh to kWh
       - filter_out: nan
 
   # - platform: total_daily_energy #(Optional, not specific to cse7766)

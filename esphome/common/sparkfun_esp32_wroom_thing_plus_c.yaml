@@ -16,10 +16,15 @@ packages:
   wifi: !include wifi.yaml
   neo_pwr: !include neopixel_power.yaml
   neo: !include 
-    file: neopixel.yaml
+    file: rmt_led.yaml
     vars:
       neopixel_pin: ${neopixel_pin}
 
+
+esp32:
+  framework:
+    advanced:
+      minimum_chip_revision: "3.1"
 
 esphome:
   platformio_options:

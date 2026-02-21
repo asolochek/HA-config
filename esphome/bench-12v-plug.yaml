@@ -1,0 +1,11 @@
+substitutions:
+  name: bench-12v-plug
+  friendly_name: Bench 12V Plug
+  hostname: plug-bench-12v
+  device_description: "12V Bench Supply"
+  room: Office
+
+packages:
+  device_base: !include common/sonoff_s31.yaml
+
+

@@ -4,6 +4,7 @@ substitutions:
   hostname: sensor-crawl-space
   room: "Crawl Space"
   device_description: "Crawl Space Temperature Sensor"
+  framework: "esp-idf"
 
 
 

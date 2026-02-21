@@ -157,6 +157,7 @@ float ExhaustFan::get_stage1_clear() {
         this->baseline_offset_) {
       float baseline = correct_humidity(this->get_external_temperature(), this->get_external_humidity(), this->get_temperature());
       ret = baseline + this->baseline_offset_.value();
+      ESP_LOGV(TAG, "Calculated Stage 1 Clear RH based on external sensors and baseline offset: %.1f%%", ret);
     }
     if (this->min_rh_) {
       ret = fmax(ret, this->min_rh_.value());
@@ -189,6 +190,14 @@ float ExhaustFan::get_stage2_trip() {
   return ret;
 }
 
+/**
+ * @brief Get the dewpoint for stage 1 clear
+ * 
+ * @details If stage1_clear_dp_ is set, return that value, otherwise calculate dewpoint
+ *         based on temperature and stage1_clear() RH value.
+ * 
+ * @return float dewpoint for stage 1 clear
+ */
 float ExhaustFan::get_stage1_clear_dp() {
   return this->stage1_clear_dp_.value_or(rh_to_dewpoint(this->get_temperature(), this->get_stage1_clear()));
 }
@@ -207,7 +216,7 @@ float ExhaustFan::get_stage2_trip_dp() {
 
 float ExhaustFan::get_temperature() {
   float temp = this->temperature_sensor_->state;
-  if (this->temperature_sensor_->get_unit_of_measurement().back() == 'F') {
+  if (this->temperature_sensor_->get_unit_of_measurement_ref().str().back() == 'F') {
     return f_to_c(temp);
   } 
   return temp;
@@ -225,8 +234,8 @@ float ExhaustFan::get_external_temperature() {
   float ret = NAN;
   if (this->external_temperature_sensor_ != nullptr) {
     ret = this->external_temperature_sensor_->state;
-  
-    if (this->external_temperature_sensor_->get_unit_of_measurement().back() == 'F') {
+
+    if (this->external_temperature_sensor_->get_unit_of_measurement_ref().str().back() == 'F') {
       ret = f_to_c(ret);
     }
   }

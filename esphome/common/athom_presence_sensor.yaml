@@ -18,9 +18,6 @@ esp8266:
   restore_from_flash: true
 
 
-mdns:
-  disabled: false
-
 web_server:
   port: 80
 

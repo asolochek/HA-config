@@ -44,12 +44,12 @@ packages:
       id_prefix: "plant_3"
       name_prefix: "Plant 3"
       dry_threshold: 35
-  soil4: !include
-    file: common/adafruit_soil_sensor.yaml
-    vars:
-      i2c_address: "0x39"
-      id_prefix: "plant_4"
-      name_prefix: "Plant 4"
+#  soil4: !include
+#    file: common/adafruit_soil_sensor.yaml
+#    vars:
+#      i2c_address: "0x39"
+#      id_prefix: "plant_4"
+#      name_prefix: "Plant 4"
   soil5: !include
     file: common/adafruit_soil_sensor.yaml
     vars:
@@ -73,7 +73,7 @@ packages:
       sensor_id_1: plant_1_dry
       sensor_id_2: plant_2_dry
       sensor_id_3: plant_3_dry
-      sensor_id_4: plant_4_dry
+#      sensor_id_4: plant_4_dry
       sensor_id_5: plant_5_dry
       sensor_id_6: plant_6_dry
   dry: !include
