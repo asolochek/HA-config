@@ -1643,6 +1643,10 @@
         entity_id: media_player.living_room_tv
         state:
         - 'on'
+  - condition: state
+    entity_id: switch.cat_camera_privacy_mode
+    state:
+    - 'off'
   actions:
   - action: switch.turn_on
     metadata: {}
@@ -1656,35 +1660,58 @@
 - id: '1727422854484'
   alias: Thao WFH End
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - device_tracker.thaos_work_laptop
-    from: home
-    to: not_home
-    enabled: true
-  - platform: state
-    entity_id:
-    - device_tracker.thaos_work_laptop
-    from: home
-    to: unknown
-    enabled: true
-  - platform: state
-    entity_id:
-    - device_tracker.thaos_work_laptop
-    from: home
-    to: unavailable
-    enabled: true
-  - platform: state
-    entity_id:
-    - binary_sensor.10_3_1_31
-    to: 'off'
     from:
-  condition:
+    - home
+    to:
+    - not_home
+    enabled: true
+    trigger: state
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  - entity_id:
+    - device_tracker.thaos_work_laptop
+    from:
+    - home
+    to:
+    - unknown
+    enabled: true
+    trigger: state
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  - entity_id:
+    - device_tracker.thaos_work_laptop
+    from:
+    - home
+    to:
+    - unavailable
+    enabled: true
+    trigger: state
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  - entity_id:
+    - binary_sensor.10_3_1_31
+    to:
+    - 'off'
+    from:
+    trigger: state
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  conditions:
   - condition: state
     entity_id: switch.cat_camera_privacy_mode
     state: 'on'
-  action:
+  actions:
   - action: switch.turn_off
     target:
       entity_id:
