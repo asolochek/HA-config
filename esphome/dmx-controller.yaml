@@ -9,6 +9,7 @@ substitutions:
 
 packages:
   device_base: !include common/sparkfun_esp32_wroom_thing_plus_c.yaml
+  #debug_controls: !include common/dmx-debug.yaml
   # fixture1: !include 
   #   file: common/elation_level_q7_5chan.yaml
   #   vars:
@@ -33,34 +34,34 @@ packages:
   fixture2: !include 
     file: common/elation_level_q7_12chan.yaml
     vars:
-      channel_r: 18
-      channel_g: 19
-      channel_b: 20
-      channel_w: 21
-      channel_shutter: 25
-      channel_dimmer: 26
+      channel_r: 13
+      channel_g: 14
+      channel_b: 15
+      channel_w: 16
+      channel_shutter: 20
+      channel_dimmer: 21
       light_id: f2
       light_name: "Light 2"
   fixture3: !include 
     file: common/elation_level_q7_12chan.yaml
     vars:
-      channel_r: 35
-      channel_g: 36
-      channel_b: 37
-      channel_w: 38
-      channel_shutter: 42
-      channel_dimmer: 43
+      channel_r: 25
+      channel_g: 26
+      channel_b: 27
+      channel_w: 28
+      channel_shutter: 32
+      channel_dimmer: 33
       light_id: f3
       light_name: "Light 3"
   fixture4: !include 
     file: common/elation_level_q7_12chan.yaml
     vars:
-      channel_r: 52
-      channel_g: 53
-      channel_b: 54
-      channel_w: 55
-      channel_shutter: 59
-      channel_dimmer: 60
+      channel_r: 37
+      channel_g: 38
+      channel_b: 39
+      channel_w: 40
+      channel_shutter: 44
+      channel_dimmer: 45
       light_id: f4
       light_name: "Light 4"
 
@@ -80,6 +81,7 @@ uart:
     baud_rate: 250000
     stop_bits: 2
 
+
 dmx512:
   - id: dmx
     uart_id: uart_bus
@@ -89,6 +91,9 @@ dmx512:
       number: GPIO17
       allow_other_uses: true
     uart_num: 1
+    update_interval: 250
+    force_full_frames: true
+
 
 
 
