@@ -1,0 +1,14 @@
+- fan:
+  - unique_id: litter_box_fan
+    speed_count: 1
+    turn_on:
+    - action: switch.turn_on
+      data:
+        entity_id: switch.litter_box_fan
+    turn_off:
+    - action: switch.turn_off
+      data:
+        entity_id: switch.litter_box_fan
+    default_entity_id: fan.litter_box_fan
+    name: Litter Box Fan
+    state: '{{ states(''switch.litter_box_fan'') }}'

@@ -1,0 +1,67 @@
+
+- fan:
+  - unique_id: bedroom_purifier_2
+    speed_count: 5
+    preset_modes:
+    - Silent
+    - Low
+    - Medium
+    - High
+    - Turbo
+    turn_on:
+    - action: input_button.press
+      data:
+        entity_id: input_button.bedroom_purifier_on
+    - action: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.bedroom_purifier_power_state
+    turn_off:
+    - action: input_button.press
+      data:
+        entity_id: input_button.bedroom_purifier_off
+    - action: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.bedroom_purifier_power_state
+    set_preset_mode:
+    - action: input_button.press
+      data:
+        entity_id: '{% from ''utils.jinja'' import concat %} {{ concat(''input_button.bedroom_purifier_'',
+          preset_mode) }}'
+    - action: input_boolean.turn_{{ 'on' if preset_mode != Off else 'off' }}
+      data:
+        entity_id: input_boolean.bedroom_purifier_power_state
+    - condition: template
+      value_template: '{{ preset_mode != Off }}'
+    - action: input_select.select_option
+      target:
+        entity_id:
+        - input_select.bedroom_purifier_preset
+      data:
+        option: '{{ preset_mode }}'
+    default_entity_id: fan.bedroom_purifier
+    name: Bedroom Purifier Old
+    preset_mode: '{{ states(''input_select.bedroom_purifier_preset'') }}'
+    state: '{{ states(''input_boolean.bedroom_purifier_power_state'') }}'
+
+- fan:
+  - unique_id: bedroom_purifier_for_homekit
+    speed_count: 5
+    turn_on:
+    - action: fan.turn_on
+      data:
+        entity_id: fan.bedroom_purifier
+    turn_off:
+    - action: fan.turn_off
+      data:
+        entity_id: fan.bedroom_purifier
+    set_percentage:
+    - action: fan.set_percentage
+      target:
+        entity_id:
+        - fan.bedroom_purifier
+      data:
+        percentage: '{{ percentage }}'
+    default_entity_id: fan.bedroom_purifier_for_homekit
+    name: Bedroom Purifier
+    percentage: '{{ states(''fan.bedroom_purifier'')|int(0) }}'
+    state: '{{ states(''fan.bedroom_purifier'') }}'
