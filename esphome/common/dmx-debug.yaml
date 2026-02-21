@@ -1,0 +1,209 @@
+
+number:
+
+  - platform: template
+    name: Chan 1
+    id: chan_1
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(1, x);
+
+  - platform: template
+    name: Chan 2
+    id: chan_2
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(2, x);
+
+  - platform: template
+    name: Chan 3
+    id: chan_3
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(3, x);
+
+  - platform: template
+    name: Chan 4
+    id: chan_4
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(4, x);
+
+  - platform: template
+    name: Chan 5
+    id: chan_5
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(5, x);
+
+  - platform: template
+    name: Chan 6
+    id: chan_6
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(6, x);
+
+  - platform: template
+    name: Chan 7
+    id: chan_7
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(7, x);
+
+  - platform: template
+    name: Chan 8
+    id: chan_8
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(8, x);
+
+  - platform: template
+    name: Chan 9
+    id: chan_9
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(9, x);
+
+  - platform: template
+    name: Chan 10
+    id: chan_10
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(10, x);
+
+  - platform: template
+    name: Chan 11
+    id: chan_11
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(11, x); 
+
+  - platform: template
+    name: Chan 12
+    id: chan_12
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(12, x);
+
+  - platform: template
+    name: Chan 13
+    id: chan_13
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(13, x);
+
+  - platform: template
+    name: Chan 14
+    id: chan_14
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(14, x);
+
+  - platform: template
+    name: Chan 15
+    id: chan_15
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(15, x);
+
+  - platform: template
+    name: Chan 16
+    id: chan_16
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(16, x);
+
+  - platform: template
+    name: Chan 17
+    id: chan_17
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
+    on_value:
+      then:
+        - lambda: |-
+            id(dmx).write_channel(17, x);
+
+
+

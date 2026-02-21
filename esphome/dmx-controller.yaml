@@ -4,49 +4,63 @@ substitutions:
   hostname: dmx-controller
   room: Office
   device_description: "DMX Controller"
-  log_level: INFO
+  log_level: DEBUG
   framework: "esp-idf"
 
 packages:
   device_base: !include common/sparkfun_esp32_wroom_thing_plus_c.yaml
+  # fixture1: !include 
+  #   file: common/elation_level_q7_5chan.yaml
+  #   vars:
+  #     channel_r: 1
+  #     channel_g: 2
+  #     channel_b: 3
+  #     channel_w: 4
+  #     channel_d: 5
+  #     light_id: f1
+  #     light_name: "Light 1"
   fixture1: !include 
-    file: common/elation_level_q7_5chan.yaml
+    file: common/elation_level_q7_12chan.yaml
     vars:
       channel_r: 1
       channel_g: 2
       channel_b: 3
       channel_w: 4
-      channel_d: 5
+      channel_shutter: 8
+      channel_dimmer: 9
       light_id: f1
       light_name: "Light 1"
   fixture2: !include 
-    file: common/elation_level_q7_5chan.yaml
+    file: common/elation_level_q7_12chan.yaml
     vars:
       channel_r: 18
       channel_g: 19
       channel_b: 20
       channel_w: 21
-      channel_d: 22
+      channel_shutter: 25
+      channel_dimmer: 26
       light_id: f2
       light_name: "Light 2"
   fixture3: !include 
-    file: common/elation_level_q7_5chan.yaml
+    file: common/elation_level_q7_12chan.yaml
     vars:
       channel_r: 35
       channel_g: 36
       channel_b: 37
       channel_w: 38
-      channel_d: 39
+      channel_shutter: 42
+      channel_dimmer: 43
       light_id: f3
       light_name: "Light 3"
   fixture4: !include 
-    file: common/elation_level_q7_5chan.yaml
+    file: common/elation_level_q7_12chan.yaml
     vars:
       channel_r: 52
       channel_g: 53
       channel_b: 54
       channel_w: 55
-      channel_d: 56
+      channel_shutter: 59
+      channel_dimmer: 60
       light_id: f4
       light_name: "Light 4"
 
@@ -77,13 +91,4 @@ dmx512:
     uart_num: 1
 
 
-number:
-  - platform: template
-    name: Strobe Period
-    id: strobe_period
-    optimistic: true
-    min_value: 0.01
-    max_value: 1
-    step: 0.01
-    restore_value: true
 

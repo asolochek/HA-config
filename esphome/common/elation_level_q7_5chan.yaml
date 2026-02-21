@@ -42,27 +42,38 @@ light:
     green: ${light_id}_green
     blue: ${light_id}_blue
     white: ${light_id}_white
-
     effects:
       - pulse:
       - pulse:
           name: "Pulse Fast"
-          transition_length: 0.05s
+          transition_length: 0s
+          update_interval: 0.1s
+      - random:
+      - random:
+          name: "Random Fast"
+          update_interval: 0.1s
+          transition_length: 0.5s
       - lambda:
           name: Strobe
-          update_interval: 0.01s
+          update_interval: 0.005s
           lambda: |-
             static bool on = false;
-            static int counter = 0;
-            auto call = id(${light_id}).make_call();
-            call.set_transition_length(0);
-            if (counter++ == id(strobe_period).state * 100) {
-              counter = 0;
+            static uint32_t last_toggle = 0;
+
+            uint32_t now = millis();
+            uint32_t interval = id(strobe_period).state * 500;  // half period in ms
+
+            if (now - last_toggle >= interval) {
+              last_toggle = now;
               on = !on;
+
+              id(dmx).write_channel(${channel_d}, on ? 255 : 0);
             }
-            if (on) {
-              call.set_brightness(1.0);
-            } else {
-              call.set_brightness(0.0);
-            }
-            call.perform();
+
+  - platform: monochromatic
+    restore_mode: RESTORE_DEFAULT_ON
+    icon: mdi:blur
+    default_transition_length: 0s
+    name: "${light_name} Dimmer"
+    id: ${light_id}_dimmer_light
+    output: ${light_id}_dimmer
