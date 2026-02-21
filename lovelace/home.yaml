@@ -94,7 +94,7 @@ cards:
           icon:
             template:
               styles: >
-                if (entity.state == "off") return 'color: gray';
+                if (entity.state == "off") return 'color: gray'; 
                 else return;
       - name: window_template
         template:
@@ -104,7 +104,7 @@ cards:
             # change the icon to match window state
             template:
               icon: >
-                if (entity.state == "on") return 'mdi:window-open';  
+                if (entity.state == "on") return 'mdi:window-open'; 
                 else return 'mdi:window-closed';
       - name: fan_template
         template:
