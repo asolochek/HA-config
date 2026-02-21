@@ -1,0 +1,68 @@
+defaults:
+  channel_r: 1
+  channel_g: 2
+  channel_b: 3
+  channel_w: 4
+  channel_d: 5
+  light_id: dmx_light
+  light_name: DMX Light
+
+
+output:
+  - platform: dmx512
+    universe: dmx
+    channel: ${channel_r}
+    id: ${light_id}_red
+  - platform: dmx512
+    universe: dmx
+    channel: ${channel_g}
+    id: ${light_id}_green
+  - platform: dmx512
+    universe: dmx
+    channel: ${channel_b}
+    id: ${light_id}_blue
+  - platform: dmx512
+    universe: dmx
+    channel: ${channel_w}
+    id: ${light_id}_white
+  - platform: dmx512
+    universe: dmx
+    channel: ${channel_d}
+    id: ${light_id}_dimmer 
+
+light:
+  - platform: rgbw
+    gamma_correct: 0
+    restore_mode: RESTORE_DEFAULT_ON
+    icon: mdi:spotlight
+    default_transition_length: 0s
+    name: ${light_name}
+    id: ${light_id}
+    red: ${light_id}_red
+    green: ${light_id}_green
+    blue: ${light_id}_blue
+    white: ${light_id}_white
+
+    effects:
+      - pulse:
+      - pulse:
+          name: "Pulse Fast"
+          transition_length: 0.05s
+      - lambda:
+          name: Strobe
+          update_interval: 0.01s
+          lambda: |-
+            static bool on = false;
+            static int counter = 0;
+            auto call = id(${light_id}).make_call();
+            call.set_transition_length(0);
+            if (counter++ == id(strobe_period).state * 100) {
+              counter = 0;
+              on = !on;
+            }
+            if (on) {
+              call.set_brightness(1.0);
+            } else {
+              call.set_brightness(0.0);
+            }
+            call.perform();
