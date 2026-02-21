@@ -110,8 +110,6 @@ devices:
     friendly_name: Bedroom Ceiling 1
   '0x00178801039d730e':
     friendly_name: Bedroom Ceiling 2
-  '0x00178801063878cb':
-    friendly_name: Office Ceiling 2
   '0x001788010b6dd9a9':
     friendly_name: Kitchen Ceiling 1-1
   '0x0017880106d9db2d':
@@ -153,6 +151,8 @@ devices:
     friendly_name: Hallway Ceiling 3
   '0x001788010dbfec5c':
     friendly_name: Office Ceiling 1
+  '0x001788010dbd4169':
+    friendly_name: Office Ceiling 2
 device_options:
   legacy: false
 groups:
@@ -182,4 +182,4 @@ groups:
     friendly_name: Bedroom Lamps
 ota:
   disable_automatic_update_check: true
-version: 4
+version: 5
