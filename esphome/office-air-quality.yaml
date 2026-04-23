@@ -11,8 +11,8 @@ substitutions:
   st7789_reset_pin: GPIO15
   st7789_width: "172"
   st7789_height: "320"
-  st7789_offset_height: "34"
-  st7789_offset_width: "0"
+  st7789_offset_height: "0"
+  st7789_offset_width: "34"
   st7789_rotation: "90"
 #  log_level: DEBUG
   i2c_frequency: 100kHz
