@@ -1,8 +1,8 @@
 import math
 
 
-@service
-def humidity_correction(dest_id=None, initial_humidity=None, initial_temperature=None, new_temperature=None):
+@service(supports_response="only")
+def humidity_correction(dest_id=None, initial_humidity=None, initial_temperature=None, new_temperature=None, return_response=True):
     """Get the temperature-corrected relative humidity value given a relative humidity computed at the wrong temperature"""
 
     humidity1_state = state.get(initial_humidity)
@@ -33,6 +33,31 @@ def humidity_correction(dest_id=None, initial_humidity=None, initial_temperature
 
     return humidity2
 
+@service(supports_response="only")
+def dew_point(dest_id=None, temperature=None, relative_humidity=None, return_response=True):
+    """Get the dew point given a temperature and a relative humidity"""
+
+    temperature_state = state.get(temperature)
+    humidity_state = state.get(relative_humidity)
+
+    try:
+        if "F" in temperature_state.unit_of_measurement:
+            temperature = fahrenheit_to_celsius(float(temperature_state))
+        else:
+            temperature = float(temperature_state)
+
+        humidity = float(humidity_state)
+
+        dew_point_value = rh_to_dew_point(temperature, humidity)
+        dew_point_value = round(dew_point_value, 2)
+
+        if dest_id is not None:
+            input_number.set_value(entity_id=dest_id, value=dew_point_value)
+
+    except ValueError:
+        return { False }
+
+    return { "dew_point": dew_point_value }
 
 def fahrenheit_to_celsius(temperature_fahrenheit):
     temperature_celsius = (temperature_fahrenheit - 32) / 1.8
@@ -87,3 +112,12 @@ def relative_humidity_at_different_temp(initial_temp, initial_rel_humidity, targ
 
     print("Corrected ", initial_rel_humidity, "% @ ", initial_temp, "ºC to ", corrected_humidity, "% @ ", target_temp, "ºC")
     return corrected_humidity
+
+
+def dew_point_to_rh(temperature, dp):
+  return 100 * (math.exp((17.625 * dp) / (243.04 + dp)) / math.exp((17.625 * temperature) / (243.04 + temperature)))
+
+
+def rh_to_dew_point(temperature, rh):
+  pressure = math.log(rh / 100) + ((17.625 * temperature) / (243.04 + temperature))
+  return (237.3 * pressure) / (17.269 - pressure)

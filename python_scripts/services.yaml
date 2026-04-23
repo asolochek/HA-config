@@ -14,3 +14,39 @@ relative_humidity_correction:
     new_temperature:
       description: The temperature for which you want the relative humidity value in celsius
       example: 20
+
+dew_point:
+  name: Dew Point
+  description: Calculate the dew point from a temperature and humidity sensor.
+  fields:
+    entity_id:
+      description: The entity in which to store the new value
+      example: input_number.dew_point
+    temperature:
+      description: The temperature value from a sensor
+      example: 30
+    humidity:
+      description: The humidity value from a sensor
+      example: 60
+    # unit_of_measurement:
+    #   description: The unit of measurement for the dew point
+    #   example: "°C"
+    # accuracy_decimals:
+    #   description: The number of decimal places to round the dew point to
+    #   example: 1
+    # device_class:
+    #   description: The device class for the dew point sensor
+    #   example: temperature
+    # update_interval:
+    #   description: The interval at which to update the dew point
+    #   example: 5s
+    # icon:
+    #   description: The icon to display for the dew point sensor
+    #   example: mdi:thermometer-water
+    # lambda:
+    #   description: The lambda function to calculate the dew point
+    #   example: |-
+    #     float temp = id(temperature).state;
+    #     float hum = id(humidity).state;
+    #     float dew = compute_dew_point(temp, hum);
+    #     return c_to_f(dew)

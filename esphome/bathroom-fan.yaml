@@ -52,7 +52,7 @@ logger:
     climate: ERROR
 #    sensor: DEBUG
     sgp30: ERROR
-    sht4x: ERROR
+    sht4x: DEBUG
     uptime: ERROR
     number: ERROR
     text_sensor: ERROR

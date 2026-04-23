@@ -4,7 +4,7 @@ substitutions:
   hostname: dmx-controller
   room: Office
   device_description: "DMX Controller"
-  log_level: DEBUG
+  log_level: INFO
   framework: "esp-idf"
 
 packages:
