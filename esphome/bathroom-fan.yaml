@@ -13,7 +13,8 @@ substitutions:
 
 packages:
   device_base: !include common/feather_esp32s3_rev_tft.yaml
-  temperature: !include common/sht4x.yaml
+#  temperature: !include common/sht4x.yaml
+  temperature: !include common/hdc302x.yaml
 #  tvoc: !include common/sgp30.yaml
 #  fonts: !include common/fonts.yaml
   colors: !include common/colors.yaml
@@ -371,7 +372,15 @@ number:
 
 
 sensor:
-  - id: !extend sht4x_sensor
+  # - id: !extend sht4x_sensor
+  #   temperature:
+  #     filters:
+  #       - offset: -2.0
+  #   humidity:
+  #     filters:
+  #       - offset: +3.0
+
+  - id: !extend hdc302x_sensor
     temperature:
       filters:
         - offset: -2.0
