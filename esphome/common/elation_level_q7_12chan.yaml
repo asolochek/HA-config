@@ -59,22 +59,9 @@ light:
     on_turn_on:
       then:
         - lambda: |-
-            //std::string mode = id(${light_id}_mode).current_option();
-            //float speed = id(${light_id}_effect_speed).state / 100.0;
-            //int speed_offset = (int)(speed * 31);
             auto dimmer_call = id(${light_id}_dimmer_light).turn_on();
             int dimmer_value = id(${light_id}_dimmer_light).current_values.get_brightness() * 255;  // Get current brightness value (0-255)
             int value = 32;  // default solid
-
-            //if (mode == "Solid") {
-            //  value = 32;
-            //} else if (mode == "Strobe") {
-            //  value = 64 + speed_offset;
-            //} else if (mode == "Pulse") {
-            //  value = 128 + speed_offset;
-            //} else if (mode == "Random Strobe") {
-            //  value = 192 + speed_offset;
-            //}
 
             id(dmx).write_channel(${channel_shutter}, value);
 
@@ -132,36 +119,6 @@ light:
     id: ${light_id}_dimmer_light
     output: ${light_id}_dimmer
 
-# select:
-#   - platform: template
-#     name: "${light_name} Mode"
-#     id: ${light_id}_mode
-#     optimistic: true
-#     restore_value: true
-#     options:
-#       - "Solid"
-#       - "Strobe"
-#       - "Pulse"
-#       - "Random Strobe"
-#     initial_option: "Solid"
-#     on_value:
-#       then:
-#         - lambda: |-
-#             float speed = id(${light_id}_effect_speed).state / 100.0;
-#             int speed_offset = (int)(speed * 31);
-#             int value = 32;  // default solid
-
-#             if (x == "Solid") {
-#               value = 32;
-#             } else if (x == "Strobe") {
-#               value = 64 + speed_offset;
-#             } else if (x == "Pulse") {
-#               value = 128 + speed_offset;
-#             } else if (x == "Random Strobe") {
-#               value = 192 + speed_offset;
-#             }
-
-#             id(dmx).write_channel(${channel_shutter}, value);
 
 number:
   - platform: template
