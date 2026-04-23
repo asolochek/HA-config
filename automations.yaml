@@ -1115,8 +1115,36 @@
       snapshot_entities:
       - light.kitchen_ceiling
       - light.kitchen_ceiling_zigbee_group
-      - light.hallway_ceiling
       - light.hallway_ceiling_zigbee_group
+      - light.all_lights
+      - light.bedroom_lights
+      - light.bathroom_lights
+      - light.hallway_ceiling_1
+      - light.bedroom_ceiling
+      - light.hallway_ceiling
+      - light.office_ceiling
+      - light.bedroom_ceiling_1
+      - light.bedroom_ceiling_2
+      - light.hallway_ceiling_2
+      - light.hallway_ceiling_3
+      - light.office_ceiling_3
+      - light.kitchen_ceiling_1_1
+      - light.kitchen_ceiling_1_2
+      - light.kitchen_ceiling_1_3
+      - light.kitchen_ceiling_2_1
+      - light.kitchen_ceiling_2_2_2
+      - light.kitchen_ceiling_2_3
+      - light.living_room_ceiling
+      - light.office_ceiling_2
+      - light.0x001788010dbfec5c
+      - light.all_lights_zigbee_group
+      - light.bedroom_ceiling_zigbee_group
+      - light.bedroom_lights_zigbee_group
+      - light.hallway_lights_zigbee_group
+      - light.kitchen_counters_zigbee_group
+      - light.kitchen_lights_zigbee_group
+      - light.office_ceiling_group
+      - light.office_lights_group
     action: scene.create
   - action: automation.turn_off
     metadata: {}
@@ -1146,6 +1174,12 @@
   - action: script.adapt_all_lights
     metadata: {}
     data: {}
+  - action: scene.delete
+    metadata: {}
+    target:
+      entity_id: scene.pre_dawn_light_state
+    data: {}
+    enabled: false
   mode: single
 - id: '1694549692218'
   alias: Dusk Tasks
