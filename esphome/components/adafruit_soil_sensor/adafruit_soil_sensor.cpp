@@ -31,7 +31,7 @@ void AdafruitSoilSensorComponent::setup()
 
   ESP_LOGI("soil_sensor", "Successfully reset soil sensor.");
 
-  this->temperature_sensor_->set_unit_of_measurement("°F");
+//  this->temperature_sensor_->set_unit_of_measurement("°F");
 }
 
 void AdafruitSoilSensorComponent::update() 
