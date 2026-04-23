@@ -29,3 +29,8 @@ esphome/archive
 esphome/components/exhaust_fan/bak
 .cache
 .ha_run.lock
+*.orig
+*.old
+secret.yaml
+.claude
+custom_components.disabled
