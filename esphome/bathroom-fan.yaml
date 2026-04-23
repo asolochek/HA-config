@@ -398,7 +398,8 @@ sensor:
     name: Baseline Humidity
     id: baseline_humidity
     icon: mdi:cloud-percent
-    entity_id: sensor.thermostat_humidity
+#    entity_id: sensor.thermostat_humidity
+    entity_id: sensor.living_room_humidity  
     unit_of_measurement: "%"
     internal: false
     filters:
