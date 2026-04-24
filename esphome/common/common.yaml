@@ -149,7 +149,8 @@ time:
 
   - platform: homeassistant
     id: ha_time
-    timezone: America/Los_Angeles
+#    timezone: America/Los_Angeles
+    timezone: PST8PDT,M3.2.0,M11.1.0
     update_interval: 60min
     on_time_sync:
       then:
