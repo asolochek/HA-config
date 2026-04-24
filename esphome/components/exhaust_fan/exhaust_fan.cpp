@@ -274,7 +274,7 @@ float ExhaustFan::get_min_humidity() {
 ExhaustFanZone ExhaustFan::get_current_zone_() {
   float dp = this->get_dewpoint();
   
-  if (dp == NAN) {
+  if (isnan(dp)) {
     ESP_LOGW(TAG, "Dewpoint is NAN");
     return EXHAUST_FAN_ZONE_0;
   }
