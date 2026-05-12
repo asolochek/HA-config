@@ -34,3 +34,4 @@ esphome/components/exhaust_fan/bak
 secret.yaml
 .claude
 custom_components.disabled
+esphome/.git.fleet
