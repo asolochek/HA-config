@@ -1,0 +1,38 @@
+substitutions:
+  name: kitchen-east-soil-sensor
+  friendly_name: Kitchen East Soil Sensor
+  room: "Kitchen"
+  hostname: soil-sensor-kitchen-east
+  device_description: Kitchen East Soil Sensor
+  log_level: INFO
+  i2c_frequency: 100kHz
+
+
+packages:
+  device_base: !include common/qtpy_esp32.yaml
+  soil: !include common/adafruit_soil_sensor.yaml
+
+
+light:
+  - id: !extend neopixel_led
+    restore_mode: RESTORE_DEFAULT_OFF
+    effects:
+    - strobe:
+        name: "Strobe"
+        # transition_length: 0.5s
+        # update_interval: 0.5s
+        # min_brightness: 0%
+        # max_brightness: 100%
+        colors:
+          - state: true
+            red: 100%
+            green: 0
+            blue: 0
+            brightness: 100%
+            duration: 250ms
+          - state: true
+            red: 0
+            green: 0
+            blue: 0
+            brightness: 0
+            duration: 250ms
