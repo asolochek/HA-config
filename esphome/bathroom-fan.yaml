@@ -386,6 +386,9 @@ sensor:
         - offset: -2.0
     humidity:
       filters:
+        - median:
+            window_size: 5
+            
         - offset: +3.0
 
   - platform: template
