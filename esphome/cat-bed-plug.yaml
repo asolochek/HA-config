@@ -9,6 +9,9 @@ substitutions:
 packages: 
   device_base: !include common/athom_plug.yaml
 
+wifi:
+  use_address: 10.3.3.25
+
 sensor:
   - id: !extend cse7766_sensor
     power:
