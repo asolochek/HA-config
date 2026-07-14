@@ -89,8 +89,10 @@ switch:
 
   - platform: gpio
     id: fan_power_relay
+    name: "Fan Power Relay"
+    entity_category: "CONFIG"
     pin: GPIO15
-    internal: true
+    internal: false
 
 binary_sensor:
   - platform: gpio
