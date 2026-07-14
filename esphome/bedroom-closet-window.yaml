@@ -45,7 +45,7 @@ switch:
           condition:
             or:
               - binary_sensor.is_on: window_closed_sensor
-              - binary_sensor.is_off: window_open_sensor_2
+ #             - binary_sensor.is_off: window_open_sensor_2
           then:
             - cover.open: bedroom_closet_window
             - delay: 6s
@@ -53,14 +53,14 @@ switch:
           condition:
             and:
               - binary_sensor.is_off: window_closed_sensor
-              - binary_sensor.is_on: window_open_sensor_2
+#              - binary_sensor.is_on: window_open_sensor_2
           then:
             - switch.turn_on: fan_power_relay
       - if:
           condition:
             or:
               - binary_sensor.is_on: window_closed_sensor
-              - binary_sensor.is_off: window_open_sensor_2
+  #            - binary_sensor.is_off: window_open_sensor_2
           then:
             - homeassistant.service:
                 service: notify.notify
