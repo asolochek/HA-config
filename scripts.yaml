@@ -112,19 +112,19 @@ goodnight:
 air_conditioners_on:
   alias: Air Conditioners On
   sequence:
-  - device_id: 4b987c6c5611f851761cceac2d341f5e
+  - device_id: df0987f26760ee064ac6c068061a284d
     domain: climate
-    entity_id: 0b2e89c8d9dde29d44a86d06541aee11
+    entity_id: 88ccbffc491148a5e48e19372039e33d
     type: set_hvac_mode
     hvac_mode: cool
-  - device_id: 4d342d88be4e71bf65993a020f1fc6b9
+  - device_id: cba82d5ad546b4390271d3598cb99ead
     domain: climate
-    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    entity_id: 74bbe99649f797ef0a492349bab604dc
     type: set_hvac_mode
     hvac_mode: cool
-  - device_id: 6833b84bb9fbdfd52286d43e14fa7596
+  - device_id: 2a42f814ff2ce7bc8cc794452d18ee76
     domain: climate
-    entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
+    entity_id: 34ad5f9cc63a59641098c949760e1108
     type: set_hvac_mode
     hvac_mode: cool
   mode: single

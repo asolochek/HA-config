@@ -75,8 +75,6 @@ devices:
     friendly_name: Living Room Closet Light
   '0x00158d0008e1ba9f':
     friendly_name: Printer Plug
-  '0x0017880108e2d3ba':
-    friendly_name: Office Ceiling 3
   '0x0017880109107ed2':
     friendly_name: Office Desk Lights
   '0x00178801091086eb':
@@ -126,8 +124,6 @@ devices:
     friendly_name: Bedroom North Window
   '0x001788010d67b5d0':
     friendly_name: Laundry Room Light
-  '0x00158d0009ee038b':
-    friendly_name: Bedroom Closet Window Sensor
   '0xf0d1b80000077af5':
     friendly_name: Living Room South Grow Light
   '0x001788010dab64c2':
@@ -138,8 +134,6 @@ devices:
     friendly_name: Kitchen Ceiling 2-1
   '0xf0d1b80000077a77':
     friendly_name: Living Room North Grow Light
-  '0x7cb03eaa00a2651e':
-    friendly_name: Cat Bed
   '0x001788010dbfbed2':
     friendly_name: Kitchen Ceiling 2-3
   '0x001788010dbfeaed':
@@ -153,6 +147,10 @@ devices:
     friendly_name: Office Ceiling 1
   '0x001788010dbd4169':
     friendly_name: Office Ceiling 2
+  '0x001788010dbfec0d':
+    friendly_name: Office Ceiling 3
+  '0x00158d0009ee038b':
+    friendly_name: Bedroom Closet Window Sensor
 device_options:
   legacy: false
 groups:

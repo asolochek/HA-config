@@ -659,29 +659,30 @@
   - condition: or
     conditions:
     - condition: device
-      device_id: 6833b84bb9fbdfd52286d43e14fa7596
+      device_id: 2a42f814ff2ce7bc8cc794452d18ee76
       domain: climate
-      entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
+      entity_id: 34ad5f9cc63a59641098c949760e1108
       type: is_hvac_mode
       hvac_mode: dry
     - condition: device
-      device_id: 6833b84bb9fbdfd52286d43e14fa7596
+      device_id: 2a42f814ff2ce7bc8cc794452d18ee76
       domain: climate
-      entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
-      type: is_hvac_mode
-      hvac_mode: cool
-    - condition: device
-      device_id: 6833b84bb9fbdfd52286d43e14fa7596
-      domain: climate
-      entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
+      entity_id: 34ad5f9cc63a59641098c949760e1108
       type: is_hvac_mode
       hvac_mode: fan_only
+    - condition: device
+      device_id: 2a42f814ff2ce7bc8cc794452d18ee76
+      domain: climate
+      entity_id: 34ad5f9cc63a59641098c949760e1108
+      type: is_hvac_mode
+      hvac_mode: cool
   actions:
-  - device_id: 6833b84bb9fbdfd52286d43e14fa7596
-    domain: climate
-    entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
-    type: set_hvac_mode
-    hvac_mode: 'off'
+  - action: climate.set_hvac_mode
+    metadata: {}
+    target:
+      device_id: 2a42f814ff2ce7bc8cc794452d18ee76
+    data:
+      hvac_mode: 'off'
   mode: single
 - id: '1688606850903'
   alias: Bathroom Fan Auto Threshold
@@ -986,26 +987,6 @@
       initial_temperature: sensor.espresense_bedroom_temperature
       new_temperature: sensor.bedroom_ecobee_temperature
   mode: single
-- id: '1691879070103'
-  alias: Bedroom Air Conditioner Turned on
-  description: ''
-  triggers:
-  - device_id: 6833b84bb9fbdfd52286d43e14fa7596
-    domain: climate
-    entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
-    type: hvac_mode_changed
-    to: cool
-    trigger: device
-  conditions:
-  - condition: state
-    entity_id: cover.bedroom_closet_window
-    state: open
-  actions:
-  - data: {}
-    target:
-      entity_id: cover.bedroom_closet_window
-    action: cover.close_cover
-  mode: single
 - id: '1691882214924'
   alias: 'Bedroom Closet fans on '
   description: 'Turn off AC if fans are turned on '
@@ -1017,9 +998,9 @@
     trigger: state
   conditions:
   - condition: device
-    device_id: 6833b84bb9fbdfd52286d43e14fa7596
+    device_id: 2a42f814ff2ce7bc8cc794452d18ee76
     domain: climate
-    entity_id: 4c3f38b88fc0931fe2cc6dbcd3377e26
+    entity_id: 34ad5f9cc63a59641098c949760e1108
     type: is_hvac_mode
     hvac_mode: cool
   actions:
@@ -1210,8 +1191,9 @@
     - binary_sensor.bedroom_closet_window_closet_motion
     from:
     - 'off'
-    - 'on'
     enabled: true
+    to:
+    - 'on'
   conditions: []
   actions:
   - action: light.turn_on
@@ -1545,12 +1527,12 @@
   alias: Office Air Conditioner Turns On
   description: ''
   triggers:
-  - device_id: 4d342d88be4e71bf65993a020f1fc6b9
+  - device_id: cba82d5ad546b4390271d3598cb99ead
     domain: climate
-    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    entity_id: 74bbe99649f797ef0a492349bab604dc
     type: hvac_mode_changed
-    to: cool
     trigger: device
+    to: 'off'
   conditions:
   - condition: state
     state: open
@@ -1572,15 +1554,15 @@
     trigger: device
   conditions:
   - condition: device
-    device_id: 4d342d88be4e71bf65993a020f1fc6b9
+    device_id: cba82d5ad546b4390271d3598cb99ead
     domain: climate
-    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    entity_id: 74bbe99649f797ef0a492349bab604dc
     type: is_hvac_mode
     hvac_mode: cool
   actions:
-  - device_id: 4d342d88be4e71bf65993a020f1fc6b9
+  - device_id: cba82d5ad546b4390271d3598cb99ead
     domain: climate
-    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    entity_id: 74bbe99649f797ef0a492349bab604dc
     type: set_hvac_mode
     hvac_mode: 'off'
   mode: single
@@ -1598,9 +1580,9 @@
       seconds: 0
   conditions: []
   actions:
-  - device_id: 4d342d88be4e71bf65993a020f1fc6b9
+  - device_id: cba82d5ad546b4390271d3598cb99ead
     domain: climate
-    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    entity_id: 74bbe99649f797ef0a492349bab604dc
     type: set_hvac_mode
     hvac_mode: cool
   mode: single
@@ -1618,15 +1600,15 @@
       seconds: 0
   conditions:
   - condition: device
-    device_id: 4d342d88be4e71bf65993a020f1fc6b9
+    device_id: cba82d5ad546b4390271d3598cb99ead
     domain: climate
-    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    entity_id: 74bbe99649f797ef0a492349bab604dc
     type: is_hvac_mode
     hvac_mode: cool
   actions:
-  - device_id: 4d342d88be4e71bf65993a020f1fc6b9
+  - device_id: cba82d5ad546b4390271d3598cb99ead
     domain: climate
-    entity_id: 757b2309cadeda1a7daa9008ca7ff6fe
+    entity_id: 74bbe99649f797ef0a492349bab604dc
     type: set_hvac_mode
     hvac_mode: 'off'
   mode: single
@@ -2139,5 +2121,27 @@
     metadata: {}
     target:
       entity_id: automation.front_porch_motion_light
+    data: {}
+  mode: single
+- id: '1781215162476'
+  alias: Bedroom Air Conditioner Turned On
+  description: ''
+  triggers:
+  - device_id: 2a42f814ff2ce7bc8cc794452d18ee76
+    domain: climate
+    entity_id: 34ad5f9cc63a59641098c949760e1108
+    type: hvac_mode_changed
+    trigger: device
+    to: cool
+  conditions:
+  - condition: state
+    entity_id: binary_sensor.bedroom_closet_window_closed
+    state:
+    - 'on'
+  actions:
+  - action: cover.close_cover
+    metadata: {}
+    target:
+      entity_id: cover.bedroom_closet_window_for_homekit
     data: {}
   mode: single

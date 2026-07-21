@@ -1,0 +1,9 @@
+{
+	"servers": {
+		"haos": {
+			"url": "https://haos.sf.aberrant.org/api/mcp",
+			"type": "http"
+		}
+	},
+	"inputs": []
+}
