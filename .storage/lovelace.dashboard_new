@@ -415,28 +415,68 @@
                   ]
                 },
                 {
-                  "show_name": true,
-                  "show_icon": true,
-                  "show_state": true,
-                  "type": "glance",
-                  "entities": [
+                  "type": "vertical-stack",
+                  "visibility": [
                     {
-                      "entity": "sensor.probe_1000edad_combustion_ambient_temperature_1000edad"
-                    },
-                    {
-                      "entity": "sensor.probe_1000edad_combustion_core_temperature_1000edad"
-                    },
-                    {
-                      "entity": "sensor.probe_1000edad_combustion_prediction_remaining_1000edad"
-                    },
-                    {
-                      "entity": "sensor.probe_1000edad_combustion_prediction_done_1000edad"
-                    },
-                    {
-                      "entity": "sensor.probe_1000edad_combustion_prediction_core_temp_1000edad"
+                      "condition": "state",
+                      "entity": "sensor.probe_1000edad_combustion_prediction_state_1000edad",
+                      "state_not": "unavailable"
                     }
                   ],
-                  "title": "Cooking State"
+                  "cards": [
+                    {
+                      "type": "glance",
+                      "title": "Cooking State",
+                      "show_name": true,
+                      "show_icon": true,
+                      "show_state": true,
+                      "entities": [
+                        {
+                          "entity": "sensor.probe_1000edad_combustion_ambient_temperature_1000edad",
+                          "name": "Oven"
+                        },
+                        {
+                          "entity": "sensor.probe_1000edad_combustion_surface_temperature_1000edad",
+                          "name": "Surface"
+                        },
+                        {
+                          "entity": "sensor.probe_1000edad_combustion_core_temperature_1000edad",
+                          "name": "Core"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "sensor.probe_1000edad_combustion_prediction_state_1000edad",
+                          "state": "PREDICTING"
+                        }
+                      ],
+                      "card": {
+                        "type": "glance",
+                        "title": "Prediction",
+                        "show_name": true,
+                        "show_icon": true,
+                        "show_state": true,
+                        "entities": [
+                          {
+                            "entity": "sensor.probe_1000edad_combustion_prediction_setpoint_1000edad",
+                            "name": "Goal"
+                          },
+                          {
+                            "entity": "sensor.probe_1000edad_combustion_prediction_done_1000edad",
+                            "name": "% Done"
+                          },
+                          {
+                            "entity": "sensor.probe_1000edad_combustion_prediction_remaining_1000edad",
+                            "name": "Remaining"
+                          }
+                        ]
+                      }
+                    }
+                  ]
                 },
                 {
                   "type": "custom:mini-graph-card",
