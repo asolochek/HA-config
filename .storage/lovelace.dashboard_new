@@ -1,0 +1,3407 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_new",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "type": "sections",
+          "path": "",
+          "max_columns": 3,
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "custom:room-card",
+                  "title": "General",
+                  "show_icon": true,
+                  "view-layout": {
+                    "grid-area": "main"
+                  },
+                  "templates": [
+                    {
+                      "name": "button_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "icon": {
+                          "template": {
+                            "styles": "return 'color: #cf13a2';\n"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "entities": [
+                    {
+                      "entity": "script.day_lights",
+                      "template": "button_template",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "script.day_lights"
+                      }
+                    },
+                    {
+                      "entity": "script.naptime",
+                      "template": "button_template",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "script.naptime"
+                      }
+                    },
+                    {
+                      "entity": "script.bedtime",
+                      "template": "button_template",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "script.bedtime"
+                      }
+                    },
+                    {
+                      "entity": "script.goodnight",
+                      "template": "button_template",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "script.goodnight"
+                      }
+                    },
+                    {
+                      "entity": "script.adapt_all_lights",
+                      "template": "button_template",
+                      "name": "Force Adapt",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "script.adapt_all_lights"
+                      }
+                    },
+                    {
+                      "entity": "script.max_air_conditioning",
+                      "template": "button_template",
+                      "name": "Max AC",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "script.max_air_conditioning"
+                      }
+                    },
+                    {
+                      "entity": "script.air_conditioning_off",
+                      "template": "button_template",
+                      "name": "AC Off",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "script.air_conditioning_off"
+                      }
+                    },
+                    {
+                      "entity": "script.christmas_lights",
+                      "template": "button_template",
+                      "name": "Xmas",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "script.christmas_lights"
+                      }
+                    },
+                    {
+                      "entity": "script.christmas_lights_alternate",
+                      "template": "button_template",
+                      "name": "Xmas2",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "script.christmas_lights_alternate"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:room-card",
+                  "title": "Hallway",
+                  "show_icon": false,
+                  "view-layout": {
+                    "grid-area": "main"
+                  },
+                  "tap_action": {
+                    "action": "call-service",
+                    "service": "light.toggle",
+                    "target": {
+                      "entity_id": "light.hallway_lights"
+                    }
+                  },
+                  "templates": [
+                    {
+                      "name": "light_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "window_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"on\") return 'mdi:window-open';   else return 'mdi:window-closed';\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "fan_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "lock_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle",
+                          "confirmation": true
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"unlocked\") return 'mdi:lock-open-variant'; else return 'mdi:lock';\n"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "entities": [
+                    {
+                      "entity": "light.hallway_ceiling",
+                      "name": "Ceiling",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "light.front_entry_light",
+                      "name": "Front Entry",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "light.front_porch",
+                      "name": "Front Porch",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "switch.adaptive_lighting_hallway",
+                      "name": "Adaptive",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "lock.front_door",
+                      "name": "Buzzer",
+                      "template": "lock_template"
+                    }
+                  ],
+                  "info_entities": [
+                    {
+                      "entity": "sensor.thermostat_humidity",
+                      "format": "precision1"
+                    },
+                    {
+                      "entity": "sensor.thermostat_temperature",
+                      "format": "precision1",
+                      "unit": "ºF"
+                    },
+                    {
+                      "entity": "binary_sensor.front_door",
+                      "name": "Front Door",
+                      "show_icon": true,
+                      "state_color": true,
+                      "icon": {
+                        "conditions": [
+                          {
+                            "icon": "mdi:door-open",
+                            "condition": "equals",
+                            "entity": "binary_sensor.front_door",
+                            "value": "on"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "entity": "binary_sensor.thermostat_occupancy",
+                      "show_icon": true,
+                      "state_color": true
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:simple-thermostat",
+                  "entity": "climate.thermostat",
+                  "layout": {
+                    "mode": {
+                      "headings": false
+                    }
+                  },
+                  "header": {
+                    "icon": "mdi:thermostat"
+                  }
+                },
+                {
+                  "type": "custom:room-card",
+                  "title": "Kitchen",
+                  "show_icon": false,
+                  "view-layout": {
+                    "grid-area": "main"
+                  },
+                  "tap_action": {
+                    "action": "call-service",
+                    "service": "light.toggle",
+                    "target": {
+                      "entity_id": "light.kitchen_lights"
+                    }
+                  },
+                  "templates": [
+                    {
+                      "name": "light_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "window_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"on\") return 'mdi:window-open';   else return 'mdi:window-closed';\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "fan_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "lock_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle",
+                          "confirmation": true
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"unlocked\") return 'mdi:lock-open-variant'; else return 'mdi:lock';\n"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "info_entities": [
+                    {
+                      "entity": "sensor.kitchen_air_quality_humidity",
+                      "format": "precision1"
+                    },
+                    {
+                      "entity": "sensor.kitchen_air_quality_temperature",
+                      "format": "precision1"
+                    },
+                    {
+                      "entity": "binary_sensor.kitchen_presence_occupancy",
+                      "show_icon": true,
+                      "state_color": true
+                    }
+                  ],
+                  "rows": [
+                    {
+                      "entities": [
+                        {
+                          "entity": "light.kitchen_ceiling",
+                          "name": "Ceiling",
+                          "template": "light_template"
+                        },
+                        {
+                          "entity": "light.kitchen_counter_east",
+                          "name": "East Counter",
+                          "template": "light_template"
+                        },
+                        {
+                          "entity": "light.kitchen_counter_west",
+                          "name": "West Counter",
+                          "template": "light_template"
+                        },
+                        {
+                          "entity": "switch.adaptive_lighting_kitchen",
+                          "name": "Adaptive",
+                          "template": "light_template"
+                        },
+                        {
+                          "entity": "fan.kitchen_fan",
+                          "name": "Fan",
+                          "template": "fan_template"
+                        },
+                        {
+                          "entity": "fan.kitchen_stove_hood_fan_enable",
+                          "template": "fan_template"
+                        },
+                        {
+                          "entity": "light.kitchen_stove_hood_light_enable",
+                          "template": "light_template",
+                          "icon": "mdi:light-recessed"
+                        },
+                        {
+                          "entity": "switch.kitchen_humidifier_plug_relay",
+                          "name": "Humidifier",
+                          "template": "fan_template",
+                          "icon": "mdi:air-humidifier"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "show_name": true,
+                  "show_icon": true,
+                  "show_state": true,
+                  "type": "glance",
+                  "entities": [
+                    {
+                      "entity": "sensor.probe_1000edad_combustion_ambient_temperature_1000edad"
+                    },
+                    {
+                      "entity": "sensor.probe_1000edad_combustion_core_temperature_1000edad"
+                    },
+                    {
+                      "entity": "sensor.probe_1000edad_combustion_prediction_remaining_1000edad"
+                    },
+                    {
+                      "entity": "sensor.probe_1000edad_combustion_prediction_done_1000edad"
+                    },
+                    {
+                      "entity": "sensor.probe_1000edad_combustion_prediction_core_temp_1000edad"
+                    }
+                  ],
+                  "title": "Cooking State"
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Kitchen Air Quality",
+                  "icon": "mdi:face-mask-outline",
+                  "unit": "AQI",
+                  "update_interval": 60,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 3,
+                  "hours_to_show": 24,
+                  "show_points": true,
+                  "aggregate_func": "last",
+                  "entities": [
+                    {
+                      "entity": "sensor.kitchen_air_quality_aqi",
+                      "name": "AQI",
+                      "show_points": true,
+                      "show_fill": false
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#5DD939"
+                    },
+                    {
+                      "value": 51,
+                      "color": "#FFFB46"
+                    },
+                    {
+                      "value": 101,
+                      "color": "#EE7826"
+                    },
+                    {
+                      "value": 151,
+                      "color": "#E82E18"
+                    },
+                    {
+                      "value": 201,
+                      "color": "#7A3F88"
+                    },
+                    {
+                      "value": 301,
+                      "color": "#691520"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:room-card",
+                  "title": "Laundry Room",
+                  "show_icon": false,
+                  "view-layout": {
+                    "grid-area": "main"
+                  },
+                  "tap_action": {
+                    "action": "call-service",
+                    "service": "light.toggle",
+                    "target": {
+                      "entity_id": "light.laundry_room_lights"
+                    }
+                  },
+                  "templates": [
+                    {
+                      "name": "light_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "window_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"on\") return 'mdi:window-open';   else return 'mdi:window-closed';\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "fan_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "lock_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle",
+                          "confirmation": true
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"unlocked\") return 'mdi:lock-open-variant'; else return 'mdi:lock';\n"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "rows": [
+                    {
+                      "entities": [
+                        {
+                          "entity": "light.laundry_room_light",
+                          "name": "Ceiling",
+                          "template": "light_template"
+                        },
+                        {
+                          "entity": "fan.litter_box_fan",
+                          "name": "Fan",
+                          "template": "fan_template"
+                        }
+                      ]
+                    }
+                  ],
+                  "info_entities": [
+                    {
+                      "entity": "binary_sensor.back_door_contact",
+                      "show_icon": true,
+                      "state_color": true,
+                      "icon": {
+                        "conditions": [
+                          {
+                            "icon": "mdi:door-open",
+                            "condition": "equals",
+                            "entity": "binary_sensor.back_door_contact",
+                            "value": "on"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:room-card",
+                  "title": "Bathroom",
+                  "show_icon": false,
+                  "view-layout": {
+                    "grid-area": "main"
+                  },
+                  "tap_action": {
+                    "action": "call-service",
+                    "service": "light.toggle",
+                    "target": {
+                      "entity_id": "light.bathroom_lights"
+                    }
+                  },
+                  "templates": [
+                    {
+                      "name": "light_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "window_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"on\") return 'mdi:window-open';   else return 'mdi:window-closed';\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "fan_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "lock_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle",
+                          "confirmation": true
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"unlocked\") return 'mdi:lock-open-variant'; else return 'mdi:lock';\n"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "entities": [
+                    {
+                      "entity": "light.bathroom_light",
+                      "name": "Ceiling",
+                      "state_color": true,
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "fan.bathroom_fan",
+                      "name": "Fan",
+                      "state_color": true,
+                      "template": "fan_template"
+                    },
+                    {
+                      "entity": "light.bathroom_fan_neopixel",
+                      "name": "LED",
+                      "state_color": true,
+                      "template": "light_template"
+                    }
+                  ],
+                  "info_entities": [
+                    {
+                      "entity": "sensor.bathroom_fan_humidity",
+                      "format": "precision1"
+                    },
+                    {
+                      "entity": "sensor.bathroom_fan_temperature",
+                      "format": "precision1",
+                      "unit": "ºF"
+                    },
+                    {
+                      "entity": "binary_sensor.bathroom_fan_bathroom_motion",
+                      "show_icon": true,
+                      "state_color": true
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Bathroom Fan Tracking",
+                  "animate": false,
+                  "smoothing": false,
+                  "points_per_hour": 30,
+                  "hours_to_show": 4,
+                  "upper_bound": 100,
+                  "lower_bound": 25,
+                  "decimals": 0,
+                  "aggregate_func": "last",
+                  "entities": [
+                    {
+                      "entity": "sensor.bathroom_fan_humidity",
+                      "name": "Humidity",
+                      "color": "#44BED1",
+                      "smoothing": false,
+                      "show_state": true,
+                      "decimals": 1
+                    },
+                    {
+                      "entity": "fan.bathroom_fan",
+                      "attribute": "percentage",
+                      "name": "Fan Speed",
+                      "color": "#A78338",
+                      "show_fill": false,
+                      "smoothing": false,
+                      "show_points": false,
+                      "show_state": true
+                    },
+                    {
+                      "entity": "sensor.bathroom_fan_clear_threshold_pct",
+                      "name": "Target Humidity",
+                      "color": "#D24E3A",
+                      "show_fill": false,
+                      "show_points": false,
+                      "show_state": true
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Bathroom Air Quality",
+                  "icon": "mdi:radiator",
+                  "update_interval": 60,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 12,
+                  "hours_to_show": 12,
+                  "aggregate_func": "last",
+                  "entities": [
+                    {
+                      "entity": "sensor.bathroom_fan_tvoc",
+                      "show_points": true,
+                      "show_fill": false
+                    },
+                    {
+                      "entity": "sensor.bathroom_fan_eco2",
+                      "show_points": true,
+                      "show_fill": false
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:room-card",
+                  "title": "Garage",
+                  "show_icon": false,
+                  "view-layout": {
+                    "grid-area": "main"
+                  },
+                  "tap_action": {
+                    "action": "call-service",
+                    "service": "light.toggle",
+                    "target": {
+                      "entity_id": "light.garage_lights"
+                    }
+                  },
+                  "templates": [
+                    {
+                      "name": "light_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "window_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"on\") return 'mdi:window-open';   else return 'mdi:window-closed';\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "fan_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "lock_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle",
+                          "confirmation": true
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"unlocked\") return 'mdi:lock-open-variant'; else return 'mdi:lock';\n"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "entities": [
+                    {
+                      "entity": "light.garage_light",
+                      "template": "light_template"
+                    }
+                  ],
+                  "info_entities": [
+                    {
+                      "entity": "sensor.garage_air_quality_humidity"
+                    },
+                    {
+                      "entity": "sensor.garage_air_quality_temperature"
+                    },
+                    {
+                      "entity": "binary_sensor.garage_door_open",
+                      "name": "Garage Door",
+                      "show_icon": true,
+                      "state_color": true,
+                      "icon": {
+                        "conditions": [
+                          {
+                            "icon": "mdi:garage-open",
+                            "condition": "equals",
+                            "entity": "binary_sensor.garage_door_open",
+                            "value": "on"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "entity": "binary_sensor.garage_interior_motion",
+                      "show_icon": true,
+                      "state_color": true
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Garage Air Quality",
+                  "icon": "mdi:face-mask-outline",
+                  "unit": "AQI",
+                  "update_interval": 60,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 3,
+                  "hours_to_show": 24,
+                  "show_points": true,
+                  "aggregate_func": "last",
+                  "entities": [
+                    {
+                      "entity": "sensor.garage_air_quality_aqi",
+                      "name": "AQI",
+                      "show_points": true,
+                      "show_fill": false
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#5DD939"
+                    },
+                    {
+                      "value": 51,
+                      "color": "#FFFB46"
+                    },
+                    {
+                      "value": 101,
+                      "color": "#EE7826"
+                    },
+                    {
+                      "value": 151,
+                      "color": "#E82E18"
+                    },
+                    {
+                      "value": 201,
+                      "color": "#7A3F88"
+                    },
+                    {
+                      "value": 301,
+                      "color": "#691520"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Garage CO2",
+                  "icon": "mdi:molecule-co2",
+                  "update_interval": 60,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 6,
+                  "hours_to_show": 12,
+                  "aggregate_func": "last",
+                  "entities": [
+                    {
+                      "entity": "sensor.garage_air_quality_co2",
+                      "show_points": true,
+                      "show_fill": false
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#3B9BD9"
+                    },
+                    {
+                      "value": 400,
+                      "color": "#409650"
+                    },
+                    {
+                      "value": 800,
+                      "color": "#D8C641"
+                    },
+                    {
+                      "value": 1200,
+                      "color": "#DA6A3D"
+                    },
+                    {
+                      "value": 2000,
+                      "color": "#BF5033"
+                    },
+                    {
+                      "value": 2500,
+                      "color": "#80251B"
+                    }
+                  ]
+                }
+              ],
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "custom:room-card",
+                  "title": "Living Room",
+                  "show_icon": false,
+                  "view-layout": null,
+                  "grid-area": "main",
+                  "tap_action": {
+                    "action": "call-service",
+                    "service": "light.toggle",
+                    "target": {
+                      "entity_id": "light.living_room_lights"
+                    }
+                  },
+                  "templates": [
+                    {
+                      "name": "light_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "window_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"on\") return 'mdi:window-open';   else return 'mdi:window-closed';\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "fan_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "ac_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "lock_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle",
+                          "confirmation": true
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"unlocked\") return 'mdi:lock-open-variant'; else return 'mdi:lock';\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "button_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "icon": {
+                          "template": {
+                            "styles": "return 'color: #cf13a2';\n"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "rows": [
+                    {
+                      "entities": [
+                        {
+                          "entity": "light.living_room_ceiling",
+                          "name": "Ceiling",
+                          "template": "light_template"
+                        },
+                        {
+                          "entity": "light.living_room_lights",
+                          "name": "Lights",
+                          "template": "light_template"
+                        },
+                        {
+                          "entity": "switch.adaptive_lighting_living_room",
+                          "name": "Adaptive",
+                          "template": "light_template"
+                        },
+                        {
+                          "entity": "switch.living_room_south_grow_light",
+                          "name": "Grow Light",
+                          "template": "light_template"
+                        },
+                        {
+                          "entity": "light.silver_lamp",
+                          "name": "Silver Lamp",
+                          "template": "light_template"
+                        },
+                        {
+                          "entity": "light.living_room_closet_light",
+                          "name": "Closet",
+                          "template": "light_template"
+                        },
+                        {
+                          "entity": "input_boolean.livingroom_filter_lights",
+                          "name": "Purifier",
+                          "icon": "mdi:car-light-fog",
+                          "template": "light_template"
+                        }
+                      ]
+                    },
+                    {
+                      "entities": [
+                        {
+                          "entity": "fan.living_room_purifier",
+                          "name": "Purifier",
+                          "icon": "mdi:air-purifier",
+                          "template": "fan_template"
+                        },
+                        {
+                          "entity": "switch.living_room_humidifier",
+                          "name": "Humidifier",
+                          "icon": "mdi:air-humidifier",
+                          "template": "fan_template"
+                        },
+                        {
+                          "entity": "fan.living_room_standing_fan",
+                          "name": "Standing Fan",
+                          "template": "fan_template"
+                        },
+                        {
+                          "entity": "fan.peloton_fan",
+                          "name": "Peloton Fan",
+                          "template": "fan_template"
+                        },
+                        {
+                          "entity": "climate.living_room_air_conditioner",
+                          "name": "Air Conditioner",
+                          "state_color": true,
+                          "template": "ac_template"
+                        },
+                        {
+                          "entity": "switch.cat_bed",
+                          "template": "light_template",
+                          "name": "Cat Bed"
+                        }
+                      ]
+                    },
+                    {
+                      "entities": [
+                        {
+                          "entity": "script.apple_tv",
+                          "name": "AppleTV",
+                          "template": "button_template",
+                          "tap_action": {
+                            "action": "call-service",
+                            "service": "script.apple_tv"
+                          }
+                        },
+                        {
+                          "entity": "script.apple_tv_music",
+                          "name": "Music",
+                          "template": "button_template",
+                          "tap_action": {
+                            "action": "call-service",
+                            "service": "script.apple_tv_music"
+                          }
+                        },
+                        {
+                          "entity": "script.playstation",
+                          "name": "PS5",
+                          "template": "button_template",
+                          "tap_action": {
+                            "action": "call-service",
+                            "service": "script.playstation"
+                          }
+                        },
+                        {
+                          "entity": "script.nintendo",
+                          "name": "Switch",
+                          "template": "button_template",
+                          "tap_action": {
+                            "action": "call-service",
+                            "service": "script.nintendo"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "info_entities": [
+                    {
+                      "entity": "sensor.living_room_humidity",
+                      "format": "precision0"
+                    },
+                    {
+                      "entity": "sensor.living_room_temperature",
+                      "format": "precision0",
+                      "unit": "ºF"
+                    },
+                    {
+                      "entity": "binary_sensor.living_room_windows",
+                      "template": "window_template",
+                      "name": "Windows"
+                    },
+                    {
+                      "entity": "binary_sensor.living_room_presence_occupancy",
+                      "show_icon": true,
+                      "state_color": true
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:simple-thermostat",
+                  "entity": "climate.living_room_air_conditioner",
+                  "theme": "LCARS Modern",
+                  "layout": {
+                    "mode": {
+                      "names": true,
+                      "icons": true,
+                      "headings": false
+                    }
+                  },
+                  "header": {}
+                },
+                {
+                  "type": "media-control",
+                  "entity": "media_player.living_room_appletv",
+                  "theme": "LCARS Zeldaar"
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Living Room Air Quality",
+                  "theme": "LCARS Modern",
+                  "icon": "mdi:face-mask-outline",
+                  "unit": "AQI",
+                  "update_interval": 60,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 3,
+                  "hours_to_show": 24,
+                  "show_points": true,
+                  "aggregate_func": "last",
+                  "entities": [
+                    {
+                      "entity": "sensor.living_room_air_quality_index",
+                      "name": "AQI",
+                      "show_points": true,
+                      "show_fill": false
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#5DD939"
+                    },
+                    {
+                      "value": 51,
+                      "color": "#FFFB46"
+                    },
+                    {
+                      "value": 101,
+                      "color": "#EE7826"
+                    },
+                    {
+                      "value": 151,
+                      "color": "#E82E18"
+                    },
+                    {
+                      "value": 201,
+                      "color": "#7A3F88"
+                    },
+                    {
+                      "value": 301,
+                      "color": "#691520"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Living Room CO2",
+                  "icon": "mdi:molecule-co2",
+                  "update_interval": 60,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 6,
+                  "hours_to_show": 12,
+                  "aggregate_func": "last",
+                  "entities": [
+                    {
+                      "entity": "sensor.living_room_co2",
+                      "show_points": true,
+                      "show_fill": false
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#3B9BD9"
+                    },
+                    {
+                      "value": 400,
+                      "color": "#409650"
+                    },
+                    {
+                      "value": 800,
+                      "color": "#D8C641"
+                    },
+                    {
+                      "value": 1200,
+                      "color": "#DA6A3D"
+                    },
+                    {
+                      "value": 2000,
+                      "color": "#BF5033"
+                    },
+                    {
+                      "value": 2500,
+                      "color": "#80251B"
+                    }
+                  ]
+                },
+                {
+                  "type": "glance",
+                  "entities": [
+                    {
+                      "entity": "sensor.aaron_on_peloton_total_output",
+                      "name": "Total Output"
+                    },
+                    {
+                      "entity": "sensor.aaron_on_peloton_active_calories",
+                      "name": "Active Calories"
+                    },
+                    {
+                      "entity": "sensor.aaron_on_peloton_total_calories",
+                      "name": "Total Calories"
+                    }
+                  ],
+                  "visibility": [
+                    {
+                      "condition": "state",
+                      "entity": "binary_sensor.aaron_on_peloton_workout",
+                      "state": "on"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:room-card",
+                  "title": "Crawl Space",
+                  "show_icon": false,
+                  "view-layout": {
+                    "grid-area": "main"
+                  },
+                  "tap_action": {
+                    "action": "call-service",
+                    "service": "light.toggle",
+                    "target": {
+                      "entity_id": "light.crawl_space_lights"
+                    }
+                  },
+                  "templates": [
+                    {
+                      "name": "light_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "window_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"on\") return 'mdi:window-open';   else return 'mdi:window-closed';\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "fan_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "lock_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle",
+                          "confirmation": true
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"unlocked\") return 'mdi:lock-open-variant'; else return 'mdi:lock';\n"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "rows": [
+                    {
+                      "entities": [
+                        {
+                          "entity": "light.crawl_space_lights",
+                          "name": "Lights",
+                          "template": "light_template"
+                        },
+                        {
+                          "entity": "light.crawl_space_sensor_neopixel",
+                          "template": "light_template"
+                        }
+                      ]
+                    }
+                  ],
+                  "info_entities": [
+                    {
+                      "entity": "sensor.crawl_space_lights_power",
+                      "format": "precision1"
+                    },
+                    {
+                      "entity": "sensor.crawl_space_sensor_humidity",
+                      "format": "precision1"
+                    },
+                    {
+                      "entity": "sensor.crawl_space_sensor_temperature",
+                      "format": "precision1",
+                      "unit": "ºF"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Indoor/Outdoor/Crawl Space Temperatures",
+                  "animate": false,
+                  "smoothing": false,
+                  "points_per_hour": 30,
+                  "hours_to_show": 24,
+                  "upper_bound": 130,
+                  "lower_bound": 40,
+                  "aggregate_func": "last",
+                  "entities": [
+                    {
+                      "entity": "sensor.crawl_space_sensor_temperature",
+                      "name": "Crawl Space Temperature",
+                      "color": "#D24E3A",
+                      "show_fill": false,
+                      "smoothing": false,
+                      "show_state": true
+                    },
+                    {
+                      "entity": "sensor.purpleair_temperature",
+                      "name": "Outdoor Temperature",
+                      "color": "#44BED1",
+                      "smoothing": false,
+                      "show_fill": false,
+                      "show_state": true
+                    },
+                    {
+                      "entity": "sensor.living_room_temperature",
+                      "name": "Living Room Temperature",
+                      "color": "#A78338",
+                      "show_fill": false,
+                      "smoothing": false,
+                      "show_state": true
+                    }
+                  ]
+                },
+                {
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "sensor.ham"
+                    },
+                    {
+                      "entity": "sensor.ham_area",
+                      "secondary_info": "last-updated"
+                    },
+                    {
+                      "entity": "sensor.aarons_watch"
+                    },
+                    {
+                      "entity": "sensor.aarons_watch_area",
+                      "secondary_info": "last-updated"
+                    },
+                    {
+                      "entity": "sensor.thaos_phone"
+                    },
+                    {
+                      "entity": "sensor.thao_phone_area",
+                      "secondary_info": "last-updated"
+                    },
+                    {
+                      "entity": "sensor.thaos_watch"
+                    },
+                    {
+                      "entity": "sensor.thao_watch_area",
+                      "secondary_info": "last-updated"
+                    },
+                    {
+                      "entity": "sensor.bacon"
+                    },
+                    {
+                      "entity": "sensor.bacon_area"
+                    },
+                    {
+                      "entity": "sensor.carpaccio"
+                    },
+                    {
+                      "entity": "sensor.paio"
+                    },
+                    {
+                      "entity": "binary_sensor.10_0_1_1"
+                    },
+                    {
+                      "entity": "binary_sensor.10_81_0_1"
+                    },
+                    {
+                      "entity": "binary_sensor.128_237_157_37"
+                    }
+                  ],
+                  "title": "Locations",
+                  "theme": "LCARS 25C (Red Alert)"
+                }
+              ],
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "custom:room-card",
+                  "title": "Office",
+                  "show_icon": false,
+                  "view-layout": {
+                    "grid-area": "main"
+                  },
+                  "tap_action": {
+                    "action": "call-service",
+                    "service": "light.toggle",
+                    "target": {
+                      "entity_id": "light.office_lights"
+                    }
+                  },
+                  "templates": [
+                    {
+                      "name": "light_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "window_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"on\") return 'mdi:window-open';   else return 'mdi:window-closed';\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "fan_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "ac_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "lock_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle",
+                          "confirmation": true
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"unlocked\") return 'mdi:lock-open-variant'; else return 'mdi:lock';\n"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "entities": [
+                    {
+                      "entity": "light.office_ceiling",
+                      "name": "Ceiling",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "light.office_string_lights",
+                      "name": "String Lights",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "light.office_desk_lights",
+                      "name": "Desk",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "light.office_bench_lights",
+                      "name": "Bench",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "light.piano_light",
+                      "name": "Piano Light",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "light.office_closet_lights",
+                      "name": "Closet",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "switch.adaptive_lighting_office",
+                      "name": "Adaptive",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "cover.office_window",
+                      "name": "Office Window",
+                      "state_color": true,
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "cover.toggle",
+                        "service_data": {
+                          "entity_id": "cover.office_window"
+                        }
+                      }
+                    },
+                    {
+                      "entity": "climate.office_air_conditioner",
+                      "name": "Air Conditioner",
+                      "template": "ac_template"
+                    },
+                    {
+                      "entity": "switch.compressor_plug_relay",
+                      "name": "Compressor",
+                      "template": "light_template",
+                      "icon": "mdi:pump"
+                    },
+                    {
+                      "entity": "switch.bench_12v_plug_relay",
+                      "name": "12V",
+                      "template": "light_template",
+                      "icon": "mdi:dice-d12-outline"
+                    }
+                  ],
+                  "info_entities": [
+                    {
+                      "entity": "sensor.office_air_quality_humidity",
+                      "format": "precision1"
+                    },
+                    {
+                      "entity": "sensor.office_air_quality_temperature",
+                      "format": "precision1"
+                    },
+                    {
+                      "entity": "binary_sensor.office_east_window",
+                      "template": "window_template",
+                      "name": "Windows"
+                    },
+                    {
+                      "entity": "binary_sensor.office_presence_occupancy",
+                      "show_icon": true,
+                      "state_color": true
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:simple-thermostat",
+                  "entity": "climate.office_air_conditioner",
+                  "layout": {
+                    "mode": {
+                      "headings": false
+                    }
+                  }
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Office Air Quality",
+                  "icon": "mdi:face-mask-outline",
+                  "unit": "AQI",
+                  "update_interval": 60,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 3,
+                  "hours_to_show": 24,
+                  "show_points": true,
+                  "aggregate_func": "last",
+                  "entities": [
+                    {
+                      "entity": "sensor.office_air_quality_aqi",
+                      "name": "AQI",
+                      "show_points": true,
+                      "show_fill": false
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#5DD939"
+                    },
+                    {
+                      "value": 51,
+                      "color": "#FFFB46"
+                    },
+                    {
+                      "value": 101,
+                      "color": "#EE7826"
+                    },
+                    {
+                      "value": 151,
+                      "color": "#E82E18"
+                    },
+                    {
+                      "value": 201,
+                      "color": "#7A3F88"
+                    },
+                    {
+                      "value": 301,
+                      "color": "#691520"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Office CO2",
+                  "icon": "mdi:molecule-co2",
+                  "update_interval": 60,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 6,
+                  "hours_to_show": 12,
+                  "aggregate_func": "last",
+                  "entities": [
+                    {
+                      "entity": "sensor.office_air_quality_co2",
+                      "show_points": true,
+                      "show_fill": false
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#3B9BD9"
+                    },
+                    {
+                      "value": 400,
+                      "color": "#409650"
+                    },
+                    {
+                      "value": 800,
+                      "color": "#D8C641"
+                    },
+                    {
+                      "value": 1200,
+                      "color": "#DA6A3D"
+                    },
+                    {
+                      "value": 2000,
+                      "color": "#BF5033"
+                    },
+                    {
+                      "value": 2500,
+                      "color": "#80251B"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:room-card",
+                  "title": "Bedroom",
+                  "show_icon": false,
+                  "tap_action": null,
+                  "action": "call-service",
+                  "service": "light.toggle",
+                  "target": {
+                    "entity_id": "light.bedroom_lights"
+                  },
+                  "templates": [
+                    {
+                      "name": "light_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "window_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"on\") return 'mdi:window-open';   else return 'mdi:window-closed';\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "fan_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "lock_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle",
+                          "confirmation": true
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "icon": "if (entity.state == \"unlocked\") return 'mdi:lock-open-variant'; else return 'mdi:lock';\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "ac_template",
+                      "template": {
+                        "show_icon": true,
+                        "state_color": true,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "double_tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon": {
+                          "template": {
+                            "styles": "if (entity.state == \"off\") return 'color: gray'; else return;\n"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "entities": [
+                    {
+                      "entity": "light.bedroom_ceiling",
+                      "name": "Ceiling",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "light.bedside_lamp_left",
+                      "name": "Left",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "light.bedside_lamp_right",
+                      "name": "Right",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "switch.adaptive_lighting_bedroom",
+                      "name": "Adaptive",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "input_boolean.bedroom_filter_lights",
+                      "name": "Purifier",
+                      "icon": "mdi:car-light-fog",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "fan.bedroom_purifier",
+                      "name": "Purifier",
+                      "icon": "mdi:air-purifier",
+                      "template": "fan_template"
+                    },
+                    {
+                      "entity": "light.bedroom_closet_light",
+                      "name": "Closet",
+                      "template": "light_template"
+                    },
+                    {
+                      "entity": "climate.bedroom_air_conditioner",
+                      "name": "Air Conditioner",
+                      "template": "ac_template"
+                    },
+                    {
+                      "entity": "fan.bedroom_closet_fans",
+                      "name": "Closet Fans",
+                      "template": "fan_template"
+                    },
+                    {
+                      "entity": "cover.bedroom_closet_window",
+                      "name": "Closet Window",
+                      "state_color": true,
+                      "tap_action": {
+                        "action": "toggle"
+                      }
+                    }
+                  ],
+                  "info_entities": [
+                    {
+                      "entity": "sensor.bedroom_air_quality_humidity",
+                      "format": "precision1"
+                    },
+                    {
+                      "entity": "sensor.bedroom_air_quality_temperature",
+                      "format": "precision1",
+                      "unit": "ºF"
+                    },
+                    {
+                      "entity": "binary_sensor.bedroom_windows",
+                      "template": "window_template",
+                      "name": "Windows"
+                    },
+                    {
+                      "entity": "binary_sensor.bedroom_closet_window_closed",
+                      "template": "window_template",
+                      "name": "Closet Window"
+                    },
+                    {
+                      "entity": "binary_sensor.bedroom_presence_occupancy",
+                      "show_icon": true,
+                      "state_color": true
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:simple-thermostat",
+                  "entity": "climate.bedroom_air_conditioner",
+                  "layout": {
+                    "mode": {
+                      "headings": false
+                    }
+                  }
+                },
+                {
+                  "type": "media-control",
+                  "entity": "media_player.bedroom_appletv",
+                  "theme": "LCARS Zeldaar"
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Bedroom Air Quality",
+                  "icon": "mdi:face-mask-outline",
+                  "unit": "AQI",
+                  "update_interval": 60,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 3,
+                  "hours_to_show": 24,
+                  "show_points": false,
+                  "aggregate_func": "last",
+                  "entities": [
+                    {
+                      "entity": "sensor.bedroom_air_quality_aqi",
+                      "name": "AQI",
+                      "show_points": true,
+                      "show_fill": false
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#5DD939"
+                    },
+                    {
+                      "value": 51,
+                      "color": "#FFFB46"
+                    },
+                    {
+                      "value": 101,
+                      "color": "#EE7826"
+                    },
+                    {
+                      "value": 151,
+                      "color": "#E82E18"
+                    },
+                    {
+                      "value": 201,
+                      "color": "#7A3F88"
+                    },
+                    {
+                      "value": 301,
+                      "color": "#691520"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Bedroom CO2",
+                  "icon": "mdi:molecule-co2",
+                  "update_interval": 60,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 6,
+                  "hours_to_show": 12,
+                  "aggregate_func": "last",
+                  "entities": [
+                    {
+                      "entity": "sensor.bedroom_air_quality_co2",
+                      "show_points": true,
+                      "show_fill": false
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#3B9BD9"
+                    },
+                    {
+                      "value": 400,
+                      "color": "#409650"
+                    },
+                    {
+                      "value": 800,
+                      "color": "#D8C641"
+                    },
+                    {
+                      "value": 1200,
+                      "color": "#DA6A3D"
+                    },
+                    {
+                      "value": 2000,
+                      "color": "#BF5033"
+                    },
+                    {
+                      "value": 2500,
+                      "color": "#80251B"
+                    }
+                  ]
+                }
+              ],
+              "column_span": 1
+            }
+          ],
+          "cards": [],
+          "title": "Home",
+          "theme": "LCARS Picard II",
+          "dense_section_placement": true,
+          "icon": "mdi:home-assistant"
+        },
+        {
+          "title": "Cameras",
+          "path": "cameras",
+          "icon": "mdi:cctv",
+          "type": "sections",
+          "max_columns": 3,
+          "dense_section_placement": true,
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Front Door"
+                },
+                {
+                  "show_state": false,
+                  "show_name": false,
+                  "camera_view": "live",
+                  "type": "picture-entity",
+                  "entity": "camera.door_high",
+                  "camera_image": "camera.door_high",
+                  "aspect_ratio": "16:9"
+                },
+                {
+                  "show_state": false,
+                  "show_name": false,
+                  "camera_view": "auto",
+                  "type": "picture-entity",
+                  "entity": "camera.door_package_camera",
+                  "camera_image": "camera.door_package_camera",
+                  "aspect_ratio": "16:9"
+                }
+              ],
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Garage"
+                },
+                {
+                  "show_state": false,
+                  "show_name": false,
+                  "camera_view": "auto",
+                  "fit_mode": "cover",
+                  "type": "picture-entity",
+                  "camera_image": "camera.garage_exterior_high",
+                  "entity": "camera.g5_ptz_high_resolution_channel",
+                  "name": "Garage Exterior"
+                },
+                {
+                  "show_state": false,
+                  "show_name": false,
+                  "camera_view": "auto",
+                  "type": "picture-entity",
+                  "entity": "camera.garage_interior_high",
+                  "name": "Garage Interior",
+                  "camera_image": "camera.garage_interior_high"
+                }
+              ],
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Living Room"
+                },
+                {
+                  "show_state": false,
+                  "show_name": false,
+                  "camera_view": "auto",
+                  "type": "picture-entity",
+                  "entity": "camera.cat_camera_high",
+                  "name": "Cat Camera",
+                  "camera_image": "camera.cat_camera_high",
+                  "aspect_ratio": "16:9"
+                }
+              ],
+              "column_span": 1
+            }
+          ]
+        },
+        {
+          "type": "sections",
+          "path": "",
+          "max_columns": 8,
+          "theme": "amoled",
+          "icon": "mdi:thermometer",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "custom:weather-card",
+                  "entity": "weather.thermostat",
+                  "number_of_forecasts": "5",
+                  "view_layout": {
+                    "height": 100
+                  },
+                  "layout_options": {
+                    "grid_columns": "full"
+                  }
+                }
+              ],
+              "column_span": 4
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "vertical-stack",
+                  "cards": [
+                    {
+                      "type": "custom:apexcharts-card",
+                      "graph_span": "24h",
+                      "view_layout": {
+                        "height": 200
+                      },
+                      "header": {
+                        "show": true,
+                        "title": "Purple Air Temperature and Humidity",
+                        "show_states": true,
+                        "colorize_states": true
+                      },
+                      "series": [
+                        {
+                          "entity": "sensor.purpleair_temperature",
+                          "curve": "smooth",
+                          "type": "line",
+                          "group_by": {
+                            "duration": "10min",
+                            "func": "avg"
+                          }
+                        },
+                        {
+                          "entity": "sensor.purpleair_humidity",
+                          "curve": "smooth",
+                          "type": "line",
+                          "group_by": {
+                            "duration": "30min",
+                            "func": "avg"
+                          }
+                        },
+                        {
+                          "entity": "sensor.purpleair_dewpoint",
+                          "curve": "smooth",
+                          "name": "Dewpoint",
+                          "group_by": {
+                            "duration": "30min",
+                            "func": "avg"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "layout_options": {
+                    "grid_columns": "full"
+                  }
+                }
+              ],
+              "column_span": 2
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "vertical-stack",
+                  "cards": [
+                    {
+                      "type": "custom:apexcharts-card",
+                      "experimental": {
+                        "color_threshold": true
+                      },
+                      "graph_span": "24h",
+                      "view_layout": {
+                        "height": 50
+                      },
+                      "show": {
+                        "last_updated": true
+                      },
+                      "header": {
+                        "show": true,
+                        "title": "Purple Air Quality",
+                        "show_states": true,
+                        "colorize_states": true
+                      },
+                      "series": [
+                        {
+                          "entity": "sensor.purpleair_airquality",
+                          "name": "AQI",
+                          "unit": " ",
+                          "curve": "smooth",
+                          "type": "line",
+                          "show": {
+                            "extremas": true
+                          },
+                          "fill_raw": "last",
+                          "group_by": {
+                            "duration": "10min",
+                            "func": "avg",
+                            "fill": "last"
+                          },
+                          "color_threshold": [
+                            {
+                              "value": 0,
+                              "color": "#5DD939"
+                            },
+                            {
+                              "value": 75,
+                              "color": "#FFFB46"
+                            },
+                            {
+                              "value": 125,
+                              "color": "#EE7826"
+                            },
+                            {
+                              "value": 175,
+                              "color": "#E82E18"
+                            },
+                            {
+                              "value": 225,
+                              "color": "#7A3F88"
+                            },
+                            {
+                              "value": 301,
+                              "color": "#691520"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "layout_options": {
+                    "grid_columns": "full"
+                  }
+                },
+                {
+                  "type": "vertical-stack",
+                  "cards": [
+                    {
+                      "type": "custom:apexcharts-card",
+                      "graph_span": "24h",
+                      "view_layout": {
+                        "height": 200
+                      },
+                      "header": {
+                        "show": true,
+                        "title": "Purple Air Particle Count",
+                        "show_states": true,
+                        "colorize_states": true
+                      },
+                      "series": [
+                        {
+                          "entity": "sensor.purpleair_3um_particle_count",
+                          "name": "0.3μm",
+                          "unit": "/dl",
+                          "curve": "smooth",
+                          "type": "line",
+                          "group_by": {
+                            "duration": "10min",
+                            "func": "avg"
+                          }
+                        },
+                        {
+                          "entity": "sensor.purpleair_5um_particle_count",
+                          "name": "0.5μm",
+                          "unit": "/dl",
+                          "curve": "smooth",
+                          "type": "line",
+                          "group_by": {
+                            "duration": "10min",
+                            "func": "avg"
+                          }
+                        },
+                        {
+                          "entity": "sensor.purpleair_1_0um_particle_count",
+                          "name": "1.0μm",
+                          "unit": "/dl",
+                          "curve": "smooth",
+                          "group_by": {
+                            "duration": "10min",
+                            "func": "avg"
+                          }
+                        },
+                        {
+                          "entity": "sensor.purpleair_2_5um_particle_count",
+                          "name": "2.5μm",
+                          "unit": "/dl",
+                          "curve": "smooth",
+                          "group_by": {
+                            "duration": "10min",
+                            "func": "avg"
+                          }
+                        },
+                        {
+                          "entity": "sensor.purpleair_5_0um_particle_count",
+                          "name": "5.0μm",
+                          "unit": "/dl",
+                          "curve": "smooth",
+                          "group_by": {
+                            "duration": "10min",
+                            "func": "avg"
+                          }
+                        },
+                        {
+                          "entity": "sensor.purpleair_10_0um_particle_count",
+                          "name": "10.0μm",
+                          "unit": "/dl",
+                          "curve": "smooth",
+                          "group_by": {
+                            "duration": "10min",
+                            "func": "avg"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "layout_options": {
+                    "grid_columns": "full"
+                  }
+                }
+              ],
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "vertical-stack",
+                  "cards": [
+                    {
+                      "type": "custom:apexcharts-card",
+                      "graph_span": "24h",
+                      "view_layout": {
+                        "height": 100
+                      },
+                      "header": {
+                        "show": true,
+                        "title": "Temperatures",
+                        "show_states": true,
+                        "colorize_states": true
+                      },
+                      "all_series_config": {
+                        "curve": "straight",
+                        "type": "line",
+                        "group_by": {
+                          "duration": "10min",
+                          "func": "avg",
+                          "fill": "last"
+                        },
+                        "show": {
+                          "extremas": true
+                        }
+                      },
+                      "series": [
+                        {
+                          "entity": "sensor.crawl_space_sensor_temperature",
+                          "name": "Crawl Space Temperature",
+                          "color": "#D24E3A"
+                        },
+                        {
+                          "entity": "sensor.purpleair_temperature",
+                          "name": "Outdoor Temperature",
+                          "color": "#44BED1"
+                        },
+                        {
+                          "entity": "sensor.living_room_temperature",
+                          "name": "Living Room Temperature",
+                          "color": "#A78338"
+                        }
+                      ]
+                    }
+                  ],
+                  "layout_options": {
+                    "grid_columns": 12,
+                    "grid_rows": "auto"
+                  }
+                }
+              ],
+              "column_span": 3
+            }
+          ],
+          "cards": [],
+          "dense_section_placement": true
+        },
+        {
+          "type": "custom:grid-layout",
+          "path": "power",
+          "title": "Power",
+          "icon": "mdi:meter-electric-outline",
+          "cards": [
+            {
+              "type": "gauge",
+              "entity": "sensor.main_panel_total_power",
+              "severity": {
+                "green": 0,
+                "yellow": 3000,
+                "red": 6000
+              },
+              "needle": true,
+              "max": 8000,
+              "name": "Current Power Usage"
+            },
+            {
+              "type": "custom:auto-entities",
+              "card": {
+                "type": "custom:bar-card",
+                "max": 2000,
+                "title": "Power Draw",
+                "animation": true,
+                "speed": 1,
+                "icon": "mdi:lightning-bolt",
+                "decimal": 1
+              },
+              "sort": {
+                "method": "state",
+                "numeric": true,
+                "reverse": true
+              },
+              "filter": {
+                "template": "{% for state in states.sensor -%}\n  \n  {%- if (state.entity_id | regex_match(\"^sensor.*_power_rt$\", ignorecase=False)) -%}\n    {{\n      {\n        'entity': state.entity_id,\n        'name': state.attributes.friendly_name|regex_replace(find='(:|)(Plug|Outlet|)(Power|Plug|Power RT|RT)', replace='', ignorecase=True),\n        'target': 1\n      }\n    }},\n  {%- endif -%}\n{%- endfor -%}",
+                "exclude": [
+                  {
+                    "entity_id": "*apparent*"
+                  },
+                  {
+                    "entity_id": "*reactive*"
+                  },
+                  {
+                    "entity_id": "*_and_*"
+                  },
+                  {
+                    "entity_id": "*circuit*"
+                  },
+                  {
+                    "entity_id": "*_ble_*"
+                  },
+                  {
+                    "entity_id": "*main_panel_total_power"
+                  },
+                  {
+                    "entity_id": "*main_panel_04*"
+                  },
+                  {
+                    "entity_id": "*main_panel_06*"
+                  },
+                  {
+                    "entity_id": "*main_panel_13*"
+                  },
+                  {
+                    "entity_id": "*main_panel_14*"
+                  },
+                  {
+                    "entity_id": "*main_panel_15*"
+                  },
+                  {
+                    "entity_id": "*main_panel_16*"
+                  },
+                  {
+                    "entity_id": "*total_power*"
+                  },
+                  {
+                    "entity_id": "sensor.main_panel_13_outlets_kitchen_south_wall_office_north_wall_power_rt"
+                  },
+                  {
+                    "entity_id": "sensor.main_panel*power"
+                  },
+                  {
+                    "integration": "group"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "sections",
+          "max_columns": 2,
+          "title": "Plants",
+          "path": "plants",
+          "icon": "mdi:sprout",
+          "theme": "LCARS Cardassia",
+          "dense_section_placement": true,
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Living Room Plants",
+                  "heading_style": "title"
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Living Room South West Plants",
+                  "icon": "mdi:water-percent",
+                  "update_interval": 10,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 6,
+                  "hours_to_show": 240,
+                  "lower_bound": 0,
+                  "upper_bound": 100,
+                  "aggregate_func": "last",
+                  "decimals": 1,
+                  "show": {
+                    "name": true,
+                    "legend": true,
+                    "state": true,
+                    "icon": true,
+                    "fill": false,
+                    "points": "hover"
+                  },
+                  "entities": [
+                    {
+                      "entity": "sensor.living_room_sw_soil_sensor_plant_1_moisture",
+                      "name": "Plant 1",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    },
+                    {
+                      "entity": "sensor.living_room_sw_soil_sensor_plant_2_moisture",
+                      "name": "Plant 2",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    },
+                    {
+                      "entity": "sensor.living_room_sw_soil_sensor_plant_3_moisture",
+                      "name": "Plant 3",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#80251B"
+                    },
+                    {
+                      "value": 35,
+                      "color": "#BF5033"
+                    },
+                    {
+                      "value": 60,
+                      "color": "#D8C641"
+                    },
+                    {
+                      "value": 75,
+                      "color": "#409650"
+                    },
+                    {
+                      "value": 90,
+                      "color": "#3B9BD9"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Living Room South West Plants 2",
+                  "icon": "mdi:water-percent",
+                  "update_interval": 10,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 6,
+                  "hours_to_show": 240,
+                  "lower_bound": 0,
+                  "upper_bound": 100,
+                  "aggregate_func": "last",
+                  "decimals": 1,
+                  "show": {
+                    "name": true,
+                    "legend": true,
+                    "state": true,
+                    "icon": true,
+                    "fill": false,
+                    "points": "hover"
+                  },
+                  "entities": [
+                    {
+                      "entity": "sensor.living_room_sw_soil_sensor_plant_4_moisture",
+                      "name": "Plant 4",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    },
+                    {
+                      "entity": "sensor.living_room_sw_soil_sensor_plant_5_moisture",
+                      "name": "Plant 5",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    },
+                    {
+                      "entity": "sensor.living_room_sw_soil_sensor_plant_6_moisture",
+                      "name": "Plant 6",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#80251B"
+                    },
+                    {
+                      "value": 35,
+                      "color": "#BF5033"
+                    },
+                    {
+                      "value": 60,
+                      "color": "#D8C641"
+                    },
+                    {
+                      "value": 75,
+                      "color": "#409650"
+                    },
+                    {
+                      "value": 90,
+                      "color": "#3B9BD9"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Living Room North West Plants",
+                  "icon": "mdi:water-percent",
+                  "update_interval": 10,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 6,
+                  "hours_to_show": 240,
+                  "lower_bound": 0,
+                  "upper_bound": 100,
+                  "aggregate_func": "last",
+                  "decimals": 1,
+                  "show": {
+                    "name": true,
+                    "legend": true,
+                    "state": true,
+                    "icon": true,
+                    "fill": false,
+                    "points": "hover"
+                  },
+                  "entities": [
+                    {
+                      "entity": "sensor.living_room_nw_soil_sensor_plant_1_moisture",
+                      "name": "Plant 4",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#80251B"
+                    },
+                    {
+                      "value": 35,
+                      "color": "#BF5033"
+                    },
+                    {
+                      "value": 60,
+                      "color": "#D8C641"
+                    },
+                    {
+                      "value": 75,
+                      "color": "#409650"
+                    },
+                    {
+                      "value": 90,
+                      "color": "#3B9BD9"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Living Room South East Plants",
+                  "icon": "mdi:water-percent",
+                  "update_interval": 10,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 6,
+                  "hours_to_show": 240,
+                  "lower_bound": 0,
+                  "upper_bound": 100,
+                  "aggregate_func": "last",
+                  "decimals": 1,
+                  "show": {
+                    "name": true,
+                    "legend": true,
+                    "state": true,
+                    "icon": true,
+                    "fill": false,
+                    "points": "hover"
+                  },
+                  "entities": [
+                    {
+                      "entity": "sensor.living_room_se_soil_sensor_plant_1_moisture",
+                      "name": "Plant 1",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    },
+                    {
+                      "entity": "sensor.living_room_se_soil_sensor_plant_2_moisture",
+                      "name": "Plant 2",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    },
+                    {
+                      "entity": "sensor.living_room_se_soil_sensor_plant_3_moisture",
+                      "name": "Plant 3",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#80251B"
+                    },
+                    {
+                      "value": 35,
+                      "color": "#BF5033"
+                    },
+                    {
+                      "value": 60,
+                      "color": "#D8C641"
+                    },
+                    {
+                      "value": 75,
+                      "color": "#409650"
+                    },
+                    {
+                      "value": 90,
+                      "color": "#3B9BD9"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Living Room South East Plants 2",
+                  "icon": "mdi:water-percent",
+                  "update_interval": 10,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 6,
+                  "hours_to_show": 240,
+                  "lower_bound": 0,
+                  "upper_bound": 100,
+                  "aggregate_func": "last",
+                  "decimals": 1,
+                  "show": {
+                    "name": true,
+                    "legend": true,
+                    "state": true,
+                    "icon": true,
+                    "fill": false,
+                    "points": "hover"
+                  },
+                  "entities": [
+                    {
+                      "entity": "sensor.living_room_se_soil_sensor_plant_4_moisture",
+                      "name": "Plant 4",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    },
+                    {
+                      "entity": "sensor.living_room_se_soil_sensor_plant_5_moisture",
+                      "name": "Plant 5",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    },
+                    {
+                      "entity": "sensor.living_room_se_soil_sensor_plant_6_moisture",
+                      "name": "Plant 6",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#80251B"
+                    },
+                    {
+                      "value": 35,
+                      "color": "#BF5033"
+                    },
+                    {
+                      "value": 60,
+                      "color": "#D8C641"
+                    },
+                    {
+                      "value": 75,
+                      "color": "#409650"
+                    },
+                    {
+                      "value": 90,
+                      "color": "#3B9BD9"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Kitchen And Bathroom Plants",
+                  "heading_style": "title"
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Kitchen Plant",
+                  "icon": "mdi:water-percent",
+                  "update_interval": 10,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 6,
+                  "hours_to_show": 240,
+                  "lower_bound": 0,
+                  "upper_bound": 100,
+                  "aggregate_func": "last",
+                  "decimals": 1,
+                  "show": {
+                    "name": true,
+                    "legend": true,
+                    "state": true,
+                    "icon": true,
+                    "fill": false,
+                    "points": "hover"
+                  },
+                  "entities": [
+                    {
+                      "entity": "sensor.kitchen_air_quality_soil_moisture",
+                      "name": "Kitchen Plant",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": true
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#80251B"
+                    },
+                    {
+                      "value": 35,
+                      "color": "#BF5033"
+                    },
+                    {
+                      "value": 60,
+                      "color": "#D8C641"
+                    },
+                    {
+                      "value": 75,
+                      "color": "#409650"
+                    },
+                    {
+                      "value": 90,
+                      "color": "#3B9BD9"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mini-graph-card",
+                  "name": "Bathroom Plant",
+                  "icon": "mdi:water-percent",
+                  "update_interval": 10,
+                  "animate": false,
+                  "smoothing": true,
+                  "points_per_hour": 6,
+                  "hours_to_show": 240,
+                  "lower_bound": 0,
+                  "upper_bound": 100,
+                  "aggregate_func": "last",
+                  "decimals": 1,
+                  "show": {
+                    "name": true,
+                    "legend": true,
+                    "state": true,
+                    "icon": true,
+                    "fill": false,
+                    "points": "hover"
+                  },
+                  "entities": [
+                    {
+                      "entity": "sensor.bathroom_fan_soil_moisture",
+                      "name": "Bathroom Plant",
+                      "show_state": true,
+                      "show_indicator": true,
+                      "show_legend": false
+                    }
+                  ],
+                  "color_thresholds": [
+                    {
+                      "value": 0,
+                      "color": "#80251B"
+                    },
+                    {
+                      "value": 35,
+                      "color": "#BF5033"
+                    },
+                    {
+                      "value": 60,
+                      "color": "#D8C641"
+                    },
+                    {
+                      "value": 75,
+                      "color": "#409650"
+                    },
+                    {
+                      "value": 90,
+                      "color": "#3B9BD9"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "cards": []
+        },
+        {
+          "type": "custom:grid-layout",
+          "path": "environment",
+          "icon": "mdi:home-analytics",
+          "cards": [
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:apexcharts-card",
+                  "graph_span": "24h",
+                  "view_layout": {
+                    "height": 100
+                  },
+                  "header": {
+                    "show": true,
+                    "title": "Temperature",
+                    "show_states": true,
+                    "colorize_states": true
+                  },
+                  "show": {
+                    "loading": false
+                  },
+                  "yaxis": [
+                    {
+                      "min": 50,
+                      "max": 100
+                    }
+                  ],
+                  "series": [
+                    {
+                      "entity": "sensor.kitchen_air_quality_temperature",
+                      "name": "Kitchen",
+                      "curve": "smooth",
+                      "type": "line",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.office_air_quality_temperature",
+                      "name": "Office",
+                      "curve": "smooth",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.bedroom_air_quality_temperature",
+                      "name": "Bedroom",
+                      "curve": "smooth",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.bathroom_fan_temperature",
+                      "name": "Bathroom",
+                      "curve": "smooth",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.living_room_temperature",
+                      "name": "Living Room",
+                      "curve": "smooth",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.hallway_temperature",
+                      "name": "Hallway",
+                      "curve": "smooth",
+                      "type": "line",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "layout_options": {
+                "grid_columns": "full"
+              }
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:apexcharts-card",
+                  "graph_span": "24h",
+                  "view_layout": {
+                    "height": 200
+                  },
+                  "header": {
+                    "show": true,
+                    "title": "Humidity",
+                    "show_states": true,
+                    "colorize_states": true
+                  },
+                  "yaxis": [
+                    {
+                      "min": 30,
+                      "max": 90
+                    }
+                  ],
+                  "show": {
+                    "loading": false
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.kitchen_air_quality_humidity",
+                      "name": "Kitchen",
+                      "curve": "smooth",
+                      "type": "line",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.office_air_quality_humidity",
+                      "name": "Office",
+                      "curve": "smooth",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.bedroom_air_quality_humidity",
+                      "name": "Bedroom",
+                      "curve": "smooth",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.bathroom_fan_humidity",
+                      "name": "Bathroom",
+                      "curve": "smooth",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.living_room_humidity",
+                      "name": "Living Room",
+                      "curve": "smooth",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.hallway_humidity",
+                      "name": "Hallway",
+                      "curve": "smooth",
+                      "type": "line",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "layout_options": {
+                "grid_columns": "full"
+              }
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:apexcharts-card",
+                  "graph_span": "24h",
+                  "view_layout": {
+                    "height": 100
+                  },
+                  "header": {
+                    "show": true,
+                    "title": "Dewpoint",
+                    "show_states": true,
+                    "colorize_states": true
+                  },
+                  "show": {
+                    "loading": false
+                  },
+                  "yaxis": [
+                    {
+                      "min": 30,
+                      "max": 90
+                    }
+                  ],
+                  "series": [
+                    {
+                      "entity": "sensor.kitchen_air_quality_dew_point",
+                      "name": "Kitchen",
+                      "curve": "smooth",
+                      "type": "line",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.office_air_quality_dew_point",
+                      "name": "Office",
+                      "curve": "smooth",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.bedroom_air_quality_dew_point",
+                      "name": "Bedroom",
+                      "curve": "smooth",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.bathroom_fan_dew_point",
+                      "name": "Bathroom",
+                      "curve": "smooth",
+                      "type": "line",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.living_room_dew_point",
+                      "name": "Living Room",
+                      "curve": "smooth",
+                      "type": "line",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    },
+                    {
+                      "entity": "sensor.hallway_dew_point",
+                      "name": "Hallway",
+                      "curve": "smooth",
+                      "type": "line",
+                      "group_by": {
+                        "func": "avg",
+                        "duration": "30m"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "layout_options": {
+                "grid_columns": "full"
+              }
+            }
+          ],
+          "title": "Environment"
+        }
+      ]
+    }
+  }
+}
